@@ -19,6 +19,9 @@ public class PlayerToken implements FaithToken {
         route.checkPopeSpace(this);
     }
 
+    @Override
+    public void advance(int pos) {}
+
     public void concede() {
         for(FaithToken t: route.getTokenList()){
             if(!(t == this)){

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 
+import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
 
 import java.util.List;
@@ -9,9 +10,15 @@ public class Game {
 
     //private List<Player> player;
     //private CardMarket cardMarket;
-    private ResourceMarket resourceMarket;
-    private VaticanRoute vaticanRoute;
+    private final ResourceMarket resourceMarket;
+    private final VaticanRoute vaticanRoute;
+    private final ActionDeck actionDeck;
 
+    public Game(int playersNumber) {
+        resourceMarket = new ResourceMarket();
+        vaticanRoute = new VaticanRoute(playersNumber);
+        this.actionDeck = new ActionDeck(this);
+    }
 
     private void giveLeaderCard(){
 
@@ -35,4 +42,7 @@ public class Game {
 
     public void discardLeaderCard(){}
 
+    public VaticanRoute getVaticanRoute() {
+        return vaticanRoute;
+    }
 }

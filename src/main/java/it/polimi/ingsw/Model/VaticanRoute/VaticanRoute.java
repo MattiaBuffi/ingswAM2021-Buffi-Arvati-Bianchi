@@ -30,7 +30,7 @@ public class VaticanRoute {
     }
 
     protected void addBlackCrossToken(){
-        tokenList.add(new BlackCrossToken());
+        tokenList.add(new BlackCrossToken(this));
     }
 
     public ArrayList<FaithToken> getTokenList() {

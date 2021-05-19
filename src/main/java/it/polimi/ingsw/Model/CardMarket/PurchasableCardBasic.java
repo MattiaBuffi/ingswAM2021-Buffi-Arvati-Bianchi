@@ -12,12 +12,11 @@ public class PurchasableCardBasic implements PurchasableCard {
     private DevelopmentCard card;
     private ResourceList cost;
 
-    public PurchasableCardBasic(CardMarket market, ResourceList cost) {
+    public PurchasableCardBasic(CardMarket market, ResourceList cost, DevelopmentCard card) {
         this.market = market;
         this.cost = cost;
+        this.card = card;
     }
-
-
 
     @Override
     public boolean buy(CardSlot cardSlot, ResourceStorage storage){

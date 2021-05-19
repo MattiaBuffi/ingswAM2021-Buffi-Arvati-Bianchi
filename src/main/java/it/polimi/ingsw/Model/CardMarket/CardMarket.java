@@ -4,7 +4,6 @@ package it.polimi.ingsw.Model.CardMarket;
 
 public class CardMarket{
 
-
     public PurchasableCard getCard(){
         return null;
     }
@@ -12,6 +11,5 @@ public class CardMarket{
     protected void newCard(PurchasableCard card){
 
     }
-
 
 }

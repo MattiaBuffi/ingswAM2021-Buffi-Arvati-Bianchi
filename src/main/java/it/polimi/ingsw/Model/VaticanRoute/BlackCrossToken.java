@@ -2,19 +2,23 @@ package it.polimi.ingsw.Model.VaticanRoute;
 
 public class BlackCrossToken implements FaithToken {
     private int faithPoints;
+    private VaticanRoute route;
 
 
-    public BlackCrossToken() {
+    public BlackCrossToken(VaticanRoute route) {
         this.faithPoints = 0;
+        this.route = route;
     }
 
     @Override
     public void advance() {
         faithPoints++;
+        route.checkPopeSpace(this);
     }
 
-    public void advance(int pos){
+    public void advance(int pos) {
         faithPoints += pos;
+        route.checkPopeSpace(this);
     }
 
     @Override
