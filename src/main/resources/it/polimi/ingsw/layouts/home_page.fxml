@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bg_home" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.HomePage">
+   <children>
+      <HBox layoutX="362.0" layoutY="348.0" prefHeight="141.0" prefWidth="556.0">
+         <children>
+            <Button fx:id="localButton" alignment="CENTER" mnemonicParsing="false" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="LOCAL&#10;GAME" textAlignment="CENTER" textFill="#01607b">
+               <font>
+                  <Font name="Franklin Gothic Demi" size="48.0" />
+               </font>
+            </Button>
+            <Button fx:id="onlineButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToConnectionPage" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="ONLINE&#10;GAME" textAlignment="CENTER" textFill="#01607b">
+               <font>
+                  <Font name="Franklin Gothic Demi" size="48.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

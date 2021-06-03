@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="bg_beige" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.LeaderCardSelection">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="1292.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="112.0" prefWidth="1300.0" text="CHOOSE 2 LEADER CARDS">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+            <GridPane prefHeight="357.0" prefWidth="1092.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <VBox.margin>
+                  <Insets left="100.0" right="100.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="leaderCard1" fitHeight="300.0" fitWidth="200.0" onMouseClicked="#cardOneSelected" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ImageView fx:id="leaderCard2" fitHeight="300.0" fitWidth="200.0" layoutX="47.0" layoutY="39.0" onMouseClicked="#cardTwoSelected" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ImageView fx:id="leaderCard3" fitHeight="300.0" fitWidth="200.0" layoutX="10.0" layoutY="39.0" onMouseClicked="#cardThreeSelected" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ImageView fx:id="leaderCard4" fitHeight="300.0" fitWidth="200.0" layoutX="10.0" layoutY="39.0" onMouseClicked="#cardFourSelected" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="rect1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="200.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="rect2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" layoutX="47.0" layoutY="39.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="rect3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" layoutX="10.0" layoutY="39.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Rectangle fx:id="rect4" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="300.0" layoutX="10.0" layoutY="39.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+            <Button mnemonicParsing="false" onAction="#discardLeaderCards" prefHeight="125.0" prefWidth="300.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="CHOOSE" textFill="#cec4a6">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="490.0" top="50.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

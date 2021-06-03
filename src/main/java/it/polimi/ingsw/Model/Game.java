@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
+import it.polimi.ingsw.ServerModel.User;
 
 import java.util.List;
 
@@ -13,6 +14,13 @@ public class Game {
     private final ResourceMarket resourceMarket;
     private final VaticanRoute vaticanRoute;
     private final ActionDeck actionDeck;
+
+    public Game(List<User> players) {
+        int playersNumber = players.size();
+        resourceMarket = new ResourceMarket();
+        vaticanRoute = new VaticanRoute(playersNumber);
+        this.actionDeck = new ActionDeck(this);
+    }
 
     public Game(int playersNumber) {
         resourceMarket = new ResourceMarket();
