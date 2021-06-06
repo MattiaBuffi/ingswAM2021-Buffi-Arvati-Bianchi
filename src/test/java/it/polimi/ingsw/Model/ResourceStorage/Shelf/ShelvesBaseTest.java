@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.TestData.TestBroadcaster;
+import it.polimi.ingsw.Model.TestData.TestBroadcaster;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

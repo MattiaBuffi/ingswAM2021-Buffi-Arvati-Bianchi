@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_leader_cards_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.LeaderCardsTab">
+<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_leader_cards_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.LeaderCardsTab">
    <children>
       <ImageView fx:id="leaderCard1" fitHeight="240.0" fitWidth="160.0" layoutX="64.0" layoutY="150.0" onMouseClicked="#cardOneSelected" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="leaderCard2" fitHeight="240.0" fitWidth="160.0" layoutX="257.0" layoutY="150.0" onMouseClicked="#cardTwoSelected" pickOnBounds="true" preserveRatio="true" />

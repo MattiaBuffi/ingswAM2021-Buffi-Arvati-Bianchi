@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.TestData.TestBroadcaster;
+import it.polimi.ingsw.Model.TestData.TestBroadcaster;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShelvesExtraTest {
 
-    private static int FIRST = 1;
-    private static int SECOND = 2;
-    private static int THIRD = 3;
-    private static int EXTRA = 4;
+    private static int FIRST = 0;
+    private static int SECOND = 1;
+    private static int THIRD = 2;
+    private static int EXTRA = 3;
 
 
 
@@ -39,25 +39,25 @@ class ShelvesExtraTest {
     public void initialization(){
         int i;
         for (i = 0; i < shelves.getShelves().size()-1; i++) {
-            assertEquals(i+1, shelves.getShelf(i+1).getMaxSize());
-            assertEquals(0, shelves.getShelf(i+1).getSize());
-            assertNull(shelves.getShelf(i+1).getColor());
+            assertEquals(i+1, shelves.getShelf(i).getMaxSize());
+            assertEquals(0, shelves.getShelf(i).getSize());
+            assertNull(shelves.getShelf(i).getColor());
         }
 
-        assertEquals(2, shelves.getShelf(i+1).getMaxSize());
-        assertEquals(0, shelves.getShelf(i+1).getSize());
-        assertEquals(color, shelves.getShelf(i+1).getColor());
+        assertEquals(2, shelves.getShelf(i).getMaxSize());
+        assertEquals(0, shelves.getShelf(i).getSize());
+        assertEquals(color, shelves.getShelf(i).getColor());
     }
 
 
     @ParameterizedTest
     @ValueSource(ints={0,1,2,3})
     public void add(int index){
-        for (int i = 0; i < shelves.getShelf(index+1).getMaxSize(); i++) {
-            boolean result = shelves.store(Marble.Color.BLUE, index+1);
+        for (int i = 0; i < shelves.getShelf(index).getMaxSize(); i++) {
+            boolean result = shelves.store(Marble.Color.BLUE, index);
             assertTrue(result);
-            assertEquals(i+1,  shelves.getShelf(index+1).getSize());
-            assertEquals(Marble.Color.BLUE, shelves.getShelf(index+1).getColor());
+            assertEquals(i+1,  shelves.getShelf(index).getSize());
+            assertEquals(Marble.Color.BLUE, shelves.getShelf(index).getColor());
         }
     }
 
@@ -156,11 +156,11 @@ class ShelvesExtraTest {
         assertTrue(result);
         int i;
         for (i = 0; i < shelves.getShelves().size()-1; i++) {
-            assertEquals(0, shelves.getShelf(i+1).getSize());
-            assertNull(shelves.getShelf(i+1).getColor());
+            assertEquals(0, shelves.getShelf(i).getSize());
+            assertNull(shelves.getShelf(i).getColor());
         }
-        assertEquals(0, shelves.getShelf(i+1).getSize());
-        assertEquals(color, shelves.getShelf(i+1).getColor());
+        assertEquals(0, shelves.getShelf(i).getSize());
+        assertEquals(color, shelves.getShelf(i).getColor());
 
 
 
@@ -184,11 +184,11 @@ class ShelvesExtraTest {
         assertTrue(result);
         int i;
         for (i = 0; i < shelves.getShelves().size()-1; i++) {
-            assertEquals(0, shelves.getShelf(i+1).getSize());
-            assertNull(shelves.getShelf(i+1).getColor());
+            assertEquals(0, shelves.getShelf(i).getSize());
+            assertNull(shelves.getShelf(i).getColor());
         }
-        assertEquals(0, shelves.getShelf(i+1).getSize());
-        assertEquals(color, shelves.getShelf(i+1).getColor());
+        assertEquals(0, shelves.getShelf(i).getSize());
+        assertEquals(color, shelves.getShelf(i).getColor());
 
 
 

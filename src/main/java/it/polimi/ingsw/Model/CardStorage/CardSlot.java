@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model.CardStorage;
 import it.polimi.ingsw.Message.Model.DevelopmentCardBuyUpdate;
 import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
-import it.polimi.ingsw.View.ModelData.ReducedDataModel.DevelopmentCardData;
 
 import java.util.ArrayList;
 import java.util.List;

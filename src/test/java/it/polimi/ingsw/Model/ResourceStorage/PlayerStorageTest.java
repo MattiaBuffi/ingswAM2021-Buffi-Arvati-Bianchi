@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.ResourceStorage;
 
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.TestData.TestBroadcaster;
+import it.polimi.ingsw.Model.TestData.TestBroadcaster;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -18,7 +18,7 @@ public class ShelvesExtra implements Shelves {
 
     public ShelvesExtra(Shelves shelves, EventBroadcaster broadcaster, Marble.Color shelfColor) {
         this.shelves = shelves;
-        this.shelf = new ShelfLeader(2, shelves.getShelves().size()+1, broadcaster ,shelfColor);
+        this.shelf = new ShelfLeader(2, shelves.getShelves().size(), broadcaster ,shelfColor);
         this.broadcaster = broadcaster;
     }
 

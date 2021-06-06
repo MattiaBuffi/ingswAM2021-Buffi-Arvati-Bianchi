@@ -34,7 +34,7 @@ public class Lobby {
         }
 
         List<User> players = users.subList(0, size-1);
-        server.addGame(new Game(players));
+        //server.addGame(new Game(players));
         users = new ArrayList<>(users.subList(size, users.size()));
         users.get(0).notify("set game size");
 

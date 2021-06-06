@@ -3,7 +3,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="270.0" prefWidth="1920.0" styleClass="bg_vatican_route" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.VaticanRoutePane">
+<AnchorPane prefHeight="270.0" prefWidth="1920.0" styleClass="bg_vatican_route" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.VaticanRoutePane">
    <children>
       <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
          <image>

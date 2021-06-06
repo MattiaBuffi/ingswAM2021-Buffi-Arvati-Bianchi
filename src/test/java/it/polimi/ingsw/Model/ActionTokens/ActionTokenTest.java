@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.ActionTokens;
 import it.polimi.ingsw.Model.CardMarket.CardRemover;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
-import it.polimi.ingsw.TestData.testTerminator;
+import it.polimi.ingsw.Model.TestData.testTerminator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
