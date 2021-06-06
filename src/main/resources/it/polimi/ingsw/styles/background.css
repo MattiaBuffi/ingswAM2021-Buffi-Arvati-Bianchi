@@ -1,0 +1,54 @@
+.bg_board{
+    -fx-background-image: url("../images/Masters_of_Renaissance_PlayerBoard.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_card{
+    -fx-background-color: #964B00;
+}
+.bg_home{
+    -fx-background-image: url("../images/backgrounds/MoR_home.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_basic{
+    -fx-background-image: url("../images/backgrounds/MoR_basicBg.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_popup{
+    /*-fx-background-color: linear-gradient(#D17D2B, #F8E13D);*/
+    -fx-background-color: #F8E13D;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
+
+.bg_trasparent{
+    -fx-background-color: transparent;
+}
+.bg_vatican_route{
+    -fx-background-image: url("../images/backgrounds/VaticanRoute.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_storage{
+    -fx-background-image: url("../images/backgrounds/Storage.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_production_board{
+    -fx-background-image: url("../images/backgrounds/ProductionBoard.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_resource_market_board{
+    -fx-background-image: url("../images/backgrounds/ResourceMarket.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_cards_market_board{
+    -fx-background-image: url("../images/backgrounds/CardsMarket.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_leader_cards_board{
+    -fx-background-image: url("../images/backgrounds/LeaderCardBoard.png");
+    -fx-background-size: 100% 100%;
+}
+.bg_beige_chiaro{
+    -fx-background-color: #f9f0d7;
+}
+.bg_beige{
+    -fx-background-color: #cec4a6;
+}

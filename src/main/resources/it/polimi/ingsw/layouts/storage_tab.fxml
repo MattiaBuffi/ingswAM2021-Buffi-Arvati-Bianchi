@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_storage" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.StorageTab">
+   <children>
+      <ImageView fx:id="res1_1" fitHeight="70.0" fitWidth="70.0" layoutX="237.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res2_1" fitHeight="70.0" fitWidth="70.0" layoutX="191.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res2_2" fitHeight="70.0" fitWidth="70.0" layoutX="269.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_1" fitHeight="70.0" fitWidth="70.0" layoutX="153.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_2" fitHeight="70.0" fitWidth="70.0" layoutX="229.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_3" fitHeight="70.0" fitWidth="70.0" layoutX="304.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
+      <HBox layoutX="53.0" layoutY="511.0" prefHeight="70.0" prefWidth="366.0">
+         <children>
+            <ImageView fitHeight="86.0" fitWidth="89.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/token/coin.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="125.0" fitWidth="91.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/token/servant.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitHeight="84.0" fitWidth="79.0" layoutX="85.0" layoutY="10.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/token/shield.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitHeight="108.0" fitWidth="88.0" layoutX="160.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/token/stone.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ImageView>
+         </children></HBox>
+      <HBox layoutX="52.0" layoutY="511.0" prefHeight="86.0" prefWidth="386.0">
+         <children>
+            <Label fx:id="yellowValue" alignment="CENTER" prefHeight="73.0" prefWidth="93.0" text="10">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="purpleValue" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="73.0" prefWidth="93.0" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="blueValue" alignment="CENTER" layoutX="103.0" layoutY="10.0" prefHeight="73.0" prefWidth="93.0" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="greyValue" alignment="CENTER" layoutX="196.0" layoutY="10.0" prefHeight="73.0" prefWidth="93.0" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children></HBox>
+      <Pane fx:id="leaderStorageContainer" layoutX="58.0" layoutY="616.0" prefHeight="159.0" prefWidth="386.0">
+         <children>
+            <ImageView fitHeight="152.0" fitWidth="386.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/leaderPowers/leaderStorageblue.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="resLeader1" fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="resLeader2" fitHeight="80.0" fitWidth="80.0" layoutX="211.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
+   </children>
+</AnchorPane>

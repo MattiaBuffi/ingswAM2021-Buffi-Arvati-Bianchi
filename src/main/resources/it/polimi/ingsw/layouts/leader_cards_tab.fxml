@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_leader_cards_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.LeaderCardsTab">
+   <children>
+      <ImageView fx:id="leaderCard1" fitHeight="240.0" fitWidth="160.0" layoutX="64.0" layoutY="150.0" onMouseClicked="#cardOneSelected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leaderCard2" fitHeight="240.0" fitWidth="160.0" layoutX="257.0" layoutY="150.0" onMouseClicked="#cardTwoSelected" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle fx:id="rectangle1" arcHeight="5.0" arcWidth="5.0" disable="true" height="240.0" layoutX="64.0" layoutY="150.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="160.0" />
+      <Rectangle fx:id="rectangle2" arcHeight="5.0" arcWidth="5.0" disable="true" height="240.0" layoutX="257.0" layoutY="150.0" opacity="0.4" stroke="TRANSPARENT" strokeType="INSIDE" width="160.0" />
+      <Button layoutX="160.0" layoutY="443.0" mnemonicParsing="false" onAction="#activateLeaderCard" prefHeight="66.0" prefWidth="160.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="ACTIVATE" textFill="#cec4a6">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="160.0" layoutY="527.0" mnemonicParsing="false" onAction="#discardLeaderCard" prefHeight="66.0" prefWidth="160.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="DISCARD" textFill="#cec4a6">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

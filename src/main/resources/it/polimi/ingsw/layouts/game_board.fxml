@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.GUI.FXMLControllers.GameBoard">
+   <center>
+      <TabPane prefHeight="810.0" prefWidth="1440.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="PRODUCTION BOARD">
+              <fx:include fx:id="productionTab" source="production_tab.fxml" />
+          </Tab>
+          <Tab text="RESOURCE MARKET">
+              <fx:include fx:id="resourcMarket" source="resource_market_tab.fxml" />
+          </Tab>
+            <Tab text="CARDS MARKET">
+                <fx:include fx:id="cardsMarket" source="cards_market_tab.fxml" />
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+       <Pane prefHeight="270.0" prefWidth="1920.0" BorderPane.alignment="CENTER" >
+           <fx:include fx:id="vaticanRoute" source="vatican_route.fxml" />
+       </Pane>
+   </top>
+   <left>
+      <TabPane prefHeight="810.0" prefWidth="480.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="RESOURCES">
+              <fx:include fx:id="storageTab" source="storage_tab.fxml" />
+          </Tab>
+          <Tab text="LEADER CARDS">
+              <fx:include fx:id="leaderCardsTab" source="leader_cards_tab.fxml" />
+          </Tab>
+          <Tab text="SCOREBOARD">
+              <fx:include fx:id="scoreboardTab" source="scoreboard_tab.fxml" />
+          </Tab>
+        </tabs>
+      </TabPane>
+   </left>
+</BorderPane>

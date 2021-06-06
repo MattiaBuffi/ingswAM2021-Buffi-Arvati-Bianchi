@@ -1,0 +1,8 @@
+.play_button{
+    -fx-background-color: linear-gradient(#F8E13D, #D17D2B);
+    -fx-background-radius: 2%;
+}
+.buy_button{
+    -fx-background-color: #565033;
+    -fx-background-radius: 2%;
+}
