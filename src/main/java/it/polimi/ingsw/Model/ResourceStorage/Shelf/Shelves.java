@@ -1,21 +1,22 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
+import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.Model.ResourceStorage.Shelf.Shelf;
 
 import java.util.List;
 
 public interface Shelves {
+
     List<Shelf> getShelves();
 
-    Shelf getFromId(String id);
+    Shelf getShelf(int Position);
 
     ResourceList getResources();
 
-    boolean store(MarbleColor color, String destId);
+    boolean store(Marble.Color color, int position);
 
-    boolean remove(ResourceList list);
+    boolean withdraw(ResourceList list);
 
-    boolean move(String originId, String destId);
+    boolean move(int origin, int dest);
+
 }

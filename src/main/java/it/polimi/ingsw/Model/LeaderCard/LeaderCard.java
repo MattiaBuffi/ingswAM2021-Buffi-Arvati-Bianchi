@@ -1,47 +1,37 @@
 package it.polimi.ingsw.Model.LeaderCard;
 
 
-import it.polimi.ingsw.Model.Player.Player;
+import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
+import it.polimi.ingsw.Model.LeaderCard.RequirementsStrategy.RequirementStrategy;
 
-public abstract class LeaderCard {
+
+public class LeaderCard {
 
     protected String id;
     private int victoryPoints;
-    private boolean active;
     private RequirementStrategy requirementsStrategy;
     private ActivationStrategy activationStrategy;
 
-    public LeaderCard(String id, int victoryPoints, RequirementStrategy requirementsStrategy) {
+    public LeaderCard(String id, int victoryPoints, RequirementStrategy requirementsStrategy, ActivationStrategy activationStrategy) {
         this.id = id;
         this.victoryPoints = victoryPoints;
         this.requirementsStrategy = requirementsStrategy;
-        active = false;
+        this.activationStrategy = activationStrategy;
     }
 
     public String getId() {
         return id;
     }
 
-
-    public void activate(Player player){
-        if(active){
-            return;
-        }
-        if(!requirementsStrategy.checkRequirements(player)){
-            return;
-        }
-        activationStrategy.execute(player);
-        active = true;
-    }
-
-
     public int getVictoryPoints() {
-        if(active){
-            return victoryPoints;
-        } else {
-            return 0;
-        }
+        return  victoryPoints;
     }
 
+    public RequirementStrategy getRequirementsStrategy() {
+        return requirementsStrategy;
+    }
 
+    public ActivationStrategy getActivationStrategy() {
+        return activationStrategy;
+    }
 }

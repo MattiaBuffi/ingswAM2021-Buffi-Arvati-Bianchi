@@ -1,111 +1,67 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
-
-import java.util.UUID;
-
-
-public class ShelfBasic implements Shelf {
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.Marble.Marble;
 
 
-    private final String id;
-    private int maxSize;
-    private MarbleColor color;
-    private int size;
+public class ShelfBasic extends Shelf {
 
-    public ShelfBasic(int size) {
-        this.maxSize = size;
-        this.id = UUID.randomUUID().toString();
+    private EventBroadcaster broadcaster;
+
+    public ShelfBasic(int size, int position, EventBroadcaster broadcaster) {
+        super(size, position, broadcaster);
+        this.broadcaster = broadcaster;
     }
-
-    public void setMaxSize(int maxSize){
-        this.maxSize = maxSize;
-    }
-
-    @Override
-    public MarbleColor getColor() {
-        return color;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    @Override
-    public int getMaxSize() {
-        return maxSize;
-    }
-
-    @Override
-    public boolean isFull() {
-        if( size == maxSize){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-
 
 
     @Override
-    public boolean add(MarbleColor color) {
+    public boolean add(Marble.Color color) {
         return add(color,1);
     }
 
     @Override
-    public boolean add(MarbleColor color, int amount) {
+    public boolean add(Marble.Color color, int amount) {
 
-        if(isFull()){
+        if(isFull() || size+amount>maxSize){
+            broadcaster.notifyUser(new ErrorUpdate("0", "not enough space"));
             return false;
         }
-        if(size>0){
+
+        if(size != 0){
             if(this.color != color){
+                broadcaster.notifyUser(new ErrorUpdate("0", "wrong color"));
                 return false;
             }
         }
-        if(size+amount>maxSize){
-            return false;
-        }
+
         size+= amount;
         if( this.color == null){
             this.color = color;
         }
+
+        broadcaster.notifyAllPlayers(new ShelfUpdate(position, maxSize, size, color));/*marble added*/
+
         return true;
     }
 
     @Override
     public boolean remove(int amount) {
         if(size < amount){
+            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
             return false;
         }
+
         size-= amount;
+
         if (size == 0){
             this.color = null;
         }
+
+        broadcaster.notifyAllPlayers(new ShelfUpdate(position, maxSize, size, color));
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -5,14 +5,14 @@ import it.polimi.ingsw.Model.ProductionCard.ProductionCard;
 
 public class SelectDevelopmentCard implements ProductionSelector {
 
-    private final String id;
+    private final int position;
 
-    public SelectDevelopmentCard(String id) {
-        this.id = id;
+    public SelectDevelopmentCard(int position) {
+        this.position = position;
     }
 
-    public String getId(){
-        return id;
+    public int getPosition() {
+        return position;
     }
 
     @Override

@@ -1,44 +1,57 @@
 package it.polimi.ingsw.Model.Player.States;
 
-import it.polimi.ingsw.Model.CardStorage.CardStorage;
 import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
-import it.polimi.ingsw.Model.Marble.*;
+import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
-import it.polimi.ingsw.Model.ProductionCard.ProductionCard;
+import it.polimi.ingsw.Model.Player.ProductionHandler;
 
-import java.util.List;
+
 
 public class StateProduction extends PlayerState {
 
 
-    private List<String> usedProduction;
+    private static StateProduction instance;
 
-    @Override
-    protected void invalidAction() {
-
+    private StateProduction(Name stateName){
+        super(stateName);
     }
 
 
     @Override
-    protected void production(ProductionSelector selector) {
-        CardStorage storage = context.cardStorage;
-        ProductionCard card = storage.getCard(selector);
-        if(usedProduction.contains(card.getId())){
-            return;
+    protected boolean production(Player context, ProductionSelector selector) {
+
+        ProductionHandler handler = context.getProductionHandler();
+        return handler.produce(selector);
+
+    }
+
+
+
+    @Override
+    protected boolean endTurn(Player context){
+
+        context.getProductionHandler().empty();
+        context.setState(StateWait.get());
+        context.getTurnHandler().endTurn();
+        return true;
+
+    }
+
+
+
+
+
+
+
+
+
+
+    public static StateProduction get(){
+        if(instance == null){
+            instance = new StateProduction(Name.PRODUCTION);
         }
-        usedProduction.add(card.getId());
-        List<Marble> production = card.make(context.resourceStorage);
-        context.productionBuffer.fill(production);
-
+        return instance;
     }
-
-
-    @Override
-    protected void endTurn(){
-        usedProduction.clear();
-        context.productionBuffer.empty();
-    }
-
 
 
 }

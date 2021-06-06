@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CardStorage {
 
-    boolean buyCard(PurchasableCard card, String destId, ResourceStorage storage);
+    boolean buyCard(PurchasableCard card, int destinationPosition, ResourceStorage storage);
     ProductionCard getCard(ProductionSelector selector);
     List<DevelopmentCard> getCards();
 

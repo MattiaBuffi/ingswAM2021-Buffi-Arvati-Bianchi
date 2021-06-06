@@ -8,12 +8,12 @@ public class RedMarble extends Marble{
     protected RedMarble(){};
 
     @Override
-    public MarbleColor getColor() {
-        return MarbleColor.RED;
+    public Color getColor() {
+        return Color.RED;
     }
 
-    public void accept(MarbleVisitor visitor){
-        visitor.visit(this);
+    public void accept(MarbleHandler handler){
+        handler.handle(this);
     }
 
 }

@@ -2,19 +2,19 @@ package it.polimi.ingsw.Model.Marble;
 
 public class ResourceMarble extends Marble  {
 
-    private final MarbleColor color;
+    private final Color color;
 
-    protected ResourceMarble(MarbleColor color){
+    protected ResourceMarble(Color color){
         this.color = color;
     }
 
     @Override
-    public MarbleColor getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void accept(MarbleVisitor visitor){
-        visitor.visit(this);
+    public void accept(MarbleHandler handler){
+        handler.handle(this);
     }
 
 

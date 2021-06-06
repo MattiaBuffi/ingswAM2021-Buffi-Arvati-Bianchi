@@ -23,8 +23,8 @@ public class ExtraProductionDecorator implements CardStorage, ProductionVisitor 
     }
 
     @Override
-    public boolean buyCard(PurchasableCard card, String destId, ResourceStorage storage) {
-        return cardStorage.buyCard(card,destId, storage);
+    public boolean buyCard(PurchasableCard card, int position, ResourceStorage storage) {
+        return cardStorage.buyCard(card, position, storage);
     }
 
     @Override
@@ -40,22 +40,26 @@ public class ExtraProductionDecorator implements CardStorage, ProductionVisitor 
 
     @Override
     public ProductionCard visit(SelectBasic selector) {
+
         return cardStorage.getCard(selector);
     }
 
 
     @Override
     public ProductionCard visit(SelectDevelopmentCard selector) {
+
         return cardStorage.getCard(selector);
     }
 
 
     @Override
     public ProductionCard visit(SelectLeader selector) {
+
         if(selector.getId() != production.getId() ){
             return cardStorage.getCard(selector);
         }
         return production.getCard(selector.getSelectedColor());
+
     }
 
 

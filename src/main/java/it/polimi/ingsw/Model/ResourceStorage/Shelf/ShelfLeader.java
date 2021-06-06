@@ -1,80 +1,54 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.Marble.Marble;
 
-import java.util.UUID;
+public class ShelfLeader extends Shelf {
 
-public class ShelfLeader implements Shelf {
 
-    private final int maxSize;
-    private final String id;
-    private final MarbleColor color;
-    private int size;
-
-    public ShelfLeader(MarbleColor color) {
-        this.id = UUID.randomUUID().toString();
-        this.maxSize = 2;
+    public ShelfLeader(int size, int position, EventBroadcaster broadcaster, Marble.Color color) {
+        super(size, position, broadcaster);
         this.color = color;
-        this.size = 0;
     }
 
     @Override
-    public MarbleColor getColor() {
-        return color;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    public int getMaxSize(){
-        return maxSize;
-    }
-
-    @Override
-    public boolean isFull() {
-        if( size == maxSize){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-
-
-
-    @Override
-    public boolean add(MarbleColor color) {
+    public boolean add(Marble.Color color) {
         return add(color,1);
     }
 
+
+
     @Override
-    public boolean add(MarbleColor color, int amount) {
+    public boolean add(Marble.Color color, int amount) {
+
         if(this.color != color){
+            broadcaster.notifyUser(new ErrorUpdate("0","wrong color"));
             return false;
         }
-        if(isFull()){
+
+        if(isFull() || size+amount>maxSize){
+            broadcaster.notifyUser(new ErrorUpdate("0","not enough space"));
             return false;
         }
-        if(size+amount>maxSize){
-            return false;
-        }
+
         size += amount;
+        broadcaster.notifyAllPlayers(new ShelfUpdate(position, maxSize, size, color)/*shelf new status*/);
         return true;
     }
+
+
+
 
     @Override
     public boolean remove(int amount) {
         if(size < amount){
+            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources")/*not enough resources*/);
             return false;
         }
         size-= amount;
+        broadcaster.notifyAllPlayers(new ShelfUpdate(position, maxSize, size, color)/*shelf new status*/);
         return true;
     }
 

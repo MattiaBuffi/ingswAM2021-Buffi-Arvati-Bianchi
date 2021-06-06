@@ -2,8 +2,17 @@ package it.polimi.ingsw.Model.Marble;
 
 public abstract class Marble {
 
-    public abstract MarbleColor getColor();
+    public enum Color {
+        RED,
+        WHITE,
+        YELLOW,
+        GREY,
+        BLUE,
+        PURPLE;
+    }
 
-    public abstract void accept(MarbleVisitor visitor);
+    public abstract Color getColor();
+
+    public abstract void accept(MarbleHandler handler);
 
 }

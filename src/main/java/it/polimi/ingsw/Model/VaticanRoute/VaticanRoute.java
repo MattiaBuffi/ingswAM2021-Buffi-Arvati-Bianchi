@@ -1,78 +1,96 @@
 package it.polimi.ingsw.Model.VaticanRoute;
 
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.GameTerminator;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class VaticanRoute {
-    protected static final int[] POPE_SPACES = {8, 16, 24};
-    protected static final int[] POPES_FAVOR_VICTORY_POINTS = {2, 3, 4};
-    protected static final int[] POPE_SPACES_LOWER_LIMITS = {5, 12, 19};
+
+    public static final int LAST_POSITION = 24;
+    public static final int[] POPE_SPACES = {8, 16, 24};
+    public static final int[] POPES_FAVOR_VICTORY_POINTS = {2, 3, 4};
+    public static final int[] POPE_SPACES_LOWER_LIMITS = {5, 12, 19};
     protected static final int VICTORY_POINTS_STEP = 3;
     protected static final int[] ROUTE_VICTORY_POINTS = {1, 2, 4, 6, 9, 12, 16, 20};
-    public static boolean[] popeSpaceReached = {false, false, false};
 
-    private ArrayList<FaithToken> tokenList = new ArrayList<>();
-    private int numPlayers;
+    public int popeSpaceReached;
 
-    public VaticanRoute(int numPlayers) {
-        this.numPlayers = numPlayers;
-        if(numPlayers == 1){
-            addPlayerToken();
-            addBlackCrossToken();
+    private ArrayList<VaticanToken> tokenList;
+    private GameTerminator gameTerminator;
+
+
+    public VaticanRoute(EventBroadcaster broadcaster, GameTerminator gameTerminator) {
+        this.tokenList = new ArrayList<>();
+        this.gameTerminator = gameTerminator;
+        this.popeSpaceReached = 0;
+    }
+
+    public VaticanRoute(EventBroadcaster broadcaster, GameTerminator gameTerminator, int popeSpaceReached) {
+        this.tokenList = new ArrayList<>();
+        this.gameTerminator = gameTerminator;
+        this.popeSpaceReached = popeSpaceReached;
+    }
+
+
+
+    public boolean addPlayer(VaticanToken token){
+        if(token.getPosition() >= POPE_SPACES[popeSpaceReached]){
+            return false;
         } else {
-            for (int i = 0; i < numPlayers; i++) {
-                addPlayerToken();
+            if(tokenList.size() >= 2){
+                token.setPosition(1);
+            }
+            return this.tokenList.add(token);
+        }
+    }
+
+    public ArrayList<VaticanToken> getTokenList() {
+        return new ArrayList<>(tokenList);
+    }
+
+    public int getPopeSpaceReached() {
+        return popeSpaceReached;
+    }
+
+
+
+    protected void advance(VaticanToken token, int points){
+
+        int newPosition = token.getPosition() + points;
+
+        if(newPosition >= POPE_SPACES[popeSpaceReached]){
+            vaticanReport( tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached], POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
+            popeSpaceReached +=1;
+        }
+
+        if(newPosition >= LAST_POSITION){
+            token.setPosition(LAST_POSITION);
+            gameTerminator.endGame();
+        } else {
+            token.setPosition(newPosition);
+        }
+
+    }
+
+
+    public void vaticanReport(List<VaticanToken> tokens, int lowerLimit, int popesFavorVictoryPoints){
+        for(VaticanToken t: tokens){
+            if(t.getPosition() >= lowerLimit){
+                t.setVictoryPoint( t.getVictoryPoints()+popesFavorVictoryPoints );
             }
         }
     }
 
-    protected void addPlayerToken(){
-        tokenList.add(new PlayerToken(this));
-    }
-
-    protected void addBlackCrossToken(){
-        tokenList.add(new BlackCrossToken());
-    }
-
-    public ArrayList<FaithToken> getTokenList() {
-        return tokenList;
-    }
-
-    protected void checkPopeSpace(FaithToken token){
-        if(token.getFaithPoints() == POPE_SPACES[0] && !popeSpaceReached[0]){
-            vaticanReport(POPE_SPACES_LOWER_LIMITS[0], POPES_FAVOR_VICTORY_POINTS[0]);
-            popeSpaceReached[0] = true;
-        } else if (token.getFaithPoints() == POPE_SPACES[1] && !popeSpaceReached[1]){
-            vaticanReport(POPE_SPACES_LOWER_LIMITS[1], POPES_FAVOR_VICTORY_POINTS[1]);
-            popeSpaceReached[1] = true;
-        } else if (token.getFaithPoints() == POPE_SPACES[2] && !popeSpaceReached[2]) {
-            vaticanReport(POPE_SPACES_LOWER_LIMITS[2], POPES_FAVOR_VICTORY_POINTS[2]);
-            popeSpaceReached[2] = true;
-            if(numPlayers == 1){
-                if(token.playerWin()){
-                    //PLAYER WIN
-                }else{
-                    //BLACK CROSS WIN
-                }
-            }
-        }
-    }
-
-    private void vaticanReport(int lowerLimit, int popesFavorVictoryPoints){
-        for(FaithToken t: tokenList){
-            if(t.getFaithPoints() >= lowerLimit){
-                t.addVictoryPoints(popesFavorVictoryPoints);
-            }
-        }
-    }
 
     public void assignRouteVictoryPoints(){
-        for(FaithToken t: tokenList){
-            int n = t.getFaithPoints()/VICTORY_POINTS_STEP;
-            t.addVictoryPoints(ROUTE_VICTORY_POINTS[n-1]);
+        for(VaticanToken t: tokenList){
+            int n = t.getPosition()/VICTORY_POINTS_STEP;
+            t.setPosition( t.getPosition() + ROUTE_VICTORY_POINTS[n-1] );
         }
     }
 
-    public int getNumPlayers() {
-        return numPlayers;
-    }
+
+
 }

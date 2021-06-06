@@ -1,63 +1,79 @@
 package it.polimi.ingsw.Model.Player;
 
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
 import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Model.Marble.MarbleColor;
 
 
 import java.util.List;
 
 public abstract class PlayerState {
 
-    protected Player context;
-
-    protected abstract void invalidAction();
-
-    protected void buyCard(PurchasableCard card, String destinationId){
-        invalidAction();
+    public enum Name {
+        NEW_GAME,
+        NEW_TURN,
+        WAIT,
+        BUY_RESOURCE,
+        STORE_RESOURCE,
+        BUY_CARD,
+        PRODUCTION;
     }
 
-    protected void production(ProductionSelector selector){
-        invalidAction();
+
+    private final Name name;
+
+    public PlayerState(Name name){
+        this.name = name;
     }
 
-    protected void storeResource(MarbleColor color, String storageId){
-        invalidAction();
+    public Name getName() {
+        return name;
     }
 
-    protected void buyResources(List<Marble> resources){
-        invalidAction();
+    protected boolean invalidAction(Player player){
+        player.notifyUser(new ErrorUpdate("0", "illegal action"));
+        return false;
     }
 
-    protected void moveResources(String originId, String destinationId){
-        context.resourceStorage.move(originId, destinationId);
+
+    protected boolean setActive(Player context){
+        return invalidAction(context);
     }
 
-    protected void discardLeader(String leaderId){
-        /*
-        for (LeaderCard c: context.getLeaderCards()){
-            if(c.getId() == leaderId){
-                context.leaderCards.remove(c);
-                //addVictoryPoints
-                break;
-            }
-        }*/
+    protected boolean buyCard(Player context, PurchasableCard card, int destinationId){
+        return invalidAction(context);
     }
 
-    protected void activateLeader(String leaderId){
-        /*
-        for (LeaderCard c: context.getLeaderCards()){
-            if(c.getId() == leaderId){
-                c.activate(context);
-                break;
-            }
-        }*/
+    protected boolean production(Player context, ProductionSelector selector){
+        return invalidAction(context);
     }
 
-    protected void endTurn(){
-        invalidAction();
+    protected boolean storeResource(Player context, Marble.Color color, int storageId){
+        return invalidAction(context);
     }
+
+    protected boolean buyResources(Player context, List<Marble> resources){
+        return invalidAction(context);
+    }
+
+    protected boolean moveResources(Player context, int originId, int destinationId){
+        return invalidAction(context);
+    }
+
+    protected boolean discardLeader(Player context, String leaderId){
+        return invalidAction(context);
+    }
+
+    protected boolean activateLeader(Player context, String leaderId){
+        return invalidAction(context);
+    }
+
+    protected boolean endTurn(Player context){
+        return invalidAction(context);
+    }
+
+
 
 
 }

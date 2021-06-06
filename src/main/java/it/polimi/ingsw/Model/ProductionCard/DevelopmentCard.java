@@ -4,22 +4,53 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 public class DevelopmentCard extends ProductionCard{
 
-    private int level;
-    private DevelopmentCardColor color;
+    public enum Color {
+        GREEN,
+        BLUE,
+        YELLOW,
+        PURPLE;
+    }
 
-    public DevelopmentCard(String id, ResourceList require, ResourceList produce, int level, DevelopmentCardColor color) {
+    public static class Info {
+
+        public final int level;
+        public final Color color;
+
+        public Info(int level, Color color) {
+            this.level = level;
+            this.color = color;
+        }
+
+    }
+
+
+    private int victoryPoint;
+    private Info info;
+
+    public DevelopmentCard(String id, ResourceList require, ResourceList produce, int level,
+                           Color color, int victoryPoint) {
         super(id,require, produce);
 
-        this.level= level;
-        this.color = color;
+        this.victoryPoint = victoryPoint;
+        this.info = new Info(level, color);
+
+    }
+
+
+    public Info getInfo(){
+        return info;
+    }
+
+    public int getVictoryPoint() {
+        return victoryPoint;
     }
 
     public int getLevel() {
-        return level;
+        return info.level;
     }
 
-    public DevelopmentCardColor getColor() {
-        return color;
+    public Color getColor() {
+        return info.color;
     }
 
 

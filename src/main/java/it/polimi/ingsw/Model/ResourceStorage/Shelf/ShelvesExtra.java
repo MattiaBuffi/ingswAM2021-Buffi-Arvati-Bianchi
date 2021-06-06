@@ -1,19 +1,25 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.util.List;
 
 public class ShelvesExtra implements Shelves {
 
+    private EventBroadcaster broadcaster;
+
     private Shelves shelves;
     private ShelfLeader shelf;
 
 
-    public ShelvesExtra(Shelves shelves, ShelfLeader shelf) {
+    public ShelvesExtra(Shelves shelves, EventBroadcaster broadcaster, Marble.Color shelfColor) {
         this.shelves = shelves;
-        this.shelf = shelf;
+        this.shelf = new ShelfLeader(2, shelves.getShelves().size()+1, broadcaster ,shelfColor);
+        this.broadcaster = broadcaster;
     }
 
     @Override
@@ -24,12 +30,18 @@ public class ShelvesExtra implements Shelves {
     }
 
     @Override
-    public Shelf getFromId(String id) {
-        if(shelf.getId() == id){
+    public Shelf getShelf(int position) {
+
+        if ( shelf.getPosition() < position ){
+            throw  new IllegalArgumentException();
+        }
+
+        if( shelf.getPosition() == position ){
             return shelf;
         } else {
-            return shelves.getFromId(id);
+            return shelves.getShelf(position);
         }
+
     }
 
     @Override
@@ -39,55 +51,68 @@ public class ShelvesExtra implements Shelves {
         return content;
     }
 
+
+
+
     @Override
-    public boolean store(MarbleColor color, String destId){
-        if(this.shelf.getId() != destId){
-            return shelves.store(color,destId);
+    public boolean store(Marble.Color color, int position){
+        if( shelf.getPosition() != position){
+            return shelves.store(color, position);
         }
+
         return shelf.add(color);
+
     }
 
     @Override
-    public boolean remove(ResourceList list) {
+    public boolean withdraw(ResourceList list) {
         if(shelves.getResources().contains(list)){
-            return shelves.remove(list);
+            return shelves.withdraw(list);
         } else{
             ResourceList missing = shelves.getResources().difference(list);
 
-            //check that the missing marble are of the correct color
-            if(missing.getSize(shelf.getColor()) != missing.getSize()){
+            //check that all of the missing marble are of the correct color
+            if( missing.getSize(shelf.getColor()) != missing.getSize()){
+                broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
                 return false;
             }
-
-            shelves.remove(list.subtract(missing));
 
             if(!shelf.remove(missing.getSize())){
                 return false;
             }
 
+            if(!shelves.withdraw(list.subtract(missing))){
+                throw new IllegalStateException(); //if previous check are correct this will never occur
+            }
+
             return true;
+
         }
     }
 
     private boolean fill(Shelf origin, Shelf dest){
-        if(origin.getColor() != dest.getColor()){
+        if(origin.getColor() != dest.getColor()){ // need to check if null
+            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
             return false;
         }
         while (!dest.isFull() && origin.getSize()>0){
             dest.add(origin.getColor());
             origin.remove(1);
         }
+
+        broadcaster.notifyAllPlayers(new ShelfUpdate(origin.position, origin.maxSize, origin.size, origin.color)/*move successful*/);//shelf 1 update
+        broadcaster.notifyAllPlayers(new ShelfUpdate(dest.position, dest.maxSize, dest.size, dest.color)/*move successful*/);//shelf 2 update
         return true;
     }
 
     @Override
-    public boolean move(String originId, String destId) {
-        if(originId == shelf.getId()){
-            return fill(shelf, shelves.getFromId(destId));
-        } else if (destId == shelf.getId()){
-            return fill(shelves.getFromId(originId), shelf);
+    public boolean move(int originId, int destId) {
+        if(shelf.getPosition() == originId ){               //the extra shelf is the origin
+            return fill(shelf, shelves.getShelf(destId));
+        } else if (shelf.getPosition() == destId){          //the extra shelf is the destination
+            return fill(shelves.getShelf(originId), shelf);
         } else {
-            return shelves.move(originId, destId);
+            return shelves.move(originId, destId);          //the extra shelf is neither
         }
     }
 

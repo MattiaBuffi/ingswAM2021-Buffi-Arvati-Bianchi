@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
+import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.TestData.TestBroadcaster;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ShelfLeaderTest {
 
+    private static TestBroadcaster broadcaster = new TestBroadcaster();
 
     /**check the initialization of the shelf
      */
     @Test
     public void initialization(){
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
         assertEquals(0, basic.getSize());
-        assertNotNull(basic.getId());
-        assertEquals( MarbleColor.RED, basic.getColor());
+        assertEquals( Marble.Color.RED, basic.getColor());
         assertEquals(2, basic.getMaxSize());
     }
 
@@ -25,13 +26,13 @@ public class ShelfLeaderTest {
     @Test
     public void addToEmpty() {
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
 
         //test
-        boolean result = basic.add(MarbleColor.RED,2);
+        boolean result = basic.add(Marble.Color.RED,2);
         assertTrue(result);
         assertEquals(2, basic.getSize());
-        assertEquals( MarbleColor.RED, basic.getColor());
+        assertEquals( Marble.Color.RED, basic.getColor());
     }
 
     /**try to add a marble to a shelf not empty
@@ -39,14 +40,14 @@ public class ShelfLeaderTest {
     @Test
     public void addNormal(){
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,1);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,1);
 
         //test
-        boolean result = basic.add(MarbleColor.RED,1);
+        boolean result = basic.add(Marble.Color.RED,1);
         assertTrue(result);
         assertEquals(2, basic.getSize());
-        assertEquals( MarbleColor.RED, basic.getColor());
+        assertEquals( Marble.Color.RED, basic.getColor());
     }
 
     /**try to add even if the shelf is full
@@ -54,14 +55,14 @@ public class ShelfLeaderTest {
     @Test
     public void addToFull() {
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,2);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,2);
 
         //test
-        boolean result = basic.add(MarbleColor.RED,2);
+        boolean result = basic.add(Marble.Color.RED,2);
         assertFalse(result);
         assertEquals(2, basic.getSize());
-        assertEquals( MarbleColor.RED, basic.getColor());
+        assertEquals( Marble.Color.RED, basic.getColor());
     }
 
     /**try to add a marble of a different color
@@ -69,14 +70,14 @@ public class ShelfLeaderTest {
     @Test
     public void addWrongColor(){
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,1);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,1);
 
         //test
-        boolean result = basic.add(MarbleColor.WHITE, 1);
+        boolean result = basic.add(Marble.Color.WHITE, 1);
         assertFalse(result);
         assertEquals(1, basic.getSize());
-        assertEquals( MarbleColor.RED, basic.getColor());
+        assertEquals( Marble.Color.RED, basic.getColor());
     }
 
 
@@ -85,14 +86,14 @@ public class ShelfLeaderTest {
     @Test
     public void removeNormal() {
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,2);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,2);
 
         //test
         boolean result = basic.remove(1);
         assertTrue(result);
         assertEquals(1, basic.getSize());
-        assertEquals(MarbleColor.RED, basic.getColor());
+        assertEquals(Marble.Color.RED, basic.getColor());
     }
 
 
@@ -101,14 +102,14 @@ public class ShelfLeaderTest {
     @Test
     public void removeAll(){
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,2);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,2);
 
         //test
         boolean result = basic.remove(2);
         assertTrue(result);
         assertEquals(0, basic.getSize());
-        assertEquals(MarbleColor.RED, basic.getColor());
+        assertEquals(Marble.Color.RED, basic.getColor());
     }
 
     /**try to remove more marbles that are stored
@@ -116,14 +117,14 @@ public class ShelfLeaderTest {
     @Test
     public void removeOverMax(){
         //setup
-        ShelfLeader basic = new ShelfLeader(MarbleColor.RED);
-        basic.add(MarbleColor.RED,2);
+        ShelfLeader basic = new ShelfLeader(2, 1, broadcaster, Marble.Color.RED);
+        basic.add(Marble.Color.RED,2);
 
         //test
         boolean result = basic.remove(5);
         assertFalse(result);
         assertEquals(2, basic.getSize());
-        assertEquals(MarbleColor.RED, basic.getColor());
+        assertEquals(Marble.Color.RED, basic.getColor());
     }
 
 

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Model.ResourceStorage.Shelf;
 
-import it.polimi.ingsw.Model.Marble.MarbleColor;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.util.ArrayList;
@@ -9,32 +12,50 @@ import java.util.List;
 
 public class ShelvesBase implements Shelves{
 
+    private EventBroadcaster broadcaster;
+
     private List<ShelfBasic> shelves;
 
-    public ShelvesBase() {
-        shelves = new ArrayList<>();
-        shelves.add(new ShelfBasic(1));
-        shelves.add(new ShelfBasic(2));
-        shelves.add(new ShelfBasic(3));
+    public ShelvesBase(EventBroadcaster broadcaster) {
+        this.shelves = new ArrayList<>();
+        this.broadcaster = broadcaster;
+
+        for (int i = 0; i < 3; i++) {
+            shelves.add(new ShelfBasic(i+1, i, broadcaster));
+        }
+
+    }
+
+
+    private void swap(int originPosition, int destPosition){
+
+        ShelfBasic origin = getShelf(originPosition);
+        ShelfBasic dest = getShelf(destPosition);
+
+        int originMaxSize = origin.getMaxSize();
+        int destMaxSize = dest.getMaxSize();
+
+        origin.setMaxSize(destMaxSize);
+        dest.setMaxSize(originMaxSize);
+
+        shelves.set(originPosition, dest);
+        shelves.set(destPosition, origin);
+        origin.setPosition(destPosition);
+        dest.setPosition(originPosition);
+
+        broadcaster.notifyAllPlayers(new ShelfUpdate(origin.position, origin.maxSize, origin.size, origin.color)/*move successful*/);//shelf 1 update
+        broadcaster.notifyAllPlayers(new ShelfUpdate(dest.position, dest.maxSize, dest.size, dest.color)/*move successful*/);//shelf 2 update
+
     }
 
     @Override
     public List<Shelf> getShelves() {
-        List<Shelf> toReturn = new ArrayList<>();
-        for (Shelf s: shelves){
-            toReturn.add(s);
-        }
-        return toReturn;
+        return new ArrayList<>(shelves);
     }
 
     @Override
-    public ShelfBasic getFromId(String id){
-        for(ShelfBasic s: shelves){
-            if(id == s.getId()){
-                return s;
-            }
-        }
-        return null;
+    public ShelfBasic getShelf(int position){
+        return shelves.get(position);
     }
 
     @Override
@@ -48,21 +69,36 @@ public class ShelvesBase implements Shelves{
 
 
     @Override
-    public boolean store(MarbleColor color, String destId){
-        for (Shelf s: shelves){
-            if(s.getColor() == color && s.getId() != destId ){
+    public boolean store(Marble.Color color, int position){
+        ShelfBasic shelf = getShelf(position);
+
+        if(shelf == null){
+            broadcaster.notifyUser(new ErrorUpdate("0","shelf not found"));
+            return false;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if(i == position){
+                continue;
+            }
+            if(getShelf(i).getColor() == color){
+                broadcaster.notifyUser(new ErrorUpdate("0","color already stored"));
                 return false;
             }
         }
-        return getFromId(destId).add(color);
+
+        return shelf.add(color);
     }
 
     @Override
-    public boolean remove(ResourceList list){
+    public boolean withdraw(ResourceList list){
+
         if(!getResources().contains(list)){
+            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
             return false;
         }
-        for(MarbleColor c: list.getColors()){
+
+        for(Marble.Color c: list.getColors()){
             for(Shelf s: shelves){
                 if(s.getColor() == c){
                     s.remove(list.getSize(c));
@@ -74,30 +110,22 @@ public class ShelvesBase implements Shelves{
     }
 
     @Override
-    public boolean move(String originId, String destId){
-        ShelfBasic origin = getFromId(originId);
-        ShelfBasic dest = getFromId(destId);
+    public boolean move(int originPosition, int destPosition){
 
-        int originMaxSize = origin.getMaxSize();
-        int destMaxSize = dest.getMaxSize();
+        ShelfBasic origin = getShelf(originPosition);
+        ShelfBasic dest = getShelf(destPosition);
 
-        if(origin.getSize() > destMaxSize){
-            //error
+        if(origin.getSize() > dest.getMaxSize()){
+            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
             return false;
         }
-        if(dest.getSize() > originMaxSize){
-            //error
+        if(dest.getSize() > origin.getMaxSize()){
+            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
             return false;
         }
 
-        origin.setMaxSize(destMaxSize);
-        dest.setMaxSize(originMaxSize);
+        swap(originPosition, destPosition);
 
-        int originIndex = shelves.indexOf(origin);
-        int destIndex = shelves.indexOf(dest);
-
-        shelves.set(originIndex, dest);
-        shelves.set(destIndex, origin);
 
         return true;
     }

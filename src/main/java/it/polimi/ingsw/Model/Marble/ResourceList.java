@@ -3,9 +3,9 @@ package it.polimi.ingsw.Model.Marble;
 
 import java.util.*;
 
-public class ResourceList {
+public class ResourceList{
 
-    private Map<MarbleColor, Integer> marbles;
+    private Map<Marble.Color, Integer> marbles;
     private int size;
 
     public ResourceList(){
@@ -17,7 +17,7 @@ public class ResourceList {
         return size;
     }
 
-    public int getSize(MarbleColor color){
+    public int getSize(Marble.Color color){
         Integer size = marbles.get(color);
         if(size != null){
             return size;
@@ -26,26 +26,34 @@ public class ResourceList {
         }
     }
 
-    public Set<MarbleColor> getColors(){
+    public Set<Marble.Color> getColors(){
         return marbles.keySet();
     }
 
-    public ResourceList add(Marble marble){
-        return add(marble.getColor(), 1);
-
+    public void add(Marble marble){
+        add(marble.getColor(), 1);
     }
 
-    public ResourceList add(MarbleColor color){
-        return add(color, 1);
+    public void add(Marble.Color color){
+        add(color, 1);
     }
 
-    public ResourceList add(MarbleColor color, int num){
+    public void add(Marble.Color color, int num){
         marbles.put(color, getSize(color)+num);
         size+= num;
-        return this;
     }
 
-    public Marble pop(MarbleColor color){
+    public void addAll(ResourceList list){
+        addAll(list.getAll());
+    }
+
+    public void addAll(List<Marble> marbles){
+        for (Marble m: marbles){
+            this.add(m);
+        }
+    }
+
+    public Marble pop(Marble.Color color){
         if(getSize(color)>0){
             marbles.put(color, getSize(color)-1 );
             size--;
@@ -57,7 +65,7 @@ public class ResourceList {
 
     public List<Marble> getAll(){
         List<Marble> marbles = new ArrayList();
-        for(MarbleColor color: this.marbles.keySet()){
+        for(Marble.Color color: this.marbles.keySet()){
             for(int i=0; i<this.marbles.get(color); i++){
                 marbles.add(MarbleFactory.getMarble(color));
             }
@@ -67,7 +75,7 @@ public class ResourceList {
 
     public ResourceList sum(ResourceList list){
         ResourceList newList= new ResourceList();
-        for(MarbleColor color: MarbleColor.values()){
+        for(Marble.Color color: Marble.Color.values()){
             for (int i = 0; i < this.getSize(color)+list.getSize(color); i++) {
                 newList.add(color);
             }
@@ -75,11 +83,20 @@ public class ResourceList {
         return newList;
     }
 
+
+    public ResourceList sum(Marble.Color color){
+        ResourceList newList= new ResourceList().sum(this);
+
+        newList.add(color);
+
+        return newList;
+    }
+
     public ResourceList subtract(ResourceList list){
 
         ResourceList newList= new ResourceList().sum(this);
 
-        for(MarbleColor color: list.getColors()){
+        for(Marble.Color color: list.getColors()){
             int size = this.getSize(color)-list.getSize(color);
             if( size > 0){
                 newList.marbles.put(color, size);
@@ -89,10 +106,21 @@ public class ResourceList {
         return newList;
     }
 
+
+    public ResourceList subtract(Marble.Color color){
+
+        ResourceList newList= new ResourceList().sum(this);
+
+        newList.pop(color);
+
+        return newList;
+    }
+
+
     public ResourceList difference(ResourceList list){
         ResourceList newList= new ResourceList();
 
-        for(MarbleColor color: list.getColors()){
+        for(Marble.Color color: list.getColors()){
             int size = list.getSize(color)-this.getSize(color);
             if( size > 0){
                 newList.add(color, size);
@@ -103,7 +131,7 @@ public class ResourceList {
     }
 
     public boolean contains(ResourceList list){
-        for(MarbleColor color: list.getColors()){
+        for(Marble.Color color: list.getColors()){
             if(this.getSize(color) < list.getSize(color)){
                 return false;
             }
@@ -111,5 +139,9 @@ public class ResourceList {
         return true;
     }
 
+    public void clear(){
+        this.size = 0;
+        marbles.clear();
+    }
 
 }

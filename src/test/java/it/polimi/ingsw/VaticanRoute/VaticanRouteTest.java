@@ -1,76 +1,79 @@
 package it.polimi.ingsw.VaticanRoute;
 
 import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
+import it.polimi.ingsw.Model.VaticanRoute.VaticanToken;
+import it.polimi.ingsw.TestData.TestBroadcaster;
+import it.polimi.ingsw.TestData.testTerminator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class VaticanRouteTest {
 
-    @Test
-    public void advanceTest(){
-        VaticanRoute route = new VaticanRoute(3);
-
-        assertEquals(0, route.getTokenList().get(0).getFaithPoints());
-        assertEquals(0, route.getTokenList().get(1).getFaithPoints());
-        assertEquals(0, route.getTokenList().get(2).getFaithPoints());
-
-        route.getTokenList().get(0).advance();
-
-        assertEquals(1, route.getTokenList().get(0).getFaithPoints());
-
-        route.getTokenList().get(0).advance();
-        route.getTokenList().get(1).advance();
-        route.getTokenList().get(2).advance();
-
-        assertEquals(2, route.getTokenList().get(0).getFaithPoints());
-        assertEquals(1, route.getTokenList().get(1).getFaithPoints());
-        assertEquals(1, route.getTokenList().get(2).getFaithPoints());
-    }
 
     @Test
-    public void vaticanReportTest(){
-        VaticanRoute route = new VaticanRoute(3);
+    void testVaticanReport(){
+        VaticanRoute route = new VaticanRoute( new TestBroadcaster(), new testTerminator());
+        List<VaticanToken> tokens = new ArrayList<>();
+        tokens.add(new VaticanToken(route, 1,"one"));
+        tokens.add(new VaticanToken(route, "two"));
 
-        route.getTokenList().get(0).setFaithPoints(7);
-        route.getTokenList().get(1).setFaithPoints(5);
-        route.getTokenList().get(2).setFaithPoints(2);
+        route.vaticanReport(tokens, 1, 5);
+        assertEquals(5, tokens.get(0).getVictoryPoints());
+        assertEquals(0, tokens.get(1).getVictoryPoints());
 
-        route.getTokenList().get(0).advance();
-
-        assertAll(  () -> assertEquals(2, route.getTokenList().get(0).getVictoryPoints()),
-                    () -> assertEquals(2, route.getTokenList().get(1).getVictoryPoints()),
-                    () -> assertEquals(0, route.getTokenList().get(2).getVictoryPoints()),
-                    () -> assertTrue(VaticanRoute.popeSpaceReached[0])
-        );
-
-        route.getTokenList().get(0).setFaithPoints(13);
-        route.getTokenList().get(1).setFaithPoints(10);
-        route.getTokenList().get(2).setFaithPoints(15);
-
-        route.getTokenList().get(2).advance();
-
-        assertAll(  () -> assertEquals(5, route.getTokenList().get(0).getVictoryPoints()),
-                () -> assertEquals(2, route.getTokenList().get(1).getVictoryPoints()),
-                () -> assertEquals(3, route.getTokenList().get(2).getVictoryPoints()),
-                () -> assertTrue(VaticanRoute.popeSpaceReached[1])
-        );
     }
 
-    @Test
-    public void endGameVictoryPoints(){
-        VaticanRoute route = new VaticanRoute(3);
 
-        route.getTokenList().get(0).setFaithPoints(24);
-        route.getTokenList().get(1).setFaithPoints(19);
-        route.getTokenList().get(2).setFaithPoints(17);
+    @ParameterizedTest
+    @ValueSource(ints={0,1,2,3})
+    void testAdvance(int testNum){
 
-        route.assignRouteVictoryPoints();
+        int index = 0;
+        int position = 0;
 
-        assertAll(  () -> assertEquals(20, route.getTokenList().get(0).getVictoryPoints()),
-                    () -> assertEquals(12, route.getTokenList().get(1).getVictoryPoints()),
-                    () -> assertEquals(9, route.getTokenList().get(2).getVictoryPoints())
-        );
+        if(testNum == 3){
+            index = 0;
+            position = 0;
+        } else {
+            index = testNum;
+            position = VaticanRoute.POPE_SPACES_LOWER_LIMITS[index];
+        }
+
+        testTerminator terminator = new testTerminator();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator, index);
+        List<VaticanToken> tokens = new ArrayList<>();
+
+        tokens.add(new VaticanToken(route, position,"one"));
+        tokens.add(new VaticanToken(route, position,"two"));
+        route.addPlayer(tokens.get(0));
+        route.addPlayer(tokens.get(1));
+
+        tokens.get(0).advance(5);
+
+
+        assertEquals(position+5, tokens.get(0).getPosition());
+        assertEquals(position, tokens.get(1).getPosition());
+
+        if(testNum == 3){
+            assertEquals(0, tokens.get(0).getVictoryPoints());
+            assertEquals(0, tokens.get(1).getVictoryPoints());
+        } else if(testNum == 2){
+            assertEquals(VaticanRoute.LAST_POSITION, tokens.get(0).getPosition());
+            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(0).getVictoryPoints());
+            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(1).getVictoryPoints());
+            assertTrue(terminator.ended);
+        } else {
+            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(0).getVictoryPoints());
+            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(1).getVictoryPoints());
+        }
+
     }
+
 
 }

@@ -5,12 +5,12 @@ public class WhiteMarble extends Marble {
     protected WhiteMarble(){}
 
     @Override
-    public MarbleColor getColor() {
-        return MarbleColor.WHITE;
+    public Color getColor() {
+        return Color.WHITE;
     }
 
-    public void accept(MarbleVisitor visitor){
-        visitor.visit(this);
+    public void accept(MarbleHandler handler){
+        handler.handle(this);
     }
 
 

@@ -2,7 +2,8 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.MarbleFactory;
-import it.polimi.ingsw.Model.ResourceMarket;
+import it.polimi.ingsw.Model.ResourceMarket.ResourceMarket;
+import it.polimi.ingsw.TestData.TestBroadcaster;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +19,7 @@ class ResourceMarketTest {
     @Test
     @DisplayName("Market random initialization")
     public void initTest(){
-        ResourceMarket market = new ResourceMarket();
+        ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         Marble[] stdArray = new Marble[ResourceMarket.MARKET_SIZE];
         Marble[] marketArray = new Marble[ResourceMarket.MARKET_SIZE];
 
@@ -26,9 +27,9 @@ class ResourceMarketTest {
             stdArray[i] = MarbleFactory.getMarble(ResourceMarket.MARBLES_COLORS[i]);
         }
 
-        for(int i = 0; i < ResourceMarket.MARKET_ROWS; i++){
-            for(int j = 0; j < ResourceMarket.MARKET_COLUMN; j++){
-                marketArray[(i * 4) + j] = market.getMarblesGrid()[i][j];
+        for(int i = 0; i < ResourceMarket.ROW_SIZE; i++){
+            for(int j = 0; j < ResourceMarket.COLUMN_SIZE; j++){
+                marketArray[(i * 3) + j] = market.getMarblesGrid()[i][j];
             }
         }
         marketArray[12] = market.getBonusMarble();
@@ -40,53 +41,55 @@ class ResourceMarketTest {
     @ParameterizedTest
     @ValueSource(ints = {0,1,2})
     public void getRowTest(int pos){
-        ResourceMarket market = new ResourceMarket();
+
+        ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         ArrayList<Marble> tmpArray = new ArrayList<>();
 
-        for(int i=0;i<ResourceMarket.MARKET_COLUMN;i++){
-            tmpArray.add(market.getMarblesGrid()[pos][i]);
+        for(int i = 0; i<ResourceMarket.ROW_SIZE; i++){
+            tmpArray.add(market.getMarblesGrid()[i][pos]);
         }
 
-        assertEquals(tmpArray, market.getRow(pos));
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {0,1,2})
-    public void insertRowTest(int pos){
-        ResourceMarket market = new ResourceMarket();
-        Marble oldBonusMarble = market.getBonusMarble();
-        Marble newBonusMarble = market.getMarblesGrid()[pos][0];
-
-        market.getRow(pos);
-
-        assertEquals(newBonusMarble, market.getBonusMarble());
-        assertEquals(oldBonusMarble, market.getMarblesGrid()[pos][3]);
+        assertEquals(tmpArray, market.get(pos));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0,1,2,3})
     public void getColumnTest(int pos){
-        ResourceMarket market = new ResourceMarket();
+        ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         ArrayList<Marble> tmpArray = new ArrayList<>();
 
-        for(int i=0;i<ResourceMarket.MARKET_ROWS;i++){
-            tmpArray.add(market.getMarblesGrid()[i][pos]);
+        for(int i = 0; i<ResourceMarket.COLUMN_SIZE; i++){
+            tmpArray.add(market.getMarblesGrid()[pos][i]);
         }
 
-        assertEquals(tmpArray, market.getColumn(pos));
+        assertEquals(tmpArray, market.get(pos+4));
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2})
+    public void insertRowTest(int pos){
+        ResourceMarket market = new ResourceMarket(new TestBroadcaster());
+        Marble oldBonusMarble = market.getBonusMarble();
+        Marble newBonusMarble = market.getMarblesGrid()[market.ROW_SIZE -1][pos];
+
+        market.insertExtra(pos+4);
+
+        assertEquals(newBonusMarble, market.getBonusMarble());
+        assertEquals(oldBonusMarble, market.getMarblesGrid()[market.ROW_SIZE -1][pos]);
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0,1,2,3})
     public void insertColumnTest(int pos){
-        ResourceMarket market = new ResourceMarket();
+        ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         Marble oldBonusMarble = market.getBonusMarble();
-        Marble newBonusMarble = market.getMarblesGrid()[0][pos];
+        Marble newBonusMarble = market.getMarblesGrid()[pos][market.COLUMN_SIZE -1];
 
-        market.getColumn(pos);
+        market.insertExtra(pos);
 
         assertEquals(newBonusMarble, market.getBonusMarble());
-        assertEquals(oldBonusMarble, market.getMarblesGrid()[2][pos]);
+        assertEquals(oldBonusMarble, market.getMarblesGrid()[pos][market.COLUMN_SIZE -1]);
     }
 
 }
