@@ -1,0 +1,386 @@
+[
+  {
+    "Color": "GREEN",
+    "Level": 1,
+    "Victory_Points": 1,
+    "Cost": ["2B"],
+    "Require": ["1Y"],
+    "Produce": ["1R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 1,
+    "Victory_Points": 2,
+    "Cost": ["1B", "1P", "1G"],
+    "Require": ["1G"],
+    "Produce": ["1P"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 1,
+    "Victory_Points": 3,
+    "Cost": ["3B"],
+    "Require": ["2P"],
+    "Produce": ["1Y", "1B", "1G"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 1,
+    "Victory_Points": 4,
+    "Cost": ["2B", "2Y"],
+    "Require": ["1G", "1P"],
+    "Produce": ["2Y", "1R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 1,
+    "Victory_Points": 1,
+    "Cost": ["2P"],
+    "Require": ["1G"],
+    "Produce": ["1R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 1,
+    "Victory_Points": 2,
+    "Cost": ["1B", "1P", "1Y"],
+    "Require": ["1Y"],
+    "Produce": ["1B"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 1,
+    "Victory_Points": 3,
+    "Cost": ["3P"],
+    "Require": ["2Y"],
+    "Produce": ["1P", "1B", "1G"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 1,
+    "Victory_Points": 4,
+    "Cost": ["2P", "2G"],
+    "Require": ["1Y", "1B"],
+    "Produce": ["2G", "1R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 1,
+    "Victory_Points": 1,
+    "Cost": ["2Y"],
+    "Require": ["1B"],
+    "Produce": ["1R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 1,
+    "Victory_Points": 2,
+    "Cost": ["1Y", "1P", "1G"],
+    "Require": ["1P"],
+    "Produce": ["1G"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 1,
+    "Victory_Points": 3,
+    "Cost": ["3Y"],
+    "Require": ["2G"],
+    "Produce": ["1Y", "1P", "1B"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 1,
+    "Victory_Points": 4,
+    "Cost": ["2Y", "2P"],
+    "Require": ["1B", "1G"],
+    "Produce": ["2P", "1R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 1,
+    "Victory_Points": 1,
+    "Cost": ["2G"],
+    "Require": ["1P"],
+    "Produce": ["1R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 1,
+    "Victory_Points": 2,
+    "Cost": ["1B", "1G"," 1Y"],
+    "Require": ["1B"],
+    "Produce": ["1Y"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 1,
+    "Victory_Points": 3,
+    "Cost": ["3G"],
+    "Require": ["2B"],
+    "Produce": ["1Y","1P","1G"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 1,
+    "Victory_Points": 4,
+    "Cost": ["2G","2B"],
+    "Require": ["1Y","1P"],
+    "Produce": ["2B","1R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 2,
+    "Victory_Points": 5,
+    "Cost": ["4B"],
+    "Require": ["1G"],
+    "Produce": ["2R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 2,
+    "Victory_Points": 6,
+    "Cost": ["3B","2P"],
+    "Require": ["1B", "1P"],
+    "Produce": ["3G"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 2,
+    "Victory_Points": 7,
+    "Cost": ["5B"],
+    "Require": ["2Y"],
+    "Produce": ["2G","2R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 2,
+    "Victory_Points": 8,
+    "Cost": ["3B","3Y"],
+    "Require": ["1Y"],
+    "Produce": ["2B","1R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 2,
+    "Victory_Points": 5,
+    "Cost": ["4P"],
+    "Require": ["1Y"],
+    "Produce": ["1R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 2,
+    "Victory_Points": 6,
+    "Cost": ["3P","2Y"],
+    "Require": ["1Y","1P"],
+    "Produce": ["3P"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 2,
+    "Victory_Points": 7,
+    "Cost": ["5P"],
+    "Require": ["2G"],
+    "Produce": ["2Y","2R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 2,
+    "Victory_Points": 8,
+    "Cost": ["3P","3B"],
+    "Require": ["1G"],
+    "Produce": ["2P","1R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 2,
+    "Victory_Points": 5,
+    "Cost": ["4Y"],
+    "Require": ["1P"],
+    "Produce": ["2R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 2,
+    "Victory_Points": 6,
+    "Cost": ["3Y","2G"],
+    "Require": ["1Y","1G"],
+    "Produce": ["3P"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 2,
+    "Victory_Points": 7,
+    "Cost": ["5Y"],
+    "Require": ["2P"],
+    "Produce": ["2P","2R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 2,
+    "Victory_Points": 8,
+    "Cost": ["3Y", "3G"],
+    "Require": ["1P"],
+    "Produce": ["2G","1R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 2,
+    "Victory_Points": 5,
+    "Cost": ["4G"],
+    "Require": ["1B"],
+    "Produce": ["2R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 2,
+    "Victory_Points": 6,
+    "Cost": ["3G","2B"],
+    "Require": ["1G","1B"],
+    "Produce": ["3Y"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 2,
+    "Victory_Points": 7,
+    "Cost": ["5G"],
+    "Require": ["2B"],
+    "Produce": ["2P","2R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 2,
+    "Victory_Points": 8,
+    "Cost": ["3G","3P"],
+    "Require": ["1B"],
+    "Produce": ["2Y","1R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 3,
+    "Victory_Points": 9,
+    "Cost": ["6B"],
+    "Require": ["2Y"],
+    "Produce": ["3G","2R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 3,
+    "Victory_Points": 10,
+    "Cost": ["5B", "2P"],
+    "Require": ["1Y","1P"],
+    "Produce": ["2B","2G", "1R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 3,
+    "Victory_Points": 11,
+    "Cost": ["7B"],
+    "Require": ["1P"],
+    "Produce": ["1Y", "3R"]
+  },
+  {
+    "Color": "GREEN",
+    "Level": 3,
+    "Victory_Points": 12,
+    "Cost": ["4B","4Y"],
+    "Require": ["1G"],
+    "Produce": ["3Y","1B"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 3,
+    "Victory_Points": 9,
+    "Cost": ["6P"],
+    "Require": ["2G"],
+    "Produce": ["3Y","2R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 3,
+    "Victory_Points": 10,
+    "Cost": ["5P","2Y"],
+    "Require": ["1G","1B"],
+    "Produce": ["2Y","2P","1R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 3,
+    "Victory_Points": 11,
+    "Cost": ["7P"],
+    "Require": ["1Y"],
+    "Produce": ["1G","3R"]
+  },
+  {
+    "Color": "PURPLE",
+    "Level": 3,
+    "Victory_Points": 12,
+    "Cost": ["4P","4B"],
+    "Require": ["1Y"],
+    "Produce": ["3G","1P"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 3,
+    "Victory_Points": 9,
+    "Cost": ["6Y"],
+    "Require": ["2P"],
+    "Produce": ["3B","2R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 3,
+    "Victory_Points": 10,
+    "Cost": ["5Y","2G"],
+    "Require": ["1Y","1B"],
+    "Produce": ["2P","2G","1R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 3,
+    "Victory_Points": 11,
+    "Cost": ["7Y"],
+    "Require": ["1G"],
+    "Produce": ["1B", "3R"]
+  },
+  {
+    "Color": "BLUE",
+    "Level": 3,
+    "Victory_Points": 12,
+    "Cost": ["4Y","4G"],
+    "Require": ["1P"],
+    "Produce": ["1Y","3B"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 3,
+    "Victory_Points": 9,
+    "Cost": ["6G"],
+    "Require": ["2B"],
+    "Produce": ["3P","2R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 3,
+    "Victory_Points": 10,
+    "Cost": ["5G","2P"],
+    "Require": ["1G", "1P"],
+    "Produce": ["2Y","2B", "1R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 3,
+    "Victory_Points": 11,
+    "Cost": ["7G"],
+    "Require": ["1B"],
+    "Produce": ["1P", "3R"]
+  },
+  {
+    "Color": "YELLOW",
+    "Level": 3,
+    "Victory_Points": 12,
+    "Cost": ["4G","4P"],
+    "Require": ["1B"],
+    "Produce": ["1G","3P"]
+  }
+]

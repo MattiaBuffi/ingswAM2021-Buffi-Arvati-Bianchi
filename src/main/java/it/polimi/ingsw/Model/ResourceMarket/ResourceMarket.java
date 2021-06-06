@@ -60,9 +60,9 @@ public class ResourceMarket {
 
     public List<Marble> get(int position){
         if(position<4){
-            return getRow(position);
+            return getColumn(position);
         } else {
-            return getColumn(position-4);
+            return getRow(position-4);
         }
     }
 

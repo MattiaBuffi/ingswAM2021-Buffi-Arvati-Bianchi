@@ -49,7 +49,10 @@ class ResourceMarketTest {
             tmpArray.add(market.getMarblesGrid()[i][pos]);
         }
 
-        assertEquals(tmpArray, market.get(pos));
+        for (int i = 0; i<ResourceMarket.ROW_SIZE; i++){
+            assertEquals(tmpArray.get(i).getColor(), market.get(pos+4).get(i).getColor());
+        }
+
     }
 
     @ParameterizedTest
@@ -62,7 +65,9 @@ class ResourceMarketTest {
             tmpArray.add(market.getMarblesGrid()[pos][i]);
         }
 
-        assertEquals(tmpArray, market.get(pos+4));
+        for (int i = 0; i<ResourceMarket.COLUMN_SIZE; i++){
+            assertEquals(tmpArray.get(i).getColor(), market.get(pos).get(i).getColor());
+        }
     }
 
 
