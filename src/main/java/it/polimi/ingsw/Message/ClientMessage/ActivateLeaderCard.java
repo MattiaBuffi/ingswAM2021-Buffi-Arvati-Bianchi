@@ -18,5 +18,4 @@ public class ActivateLeaderCard implements Message<SingleClientEventHandler> {
     }
 
 
-
 }
