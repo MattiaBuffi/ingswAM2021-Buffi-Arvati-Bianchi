@@ -2,8 +2,11 @@ package it.polimi.ingsw.Message;
 
 import it.polimi.ingsw.Message.ClientMessages.*;
 
+public interface ClientEventHandler {
 
-public interface SingleClientEventHandler{
+    void handle(Login event);
+
+    void handle(GameSize event);
 
     void handle(ActivateLeaderCard event);
 

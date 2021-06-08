@@ -5,9 +5,7 @@ import java.util.List;
 
 public abstract class Observable<T> {
 
-
     private final List<Observer<T>> observers = new ArrayList<>();
-
 
 
     public void addObserver(Observer<T> observer){

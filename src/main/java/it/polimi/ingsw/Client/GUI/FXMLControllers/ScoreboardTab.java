@@ -1,12 +1,21 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Client.GUI.ControllerManager;
+import it.polimi.ingsw.Controller.ClientMessageController;
+import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ScoreboardTab {
+
+public class ScoreboardTab extends Observable<Message<ClientEventHandler>> implements Initializable {
 
     @FXML
     Label player1, player2, player3, player4;
@@ -56,5 +65,11 @@ public class ScoreboardTab {
                 hbox4.getStyleClass().clear();
                 break;
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ControllerManager.addController(this);
+        addObserver(new ClientMessageController());
     }
 }

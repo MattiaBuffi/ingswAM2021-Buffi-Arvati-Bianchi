@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
 import it.polimi.ingsw.Client.App;
+import it.polimi.ingsw.Controller.ClientMessageController;
+import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -11,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LeaderCardsTab implements Initializable {
+public class LeaderCardsTab extends Observable<Message<ClientEventHandler>> implements Initializable {
     @FXML
     ImageView leaderCard1, leaderCard2;
     @FXML
@@ -27,6 +31,8 @@ public class LeaderCardsTab implements Initializable {
                 rectangle2.setVisible(false);
                 break;
         }
+        //ActivateLeaderCard message = new ActivateLeaderCard();
+        //notify(message);
     }
 
     public void discardLeaderCard() {
@@ -43,6 +49,8 @@ public class LeaderCardsTab implements Initializable {
                 leaderCard2.setDisable(true);
                 break;
         }
+        //DiscardLeaderCard message = new DiscardLeaderCard();
+        //notify(message);
     }
 
     public void cardOneSelected() {
@@ -67,5 +75,6 @@ public class LeaderCardsTab implements Initializable {
         leaderCard1.setImage(getImage(1));
         leaderCard2.setImage(getImage(2));
         System.out.println(getClass().getResource(""));
+        addObserver(new ClientMessageController());
     }
 }

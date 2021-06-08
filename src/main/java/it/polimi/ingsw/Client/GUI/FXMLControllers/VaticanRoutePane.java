@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
 import it.polimi.ingsw.Client.App;
+import it.polimi.ingsw.Client.GUI.ControllerManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -21,9 +22,7 @@ public class VaticanRoutePane implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /**
-         * TODO: Token initialization based on number of player
-         */
+        ControllerManager.addController(this);
     }
 
     public void advanceCross1(){

@@ -1,10 +1,19 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
-import it.polimi.ingsw.Message.SingleClientEventHandler;
-import it.polimi.ingsw.Utils.Observer;
 
-public class GameController implements Observer, SingleClientEventHandler {
+public class ClientMessageHandler implements ClientEventHandler {
+
+    @Override
+    public void handle(Login event) {
+        System.out.println(event.getUsername());
+    }
+
+    @Override
+    public void handle(GameSize event) {
+
+    }
 
     @Override
     public void handle(ActivateLeaderCard event) {
@@ -45,10 +54,4 @@ public class GameController implements Observer, SingleClientEventHandler {
     public void handle(LeaderCardProduction event) {
 
     }
-
-    @Override
-    public void update(Object event) {
-
-    }
-
 }

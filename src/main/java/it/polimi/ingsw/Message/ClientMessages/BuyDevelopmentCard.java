@@ -1,9 +1,10 @@
-package it.polimi.ingsw.Message.ClientMessage;
+package it.polimi.ingsw.Message.ClientMessages;
 
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.SingleClientEventHandler;
 
-public class BuyDevelopmentCard implements Message<SingleClientEventHandler> {
+public class BuyDevelopmentCard implements Message<ClientEventHandler> {
     private final int x;
     private final int y;
     private final int productionColumn;
@@ -27,7 +28,7 @@ public class BuyDevelopmentCard implements Message<SingleClientEventHandler> {
     }
 
     @Override
-    public void accept(SingleClientEventHandler handler) {
+    public void accept(ClientEventHandler handler) {
         handler.handle(this);
     }
 }

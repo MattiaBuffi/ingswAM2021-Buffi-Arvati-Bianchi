@@ -1,11 +1,22 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Client.GUI.ControllerManager;
+//import it.polimi.ingsw.Utils.StaticMessageObservable;
+import it.polimi.ingsw.Controller.ClientMessageController;
+import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Message.ClientMessages.TakeResources;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class ResourceMarketTab{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ResourceMarketTab extends Observable<Message<ClientEventHandler>> implements Initializable {
     @FXML
     ImageView ivMarble00, ivMarble01, ivMarble02, ivMarble03, ivMarble10, ivMarble11, ivMarble12, ivMarble13, ivMarble20, ivMarble21, ivMarble22, ivMarble23, ivMarbleBonus;
     @FXML
@@ -16,7 +27,10 @@ public class ResourceMarketTab{
     private int selection = -1;
 
     public void takeResources(){
-        System.out.println(selection);
+        if(selection != -1){
+            TakeResources message = new TakeResources(selection);
+            notify(message);
+        }
     }
 
     public void getColumn1() {
@@ -85,5 +99,11 @@ public class ResourceMarketTab{
                 rectangle7.setVisible(false);
                 break;
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ControllerManager.addController(this);
+        addObserver(new ClientMessageController());
     }
 }

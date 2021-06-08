@@ -1,12 +1,19 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Controller.ClientMessageController;
+import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import it.polimi.ingsw.Client.App;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ConnectionPage {
+public class ConnectionPage extends Observable<Message<ClientEventHandler>> implements Initializable {
     @FXML
     TextField tfIpAddress;
     @FXML
@@ -25,5 +32,10 @@ public class ConnectionPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        addObserver(new ClientMessageController());
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -9,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class LeaderCardSelection implements Initializable {
+public class LeaderCardSelection extends Observable<Message> implements Initializable {
     @FXML
     ImageView leaderCard1, leaderCard2, leaderCard3, leaderCard4;
     @FXML

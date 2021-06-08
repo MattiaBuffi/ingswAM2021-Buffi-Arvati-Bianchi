@@ -1,9 +1,10 @@
-package it.polimi.ingsw.Message.ClientMessage;
+package it.polimi.ingsw.Message.ClientMessages;
 
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.SingleClientEventHandler;
 
-public class BasicProduction implements Message<SingleClientEventHandler> {
+public class BasicProduction implements Message<ClientEventHandler> {
     private String[] production;
 
     public BasicProduction(String in1, String in2, String out){
@@ -11,7 +12,7 @@ public class BasicProduction implements Message<SingleClientEventHandler> {
     }
 
     @Override
-    public void accept(SingleClientEventHandler handler) {
+    public void accept(ClientEventHandler handler) {
         handler.handle(this);
     }
 }

@@ -21,9 +21,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //scene = new Scene(loadFXML("home_page"));
+        scene = new Scene(loadFXML("home_page"));
         //scene = new Scene(loadFXML("game_board"));
-        scene = new Scene(loadFXML("leader_card_selection"));
+        //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -51,8 +51,8 @@ public class App extends Application {
         Stage stage = new Stage();
         stage.setScene(scene);
 
-        scene.setFill(Color.TRANSPARENT); // Fill our scene with nothing
-        stage.initStyle(StageStyle.TRANSPARENT); // Important one!
+        scene.setFill(Color.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }

@@ -28,8 +28,4 @@ public class ViewModel {
         this.resourceMarket = new ResourceMarket();
     }
 
-
-
-
-
 }
