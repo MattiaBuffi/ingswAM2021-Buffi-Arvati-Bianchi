@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 public class ChestUpdate implements Message<ModelEventHandler> {
 
-    private ResourceList resources;
+    private final ResourceList resources;
 
     public ChestUpdate(ResourceList resources){
         this.resources = resources;

@@ -6,10 +6,10 @@ import it.polimi.ingsw.Model.Marble.Marble;
 
 public class ShelfUpdate implements Message<ModelEventHandler> {
 
-    private int position;
-    private int maxSize;
-    private int size;
-    private Marble.Color color;
+    private final int position;
+    private final int maxSize;
+    private final int size;
+    private final Marble.Color color;
 
     public ShelfUpdate(int position, int maxSize, int size, Marble.Color color) {
         this.position = position;

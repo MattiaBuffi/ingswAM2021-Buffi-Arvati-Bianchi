@@ -10,12 +10,12 @@ import java.util.List;
 
 public class DevelopmentCardBuyUpdate implements Message<ModelEventHandler> {
 
-    private int position;
+    private final int position;
 
-    private String id;
-    private int victoryPoints;
-    private ResourceList require;
-    private ResourceList produce;
+    private final String id;
+    private final int victoryPoints;
+    private final ResourceList require;
+    private final ResourceList produce;
 
     public DevelopmentCardBuyUpdate(int position, String id, int victoryPoints, ResourceList require, ResourceList produce) {
         this.position = position;

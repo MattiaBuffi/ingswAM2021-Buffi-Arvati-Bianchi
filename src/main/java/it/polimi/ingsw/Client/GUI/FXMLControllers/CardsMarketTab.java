@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.ControllerManager;
 //import it.polimi.ingsw.Utils.StaticMessageObservable;
 import it.polimi.ingsw.Controller.ClientMessageController;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
@@ -28,9 +30,7 @@ public class CardsMarketTab extends Observable<Message<ClientEventHandler>> impl
             rectangle10, rectangle11, rectangle12, rectangle13,
             rectangle20, rectangle21, rectangle22, rectangle23;
 
-    private final ImageView[][] cardsMatrix = new ImageView[][]{{ivGreenCardLvl3, ivBlueCardLvl3, ivYellowCardLvl3, ivPurpleCardLvl3},
-            {ivGreenCardLvl2, ivBlueCardLvl2, ivYellowCardLvl2, ivPurpleCardLvl2},
-            {ivGreenCardLvl1, ivBlueCardLvl1, ivYellowCardLvl1, ivPurpleCardLvl1}};
+    private ImageView[][] cardsMatrix;
 
     private int cardSelected = -1;
     private int cardSelectedX = -1;
@@ -42,6 +42,22 @@ public class CardsMarketTab extends Observable<Message<ClientEventHandler>> impl
             BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, productionColumn);
             notify(message);
         }
+    }
+
+    public void updateCard(int x, int y, int id){
+        cardsMatrix[y][x].setImage(getImage(id));
+    }
+
+    public void updateAllCards(){
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                cardsMatrix[i][j].setImage(getImage(Integer.parseInt(ControllerManager.getModel().cardMarket.getCard(i,j).id)));
+            }
+        }
+    }
+
+    private Image getImage(int cardID){
+        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/DC_" + cardID + ".png"));
     }
 
     private void hideRectangle(int cardSelected){
@@ -178,5 +194,11 @@ public class CardsMarketTab extends Observable<Message<ClientEventHandler>> impl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ControllerManager.addController(this);
         addObserver(new ClientMessageController());
+
+        cardsMatrix = new ImageView[][]{{ivGreenCardLvl3, ivBlueCardLvl3, ivYellowCardLvl3, ivPurpleCardLvl3},
+                {ivGreenCardLvl2, ivBlueCardLvl2, ivYellowCardLvl2, ivPurpleCardLvl2},
+                {ivGreenCardLvl1, ivBlueCardLvl1, ivYellowCardLvl1, ivPurpleCardLvl1}};
+
+        updateAllCards();
     }
 }

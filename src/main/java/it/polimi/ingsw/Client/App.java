@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.GUI.ControllerManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,13 +22,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("home_page"));
-        //scene = new Scene(loadFXML("game_board"));
+        //scene = new Scene(loadFXML("home_page"));
+        scene = new Scene(loadFXML("game_board"));
         //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        //System.out.println(App.class.getResource("layouts/game_board.fxml"));
     }
 
     public static void setRoot(String fxml) throws IOException {
@@ -53,7 +53,7 @@ public class App extends Application {
 
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

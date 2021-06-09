@@ -18,7 +18,4 @@ public class DevelopmentCardData {
         this.require = require;
         this.produce = produce;
     }
-
-
-
 }

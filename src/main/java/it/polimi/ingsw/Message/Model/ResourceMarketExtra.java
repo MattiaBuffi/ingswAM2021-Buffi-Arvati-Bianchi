@@ -7,7 +7,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
 
 public class ResourceMarketExtra implements Message<ModelEventHandler> {
 
-    private Marble marble;
+    private final Marble marble;
 
     public ResourceMarketExtra(Marble marble) {
         this.marble = marble;

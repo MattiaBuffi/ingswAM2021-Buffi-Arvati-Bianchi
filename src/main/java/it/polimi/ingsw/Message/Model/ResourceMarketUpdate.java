@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ResourceMarketUpdate implements Message<ModelEventHandler> {
 
-    private int position;
-    private List<Marble> marbles;
+    private final int position;
+    private final List<Marble> marbles;
 
     public ResourceMarketUpdate(int position, List<Marble> marbles) {
         this.position = position;

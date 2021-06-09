@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.View;
 
+import it.polimi.ingsw.Client.GUI.ViewChanger;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.ResourceList;
@@ -11,7 +12,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 public class MessageHandler implements ModelEventHandler {
 
     private ViewModel model;
-    private View view;
+    private ViewChanger view = new ViewChanger();
 
 
     @Override
@@ -38,8 +39,7 @@ public class MessageHandler implements ModelEventHandler {
 
     @Override
     public void handle(ErrorUpdate error) {
-
-        //view.doSomething()
+        view.displayError(error);
     }
 
 
@@ -76,7 +76,7 @@ public class MessageHandler implements ModelEventHandler {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        //view.updateScreen();
+        view.updateView(event);
     }
 
 
@@ -112,8 +112,5 @@ public class MessageHandler implements ModelEventHandler {
         model.current.getShelves().add(event.getPosition(), new Shelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor()));
 
     }
-
-
-
 
 }

@@ -49,7 +49,7 @@ public class LeaderCardsTab extends Observable<Message<ClientEventHandler>> impl
                 leaderCard2.setDisable(true);
                 break;
         }
-        //DiscardLeaderCard message = new DiscardLeaderCard();
+        //DiscardLeaderCard message = new DiscardLeaderCard(); TAKE ID FROM LIGHT MODEL!
         //notify(message);
     }
 

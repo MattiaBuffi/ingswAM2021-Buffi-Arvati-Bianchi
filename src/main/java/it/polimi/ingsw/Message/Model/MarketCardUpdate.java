@@ -10,14 +10,14 @@ import java.util.List;
 
 public class MarketCardUpdate implements Message<ModelEventHandler> {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
-    private String id;
-    private int victoryPoints;
-    private ResourceList price;
-    private ResourceList require;
-    private ResourceList produce;
+    private final String id;
+    private final int victoryPoints;
+    private final ResourceList price;
+    private final ResourceList require;
+    private final ResourceList produce;
 
 
     public MarketCardUpdate(int x, int y, String id, int victoryPoints, ResourceList price, ResourceList require, ResourceList produce) {
