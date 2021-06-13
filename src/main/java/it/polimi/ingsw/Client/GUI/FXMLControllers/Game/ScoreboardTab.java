@@ -1,21 +1,14 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
-import it.polimi.ingsw.Client.GUI.ControllerManager;
-import it.polimi.ingsw.Controller.ClientMessageController;
-import it.polimi.ingsw.Message.ClientEventHandler;
-import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Utils.Observable;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
-
-public class ScoreboardTab extends Observable<Message<ClientEventHandler>> implements Initializable {
+public class ScoreboardTab implements Layout {
 
     @FXML
     Label player1, player2, player3, player4;
@@ -24,7 +17,25 @@ public class ScoreboardTab extends Observable<Message<ClientEventHandler>> imple
     @FXML
     HBox hbox1, hbox2, hbox3, hbox4;
 
-    private int selection = -1;
+    private int selection = -1; //why not set the active Hbox???
+
+
+
+    private ViewBackEnd backEnd;
+
+    @Override
+    public void setup(ViewBackEnd backEnd) {
+        System.out.println("ScoreBoardTab");
+        this.backEnd = backEnd;
+
+    }
+
+
+
+
+
+
+
 
     public void viewPlayerSelected() {
     }
@@ -67,9 +78,5 @@ public class ScoreboardTab extends Observable<Message<ClientEventHandler>> imple
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerManager.addController(this);
-        addObserver(new ClientMessageController());
-    }
+
 }

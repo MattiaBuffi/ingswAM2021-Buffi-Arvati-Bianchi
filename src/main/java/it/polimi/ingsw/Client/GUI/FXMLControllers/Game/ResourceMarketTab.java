@@ -1,22 +1,15 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
-import it.polimi.ingsw.Client.GUI.ControllerManager;
 //import it.polimi.ingsw.Utils.StaticMessageObservable;
-import it.polimi.ingsw.Controller.ClientMessageController;
-import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
-import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class ResourceMarketTab extends Observable<Message<ClientEventHandler>> implements Initializable {
+public class ResourceMarketTab implements Layout{
     @FXML
     ImageView ivMarble00, ivMarble01, ivMarble02, ivMarble03, ivMarble10, ivMarble11, ivMarble12, ivMarble13, ivMarble20, ivMarble21, ivMarble22, ivMarble23, ivMarbleBonus;
     @FXML
@@ -26,53 +19,94 @@ public class ResourceMarketTab extends Observable<Message<ClientEventHandler>> i
 
     private int selection = -1;
 
+
+
+    private ViewBackEnd backEnd;
+
+    @Override
+    public void setup(ViewBackEnd backEnd) {
+        System.out.println("ResourceMarketTab");
+        this.backEnd = backEnd;
+
+    }
+
+
+
+
     public void takeResources(){
         if(selection != -1){
             TakeResources message = new TakeResources(selection);
-            notify(message);
+            backEnd.notify(message);
         }
     }
 
+
+    private void get(int position, Rectangle rectangle){
+        hideRectangle(selection);
+        this.selection = position;
+        rectangle.setVisible(true);
+    }
+
     public void getColumn1() {
+        get(1, rectangle1);
+         /*
         hideRectangle(selection);
         selection = 1;
-        rectangle1.setVisible(true);
+        rectangle1.setVisible(true);*/
     }
 
     public void getColumn2() {
+        get(2, rectangle2);
+        /*
         hideRectangle(selection);
         selection = 2;
-        rectangle2.setVisible(true);
+        rectangle2.setVisible(true);*/
     }
 
     public void getColumn3() {
+        get(3, rectangle3);
+        /*
         hideRectangle(selection);
         selection = 3;
-        rectangle3.setVisible(true);
+        rectangle3.setVisible(true);*/
     }
 
     public void getColumn4() {
+        get(4, rectangle4);
+        /*
         hideRectangle(selection);
         selection = 4;
         rectangle4.setVisible(true);
+        */
     }
 
     public void getRow1() {
+        get(7, rectangle7);
+        /*
         hideRectangle(selection);
         selection = 7;
         rectangle7.setVisible(true);
+        */
     }
 
     public void getRow2() {
+        get(6, rectangle6);
+        /*
         hideRectangle(selection);
         selection = 6;
         rectangle6.setVisible(true);
+
+         */
     }
 
     public void getRow3() {
+        get(5, rectangle5);
+        /*
         hideRectangle(selection);
         selection = 5;
         rectangle5.setVisible(true);
+
+         */
     }
 
     private void hideRectangle(int cardSelected){
@@ -101,9 +135,5 @@ public class ResourceMarketTab extends Observable<Message<ClientEventHandler>> i
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerManager.addController(this);
-        addObserver(new ClientMessageController());
-    }
+
 }

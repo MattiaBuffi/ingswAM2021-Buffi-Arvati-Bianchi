@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.View.ModelData.ReducedDataModel;
+package it.polimi.ingsw.Client.ModelData.ReducedDataModel;
 
 import it.polimi.ingsw.Model.Marble.ResourceList;
 

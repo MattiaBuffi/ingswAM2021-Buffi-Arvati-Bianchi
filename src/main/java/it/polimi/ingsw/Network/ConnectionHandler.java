@@ -5,19 +5,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 
-
-public abstract class ConnectionHandler<IN, OUT> implements Runnable {
+public class ConnectionHandler<IN, OUT> implements Runnable {
 
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private boolean running;
 
+    private final Consumer<IN> readHandler;
 
-    public ConnectionHandler(Socket socket){
+    public ConnectionHandler(Socket socket, Consumer<IN> readHandler){
         this.socket = socket;
+        this.readHandler = readHandler;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
@@ -47,7 +50,9 @@ public abstract class ConnectionHandler<IN, OUT> implements Runnable {
         }
     }
 
-    protected abstract void handleReadMessage(IN event);
+    protected void handleReadMessage(IN event){
+        readHandler.accept(event);
+    }
 
 
     @Override

@@ -54,7 +54,7 @@ public class ServerConnectionHandler extends ConnectionHandler {
 
 
     private ServerConnectionHandler(Socket socket, EventHandler handler, Executor executor) {
-        super(socket);
+        super(socket, (T)->{} );//fix
         this.handler = handler;
         this.executor = executor;
         executor.execute(this);

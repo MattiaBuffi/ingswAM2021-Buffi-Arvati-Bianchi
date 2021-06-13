@@ -1,16 +1,13 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
-import it.polimi.ingsw.Client.GUI.ControllerManager;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class VaticanRoutePane implements Initializable {
+public class VaticanRoutePane implements Layout  {
     @FXML
     public ImageView cross1, cross2, cross3, cross4;
     @FXML
@@ -20,10 +17,19 @@ public class VaticanRoutePane implements Initializable {
     private final int[] CROSS_SHIFT_Y = {0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 62, 62, 0, 0, 0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 0};
     private int[] positions = {0, 0, 0, 0};
 
+
+
+    private ViewBackEnd backEnd;
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerManager.addController(this);
+    public void setup(ViewBackEnd backEnd) {
+        this.backEnd = backEnd;
     }
+
+
+
+
+
 
     public void advanceCross1(){
         positions[0]++;
@@ -62,4 +68,6 @@ public class VaticanRoutePane implements Initializable {
                 break;
         }
     }
+
+
 }

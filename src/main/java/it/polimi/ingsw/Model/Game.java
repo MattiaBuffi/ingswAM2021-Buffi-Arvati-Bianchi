@@ -4,6 +4,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.CardMarket.CardMarket;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.Selection.SelectBasic;
@@ -25,6 +26,9 @@ import java.util.List;
 public class Game implements TurnHandler, GameTerminator{
 
     private gameState state;
+    private gameStrategy strategy;
+
+    private ActionDeck actionDeck;
 
 
     private List<Player> players;
@@ -35,6 +39,9 @@ public class Game implements TurnHandler, GameTerminator{
     private int currentPlayer;
 
     private Broadcaster broadcaster;
+
+
+
 
     public<U extends User> Game(List<U> users){
 
@@ -57,7 +64,8 @@ public class Game implements TurnHandler, GameTerminator{
 
 
         if(users.size() ==1){
-
+            VaticanToken blackCrossToken = new VaticanToken(vaticanRoute, "cpu");
+            this.actionDeck = new ActionDeck(cardMarket, blackCrossToken,this);
         }
 
         this.state = new SetupState(users.size());
@@ -205,16 +213,14 @@ public class Game implements TurnHandler, GameTerminator{
 
     @Override
     public void endTurn() {
-        currentPlayer = (currentPlayer+1)%players.size();
-        players.get(currentPlayer).setActive();
-        broadcaster.sendMessages();
+        strategy.endTurn();
     }
 
 
 
     @Override
     public void endGame() {
-
+        strategy.endGame();
     }
 
 
@@ -269,6 +275,41 @@ public class Game implements TurnHandler, GameTerminator{
 
 
 
+    private interface gameStrategy{
+
+        void endTurn();
+
+        void endGame();
+
+    }
+
+    private class SinglePlayerStrategy implements  gameStrategy{
+
+        @Override
+        public void endTurn() {
+
+        }
+
+        @Override
+        public void endGame() {
+
+        }
+    }
+
+    private class MultiPlayerStrategy implements  gameStrategy{
+
+        @Override
+        public void endTurn() {
+            currentPlayer = (currentPlayer+1)%players.size();
+            players.get(currentPlayer).setActive();
+            broadcaster.sendMessages();
+        }
+
+        @Override
+        public void endGame() {
+
+        }
+    }
 
 
 

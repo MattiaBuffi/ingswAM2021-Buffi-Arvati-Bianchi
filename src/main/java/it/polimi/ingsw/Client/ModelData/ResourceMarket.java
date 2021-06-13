@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.View.ModelData;
+package it.polimi.ingsw.Client.ModelData;
 
 import it.polimi.ingsw.Model.Marble.Marble;
 
@@ -14,6 +14,8 @@ public class ResourceMarket {
     private Marble[][] marblesGrid;
     private Marble bonusMarble;
 
+    private boolean changed;
+
 
     public ResourceMarket(){
         this.marblesGrid = new Marble[ROW_SIZE][COLUMN_SIZE];
@@ -23,9 +25,9 @@ public class ResourceMarket {
 
     public List<Marble> get(int position){
         if(position<4){
-            return getRow(position);
+            return getColumn(position);
         } else {
-            return getColumn(position-4);
+            return getRow(position-4);
         }
     }
 
@@ -61,6 +63,7 @@ public class ResourceMarket {
         } else {
             insertInRow(position-4, marbles);
         }
+        changed = true;
     }
 
 
@@ -90,5 +93,7 @@ public class ResourceMarket {
 
     public void setBonusMarble(Marble bonusMarble) {
         this.bonusMarble = bonusMarble;
+        changed = true;
     }
+
 }

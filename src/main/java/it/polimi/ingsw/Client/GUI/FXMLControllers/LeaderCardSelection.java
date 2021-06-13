@@ -1,17 +1,15 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
-import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Utils.Observable;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.List;
 
-public class LeaderCardSelection extends Observable<Message> implements Initializable {
+public class LeaderCardSelection implements Layout{
     @FXML
     ImageView leaderCard1, leaderCard2, leaderCard3, leaderCard4;
     @FXML
@@ -20,8 +18,13 @@ public class LeaderCardSelection extends Observable<Message> implements Initiali
     private ArrayList<Integer> indexSelected = new ArrayList<>();
     private Rectangle[] rectArray;
 
+
+    private ViewBackEnd backEnd;
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void setup(ViewBackEnd backEnd) {
+        this.backEnd = backEnd;
+
         /**
          * TODO: Initialization of image views
          */
@@ -29,49 +32,62 @@ public class LeaderCardSelection extends Observable<Message> implements Initiali
     }
 
 
+    public void selectCard(int position, Rectangle rectangle){
+        selection[position] = !selection[position];
+        rectangle.setVisible(selection[position]);
+        if(indexSelected.size() == 2){
+            hideRectangle();
+        }
+        indexSelected.add(position+1);
+    }
+
+
+
     public void cardOneSelected() {
+        /*
         selection[0] = !selection[0];
         rect1.setVisible(selection[0]);
         if(indexSelected.size() == 2){
             hideRectangle();
-            indexSelected.add(1);
-        } else {
-            indexSelected.add(1);
         }
+        indexSelected.add(1);*/
+        selectCard(0, rect1);
     }
 
     public void cardTwoSelected() {
+        /*
         selection[1] = !selection[1];
         rect2.setVisible(selection[1]);
         if(indexSelected.size() == 2){
             hideRectangle();
-            indexSelected.add(2);
-        } else {
-            indexSelected.add(2);
         }
+        indexSelected.add(2);*/
+        selectCard(1, rect2);
     }
 
     public void cardThreeSelected() {
+        /*
         selection[2] = !selection[2];
         rect3.setVisible(selection[2]);
         if(indexSelected.size() == 2){
             hideRectangle();
-            indexSelected.add(3);
-        } else {
-            indexSelected.add(3);
         }
+        indexSelected.add(3);
+         */
+        selectCard(2, rect3);
     }
 
     public void cardFourSelected() {
+        /*
         selection[3] = !selection[3];
         rect4.setVisible(selection[3]);
         if(indexSelected.size() == 2){
             hideRectangle();
-            indexSelected.add(4);
-        } else {
-            indexSelected.add(4);
         }
+        indexSelected.add(4);*/
+        selectCard(3, rect4);
     }
+
 
     private void hideRectangle(){
         rectArray[indexSelected.get(0) - 1].setVisible(false);
@@ -79,9 +95,12 @@ public class LeaderCardSelection extends Observable<Message> implements Initiali
         indexSelected.remove(0);
     }
 
+
+
     public void discardLeaderCards() {
         /**
          * Discard leader card based on selection
          */
     }
+
 }

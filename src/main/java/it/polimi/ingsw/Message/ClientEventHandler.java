@@ -4,9 +4,62 @@ import it.polimi.ingsw.Message.ClientMessages.*;
 
 public interface ClientEventHandler {
 
-    void handle(Login event);
+    abstract class Default implements ClientEventHandler{
 
-    void handle(GameSize event);
+        public abstract void invalidMessage();
+
+        @Override
+        public void handle(ActivateLeaderCard event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(DiscardLeaderCard event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(BuyDevelopmentCard event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(TakeResources event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(EndTurn event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(BasicProduction event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(CardProduction event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(LeaderCardProduction event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(Login event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(GameSize event) {
+            invalidMessage();
+        }
+    }
+
+
 
     void handle(ActivateLeaderCard event);
 
@@ -23,4 +76,11 @@ public interface ClientEventHandler {
     void handle(CardProduction event);
 
     void handle(LeaderCardProduction event);
+
+
+
+    void handle(Login event);
+
+    void handle(GameSize event);
+
 }
