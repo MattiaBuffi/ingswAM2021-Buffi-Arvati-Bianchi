@@ -1,26 +1,36 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
-import it.polimi.ingsw.Controller.ClientMessageController;
-import it.polimi.ingsw.Message.ClientEventHandler;
-import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Utils.Observable;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class LeaderCardsTab extends Observable<Message<ClientEventHandler>> implements Initializable {
+public class LeaderCardsTab implements Layout{
     @FXML
     ImageView leaderCard1, leaderCard2;
     @FXML
     Rectangle rectangle1, rectangle2;
     private int selection = -1;
+
+
+    private ViewBackEnd backEnd;
+
+    public void setup(ViewBackEnd backEnd) {
+        System.out.println("LeaderCardTab");
+        this.backEnd = backEnd;
+
+        leaderCard1.setImage(getImage(1));
+        leaderCard2.setImage(getImage(2)); //what if there is only one card???
+        System.out.println(getClass().getResource(""));
+    }
+
+
+
+
 
     public void activateLeaderCard() {
         switch (selection){
@@ -70,11 +80,6 @@ public class LeaderCardsTab extends Observable<Message<ClientEventHandler>> impl
         return new Image(App.class.getResourceAsStream(BASE_PATH + cardID + ".png"));
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        leaderCard1.setImage(getImage(1));
-        leaderCard2.setImage(getImage(2));
-        System.out.println(getClass().getResource(""));
-        addObserver(new ClientMessageController());
-    }
+
+
 }

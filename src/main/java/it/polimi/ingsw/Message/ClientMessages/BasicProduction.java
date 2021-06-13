@@ -2,13 +2,27 @@ package it.polimi.ingsw.Message.ClientMessages;
 
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.SingleClientEventHandler;
+import it.polimi.ingsw.Model.Marble.Marble;
 
 public class BasicProduction implements Message<ClientEventHandler> {
-    private String[] production;
 
-    public BasicProduction(String in1, String in2, String out){
-        production = new String[]{in1, in2, out};
+
+    private Marble.Color[] production;
+
+    public BasicProduction(Marble.Color in1, Marble.Color in2, Marble.Color out){
+        production = new Marble.Color[]{in1, in2, out};
+    }
+
+    public Marble.Color getFirstInput(){
+        return production[0];
+    }
+
+    public Marble.Color getSecondInput(){
+        return production[0];
+    }
+
+    public Marble.Color getOutput(){
+        return production[0];
     }
 
     @Override

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_storage" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.StorageTab">
+<AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_storage" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab">
    <children>
       <ImageView fx:id="res1_1" fitHeight="70.0" fitWidth="70.0" layoutX="237.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="res2_1" fitHeight="70.0" fitWidth="70.0" layoutX="191.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />

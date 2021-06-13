@@ -2,7 +2,6 @@ package it.polimi.ingsw.Message.ClientMessages;
 
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.SingleClientEventHandler;
 
 public class BuyDevelopmentCard implements Message<ClientEventHandler> {
     private final int x;

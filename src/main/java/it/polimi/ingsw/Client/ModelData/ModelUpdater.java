@@ -1,23 +1,27 @@
-package it.polimi.ingsw.Client.View;
+package it.polimi.ingsw.Client.ModelData;
 
-import it.polimi.ingsw.Client.GUI.ViewChanger;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.Client.View.ModelData.ReducedDataModel.DevelopmentCardData;
-import it.polimi.ingsw.Client.View.ModelData.ReducedDataModel.Shelf;
-import it.polimi.ingsw.Client.View.ModelData.ViewModel;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
-public class MessageHandler implements ModelEventHandler {
+public class ModelUpdater implements ModelEventHandler {
 
     private ViewModel model;
-    private ViewChanger view = new ViewChanger();
 
+    public ModelUpdater(ViewModel model){
+        this.model = model;
+    }
 
     @Override
     public void handle(ChestUpdate event) {
-        model.current.getChest().addAll(event.getResources());
+        model.current.addToChest(event.getResources());
+    }
+
+    @Override
+    public void handle(ShelfUpdate event) {
+        model.current.updateShelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor());
     }
 
 
@@ -25,7 +29,7 @@ public class MessageHandler implements ModelEventHandler {
     @Override
     public void handle(DevelopmentCardBuyUpdate event) {
 
-        model.current.getProductions().get(event.getPosition()).add(new DevelopmentCardData(event.getId(),
+        model.current.buyCard(event.getPosition(),new DevelopmentCardData(event.getId(),
                         event.getVictoryPoints(),
                         new ResourceList(),
                         event.getProduce(),
@@ -39,7 +43,7 @@ public class MessageHandler implements ModelEventHandler {
 
     @Override
     public void handle(ErrorUpdate error) {
-        view.displayError(error);
+        //
     }
 
 
@@ -76,7 +80,6 @@ public class MessageHandler implements ModelEventHandler {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        view.updateView(event);
     }
 
 
@@ -107,10 +110,6 @@ public class MessageHandler implements ModelEventHandler {
 
 
 
-    @Override
-    public void handle(ShelfUpdate event) {
-        model.current.getShelves().add(event.getPosition(), new Shelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor()));
 
-    }
 
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bg_cards_market_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.CardsMarketTab">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bg_cards_market_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.CardsMarketTab">
    <children>
       <GridPane layoutX="280.0" layoutY="75.0" prefHeight="660.0" prefWidth="880.0">
         <columnConstraints>

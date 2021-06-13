@@ -1,18 +1,29 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
 import it.polimi.ingsw.Client.App;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 
-import java.io.IOException;
+public class HomePage implements Layout {
 
-public class HomePage {
+    private ViewBackEnd backEnd;
+    @Override
+    public void setup(ViewBackEnd backEnd) {
+        this.backEnd = backEnd;
+    }
+
+    public void initialize(){
+        System.out.println("HomePage");
+        this.backEnd = backEnd;
+    }
+
+
 
     public void goToConnectionPage(){
-        System.out.println("AAAAAAAAAAAAAAAHHHHHHHHHH");
-
-        try {
-            App.setRoot("connection_page");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        App.setScene("connection_page");
     }
+
+
+
+
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Controller.ServerController;
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Network.*;
 import it.polimi.ingsw.ServerModel.ServerModel;
 
@@ -40,7 +40,7 @@ public class ServerApp implements SocketHandler {
 
 
     private ServerModel model;
-    private ServerController controller;
+    private ClientEventHandler controller;
     private SocketCreator networkManager;
 
     private List<VirtualView> connections;
@@ -51,7 +51,7 @@ public class ServerApp implements SocketHandler {
     private ServerApp(int port){
         this.port = port;
         this.model = new ServerModel();
-        this.controller = new ServerController();
+        //this.controller = new ServerController();
         this.networkManager = new SocketCreator(port, this);
         this.connections = new ArrayList<>();
         this.executor = Executors.newCachedThreadPool();
@@ -72,7 +72,7 @@ public class ServerApp implements SocketHandler {
                                                     .setExecutor(executor)
                                                     .setSocket(socket));
             connections.add(view);
-            view.addObserver(controller);
+            //view.addObserver(controller);
 
 
             model.connect(view);

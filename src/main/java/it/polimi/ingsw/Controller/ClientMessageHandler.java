@@ -5,15 +5,6 @@ import it.polimi.ingsw.Message.ClientMessages.*;
 
 public class ClientMessageHandler implements ClientEventHandler {
 
-    @Override
-    public void handle(Login event) {
-        System.out.println(event.getUsername());
-    }
-
-    @Override
-    public void handle(GameSize event) {
-
-    }
 
     @Override
     public void handle(ActivateLeaderCard event) {
@@ -54,4 +45,16 @@ public class ClientMessageHandler implements ClientEventHandler {
     public void handle(LeaderCardProduction event) {
 
     }
+
+    @Override
+    public void handle(Login event) {
+
+    }
+
+    @Override
+    public void handle(GameSize event) {
+
+    }
+
+
 }

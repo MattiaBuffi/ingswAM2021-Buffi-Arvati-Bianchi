@@ -1,22 +1,16 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 
-import it.polimi.ingsw.Client.GUI.ControllerManager;
-import it.polimi.ingsw.Controller.ClientMessageController;
-import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.CardProduction;
-import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Utils.Observable;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class ProductionTab implements Layout {
 
-public class ProductionTab extends Observable<Message<ClientEventHandler>> implements Initializable {
     @FXML
     ImageView ivProductionLeader;
     @FXML
@@ -25,6 +19,21 @@ public class ProductionTab extends Observable<Message<ClientEventHandler>> imple
     Button buttonBasicProduction, buttonLeftProduction, buttonCenterProduction, buttonRightProduction;
     @FXML
     CheckBox checkLeaderProduction, checkBasicProduction;
+
+
+    private ViewBackEnd backEnd;
+    @Override
+    public void setup(ViewBackEnd backEnd) {
+        System.out.println("ProductionTabSetup");
+        this.backEnd = backEnd;
+
+    }
+
+
+
+
+
+
 
     public void activateBasicProduction() {
 
@@ -46,12 +55,8 @@ public class ProductionTab extends Observable<Message<ClientEventHandler>> imple
 
     private void cardProduction(int column){
         CardProduction message = new CardProduction(column);
-        notify(message);
+        backEnd.notify(message);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerManager.addController(this);
-        addObserver(new ClientMessageController());
-    }
+
 }

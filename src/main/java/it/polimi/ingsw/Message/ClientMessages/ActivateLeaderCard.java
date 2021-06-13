@@ -2,7 +2,6 @@ package it.polimi.ingsw.Message.ClientMessages;
 
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.SingleClientEventHandler;
 
 public class ActivateLeaderCard implements Message<ClientEventHandler> {
 
@@ -10,6 +9,10 @@ public class ActivateLeaderCard implements Message<ClientEventHandler> {
 
     public ActivateLeaderCard(String cardId) {
         this.cardId = cardId;
+    }
+
+    public String getCardId() {
+        return cardId;
     }
 
     @Override

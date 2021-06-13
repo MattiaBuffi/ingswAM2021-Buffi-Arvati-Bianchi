@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Client.View.ModelData;
+package it.polimi.ingsw.Client.ModelData;
 
 
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
@@ -20,12 +22,21 @@ public class ViewModel {
     public ResourceMarket resourceMarket;
 
 
+    private ModelUpdater updater;
+
     public ViewModel(){
         this.players = new ArrayList<>();
         this.resourceMarketBuffer = new ArrayList<>();
         this.usedProduction = new ArrayList<>();
         this.cardMarket = new CardMarket();
         this.resourceMarket = new ResourceMarket();
+
+        this.updater = new ModelUpdater(this);
     }
+
+    public void updateModel(Message<ModelEventHandler> message){
+        message.accept(updater);
+    }
+
 
 }
