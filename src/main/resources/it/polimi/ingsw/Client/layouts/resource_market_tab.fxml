@@ -84,10 +84,8 @@
             </ImageView>
          </children>
       </GridPane>
-      <ImageView fx:id="ivMarbleBonus" fitHeight="72.0" fitWidth="72.0" layoutX="871.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
-         <!--<image>
-            <Image url="@../marbles/blue.png" />
-         </image>--></ImageView>
+      <ImageView fx:id="ivMarbleBonus" fitHeight="72.0" fitWidth="72.0" layoutX="871.0" layoutY="218.0"
+                 pickOnBounds="true" preserveRatio="true"/>
       <Button fx:id="arrow1" layoutX="569.0" layoutY="590.0" mnemonicParsing="false" onAction="#getColumn1" opacity="0.0" prefHeight="108.0" prefWidth="58.0" textFill="TRANSPARENT" />
       <Button fx:id="arrow2" layoutX="653.0" layoutY="590.0" mnemonicParsing="false" onAction="#getColumn2" opacity="0.0" prefHeight="108.0" prefWidth="58.0" textFill="TRANSPARENT" />
       <Button fx:id="arrow3" layoutX="738.0" layoutY="590.0" mnemonicParsing="false" onAction="#getColumn3" opacity="0.0" prefHeight="108.0" prefWidth="58.0" textFill="TRANSPARENT" />

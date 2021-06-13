@@ -199,6 +199,6 @@ public class CardsMarketTab extends Observable<Message<ClientEventHandler>> impl
                 {ivGreenCardLvl2, ivBlueCardLvl2, ivYellowCardLvl2, ivPurpleCardLvl2},
                 {ivGreenCardLvl1, ivBlueCardLvl1, ivYellowCardLvl1, ivPurpleCardLvl1}};
 
-        updateAllCards();
+        //updateAllCards();
     }
 }

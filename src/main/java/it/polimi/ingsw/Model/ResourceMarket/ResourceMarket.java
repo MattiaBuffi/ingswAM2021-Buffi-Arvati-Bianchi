@@ -12,11 +12,9 @@ import java.util.List;
 
 public class ResourceMarket {
 
-
     public static final int MARKET_SIZE = 13;
     public static final int COLUMN_SIZE = 3;
     public static final int ROW_SIZE = 4;
-
 
     public static final Marble.Color[] MARBLES_COLORS = {Marble.Color.RED, Marble.Color.WHITE, Marble.Color.WHITE, Marble.Color.WHITE, Marble.Color.WHITE,
             Marble.Color.BLUE, Marble.Color.BLUE, Marble.Color.YELLOW, Marble.Color.YELLOW,
@@ -29,6 +27,9 @@ public class ResourceMarket {
 
     private final EventBroadcaster broadcaster;
 
+    /**
+     * TODO: Write constructor JavaDoc
+     */
     public ResourceMarket(EventBroadcaster broadcaster){
 
         this.broadcaster = broadcaster;
@@ -57,7 +58,14 @@ public class ResourceMarket {
 
     }
 
-
+    /**
+     * This method return the list of marbles of the selected row or column by calling alternatively getRow or getColumn.
+     * The indexes of row and column are:
+     * - 0-3 for the columns starting from left
+     * - 4-6 for the rows starting from the bottom
+     * @param position int number between 0 and 6
+     * @return the list of marble of the selected row/column
+     */
     public List<Marble> get(int position){
         if(position<4){
             return getColumn(position);
@@ -66,6 +74,10 @@ public class ResourceMarket {
         }
     }
 
+    /**
+     * Call alternatively insertInColumn or insertInRow depending on parameter
+     * @param position int number between 0 and 6
+     */
     public void insertExtra(int position){
         if(position<4){
             insertInColumn(position);
@@ -78,7 +90,11 @@ public class ResourceMarket {
 
     }
 
-
+    /**
+     * Method that return the list of the marble of the selected row.
+     * @param position int number between 0 and 2
+     * @return List of marble of the selected row
+     */
     private List<Marble> getRow(int position){
 
         ArrayList<Marble> list = new ArrayList<>();
@@ -90,7 +106,11 @@ public class ResourceMarket {
         return list;
     }
 
-
+    /**
+     * Method that return the list of the marble of the selected column.
+     * @param position int number between 0 and 3
+     * @return List of marble of the selected column
+     */
     private List<Marble> getColumn(int position){
         ArrayList<Marble> list = new ArrayList<>();
 
@@ -101,7 +121,11 @@ public class ResourceMarket {
         return list;
     }
 
-
+    /**
+     * Method that insert the bonus marble of the market in the right spot after the resources of a row are taken. The
+     * method also replace the bonus marble with the last marble of the row selected.
+     * @param position int number between 0 and 2
+     */
     private void insertInRow(int position){
         Marble tmpBonusMarble = bonusMarble;
 
@@ -114,7 +138,11 @@ public class ResourceMarket {
         marblesGrid[3][position] = tmpBonusMarble;
     }
 
-
+    /**
+     * Method that insert the bonus marble of the market in the right spot after the resources of a column are taken. The
+     * method also replace the bonus marble with the last marble of the column selected.
+     * @param position int number between 0 and 3
+     */
     private void insertInColumn(int position){
         Marble tmpBonusMarble = bonusMarble;
 
@@ -126,11 +154,18 @@ public class ResourceMarket {
         marblesGrid[position][COLUMN_SIZE -1] = tmpBonusMarble;
     }
 
-
+    /**
+     * Get the marbles grid of the market
+     * @return Entire marbles grid of the market
+     */
     public Marble[][] getMarblesGrid() {
         return marblesGrid;
     }
 
+    /**
+     * Get the bonus marble
+     * @return Bonus marble
+     */
     public Marble getBonusMarble() {
         return bonusMarble;
     }

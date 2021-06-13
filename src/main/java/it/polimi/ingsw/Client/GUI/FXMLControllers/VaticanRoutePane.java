@@ -18,35 +18,37 @@ public class VaticanRoutePane implements Initializable {
 
     private final int[] CROSS_SHIFT_X = {0, 94, 94, 0, 0, 94, 94, 94, 94, 94, 0, 0, 94, 94, 94, 94, 94, 0, 0, 94, 94, 94, 94, 94, 94};
     private final int[] CROSS_SHIFT_Y = {0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 62, 62, 0, 0, 0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 0};
-    private int[] positions = {0, 0, 0, 0};
+    private final int[] INITIAL_POS_X = {68, 115, 68, 115};
+    private final int[] INITIAL_POS_Y = {148, 201, 201, 148};
+    private ImageView[] crossArray;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerManager.addController(this);
+    public void updateRoute(){
+        for(int i=0; i<ControllerManager.getModel().players.size(); i++){
+            updateCross(i);
+        }
     }
 
-    public void advanceCross1(){
-        positions[0]++;
-        cross1.setLayoutX(cross1.getLayoutX() + CROSS_SHIFT_X[positions[0]]);
-        cross1.setLayoutY(cross1.getLayoutY() + CROSS_SHIFT_Y[positions[0]]);
+    private void updateCross(int index){
+        int faithPoints = ControllerManager.getModel().getPlayer(ControllerManager.username).getFaithPoints();
+
+        crossArray[index].setLayoutX(INITIAL_POS_X[index] + xToAdd(faithPoints));
+        crossArray[index].setLayoutY(INITIAL_POS_Y[index] + yToAdd(faithPoints));
     }
 
-    public void advanceCross2(){
-        positions[1]++;
-        cross2.setLayoutX(cross2.getLayoutX() + CROSS_SHIFT_X[positions[1]]);
-        cross2.setLayoutY(cross2.getLayoutY() + CROSS_SHIFT_Y[positions[1]]);
+    private int xToAdd(int faithPoints){
+        int x_toAdd = 0;
+        for(int i=0; i<faithPoints; i++){
+            x_toAdd += CROSS_SHIFT_X[i];
+        }
+        return x_toAdd;
     }
 
-    public void advanceCross3(){
-        positions[2]++;
-        cross3.setLayoutX(cross3.getLayoutX() + CROSS_SHIFT_X[positions[2]]);
-        cross3.setLayoutY(cross3.getLayoutY() + CROSS_SHIFT_Y[positions[2]]);
-    }
-
-    public void advanceCross4(){
-        positions[3]++;
-        cross4.setLayoutX(cross4.getLayoutX() + CROSS_SHIFT_X[positions[3]]);
-        cross4.setLayoutY(cross4.getLayoutY() + CROSS_SHIFT_Y[positions[3]]);
+    private int yToAdd(int faithPoints){
+        int y_toAdd = 0;
+        for(int i=0; i<faithPoints; i++){
+            y_toAdd += CROSS_SHIFT_Y[i];
+        }
+        return y_toAdd;
     }
 
     public void activatePopeFavor(int pos){
@@ -62,4 +64,13 @@ public class VaticanRoutePane implements Initializable {
                 break;
         }
     }
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ControllerManager.addController(this);
+        crossArray = new ImageView[]{cross1, cross2, cross3, cross4};
+    }
+
 }

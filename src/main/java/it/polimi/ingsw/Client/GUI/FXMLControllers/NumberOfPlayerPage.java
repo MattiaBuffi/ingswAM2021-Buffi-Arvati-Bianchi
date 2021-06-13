@@ -22,11 +22,11 @@ public class NumberOfPlayerPage extends Observable<Message<ClientEventHandler>> 
         //System.out.println("ITEM - " + choiceBox.getSelectionModel().getSelectedItem());
         GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
         notify(message);
-        /*try {
+        try {
             showPopUp();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     private void showPopUp() throws IOException {

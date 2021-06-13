@@ -8,15 +8,15 @@
 <AnchorPane prefHeight="810.0" prefWidth="1440.0" styleClass="bg_production_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.ProductionTab">
     <children>
         <ImageView fx:id="ivProductionLeader" fitHeight="210.0" fitWidth="258.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard1" fitHeight="450.0" fitWidth="300.0" layoutX="299.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivLeftCard2" fitHeight="450.0" fitWidth="300.0" layoutX="299.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="ivLeftCard1" fitHeight="450.0" fitWidth="300.0" layoutX="299.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard2" fitHeight="450.0" fitWidth="300.0" layoutX="299.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivLeftCard3" fitHeight="450.0" fitWidth="300.0" layoutX="299.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivCenterCard1" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivCenterCard2" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivCenterCard3" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivRightCard1" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivRightCard2" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true"/>
-        <ImageView fx:id="ivRightCard3" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true"/>
+        <ImageView fx:id="ivCenterCard1" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivCenterCard2" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivCenterCard3" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard1" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard2" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard3" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="buttonBasicProduction" layoutX="114.0" layoutY="700.0" mnemonicParsing="false" onAction="#activateBasicProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
       <Button fx:id="buttonLeftProduction" layoutX="412.0" layoutY="700.0" mnemonicParsing="false" onAction="#activateLeftProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
       <Button fx:id="buttonCenterProduction" layoutX="779.0" layoutY="699.0" mnemonicParsing="false" onAction="#activateCenterProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />

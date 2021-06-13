@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Client.GUI.ControllerManager;
 import it.polimi.ingsw.Controller.ClientMessageController;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.Login;
@@ -22,15 +23,22 @@ public class UsernamePage extends Observable<Message<ClientEventHandler>> implem
     TextField tfUsername;
 
     public void checkUsername() {
-        usernameLabel.setVisible(true);
+        usernameLabel.setVisible(false);
 
-        Login message = new Login(tfUsername.getText());
+        ControllerManager.username = tfUsername.getText();
+        Login message = new Login(ControllerManager.username);
         notify(message);
+    }
 
-        try {
-            App.setRoot("number_of_player_page");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void manageResponse(boolean response){
+        if(response){
+            try {
+                App.setRoot("number_of_player_page");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            usernameLabel.setVisible(true);
         }
     }
 

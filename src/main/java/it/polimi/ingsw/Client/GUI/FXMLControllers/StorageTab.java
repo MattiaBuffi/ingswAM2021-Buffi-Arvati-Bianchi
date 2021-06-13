@@ -34,7 +34,7 @@ public class StorageTab extends Observable<Message<ClientEventHandler>> implemen
     private ImageView[] shelf_3;
 
     public void updateShelves() {
-        List<Shelf> shelves = ControllerManager.getModel().current.getShelves();
+        List<Shelf> shelves = ControllerManager.getModel().getPlayer(ControllerManager.username).getShelves();
         for(Shelf s: shelves){
             if(s.getMaxSize() == 1){
                 updateSingleShelf(shelf_1, s);
@@ -47,7 +47,7 @@ public class StorageTab extends Observable<Message<ClientEventHandler>> implemen
     }
 
     public void updateChest() {
-        ResourceList resourceList = ControllerManager.getModel().current.getChest();
+        ResourceList resourceList = ControllerManager.getModel().getPlayer(ControllerManager.username).getChest();
         Marble.Color[] colors = new Marble.Color[]{Marble.Color.YELLOW, Marble.Color.PURPLE, Marble.Color.BLUE, Marble.Color.GREY};
 
         for(Marble.Color color: colors){
@@ -99,16 +99,16 @@ public class StorageTab extends Observable<Message<ClientEventHandler>> implemen
         Image resource = null;
         switch (color){
             case YELLOW:
-                resource = new Image(App.class.getResourceAsStream("images/token/coin"));
+                resource = new Image(App.class.getResourceAsStream("images/token/coin.png"));
                 break;
             case PURPLE:
-                resource = new Image(App.class.getResourceAsStream("images/token/servant"));
+                resource = new Image(App.class.getResourceAsStream("images/token/servant.png"));
                 break;
             case BLUE:
-                resource = new Image(App.class.getResourceAsStream("images/token/shield"));
+                resource = new Image(App.class.getResourceAsStream("images/token/shield.png"));
                 break;
             case GREY:
-                resource = new Image(App.class.getResourceAsStream("images/token/stone"));
+                resource = new Image(App.class.getResourceAsStream("images/token/stone.png"));
                 break;
         }
         return resource;

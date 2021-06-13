@@ -27,6 +27,7 @@ public class ProductionTab extends Observable<Message<ClientEventHandler>> imple
     CheckBox checkLeaderProduction, checkBasicProduction;
 
     public void activateBasicProduction() {
+
     }
 
     public void activateLeftProduction() {

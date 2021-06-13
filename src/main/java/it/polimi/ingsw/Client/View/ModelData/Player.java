@@ -25,8 +25,6 @@ public class Player {
         this.shelves = new ArrayList<>();
     }
 
-
-
     public String getUsername() {
         return username;
     }
