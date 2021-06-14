@@ -73,7 +73,7 @@
          <children>
             <ImageView fitHeight="152.0" fitWidth="386.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/leaderPowers/leaderStorageblue.png" />
+                  <Image url="@../images/leaderPowers/leaderStorageBLUE.png" />
                </image>
             </ImageView>
             <ImageView fx:id="resLeader1" fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />

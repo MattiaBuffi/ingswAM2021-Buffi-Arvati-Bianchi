@@ -29,9 +29,6 @@ public class LeaderCardsTab implements Layout{
     }
 
 
-
-
-
     public void activateLeaderCard() {
         switch (selection){
             case 1:

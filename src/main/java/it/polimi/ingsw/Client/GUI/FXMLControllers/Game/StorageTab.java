@@ -46,12 +46,6 @@ public class StorageTab implements Layout {
     }
 
 
-
-
-
-
-
-
     public void updateShelves() {
         List<Shelf> shelves = backEnd.getModel().current.getShelves();
         for(Shelf s: shelves){

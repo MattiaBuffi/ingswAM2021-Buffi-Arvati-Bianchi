@@ -21,7 +21,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="ivGreenCardLvl3" fitHeight="210.0" fitWidth="140.0" onMouseClicked="#greenCardLvl3selected" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER"></ImageView>
+            <ImageView fx:id="ivGreenCardLvl3" fitHeight="210.0" fitWidth="140.0" onMouseClicked="#greenCardLvl3selected" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="ivBlueCardLvl3" fitHeight="210.0" fitWidth="140.0" layoutX="50.0" layoutY="15.0" onMouseClicked="#blueCardLvl3selected" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="ivYellowCardLvl3" fitHeight="210.0" fitWidth="140.0" layoutX="270.0" layoutY="15.0" onMouseClicked="#yellowCardLvl3selected" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ImageView fx:id="ivGreenCardLvl2" fitHeight="210.0" fitWidth="140.0" layoutX="50.0" layoutY="15.0" onMouseClicked="#greenCardLvl2selected" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
@@ -52,5 +52,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
+      <ImageView fx:id="leaderDiscount1" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leaderDiscount2" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

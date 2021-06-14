@@ -28,9 +28,6 @@ public class GameBoard implements Layout, ModelEventHandler {
     public Tab scoreboardTab;
     public ScoreboardTab scoreboardTab_Controller;
 
-
-
-
     private ViewBackEnd backEnd;
 
     @Override
@@ -42,10 +39,6 @@ public class GameBoard implements Layout, ModelEventHandler {
         productionTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);
     }
-
-
-
-
 
 
     @Override

@@ -17,11 +17,7 @@
         <ImageView fx:id="ivRightCard1" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivRightCard2" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivRightCard3" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="buttonBasicProduction" layoutX="114.0" layoutY="700.0" mnemonicParsing="false" onAction="#activateBasicProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
-      <Button fx:id="buttonLeftProduction" layoutX="412.0" layoutY="700.0" mnemonicParsing="false" onAction="#activateLeftProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
-      <Button fx:id="buttonCenterProduction" layoutX="779.0" layoutY="699.0" mnemonicParsing="false" onAction="#activateCenterProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
-      <Button fx:id="buttonRightProduction" layoutX="1162.0" layoutY="699.0" mnemonicParsing="false" onAction="#activateRightProduction" opacity="0.0" prefHeight="61.0" prefWidth="61.0" textFill="TRANSPARENT" />
-      <CheckBox fx:id="checkBasicProduction" layoutX="115.0" layoutY="624.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0" visible="false">
+      <CheckBox fx:id="checkBasicProduction" layoutX="115.0" layoutY="624.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -31,6 +27,26 @@
             <Font size="20.0" />
          </font>
       </CheckBox>
+      <CheckBox fx:id="checkLeftProduction" layoutX="429.0" layoutY="650.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkCenterProduction" layoutX="796.0" layoutY="650.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkRightProduction" layoutX="1179.0" layoutY="650.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </CheckBox>
+      <Button layoutX="64.0" layoutY="692.0" mnemonicParsing="false" onAction="#produce" prefHeight="76.0" prefWidth="150.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="PRODUCE" textFill="#cec4a6">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+      </Button>
     </children>
 
 </AnchorPane>

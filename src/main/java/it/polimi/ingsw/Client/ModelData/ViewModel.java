@@ -38,5 +38,15 @@ public class ViewModel {
         message.accept(updater);
     }
 
+    public Player getPlayer(String username){
+        Player playerToReturn = null;
+        for(Player p: players){
+            if(p.getUsername().equals(username)){
+                playerToReturn = p;
+                break;
+            }
+        }
+        return playerToReturn;
+    }
 
 }
