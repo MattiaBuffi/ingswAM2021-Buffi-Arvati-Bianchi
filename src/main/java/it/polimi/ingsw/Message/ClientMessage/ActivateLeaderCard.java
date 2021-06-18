@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Message.ClientMessage;
 
-import it.polimi.ingsw.Message.SingleClientEventHandler;
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 
-public class ActivateLeaderCard implements Message<SingleClientEventHandler> {
+public class ActivateLeaderCard implements Message<ClientEventHandler> {
 
     private final String cardId;
 
@@ -13,7 +13,7 @@ public class ActivateLeaderCard implements Message<SingleClientEventHandler> {
 
 
     @Override
-    public void accept(SingleClientEventHandler handler) {
+    public void accept(ClientEventHandler handler) {
 
     }
 

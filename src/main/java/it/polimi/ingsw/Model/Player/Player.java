@@ -22,7 +22,7 @@ import it.polimi.ingsw.Model.VaticanRoute.VaticanToken;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements EventBroadcaster {
+public class Player implements EventBroadcaster, PlayerState.Context {
 
 
     private User user;
@@ -100,25 +100,7 @@ public class Player implements EventBroadcaster {
 
 
     public int getVictoryPoints(){
-        int points = 0;
-
-        //vatican route points
-        points += vaticanToken.getVictoryPoints();
-        //deleted leader card point
-        points += 2 - leaderCards.size();
-        //active leader card point
-        for (LeaderCard lc: leaderCards){
-            points += lc.getVictoryPoints();
-        }
-        //production card point
-        for(DevelopmentCard c: cardStorage.getCards()){
-            points += c.getVictoryPoint();
-        }
-
-        //resources points
-        points += resourceStorage.getResources().getSize()/5;
-
-        return points;
+        return state.getVictoryPoints(this);
     }
 
 
@@ -165,7 +147,7 @@ public class Player implements EventBroadcaster {
 
     //***********************************SETTER*************************************************************************
 
-
+    @Override
     public void setState(PlayerState state) {
         this.state = state;
     }

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Message.ClientMessage;
 
-import it.polimi.ingsw.Message.MultipleClientEventHandler;
+import it.polimi.ingsw.Message.ServerEventHandler;
 import it.polimi.ingsw.Message.Message;
 
-public class GameSize implements Message<MultipleClientEventHandler> {
+public class GameSize implements Message<ServerEventHandler> {
 
     private final int size;
 
@@ -16,7 +16,7 @@ public class GameSize implements Message<MultipleClientEventHandler> {
     }
 
     @Override
-    public void accept(MultipleClientEventHandler handler) {
+    public void accept(ServerEventHandler handler) {
         handler.handle(this);
     }
 }

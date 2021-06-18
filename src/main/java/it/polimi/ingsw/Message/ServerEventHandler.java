@@ -3,11 +3,12 @@ package it.polimi.ingsw.Message;
 import it.polimi.ingsw.Message.ClientMessage.GameSize;
 import it.polimi.ingsw.Message.ClientMessage.Login;
 
-public interface MultipleClientEventHandler extends SingleClientEventHandler {
+public abstract class ServerEventHandler implements ClientEventHandler {
 
-    void handle(Login event);
 
-    void handle(GameSize event);
+
+
+
 
 
 }

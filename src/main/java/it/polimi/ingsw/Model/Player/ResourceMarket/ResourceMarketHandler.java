@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.Marble.MarbleHandler;
 import java.util.List;
 import java.util.Set;
 
-public interface ResourceMarketHandler extends MarbleHandler {
+public interface ResourceMarketHandler extends MarbleHandler{
 
     int size();
 
@@ -15,5 +15,7 @@ public interface ResourceMarketHandler extends MarbleHandler {
     boolean take(Marble.Color color);
 
     void empty();
+
+    void handleMarbles(List<Marble> marbles);
 
 }

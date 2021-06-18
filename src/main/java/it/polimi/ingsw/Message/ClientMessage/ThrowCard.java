@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Message.ClientMessage;
 
-import it.polimi.ingsw.Message.SingleClientEventHandler;
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 
-public class ThrowCard implements Message<SingleClientEventHandler> {
+public class ThrowCard implements Message<ClientEventHandler> {
 
     private final String cardId;
 
@@ -14,7 +14,7 @@ public class ThrowCard implements Message<SingleClientEventHandler> {
 
 
     @Override
-    public void accept(SingleClientEventHandler handler) {
+    public void accept(ClientEventHandler handler) {
 
     }
 

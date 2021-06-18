@@ -2,12 +2,9 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.Controller.ServerController;
 import it.polimi.ingsw.Network.*;
-import it.polimi.ingsw.ServerModel.ServerModel;
 
 
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,21 +37,21 @@ public class ServerApp implements SocketHandler {
     private final int port;
 
 
-    private ServerModel model;
+    //private ServerModel model;
     private ServerController controller;
     private SocketCreator networkManager;
 
-    private List<VirtualView> connections;
+
 
     private ExecutorService executor;
 
 
     private ServerApp(int port){
         this.port = port;
-        this.model = new ServerModel();
+        //this.model = new ServerModel();
         this.controller = new ServerController();
         this.networkManager = new SocketCreator(port, this);
-        this.connections = new ArrayList<>();
+
         this.executor = Executors.newCachedThreadPool();
     }
 
@@ -69,12 +66,6 @@ public class ServerApp implements SocketHandler {
     public void handleSocket(Socket socket) {
         try {
 
-            VirtualView view = new VirtualView(new AsyncConnectionHandler.ConnectionBuilder(executor, socket));
-            connections.add(view);
-            view.addObserver(controller);
-
-
-            model.connect(view);
 
         } catch (Exception e) {
            e.printStackTrace();
@@ -84,9 +75,10 @@ public class ServerApp implements SocketHandler {
 
     private void shutdown(){
 
+        /*
         for (VirtualView v: connections){
             v.getConnection().stop();
-        }
+        }*/
 
         networkManager.stop();
 
@@ -124,7 +116,7 @@ public class ServerApp implements SocketHandler {
                     System.exit(0);
                     break;
                 case "state":
-                    System.out.println("Connected:" + connections.size());
+                    //System.out.println("Connected:" + connections.size());
                     break;
                 case "ip":
 

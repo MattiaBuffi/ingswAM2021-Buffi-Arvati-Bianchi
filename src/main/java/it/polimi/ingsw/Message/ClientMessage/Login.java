@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Message.ClientMessage;
 
-import it.polimi.ingsw.Message.MultipleClientEventHandler;
+import it.polimi.ingsw.Message.ServerEventHandler;
 import it.polimi.ingsw.Message.Message;
 
-public class Login implements Message<MultipleClientEventHandler> {
+public class Login implements Message<ServerEventHandler> {
 
     private String username;
     private String id;
@@ -24,7 +24,7 @@ public class Login implements Message<MultipleClientEventHandler> {
 
 
     @Override
-    public void accept(MultipleClientEventHandler handler) {
+    public void accept(ServerEventHandler handler) {
         handler.handle(this);
     }
 
