@@ -1,13 +1,10 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Controller.ServerController;
 import it.polimi.ingsw.Network.*;
-import it.polimi.ingsw.ServerModel.ServerModel;
 
 
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +22,7 @@ public class ServerApp implements SocketHandler {
                 switch (args[i]){
                     case "-port":
                         app = new ServerApp(Integer.getInteger(args[i+1]));
+                        i+= 1;
                         break;
                 }
             }
@@ -39,21 +37,21 @@ public class ServerApp implements SocketHandler {
     private final int port;
 
 
-    private ServerModel model;
-    private ClientEventHandler controller;
+    //private ServerModel model;
+    private ServerController controller;
     private SocketCreator networkManager;
 
-    private List<VirtualView> connections;
+
 
     private ExecutorService executor;
 
 
     private ServerApp(int port){
         this.port = port;
-        this.model = new ServerModel();
-        //this.controller = new ServerController();
+        //this.model = new ServerModel();
+        this.controller = new ServerController();
         this.networkManager = new SocketCreator(port, this);
-        this.connections = new ArrayList<>();
+
         this.executor = Executors.newCachedThreadPool();
     }
 
@@ -68,18 +66,6 @@ public class ServerApp implements SocketHandler {
     public void handleSocket(Socket socket) {
         try {
 
-            VirtualView view = new VirtualView(new ServerConnectionHandler.ConnectionBuilder()
-                                                    .setExecutor(executor)
-                                                    .setSocket(socket));
-            connections.add(view);
-            //view.addObserver(controller);
-
-
-            model.connect(view);
-            /*
-            test = new testHandler(socket);
-            executor.execute(test);
-            */
 
         } catch (Exception e) {
            e.printStackTrace();
@@ -89,9 +75,10 @@ public class ServerApp implements SocketHandler {
 
     private void shutdown(){
 
+        /*
         for (VirtualView v: connections){
             v.getConnection().stop();
-        }
+        }*/
 
         networkManager.stop();
 
@@ -129,15 +116,11 @@ public class ServerApp implements SocketHandler {
                     System.exit(0);
                     break;
                 case "state":
-                    System.out.println("Connected:" + connections.size());
+                    //System.out.println("Connected:" + connections.size());
                     break;
                 case "ip":
-                    try(final DatagramSocket socket = new DatagramSocket()){
-                        socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-                        System.out.println("ip: "+ socket.getLocalAddress().getHostAddress());
-                    } catch (SocketException | UnknownHostException e) {
-                        e.printStackTrace();
-                    }
+
+                    break;
                 case "port":
                     System.out.println("port: " + port);
                     break;
@@ -148,35 +131,6 @@ public class ServerApp implements SocketHandler {
         }
 
     }
-
-
-
-
-    /*
-
-    private testHandler test;
-
-    private class testHandler extends ConnectionHandler {
-
-        public testHandler(Socket socket) {
-            super(socket);
-        }
-
-        @Override
-        protected void handleReadMessage(Object event) {
-            System.out.println("-Received: " + event);
-        }
-
-    }*/
-
-
-
-
-
-
-
-
-
 
 
 }

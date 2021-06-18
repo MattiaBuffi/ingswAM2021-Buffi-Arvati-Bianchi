@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.Player.ProductionHandler;
-
+import it.polimi.ingsw.Model.TurnHandler;
 
 
 public class StateProduction extends PlayerState {
@@ -17,24 +17,32 @@ public class StateProduction extends PlayerState {
     }
 
 
-    @Override
-    protected boolean production(Player context, ProductionSelector selector) {
-
-        ProductionHandler handler = context.getProductionHandler();
-        return handler.produce(selector);
-
+    public boolean production(ProductionHandler productionHandler, ProductionSelector selector){
+        return productionHandler.produce(selector);
     }
 
 
 
     @Override
-    protected boolean endTurn(Player context){
+    protected boolean production(Player context, ProductionSelector selector) {
 
-        context.getProductionHandler().empty();
+        return production(context.getProductionHandler(), selector);
+
+    }
+
+
+
+    public void endTurn(ProductionHandler handler, PlayerState.Context context, TurnHandler turnHandler){
+        handler.empty();
         context.setState(StateWait.get());
-        context.getTurnHandler().endTurn();
-        return true;
+        turnHandler.endTurn();
+    }
 
+
+    @Override
+    protected boolean endTurn(Player context){
+        endTurn(context.getProductionHandler(),context, context.getTurnHandler());
+        return true;
     }
 
 

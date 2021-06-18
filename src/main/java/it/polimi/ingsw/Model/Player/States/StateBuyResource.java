@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.Player.States;
 import it.polimi.ingsw.Model.Marble.*;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
+import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceMarketHandler;
 
 import java.util.List;
 
@@ -15,14 +16,25 @@ public class StateBuyResource extends PlayerState {
     }
 
 
+
+    public void buyResources(ResourceMarketHandler marketHandler, List<Marble> resources){
+        for (Marble m: resources){
+            m.accept(marketHandler);
+        }
+    }
+
+    public void changeState(PlayerState.Context context){
+        context.setState(StateStoreResource.get());
+    }
+
+
     @Override
     protected boolean buyResources(Player context, List<Marble> resources) {
 
-        for (Marble m: resources){
-            m.accept(context.getResourceMarketBuffer());
-        }
+        buyResources(context.getResourceMarketBuffer(), resources);
 
-        context.setState(StateStoreResource.get());
+        changeState(context);
+
         return true;
 
     }

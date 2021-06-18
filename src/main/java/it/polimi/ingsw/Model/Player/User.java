@@ -5,19 +5,18 @@ import it.polimi.ingsw.Utils.Observable;
 public class User extends Observable {
 
 
-    private String username;
+    private final String username;
 
-    public User() {
-        username = null;
+
+
+    public User(String username) {
+        this.username = username;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
 
 }

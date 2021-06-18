@@ -3,12 +3,19 @@ package it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
+import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
 
 import java.util.List;
 
 public abstract class PlayerState {
+
+    public interface Context {
+        void setState(PlayerState state);
+    }
+
 
     public enum Name {
         NEW_GAME,
@@ -17,7 +24,8 @@ public abstract class PlayerState {
         BUY_RESOURCE,
         STORE_RESOURCE,
         BUY_CARD,
-        PRODUCTION;
+        PRODUCTION,
+        END_GAME;
     }
 
 
@@ -74,6 +82,24 @@ public abstract class PlayerState {
     }
 
 
+    protected int getVictoryPoints(Player context){
+        int points = 0;
+
+        //vatican route points
+        points += context.getVaticanToken().getVictoryPoints();
+        //deleted leader card point
+        points += 2 - context.getLeaderCards().size();
+        //active leader card point
+        for (LeaderCard lc: context.getLeaderCards()){
+            points += lc.getVictoryPoints();
+        }
+        //production card point
+        for(DevelopmentCard c: context.getCardStorage().getCards()){
+            points += c.getVictoryPoint();
+        }
+        return points;
+
+    }
 
 
 }

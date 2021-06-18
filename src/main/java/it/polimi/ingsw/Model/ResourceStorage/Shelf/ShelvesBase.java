@@ -98,7 +98,7 @@ public class ShelvesBase implements Shelves{
             return false;
         }
 
-        for(Marble.Color c: list.getColors()){
+        for(Marble.Color c: list.getColorSet()){
             for(Shelf s: shelves){
                 if(s.getColor() == c){
                     s.remove(list.getSize(c));

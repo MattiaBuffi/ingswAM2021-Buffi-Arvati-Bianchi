@@ -14,8 +14,9 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 
-public class ResourceBuffer implements ResourceMarketHandler{
+public class ResourceBuffer implements ResourceMarketHandler, MarbleHandler{
 
+    /*
     private static final BiFunction<SelectableMarble, Marble.Color, Boolean> selectableComparator = (m1, m2)->{
         for(Marble.Color m: m1.getSelectableColors()){
             if(m == m2){
@@ -25,7 +26,7 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return false;
     };
     private static final BiFunction<ResourceMarble, Marble.Color, Boolean> normalComparator = (m1, m2)-> m1.getColor() == m2;
-
+*/
 
     private final FaithHandler faithHandler;
     private final EventBroadcaster broadcaster;
@@ -42,6 +43,19 @@ public class ResourceBuffer implements ResourceMarketHandler{
     }
 
 
+    public Boolean normalMarbleComparator(ResourceMarble marble, Marble.Color color){
+        return marble.getColor() == color;
+    }
+
+    public Boolean selectableMarbleComparator(SelectableMarble marble, Marble.Color color){
+        for(Marble.Color m: marble.getSelectableColors()){
+            if(m == color){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private<M extends Marble> boolean remove(List<M> marbleList, Marble.Color color, BiFunction<M, Marble.Color, Boolean> comparator){
         for(M m: marbleList){
@@ -52,7 +66,6 @@ public class ResourceBuffer implements ResourceMarketHandler{
         }
         return false;
     }
-
 
     @Override
     public int size() {
@@ -75,11 +88,11 @@ public class ResourceBuffer implements ResourceMarketHandler{
 
     @Override
     public boolean take(Marble.Color color){
-        if(remove(availableMarbles, color, normalComparator)){
+        if(remove(availableMarbles, color, this::normalMarbleComparator)){
             broadcaster.notifyAllPlayers(new MarketResourceTaken(color));
             return true;
         }
-        if(remove(selectableMarbles, color, selectableComparator)){
+        if(remove(selectableMarbles, color, this::selectableMarbleComparator)){
             broadcaster.notifyAllPlayers(new MarketResourceTaken(color));
             return true;
         }
@@ -87,12 +100,22 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return false;
     }
 
+
     @Override
     public void empty(){
         faithHandler.give(availableMarbles.size()+selectableMarbles.size() );
         availableMarbles.clear();
         selectableMarbles.clear();
     }
+
+
+    @Override
+    public void handleMarbles(List<Marble> marbles) {
+        for (Marble m: marbles){
+            m.accept(this);
+        }
+    }
+
 
 
 
