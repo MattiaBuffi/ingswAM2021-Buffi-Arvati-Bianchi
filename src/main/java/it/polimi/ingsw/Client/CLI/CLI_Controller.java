@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
@@ -61,7 +62,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "carcScheme.txt"};
 
-    public void CLIView(ViewBackEnd backEndController) throws IOException, InterruptedException {
+    public void CLIView(ViewBackEnd backEndController) throws IOException {
         this.backEnd = backEndController;
         char[] home = readSchematics(2);
         char[] production = readSchematics(3);
@@ -94,14 +95,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                    // cls();
                     charArray = readSchematics(1);
                     System.out.println(charArray);
-                    Thread.sleep(2000);
                     //clausola primo giocatore
-                    if(true)
-                    {
-                        value = "NEWGAME";
-                    }else{
-                        value = "JOINGAME";
-                    }
+                    value = "NEWGAME";
                     break;
 
                 case "NEWGAME":
@@ -148,7 +143,6 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                 case "WAIT":
                     charArray = readSchematics(9);
                     System.out.println(charArray);
-                    Thread.sleep(2000);
                     value = "SELECTION";
                     break;
 
@@ -191,7 +185,10 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     }
 
 
-                    //Mancano le shelf
+
+                    List<Shelf> playerShelf = backEnd.getModel().current.getShelves();
+                    ShelfExtractor(home, playerShelf);
+
                     ResourceList playerChest = backEnd.getModel().current.getChest();
                     List<Marble> playerChestMarble = playerChest.getAll();
                     String[] playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
@@ -302,6 +299,9 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         row++;
                     }
 
+                    playerShelf = backEnd.getModel().current.getShelves();
+                    ShelfExtractor(production, playerShelf);
+
                     playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
                     playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
@@ -364,6 +364,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                             System.arraycopy(vpArray, 0, rssMarket, CardMarketVPPosition[i*4+j], vpArray.length);
                         }
                     }
+                    playerShelf = backEnd.getModel().current.getShelves();
+                    ShelfExtractor(cardMarket, playerShelf);
 
                     playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
@@ -433,6 +435,9 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                             break;
                     }
 
+                    playerShelf = backEnd.getModel().current.getShelves();
+                    ShelfExtractor(rssMarket, playerShelf);
+
                     playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
                     playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
@@ -489,7 +494,6 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                 case "QUIT":
                     charArray = readSchematics(7);
                     System.out.println(charArray);
-                    Thread.sleep(1500);
                     value = "exit";
                     break;
 
@@ -497,6 +501,34 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                    // cls();
                     System.out.println("Wrong Command, please insert a real command, redirecting to Home..");
                     value = "HOME";
+                    break;
+            }
+        }
+    }
+
+    private void ShelfExtractor(char[] scheme, List<Shelf> playerShelf) {
+        for (int i = 0; i < playerShelf.size(); i++) {
+            int size = playerShelf.get(i).size;
+            switch (playerShelf.get(i).color.toString()) {
+                case "YELLOW":
+                    for (int j = 0; j < size; j++) {
+                        scheme[RssPosition[i+j]]= 'Y';
+                    }
+                    break;
+                case "BLUE":
+                    for (int j = 0; j < size; j++) {
+                        scheme[RssPosition[i+j]]= 'B';
+                    }
+                    break;
+                case "PURPLE":
+                    for (int j = 0; j < size; j++) {
+                        scheme[RssPosition[i+j]]= 'P';
+                    }
+                    break;
+                case "GREY":
+                    for (int j = 0; j < size; j++) {
+                        scheme[RssPosition[i+j]]= 'G';
+                    }
                     break;
             }
         }
