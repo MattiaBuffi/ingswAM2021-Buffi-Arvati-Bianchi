@@ -3,7 +3,7 @@ package it.polimi.ingsw.Client.CLI;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Client.ModelData.ViewModel;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
 import it.polimi.ingsw.Message.Message;
@@ -51,6 +51,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
     private static final int[] singleCardPosition = {21, 59, 97, 166};
 
     int lastPosition = 0;
+    private ViewBackEnd backEnd;
 
     Scanner input = new Scanner(System.in);
     private static final String rssPath = "src/main/resources/CLI/";
@@ -60,8 +61,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "carcScheme.txt"};
 
-    public void CLIView() throws IOException, InterruptedException {
-        ViewModel reducedModel = new ViewModel();
+    public void CLIView(ViewBackEnd backEndController) throws IOException, InterruptedException {
+        this.backEnd = backEndController;
         char[] home = readSchematics(2);
         char[] production = readSchematics(3);
         char[] cardMarket = readSchematics(4);
@@ -82,10 +83,10 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     System.out.println(charArray);
                     System.out.println("Insert Port Number: ");
                     String port = input.nextLine();
-
                     char[] portArray = port.toCharArray();
                     System.arraycopy(portArray, 0, charArray, SecondCellPosition, portArray.length);
                     System.out.println(charArray);
+                    backEnd.connectToServer(server, Integer.parseInt(port));
                     value = "loading";
                     break;
 
@@ -113,7 +114,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     char[] nameArray = name.toCharArray();
                     System.arraycopy(nameArray, 0, charArray, 2671, nameArray.length);
                     System.out.println(charArray);
-
+                    Login messageUsername = new Login(name);
+                    backEnd.notify(messageUsername);
                     System.out.println("Insert Number of Player (1-4): ");
                     String playerNumber = input.nextLine();
                     while (Integer.parseInt(playerNumber) > 4 || Integer.parseInt(playerNumber) < 1) {
@@ -123,6 +125,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     char[] numArray = playerNumber.toCharArray();
                     System.arraycopy(numArray, 0, charArray, SecondCellPosition, numArray.length);
                     System.out.println(charArray);
+                    GameSize messageGameSize = new GameSize(Integer.parseInt(playerNumber));
+                    backEnd.notify(messageGameSize);
                     value = "WAIT";
                     break;
 
@@ -136,6 +140,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     nameArray = name.toCharArray();
                     System.arraycopy(nameArray, 0, charArray, FirstCellPosition, nameArray.length);
                     System.out.println(charArray);
+                    Login message = new Login(name);
+                    backEnd.notify(message);
                     value = "WAIT";
                     break;
 
@@ -151,7 +157,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     //cls();
                     //DA FIXARE
                     charArray = readSchematics(11);
-                    List<LeaderCard> leaderCardSelection = reducedModel.current.getLeaderCard();
+                    List<LeaderCard> leaderCardSelection = backEnd.getModel().current.getLeaderCard();
                     for (int i = 0; i < 4; i++) {
                         LeaderCardInfoExtractor(charArray, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos);
                     }
@@ -160,8 +166,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     String discardedCard = input.nextLine();
                     String[] cardArray = discardedCard.split("-");
                     for (String s : cardArray) {
-                        DiscardLeaderCard message = new DiscardLeaderCard(reducedModel.current.getLeaderCard().get(Integer.parseInt(s)).getId());
-                        notify(message);
+                        DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(Integer.parseInt(s)).getId());
+                        backEnd.notify(messageDiscard);
                     }
                     value = "HOME";
                     break;
@@ -170,12 +176,12 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                 case "HOME":
                     // cls();
 
-                    String customName = reducedModel.current.getUsername() + "'s Turn";
+                    String customName = backEnd.getModel().current.getUsername() + "'s Turn";
                     nameArray = customName.toCharArray();
                     System.arraycopy(nameArray, 0, home, TurnPosition, nameArray.length);
 
-                    for (int i = 0; i < reducedModel.players.size(); i++) {
-                        Player user = reducedModel.players.get(i);
+                    for (int i = 0; i < backEnd.getModel().players.size(); i++) {
+                        Player user = backEnd.getModel().players.get(i);
                         nameArray = user.getUsername().toCharArray();
                         String posName = "" + (i + 1);
                         char[] posNameArray = posName.toCharArray();
@@ -186,7 +192,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
 
 
                     //Mancano le shelf
-                    ResourceList playerChest = reducedModel.current.getChest();
+                    ResourceList playerChest = backEnd.getModel().current.getChest();
                     List<Marble> playerChestMarble = playerChest.getAll();
                     String[] playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
                     for (int i = 0; i < playerChestRss.length; i++) {
@@ -194,7 +200,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     }
 
 
-                    int position = reducedModel.current.getFaithPoints();
+                    int position = backEnd.getModel().current.getFaithPoints();
                     if ( position != lastPosition){
                         String lastPosString = Integer.toString(lastPosition);
                         char[] lastPositionArray = lastPosString.toCharArray();
@@ -207,7 +213,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         lastPosition = position;
                     }
 
-                    List<LeaderCard> leaderCard = reducedModel.current.getLeaderCard();
+                    List<LeaderCard> leaderCard = backEnd.getModel().current.getLeaderCard();
                     for (int i = 0; i < 2; i++) {
                         LeaderCardInfoExtractor(home, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost);
                     }
@@ -225,12 +231,12 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         String activateLeader = input.nextLine();
 
                         if (activateLeader.equals("1")){
-                            ActivateLeaderCard message = new ActivateLeaderCard(reducedModel.current.getLeaderCard().get(0).getId());
-                            notify(message);
+                            ActivateLeaderCard messageActivate = new ActivateLeaderCard(backEnd.getModel().current.getLeaderCard().get(0).getId());
+                            backEnd.notify(messageActivate);
                             System.arraycopy(activeArray, 0, home, LeaderCardHomePosActive[0], active.length());
                         }else if (activateLeader.equals("2")){
-                            ActivateLeaderCard message = new ActivateLeaderCard(reducedModel.current.getLeaderCard().get(1).getId());
-                            notify(message);
+                            ActivateLeaderCard messageActivate = new ActivateLeaderCard(backEnd.getModel().current.getLeaderCard().get(1).getId());
+                            backEnd.notify(messageActivate);
                             System.arraycopy(activeArray, 0, home, LeaderCardHomePosActive[1], active.length());
                         }
                     }else if (command.equals("DISCARD")){
@@ -238,16 +244,16 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         System.out.println("Which Leader card do you want to Discard (1/2): ");
                         String discardLeader = input.nextLine();
                         if (discardLeader.equals("1")){
-                            DiscardLeaderCard message = new DiscardLeaderCard(reducedModel.current.getLeaderCard().get(0).getId());
-                            notify(message);
+                            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(0).getId());
+                            backEnd.notify(messageDiscard);
                             for (int i = 0; i < 10; i++) {
                                 for (int j = 0; j < 20; j++) {
                                     home[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
                                 }
                             }
                         }else if (discardLeader.equals("2")){
-                            DiscardLeaderCard message = new DiscardLeaderCard(reducedModel.current.getLeaderCard().get(1).getId());
-                            notify(message);
+                            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(1).getId());
+                            backEnd.notify(messageDiscard);
                             for (int i = 0; i < 10; i++) {
                                 for (int j = 0; j < 20; j++) {
                                     home[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
@@ -264,7 +270,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     char[] customCard = readSchematics(12);
                     int row = 0;
                     int column = 0;
-                    List<List<DevelopmentCardData>> playerProductions = reducedModel.current.getProductions();
+                    List<List<DevelopmentCardData>> playerProductions = backEnd.getModel().current.getProductions();
                     for (List<DevelopmentCardData> productionColumn : playerProductions) {
                         for (DevelopmentCardData devCard : productionColumn) {
                             List<Marble> costList = devCard.price.getAll();
@@ -296,7 +302,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         row++;
                     }
 
-                    playerChest = reducedModel.current.getChest();
+                    playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
                     playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
                     for (int i = 0; i < playerChestRss.length; i++) {
@@ -309,7 +315,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     command = command.toUpperCase();
                     switch (command){
                         case "PRODUCE":
-                            System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4 = leader production, insert the numbers divided by '-') : ");
+                            System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production, insert the numbers divided by '-') : ");
                             String productionString = input.nextLine();
                             if(productionString.length()>1) {
                                 String[] productionArray = productionString.split("-");
@@ -336,7 +342,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     //cls();
                     for(int i=0;i<3;i++){
                         for(int j=0;j<4;j++){
-                            cardMatrix[i][j] = reducedModel.cardMarket.getCard(i,j);
+                            cardMatrix[i][j] = backEnd.getModel().cardMarket.getCard(i,j);
 
                             List<Marble> costList = cardMatrix[i][j].price.getAll();
                             String costString = getColorStringFromMarble(costList);
@@ -359,7 +365,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         }
                     }
 
-                    playerChest = reducedModel.current.getChest();
+                    playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
                     playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
                     for (int i = 0; i < playerChestRss.length; i++) {
@@ -375,8 +381,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                             System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
                             String buyCard = input.nextLine();
                             String[] buyCardArray = buyCard.split("-");
-                            BuyDevelopmentCard message = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]), Integer.parseInt(buyCardArray[1]), Integer.parseInt(buyCardArray[2]));
-                            notify(message);
+                            BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]), Integer.parseInt(buyCardArray[1]), Integer.parseInt(buyCardArray[2]));
+                            backEnd.notify(messageBuyDev);
                             break;
                         case "EXIT":
                             System.out.println("redirecting to Home..");
@@ -391,7 +397,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                 case "RSSMARKET":
                     //cls();
                     for (int i = 0; i < 3; i++){
-                        List<Marble> rssRow = reducedModel.resourceMarket.get(i);
+                        List<Marble> rssRow = backEnd.getModel().resourceMarket.get(i);
                         for (int j=0; j<rssRow.size(); j++) {
                             String color = rssRow.get(j).getColor().toString();
                             switch (color) {
@@ -410,7 +416,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                             }
                         }
                     }
-                    Marble bonusMarble = reducedModel.resourceMarket.getBonusMarble();
+                    Marble bonusMarble = backEnd.getModel().resourceMarket.getBonusMarble();
                     String bonusColor = bonusMarble.getColor().toString();
                     switch (bonusColor) {
                         case "YELLOW":
@@ -427,7 +433,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                             break;
                     }
 
-                    playerChest = reducedModel.current.getChest();
+                    playerChest = backEnd.getModel().current.getChest();
                     playerChestMarble = playerChest.getAll();
                     playerChestRss = getColorStringFromMarble(playerChestMarble).split(" ");
                     for (int i = 0; i < playerChestRss.length; i++) {
@@ -442,8 +448,8 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                         case "BUY":
                             System.out.println("Which card do you want to buy? (value between 1 and 7 [1 = first column on the left, 7 = first row from the top]) : ");
                             String buyRss = input.nextLine();
-                            TakeResources message = new TakeResources(Integer.parseInt(buyRss));
-                            notify(message);
+                            TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss));
+                            backEnd.notify(messageBuyRss);
                             break;
                         case "EXIT":
                             System.out.println("redirecting to Home..");
@@ -459,7 +465,7 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                 case "VIEW":
                     char[] bigView = readSchematics(10);
                     int i = 0;
-                    List<Player> users = reducedModel.players;
+                    List<Player> users = backEnd.getModel().players;
                     for (Player user: users) {
                         System.arraycopy(((char)(i+1)+ " " + user.getUsername()).toCharArray(), 0, bigView, BigFaithPlayerNamePos[i], user.getUsername().toCharArray().length);
                         System.arraycopy(Integer.toString(user.getProductions().size()).toCharArray(), 0, bigView, BigFaithPlayerProdPos[i], Integer.toString(user.getProductions().size()).toCharArray().length);
@@ -526,11 +532,29 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
             System.out.println("Please insert data for basic production (in1-in2-out): ");
             String basicProd = input.nextLine();
             String[] basicProdArray = basicProd.split("-");
-            //BasicProduction message = new BasicProduction(basicProdArray[0], basicProdArray[1],basicProdArray[2]);
-            //notify(message);
+            Marble.Color[] prodColor = new Marble.Color[3];
+            for (int i = 0; i < basicProdArray.length; i++) {
+                switch (basicProdArray[i]) {
+                    case "Y":
+                        prodColor[i] = Marble.Color.YELLOW;
+                        break;
+                    case "G":
+                        prodColor[i] = Marble.Color.GREY;
+                        break;
+                    case "P":
+                        prodColor[i] = Marble.Color.PURPLE;
+                        break;
+                    case "B":
+                        prodColor[i] = Marble.Color.BLUE;
+                        break;
+                }
+            }
+
+            BasicProduction message = new BasicProduction(prodColor[0], prodColor[1],prodColor[2]);
+            backEnd.notify(message);
         }else{
-            CardProduction message = new CardProduction(Integer.parseInt(productionString));
-            notify(message);
+            CardProduction message = new CardProduction(Integer.parseInt(productionString)-1);
+            backEnd.notify(message);
         }
     }
 
@@ -607,10 +631,5 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
             }
         }
         return colorString.toString();
-    }
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        CLI_Controller controller = new CLI_Controller();
-        controller.CLIView();
     }
 }
