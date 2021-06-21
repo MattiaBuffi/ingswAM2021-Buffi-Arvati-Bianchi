@@ -73,7 +73,7 @@ public class ShelvesBase implements Shelves{
         ShelfBasic shelf = getShelf(position);
 
         if(shelf == null){
-            broadcaster.notifyUser(new ErrorUpdate("0","shelf not found"));
+            broadcaster.notifyUser(new ErrorUpdate("shelf not found"));
             return false;
         }
 
@@ -82,7 +82,7 @@ public class ShelvesBase implements Shelves{
                 continue;
             }
             if(getShelf(i).getColor() == color){
-                broadcaster.notifyUser(new ErrorUpdate("0","color already stored"));
+                broadcaster.notifyUser(new ErrorUpdate("color already stored"));
                 return false;
             }
         }
@@ -94,11 +94,11 @@ public class ShelvesBase implements Shelves{
     public boolean withdraw(ResourceList list){
 
         if(!getResources().contains(list)){
-            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
+            broadcaster.notifyUser(new ErrorUpdate( "not enough resources"));
             return false;
         }
 
-        for(Marble.Color c: list.getColors()){
+        for(Marble.Color c: list.getColorSet()){
             for(Shelf s: shelves){
                 if(s.getColor() == c){
                     s.remove(list.getSize(c));
@@ -116,11 +116,11 @@ public class ShelvesBase implements Shelves{
         ShelfBasic dest = getShelf(destPosition);
 
         if(origin.getSize() > dest.getMaxSize()){
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
+            broadcaster.notifyUser(new ErrorUpdate("illegal move"));
             return false;
         }
         if(dest.getSize() > origin.getMaxSize()){
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
+            broadcaster.notifyUser(new ErrorUpdate("illegal move"));
             return false;
         }
 

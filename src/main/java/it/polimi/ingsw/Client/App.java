@@ -27,13 +27,17 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         app = new ClientApp();
         backEnd = new ViewBackEnd(app);
-        //scene = new Scene(loadFXML("home_page"));
-       scene = new Scene(loadFXML("game_board"));
+
+        app.setBackEnd(backEnd);
+
+        scene = new Scene(loadFXML("home_page"));
+        //scene = new Scene(loadFXML("game_board"));
         //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(true);
 
-        setScene("game_board");
+        //setScene("game_board");
+        setScene("home_page");
         stage.show();
     }
 

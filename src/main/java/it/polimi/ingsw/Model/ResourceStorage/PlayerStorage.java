@@ -58,7 +58,7 @@ public class PlayerStorage implements ResourceStorage{
 
     public boolean withdrawal(ResourceList resourceList) {
         if(!getResources().contains(resourceList)){
-            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
+            broadcaster.notifyUser(new ErrorUpdate( "not enough resources"));
             return false;
         }
 

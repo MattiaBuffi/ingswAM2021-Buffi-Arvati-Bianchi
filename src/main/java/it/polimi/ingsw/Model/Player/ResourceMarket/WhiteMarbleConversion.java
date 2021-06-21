@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.Marble.*;
 import java.util.List;
 import java.util.Set;
 
-public class WhiteMarbleConversion implements ResourceMarketHandler {
+public class WhiteMarbleConversion implements ResourceMarketHandler{
 
     private final ResourceMarketHandler baseHandler;
     private final Marble.Color color;
@@ -36,6 +36,12 @@ public class WhiteMarbleConversion implements ResourceMarketHandler {
         baseHandler.empty();
     }
 
+    @Override
+    public void handleMarbles(List<Marble> marbles) {
+        for (Marble m: marbles){
+            m.accept(this);
+        }
+    }
 
 
     @Override

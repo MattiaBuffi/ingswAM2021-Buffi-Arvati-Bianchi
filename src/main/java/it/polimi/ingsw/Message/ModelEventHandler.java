@@ -63,6 +63,22 @@ public interface ModelEventHandler {
         public void handle(ResourceMarketExtra resourceMarketExtra) {
             invalidMessage();
         }
+
+
+        @Override
+        public void handle(GameSizeRequest event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(UsernameSelected event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(WaitingPlayersUpdate event) {
+            invalidMessage();
+        }
     }
 
 
@@ -89,5 +105,11 @@ public interface ModelEventHandler {
     void handle( ShelfUpdate event);
 
     void handle(ResourceMarketExtra resourceMarketExtra);
+
+    void handle(GameSizeRequest event);
+
+    void handle(UsernameSelected event);
+
+    void handle(WaitingPlayersUpdate event);
 
 }

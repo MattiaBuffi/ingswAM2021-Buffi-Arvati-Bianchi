@@ -78,7 +78,6 @@ public interface ClientEventHandler {
     void handle(LeaderCardProduction event);
 
 
-
     void handle(Login event);
 
     void handle(GameSize event);

@@ -26,7 +26,7 @@ public class ResourceList{
         }
     }
 
-    public Set<Marble.Color> getColors(){
+    public Set<Marble.Color> getColorSet(){
         return marbles.keySet();
     }
 
@@ -96,7 +96,7 @@ public class ResourceList{
 
         ResourceList newList= new ResourceList().sum(this);
 
-        for(Marble.Color color: list.getColors()){
+        for(Marble.Color color: list.getColorSet()){
             int size = this.getSize(color)-list.getSize(color);
             if( size > 0){
                 newList.marbles.put(color, size);
@@ -120,7 +120,7 @@ public class ResourceList{
     public ResourceList difference(ResourceList list){
         ResourceList newList= new ResourceList();
 
-        for(Marble.Color color: list.getColors()){
+        for(Marble.Color color: list.getColorSet()){
             int size = list.getSize(color)-this.getSize(color);
             if( size > 0){
                 newList.add(color, size);
@@ -131,7 +131,7 @@ public class ResourceList{
     }
 
     public boolean contains(ResourceList list){
-        for(Marble.Color color: list.getColors()){
+        for(Marble.Color color: list.getColorSet()){
             if(this.getSize(color) < list.getSize(color)){
                 return false;
             }

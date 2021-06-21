@@ -57,14 +57,14 @@ public class ProductionHandler {
         ProductionCard card = cardStorage.getCard(selector);
 
         if(usedCard.contains(card.getId())){
-            broadcaster.notifyUser(new ErrorUpdate("0", "production already used"));
+            broadcaster.notifyUser(new ErrorUpdate( "production already used"));
             return false;
         }
 
         List<Marble> production = card.make(resourceStorage);
 
         if(production == null){
-            broadcaster.notifyUser(new ErrorUpdate("0", "production unavailable"));
+            broadcaster.notifyUser(new ErrorUpdate( "production unavailable"));
             return false;
         }
 

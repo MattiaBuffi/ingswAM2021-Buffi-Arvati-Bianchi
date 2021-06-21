@@ -5,11 +5,34 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.Executor;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 
 public class ConnectionHandler<IN, OUT> implements Runnable {
+
+
+
+    public static class Builder<A, B>{
+
+        private Executor executor;
+        private Socket socket;
+
+        public Builder(Executor executor,Socket socket){
+            this.socket = socket;
+            this.executor = executor;
+        }
+
+        public ConnectionHandler<A, B> build(Consumer<A> handler) {
+            ConnectionHandler connectionHandler = new ConnectionHandler(socket, handler);
+            executor.execute(connectionHandler);
+            return connectionHandler;
+        }
+
+    }
+
+
 
     private Socket socket;
     private ObjectOutputStream out;
@@ -65,7 +88,10 @@ public class ConnectionHandler<IN, OUT> implements Runnable {
                 @SuppressWarnings("unchecked")
                 IN event = (IN) in.readObject();
                 handleReadMessage(event);
-            } catch( ClassNotFoundException | IOException e){
+            } catch( ClassNotFoundException e){
+                e.printStackTrace();
+                break;
+            } catch (IOException e){
                 //e.printStackTrace();//commented out to avoid crash when client disconnect. need fix
                 break;
             }

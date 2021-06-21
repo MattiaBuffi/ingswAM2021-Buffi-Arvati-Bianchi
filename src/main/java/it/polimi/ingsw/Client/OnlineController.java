@@ -8,13 +8,15 @@ import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
 
 import java.net.Socket;
+import java.util.concurrent.Executor;
 
 public class OnlineController extends Controller {
 
     private ConnectionHandler<Message<ModelEventHandler>, Message<ClientEventHandler>> connectionHandler;
 
-    public OnlineController(Socket socket){
+    public OnlineController(Socket socket, Executor executor){
         this.connectionHandler = new ConnectionHandler<>(socket, this::notify);
+        executor.execute(connectionHandler);
     }
 
     @Override

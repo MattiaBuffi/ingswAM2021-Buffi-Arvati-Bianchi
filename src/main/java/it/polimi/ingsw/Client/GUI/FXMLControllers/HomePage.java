@@ -7,6 +7,7 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 public class HomePage implements Layout {
 
     private ViewBackEnd backEnd;
+
     @Override
     public void setup(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
