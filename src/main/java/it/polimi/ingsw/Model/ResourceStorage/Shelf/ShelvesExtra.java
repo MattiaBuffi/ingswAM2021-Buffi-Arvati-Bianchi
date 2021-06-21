@@ -73,7 +73,7 @@ public class ShelvesExtra implements Shelves {
 
             //check that all of the missing marble are of the correct color
             if( missing.getSize(shelf.getColor()) != missing.getSize()){
-                broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
+                broadcaster.notifyUser(new ErrorUpdate("not enough resources"));
                 return false;
             }
 
@@ -92,7 +92,7 @@ public class ShelvesExtra implements Shelves {
 
     private boolean fill(Shelf origin, Shelf dest){
         if(origin.getColor() != dest.getColor()){ // need to check if null
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal move"));
+            broadcaster.notifyUser(new ErrorUpdate("illegal move"));
             return false;
         }
         while (!dest.isFull() && origin.getSize()>0){

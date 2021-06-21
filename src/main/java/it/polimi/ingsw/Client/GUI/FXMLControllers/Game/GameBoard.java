@@ -106,8 +106,20 @@ public class GameBoard implements Layout, ModelEventHandler {
     }
 
 
+    @Override
+    public void handle(GameSizeRequest event) {
 
+    }
 
+    @Override
+    public void handle(UsernameSelected event) {
+
+    }
+
+    @Override
+    public void handle(WaitingPlayersUpdate event) {
+
+    }
 
 
 }

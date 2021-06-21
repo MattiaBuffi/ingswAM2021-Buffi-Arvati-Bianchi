@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.Marble.*;
 import java.util.List;
 import java.util.Set;
 
-public class WhiteMarbleConversion implements ResourceMarketHandler, MarbleHandler {
+public class WhiteMarbleConversion implements ResourceMarketHandler{
 
     private final ResourceMarketHandler baseHandler;
     private final Marble.Color color;

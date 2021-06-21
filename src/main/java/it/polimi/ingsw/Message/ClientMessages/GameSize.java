@@ -3,7 +3,7 @@ package it.polimi.ingsw.Message.ClientMessages;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 
-public class GameSize implements Message {
+public class GameSize implements Message<ClientEventHandler> {
 
     private final int size;
 
@@ -16,8 +16,8 @@ public class GameSize implements Message {
     }
 
     @Override
-    public void accept(Object handler) {
-        //handler.handle(this);
+    public void accept(ClientEventHandler handler) {
+        handler.handle(this);
     }
 
 

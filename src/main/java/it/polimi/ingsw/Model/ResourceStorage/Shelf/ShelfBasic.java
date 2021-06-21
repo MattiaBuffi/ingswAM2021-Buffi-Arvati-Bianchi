@@ -25,13 +25,13 @@ public class ShelfBasic extends Shelf {
     public boolean add(Marble.Color color, int amount) {
 
         if(isFull() || size+amount>maxSize){
-            broadcaster.notifyUser(new ErrorUpdate("0", "not enough space"));
+            broadcaster.notifyUser(new ErrorUpdate("not enough space"));
             return false;
         }
 
         if(size != 0){
             if(this.color != color){
-                broadcaster.notifyUser(new ErrorUpdate("0", "wrong color"));
+                broadcaster.notifyUser(new ErrorUpdate( "wrong color"));
                 return false;
             }
         }
@@ -49,7 +49,7 @@ public class ShelfBasic extends Shelf {
     @Override
     public boolean remove(int amount) {
         if(size < amount){
-            broadcaster.notifyUser(new ErrorUpdate("0", "not enough resources"));
+            broadcaster.notifyUser(new ErrorUpdate("not enough resources"));
             return false;
         }
 

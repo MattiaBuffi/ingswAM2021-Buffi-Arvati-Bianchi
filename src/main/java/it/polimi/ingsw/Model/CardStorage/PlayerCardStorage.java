@@ -46,7 +46,7 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
         CardSlot slot = getSlotByPosition(position);
 
         if (slot.getLevel() != card.getLevel()-1){
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal position"));
+            broadcaster.notifyUser(new ErrorUpdate("illegal position"));
             return false;
         }
         if(!storage.withdrawal(card.getCost())){
@@ -84,19 +84,19 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
     @Override
     public ProductionCard visit(SelectBasic selector) {
         if( selector.getRequires().getSize() != 2 ){
-            broadcaster.notifyUser(new ErrorUpdate("0", "wrong input size"));
+            broadcaster.notifyUser(new ErrorUpdate( "wrong input size"));
             return null;
         }
         if( selector.getRequires().getSize(Marble.Color.RED) != 0){
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal color"));
+            broadcaster.notifyUser(new ErrorUpdate( "illegal color"));
             return null;
         }
         if( selector.getProduce().getSize() != 1){
-            broadcaster.notifyUser(new ErrorUpdate("0", "wrong output size"));
+            broadcaster.notifyUser(new ErrorUpdate( "wrong output size"));
             return null;
         }
         if(selector.getProduce().getSize(Marble.Color.RED) != 0){
-            broadcaster.notifyUser(new ErrorUpdate("0", "illegal color"));
+            broadcaster.notifyUser(new ErrorUpdate( "illegal color"));
             return null;
         }
         return new ProductionCard(selector.getId(), selector.getRequires(), selector.getProduce());
@@ -107,14 +107,14 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
     public ProductionCard visit(SelectDevelopmentCard selector) {
         ProductionCard card = getSlotByPosition(selector.getPosition()).getActiveCard();
         if(card == null){
-            broadcaster.notifyUser(new ErrorUpdate("0", "card not found"));
+            broadcaster.notifyUser(new ErrorUpdate( "card not found"));
         }
         return card;
     }
 
     @Override
     public ProductionCard visit(SelectLeader selector) {
-        broadcaster.notifyUser(new ErrorUpdate("0", "card not found"));
+        broadcaster.notifyUser(new ErrorUpdate("card not found"));
         return null;
     }
 

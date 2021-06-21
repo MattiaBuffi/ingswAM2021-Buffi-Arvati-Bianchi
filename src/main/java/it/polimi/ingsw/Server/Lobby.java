@@ -1,15 +1,18 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.GameSizeRequest;
+import it.polimi.ingsw.Message.Model.WaitingPlayersUpdate;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Player.User;
-import it.polimi.ingsw.Server.Client.ClientHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Lobby {
 
-    private List<ClientHandler> clientWaitingQueue;
+    private List<Client> clientWaitingQueue;
     private int gameSize;
 
     public Lobby(){
@@ -17,46 +20,75 @@ public class Lobby {
         this.gameSize = 0;
     }
 
-    public synchronized void join(ClientHandler client){
+
+    public void join(Client client){
+
+        if (client.isSearchingGame()){
+            client.send(new ErrorUpdate("already connected"));
+            return;
+        }
+
         clientWaitingQueue.add(client);
+        client.setSearchingGame(true);
 
         if(clientWaitingQueue.size() == 1){
-            //client.send()
+            client.send(new GameSizeRequest(clientWaitingQueue.size()));
             return;
         }
 
-        if(clientWaitingQueue.size() < gameSize){
-            //wait
-            return;
+        if(startGame(gameSize, clientWaitingQueue)){
+            gameSize = 0;
         }
 
-        startGame(gameSize, clientWaitingQueue);
+
     }
 
-    public synchronized void setGameSize(ClientHandler client, int size){
+
+    public void setGameSize(Client client, int size){
 
         if (gameSize != 0){
-            //size alreadySet
+            client.send(new ErrorUpdate("game size already set"));
             return;
         }
 
         if(clientWaitingQueue.get(0) != client){
+            client.send(new ErrorUpdate("action not allowed"));
             return;
         }
 
-        if(clientWaitingQueue.size() < size){
-            return;
+
+        if(startGame(gameSize, clientWaitingQueue)){
+            gameSize = 0;
         }
 
-        startGame(gameSize, clientWaitingQueue);
 
     }
 
 
 
-    private void startGame(int size, List<ClientHandler> clients){
+    public void sendToAllClients(List<Client> clients, Message message){
+        for (Client c: clients){
+            c.send(message);
+        }
+    }
+
+
+    public boolean canStartGame(int size, List<Client> clients){
+        if(clients.size() < size){
+            sendToAllClients(clients, new WaitingPlayersUpdate(clients.size()));
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean startGame(int size, List<Client> clients){
+
+        if (!canStartGame(size, clients)){
+            return false;
+        }
+
         List<User> players = new ArrayList<>();
-        this.gameSize = 0;
 
         for (int i = 0; i <size ; i++) {
             User user = new User(clients.get(i).getUsername());
@@ -66,17 +98,19 @@ public class Lobby {
 
         Game game = new Game(players);
 
-        for (int i = 0; i <size ; i++) {
-            clients.get(i).setGame(game);
+        for (int i = 0; i < size ; i++) {
+            Client client = clients.get(i);
+            client.setGame(game);
+            client.setSearchingGame(false);
         }
 
         clients.removeAll(clients.subList(0, size));
 
-        if(clients.size() == 0){
-            return;
+        if(clients.size() != 0){
+            clients.get(0).send(new GameSizeRequest(clients.size()));
         }
 
-        //clients.get(0).notify(); setSize
+        return true;
 
     }
 

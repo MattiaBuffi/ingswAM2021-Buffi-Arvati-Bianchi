@@ -17,6 +17,6 @@ public class Login implements Message<ClientEventHandler> {
 
     @Override
     public void accept(ClientEventHandler handler) {
-        //handler.handle(this);
+        handler.handle(this);
     }
 }

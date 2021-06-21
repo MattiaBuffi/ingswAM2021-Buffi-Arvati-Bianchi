@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers;
 
+import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
@@ -27,8 +28,12 @@ public class ConnectionPage extends ModelEventHandler.Default implements Layout 
 
 
     public void connect(){
-        backEnd.connectToServer(tfIpAddress.getText(), Integer.parseInt(tfPortNumber.getText()));
-        //App.setRoot("username_page");
+        if(backEnd.connectToServer(tfIpAddress.getText(), Integer.parseInt(tfPortNumber.getText()))){
+            App.setScene("username_page");
+        } else {
+            tfIpAddress.clear();
+            tfPortNumber.clear();
+        }
     }
 
 

@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 
-public class ResourceBuffer implements ResourceMarketHandler, MarbleHandler{
+public class ResourceBuffer implements ResourceMarketHandler{
 
     /*
     private static final BiFunction<SelectableMarble, Marble.Color, Boolean> selectableComparator = (m1, m2)->{
@@ -96,7 +96,7 @@ public class ResourceBuffer implements ResourceMarketHandler, MarbleHandler{
             broadcaster.notifyAllPlayers(new MarketResourceTaken(color));
             return true;
         }
-        broadcaster.notifyUser(new ErrorUpdate("0", "marble not found"));
+        broadcaster.notifyUser(new ErrorUpdate("marble not found"));
         return false;
     }
 

@@ -23,8 +23,8 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     }
 
 
-    public void connectToServer(String ip, int port){
-        //app.onlineController( ip, port);
+    public boolean connectToServer(String ip, int port){
+        return app.onlineController( ip, port);
     }
 
     public void localGame(){
@@ -55,7 +55,10 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     @Override
     public void update(Message<ModelEventHandler> event) {
+        System.out.println("backend received a message");
         event.accept(eventHandler);
     }
+
+
 
 }

@@ -1,6 +1,6 @@
+
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Controller.ServerController;
 import it.polimi.ingsw.Network.*;
 
 
@@ -37,10 +37,7 @@ public class ServerApp implements SocketHandler {
     private final int port;
 
 
-    //private ServerModel model;
-    private ServerController controller;
     private SocketCreator networkManager;
-
 
 
     private ExecutorService executor;
@@ -48,8 +45,6 @@ public class ServerApp implements SocketHandler {
 
     private ServerApp(int port){
         this.port = port;
-        //this.model = new ServerModel();
-        this.controller = new ServerController();
         this.networkManager = new SocketCreator(port, this);
 
         this.executor = Executors.newCachedThreadPool();
@@ -131,6 +126,6 @@ public class ServerApp implements SocketHandler {
         }
 
     }
-
+*/
 
 }

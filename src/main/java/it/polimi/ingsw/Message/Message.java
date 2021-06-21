@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Message;
 
-public interface Message<T> {
+import java.io.Serializable;
+
+public interface Message<T> extends Serializable {
 
     void accept(T handler);
 

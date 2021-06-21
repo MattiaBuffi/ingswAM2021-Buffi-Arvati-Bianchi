@@ -1,8 +1,13 @@
 package it.polimi.ingsw.Client;
 
+import com.sun.javafx.iio.ios.IosDescriptor;
+
 import java.io.IOException;
 
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -12,31 +17,37 @@ public class ClientApp {
 
     private Controller controller;
     private ViewBackEnd backEnd;
+    private Executor executor;
 
+    public ClientApp() {
+        this.executor = Executors.newCachedThreadPool();
+    }
 
-    private Socket getSocket(String ip, int port){
-        try {
-            Socket socket = new Socket(ip,port);
-            return socket;
-        } catch (IOException e) {
-            //return something???
-            e.printStackTrace();
-        }
-        System.out.println("WHY????");
-        return null;
+    public void setBackEnd(ViewBackEnd backEnd) {
+        this.backEnd = backEnd;
+    }
+
+    private Socket getSocket(String ip, int port) throws IOException {
+        Socket socket = new Socket(ip,port);
+        return socket;
     }
 
 
-    public void onlineController(String ip, int port){
+    public boolean onlineController(String ip, int port){
 
         if(!validIP(ip)){
-            return;
+            return false;
         }
 
-        this.controller = new OnlineController(getSocket(ip,port));
+        try {
+            this.controller = new OnlineController(getSocket(ip,port), executor);
+        } catch (IOException e) {
+            return false;
+        }
+
         this.controller.addObserver(backEnd);
         backEnd.addObserver(controller);
-
+        return true;
     }
 
     public void localController(){

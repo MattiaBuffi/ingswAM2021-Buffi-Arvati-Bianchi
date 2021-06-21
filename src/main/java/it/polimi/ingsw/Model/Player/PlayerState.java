@@ -40,7 +40,7 @@ public abstract class PlayerState {
     }
 
     protected boolean invalidAction(Player player){
-        player.notifyUser(new ErrorUpdate("0", "illegal action"));
+        player.notifyUser(new ErrorUpdate( "illegal action"));
         return false;
     }
 
