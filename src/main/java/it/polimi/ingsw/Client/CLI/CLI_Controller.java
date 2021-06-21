@@ -32,87 +32,89 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
 
     public CLI_Controller(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
+
     }
 
-    public void CLIView() throws IOException {
+    public void CLIView() throws IOException{
         char[] home = readSchematics(2);
         char[] production = readSchematics(3);
         char[] cardMarket = readSchematics(4);
         char[] rssMarket = readSchematics(5);
+
+        StartPage start = new StartPage(backEnd);
+        LoadingPage loading = new LoadingPage(backEnd);
+        NewGamePage newGame = new NewGamePage(backEnd);
+        JoinGamePage joinGame = new JoinGamePage(backEnd);
+        WaitPage waitPage = new WaitPage(backEnd);
+        SelectionPage selectionPage = new SelectionPage(backEnd);
+        HomePage homePage = new HomePage(backEnd, home);
+        ProductionPage productionPage = new ProductionPage(backEnd, production);
+        CardMarketPage cardMarketPage = new CardMarketPage(backEnd, cardMarket);
+        RssMarketPage rssMarketPage = new RssMarketPage(backEnd, rssMarket);
+        ViewPage viewPage = new ViewPage(backEnd);
+        QuitPage quitPage = new QuitPage(backEnd);
 
         scene = "START";
         while(!scene.equals("exit")) {
             switch (scene) {
                 case "START":
                     //cls();
-                    StartPage start = new StartPage(backEnd);
                     start.StartPageView();
                     break;
 
                 case "LOADING":
                    // cls();
-                    LoadingPage loading = new LoadingPage(backEnd);
                     loading.LoadingPageView();
                     break;
 
                 case "NEWGAME":
                     // cls();
-                    NewGamePage newGame = new NewGamePage(backEnd);
                     newGame.NewGamePageView();
                     break;
 
                 case "JOINGAME":
                     // cls();
-                    JoinGamePage joinGame = new JoinGamePage(backEnd);
                     joinGame.JoinGamePageView();
                     break;
 
                 case "WAIT":
-                    WaitPage waitPage = new WaitPage(backEnd);
+                    //cls();
                     waitPage.WaitPageView();
                     break;
 
-
                 case "SELECTION":
                     //cls();
-                    SelectionPage selectionPage = new SelectionPage(backEnd);
                     selectionPage.SelectionPageView();
                     break;
 
                 case "HOME":
                     // cls();
-                    HomePage homePage = new HomePage(backEnd, home);
                     homePage.HomePageView();
                     break;
 
                 case "PRODUCE":
                   //  cls();
-                    ProductionPage productionPage = new ProductionPage(backEnd, production);
                     productionPage.ProductionPageView();
                     break;
 
                 case "CARDMARKET":
                     //cls();
-                    CardMarketPage cardMarketPage = new CardMarketPage(backEnd, cardMarket);
                     cardMarketPage.CardMarketPageView();
                     break;
 
                 case "RSSMARKET":
                     //cls();
-                    RssMarketPage rssMarketPage = new RssMarketPage(backEnd, rssMarket);
                     rssMarketPage.RssMarketPageView();
                     break;
 
 
                 case "VIEW":
                     //cls();
-                    ViewPage viewPage = new ViewPage(backEnd);
                     viewPage.ViewPageView();
                     break;
 
                 case "QUIT":
                     //cls();
-                    QuitPage quitPage = new QuitPage(backEnd);
                     quitPage.QuitPageView();
                     break;
 
