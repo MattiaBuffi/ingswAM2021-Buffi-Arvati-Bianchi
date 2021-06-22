@@ -24,8 +24,6 @@ public class ModelUpdater implements ModelEventHandler {
         model.current.updateShelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor());
     }
 
-
-
     @Override
     public void handle(DevelopmentCardBuyUpdate event) {
 
@@ -35,32 +33,22 @@ public class ModelUpdater implements ModelEventHandler {
                         event.getProduce(),
                         event.getRequire())
         );
-
-
     }
-
-
 
     @Override
     public void handle(ErrorUpdate error) {
         //
     }
 
-
-
     @Override
     public void handle(MarketResourceAvailable event) {
-        model.resourceMarketBuffer.add(event.getColor());
-
+        model.resourceMarketBuffer.add(event.getMarble());
     }
-
-
 
     @Override
     public void handle(MarketResourceTaken event) {
         model.resourceMarketBuffer.remove(event.getColor());
     }
-
 
 
     @Override
@@ -91,8 +79,6 @@ public class ModelUpdater implements ModelEventHandler {
         model.usedProduction.add(event.getId());
 
     }
-
-
 
     @Override
     public void handle(ResourceMarketUpdate event) {

@@ -11,7 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
@@ -22,7 +24,11 @@ public class StorageTab implements Layout {
     @FXML
     Label yellowValue, purpleValue, blueValue, greyValue;
     @FXML
+    Rectangle shelfSel1, shelfSel2, shelfSel3;
+    @FXML
     Pane leaderStorageContainer;
+
+    private Rectangle lastSelection = new Rectangle();
     private ImageView[] shelf_1;
     private ImageView[] shelf_2;
     private ImageView[] shelf_3;
@@ -43,11 +49,13 @@ public class StorageTab implements Layout {
         shelf_1 = new ImageView[]{res1_1};
         shelf_2 = new ImageView[]{res2_1, res2_2};
         shelf_3 = new ImageView[]{res3_1, res3_2, res3_3};
+
+        lastSelection = shelfSel1;
     }
 
 
     public void updateShelves() {
-        List<Shelf> shelves = backEnd.getModel().current.getShelves();
+        List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
         for(Shelf s: shelves){
             if(s.maxSize == 1){
                 updateSingleShelf(shelf_1, s);
@@ -60,24 +68,11 @@ public class StorageTab implements Layout {
     }
 
     public void updateChest() {
-        ResourceList resourceList = backEnd.getModel().current.getChest();
+        ResourceList resourceList = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getChest();
         Marble.Color[] colors = new Marble.Color[]{Marble.Color.YELLOW, Marble.Color.PURPLE, Marble.Color.BLUE, Marble.Color.GREY};
 
         for(Marble.Color color: colors){
-            switch (color){
-                case YELLOW:
-                    yellowValue.setText(String.valueOf(resourceList.getSize(color)));
-                    break;
-                case PURPLE:
-                    purpleValue.setText(String.valueOf(resourceList.getSize(color)));
-                    break;
-                case BLUE:
-                    blueValue.setText(String.valueOf(resourceList.getSize(color)));
-                    break;
-                case GREY:
-                    greyValue.setText(String.valueOf(resourceList.getSize(color)));
-                    break;
-            }
+            changeResourceValue(color, resourceList.getSize(color));
         }
     }
 
@@ -135,5 +130,33 @@ public class StorageTab implements Layout {
     }
 
 
+    public void res11selected() {
+        showSelection(shelfSel1);
+    }
 
+    public void res21selected() {
+        showSelection(shelfSel2);
+    }
+
+    public void res22selected() {
+        showSelection(shelfSel2);
+    }
+
+    public void res31selected() {
+        showSelection(shelfSel3);
+    }
+
+    public void res32selected() {
+        showSelection(shelfSel3);
+    }
+
+    public void res33selected() {
+        showSelection(shelfSel3);
+    }
+
+    private void showSelection(Rectangle rectangle){
+        lastSelection.setVisible(false);
+        rectangle.setVisible(!rectangle.isVisible());
+        lastSelection = rectangle;
+    }
 }

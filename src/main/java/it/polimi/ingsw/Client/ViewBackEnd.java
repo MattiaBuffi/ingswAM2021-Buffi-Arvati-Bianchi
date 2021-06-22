@@ -43,8 +43,6 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     }
 
 
-
-
     public void setModel(ViewModel model){
         this.model = model;
     }

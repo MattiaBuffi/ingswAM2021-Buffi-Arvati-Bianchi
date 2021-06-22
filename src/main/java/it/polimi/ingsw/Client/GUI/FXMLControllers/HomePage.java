@@ -6,25 +6,21 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 
 public class HomePage implements Layout {
 
+    private final String NEXT_SCENE[] = new String[]{"connection_page", "..."};
     private ViewBackEnd backEnd;
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
-    }
-
-    public void initialize(){
         System.out.println("HomePage");
         this.backEnd = backEnd;
     }
 
-
-
-    public void goToConnectionPage(){
-        App.setScene("connection_page");
+    public void setupOnlineGame(){
+        App.setScene(NEXT_SCENE[0]);
     }
 
-
-
+    public void setupOfflineGame(){
+        //...
+    }
 
 }

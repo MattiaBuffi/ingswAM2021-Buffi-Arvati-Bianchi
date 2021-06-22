@@ -1,16 +1,22 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.GUI.FXMLControllers.ErrorPopup;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.LeaderCardSelection;
 import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * JavaFX App
@@ -30,14 +36,14 @@ public class App extends Application {
 
         app.setBackEnd(backEnd);
 
-        scene = new Scene(loadFXML("home_page"));
-        //scene = new Scene(loadFXML("game_board"));
+        //scene = new Scene(loadFXML("home_page"));
+        scene = new Scene(loadFXML("game_board"));
         //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(true);
 
         //setScene("game_board");
-        setScene("home_page");
+        //setScene("home_page");
         stage.show();
     }
 
@@ -66,17 +72,36 @@ public class App extends Application {
 
     }
 
-    public static void showPopUp(String fxml) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/" + fxml + ".fxml"));
+    public static void showErrorPopUp(String errorMessage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/error_popup.fxml"));
         AnchorPane shadowPane = loader.load();
 
         Scene scene = new Scene(shadowPane);
         Stage stage = new Stage();
         stage.setScene(scene);
 
+        ErrorPopup controller = loader.getController();
+        controller.setMessage(errorMessage);
+
+        scene.setFill(Color.TRANSPARENT);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void showLeaderCardsPopUp(List<LeaderCard> leaderCards, LeaderCardsTab mainController) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/leader_card_selection.fxml"));
+        AnchorPane shadowPane = loader.load();
+
+        Scene scene = new Scene(shadowPane);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        LeaderCardSelection controller = loader.getController();
+        controller.initData(leaderCards, mainController);
+
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
-        //stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

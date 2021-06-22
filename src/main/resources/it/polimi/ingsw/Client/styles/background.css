@@ -52,3 +52,7 @@
 .bg_beige{
     -fx-background-color: #cec4a6;
 }
+.bg_error{
+    -fx-background-image: url("../images/backgrounds/error.png");
+    -fx-background-size: 100% 100%;
+}

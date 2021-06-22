@@ -23,5 +23,4 @@ public class MarketResourceTaken implements Message<ModelEventHandler> {
         handler.handle(this);
     }
 
-
 }

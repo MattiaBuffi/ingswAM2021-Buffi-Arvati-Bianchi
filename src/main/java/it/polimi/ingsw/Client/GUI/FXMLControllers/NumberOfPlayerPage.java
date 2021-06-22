@@ -13,7 +13,7 @@ public class NumberOfPlayerPage implements Layout{
     @FXML
     ChoiceBox<Integer> choiceBox;
 
-
+    private final String NEXT_SCENE = "waiting_page";
     private ViewBackEnd backEnd;
 
     @Override
@@ -24,20 +24,12 @@ public class NumberOfPlayerPage implements Layout{
 
     public void goToWaitingRoom(){
         //System.out.println("ITEM - " + choiceBox.getSelectionModel().getSelectedItem());
-        GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
-        backEnd.notify(message);
-        /*try {
-            showPopUp();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(choiceBox.getSelectionModel().getSelectedItem()!=null) {
+            GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
+            backEnd.notify(message);
+
+            App.setScene(NEXT_SCENE);
+        }
     }
-
-    private void showPopUp() throws IOException {
-        App.showPopUp("waiting_page");
-    }
-
-
-
 
 }

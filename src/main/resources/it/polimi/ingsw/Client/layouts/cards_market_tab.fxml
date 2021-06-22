@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -47,12 +49,26 @@
             <Rectangle fx:id="rectangle23" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="710.0" layoutY="235.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="140.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
-      <Button alignment="CENTER" layoutX="1218.0" layoutY="370.0" mnemonicParsing="false" onAction="#buyCardSelected" prefHeight="70.0" prefWidth="95.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="BUY" textAlignment="CENTER" textFill="#cec4a6">
+      <Button alignment="CENTER" layoutX="1218.0" layoutY="424.0" mnemonicParsing="false" onAction="#buyCardSelected" prefHeight="70.0" prefWidth="95.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="BUY" textAlignment="CENTER" textFill="#cec4a6">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
       <ImageView fx:id="leaderDiscount1" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="leaderDiscount2" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
+      <ChoiceBox fx:id="columnChoice" layoutX="1217.0" layoutY="361.0" prefHeight="25.0" prefWidth="95.0">
+          <items>
+              <FXCollections fx:factory="observableArrayList">
+                  <Integer fx:value="1" />
+                  <Integer fx:value="2" />
+                  <Integer fx:value="3" />
+              </FXCollections>
+          </items>
+      </ChoiceBox>
+      <Label alignment="CENTER" layoutX="1211.0" layoutY="308.0" prefHeight="44.0" prefWidth="111.0" text="Choose the &#10;production column " textAlignment="CENTER" textFill="#565033">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

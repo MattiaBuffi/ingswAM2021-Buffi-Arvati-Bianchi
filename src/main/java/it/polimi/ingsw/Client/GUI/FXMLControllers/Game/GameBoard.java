@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
+import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.scene.control.Tab;
+
+import java.io.IOException;
 
 
 public class GameBoard implements Layout, ModelEventHandler {
@@ -38,12 +41,15 @@ public class GameBoard implements Layout, ModelEventHandler {
 
         productionTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);
+        storageTab_Controller.setup(backEnd);
     }
 
 
     @Override
     public void handle(ChestUpdate event) {
         backEnd.getModel().updateModel(event);
+
+        storageTab_Controller.updateChest();
     }
 
     @Override
@@ -53,7 +59,11 @@ public class GameBoard implements Layout, ModelEventHandler {
 
     @Override
     public void handle(ErrorUpdate error) {
-
+        try {
+            App.showErrorPopUp(error.getErrorMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -86,16 +96,22 @@ public class GameBoard implements Layout, ModelEventHandler {
     @Override
     public void handle(ResourceMarketUpdate event) {
         backEnd.getModel().updateModel(event);
+
+        resourceMarket_Controller.updateMarket(event.getMarbles(), event.getPosition());
     }
 
     @Override
     public void handle(ShelfUpdate event) {
         backEnd.getModel().updateModel(event);
+
+        storageTab_Controller.updateShelves();
     }
 
     @Override
     public void handle(ResourceMarketExtra event) {
         backEnd.getModel().updateModel(event);
+
+        resourceMarket_Controller.updateBonusMarble(event.getMarble().getColor());
     }
 
 
@@ -113,6 +129,5 @@ public class GameBoard implements Layout, ModelEventHandler {
     public void handle(WaitingPlayersUpdate event) {
 
     }
-
 
 }

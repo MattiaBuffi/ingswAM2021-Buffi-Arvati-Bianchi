@@ -7,9 +7,12 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+
+import java.io.IOException;
 
 public class CardsMarketTab implements Layout{
 
@@ -25,6 +28,8 @@ public class CardsMarketTab implements Layout{
 
     @FXML
     ImageView leaderDiscount1, leaderDiscount2;
+    @FXML
+    ChoiceBox<Integer> columnChoice;
 
     private ImageView[][] cardsMatrix;
     private ImageView[] leaderDiscount;
@@ -32,7 +37,6 @@ public class CardsMarketTab implements Layout{
     private int cardSelected = -1;
     private int cardSelectedX = -1;
     private int cardSelectedY = -1;
-    private int productionColumn = 1;
 
 
     private ViewBackEnd backEnd;
@@ -49,16 +53,13 @@ public class CardsMarketTab implements Layout{
         updateAllCards();
     }
 
-
-
-
     public void buyCardSelected(){
         if(cardSelectedX != -1 && cardSelectedY != -1){
-            /**
-             * TODO: selection of production column
-             */
-            BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, productionColumn);
-            backEnd.notify(message);
+            if(columnChoice.getSelectionModel().getSelectedItem() != null) {
+                System.out.println(columnChoice.getSelectionModel().getSelectedItem());
+                BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, columnChoice.getSelectionModel().getSelectedItem());
+                backEnd.notify(message);
+            }
         }
     }
 
@@ -187,12 +188,5 @@ public class CardsMarketTab implements Layout{
         cardSelectedX = x;
         cardSelectedY = y;
     }
-
-
-
-
-
-    
-
 
 }

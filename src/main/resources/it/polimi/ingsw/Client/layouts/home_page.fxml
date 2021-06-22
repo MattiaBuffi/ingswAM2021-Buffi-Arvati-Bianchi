@@ -9,12 +9,12 @@
    <children>
       <HBox layoutX="362.0" layoutY="348.0" prefHeight="141.0" prefWidth="556.0">
          <children>
-            <Button fx:id="localButton" alignment="CENTER" mnemonicParsing="false" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="LOCAL&#10;GAME" textAlignment="CENTER" textFill="#01607b">
+            <Button fx:id="localButton" alignment="CENTER" mnemonicParsing="false" onAction="#setupOfflineGame" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="LOCAL&#10;GAME" textAlignment="CENTER" textFill="#01607b">
                <font>
                   <Font name="Franklin Gothic Demi" size="48.0" />
                </font>
             </Button>
-            <Button fx:id="onlineButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToConnectionPage" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="ONLINE&#10;GAME" textAlignment="CENTER" textFill="#01607b">
+            <Button fx:id="onlineButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#setupOnlineGame" prefHeight="139.0" prefWidth="254.0" styleClass="play_button" stylesheets="@../styles/buttons.css" text="ONLINE&#10;GAME" textAlignment="CENTER" textFill="#01607b">
                <font>
                   <Font name="Franklin Gothic Demi" size="48.0" />
                </font>

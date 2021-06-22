@@ -59,8 +59,6 @@ public interface ClientEventHandler {
         }
     }
 
-
-
     void handle(ActivateLeaderCard event);
 
     void handle(DiscardLeaderCard event);
@@ -76,7 +74,6 @@ public interface ClientEventHandler {
     void handle(CardProduction event);
 
     void handle(LeaderCardProduction event);
-
 
     void handle(Login event);
 

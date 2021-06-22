@@ -51,9 +51,6 @@ public class NewServerApp implements Server, SocketHandler {
     private final Lobby lobby;
 
 
-
-
-
     private NewServerApp(int port){
         this.port = port;
         this.networkManager = new SocketCreator(port, this);

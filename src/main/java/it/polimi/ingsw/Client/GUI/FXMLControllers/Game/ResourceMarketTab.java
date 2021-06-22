@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceMarketTab implements Layout{
@@ -55,7 +56,11 @@ public class ResourceMarketTab implements Layout{
         }
     }
 
-    public void updateMarket(List<Marble.Color> colors, int position) {
+    public void updateMarket(List<Marble> marbles, int position) {
+        List<Marble.Color> colors = new ArrayList<>();
+        for(Marble m: marbles){
+            colors.add(m.getColor());
+        }
         for(int i=0; i<colors.size(); i++){
             rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
         }
