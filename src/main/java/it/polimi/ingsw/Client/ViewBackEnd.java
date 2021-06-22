@@ -6,6 +6,7 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
+import javafx.application.Platform;
 
 public class ViewBackEnd extends Observable<Message<ClientEventHandler>> implements Observer<Message<ModelEventHandler>> {
 
@@ -55,8 +56,7 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     @Override
     public void update(Message<ModelEventHandler> event) {
-        System.out.println("backend received a message");
-        event.accept(eventHandler);
+        Platform.runLater( ()->event.accept(eventHandler) );
     }
 
 

@@ -8,6 +8,8 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.*;
+import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Utils.Observable;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
+public class CLI_Controller extends Observable<Message<ClientEventHandler>> implements ModelEventHandler {
     private static final int[] FaithCellPosition = {1102, 1107,1112,713,314, 319, 324, 329, 334,339,738,1137, 1142,1147,1152,1157,1162,763,364,369,374,379,384,389,394,399};
     private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
     private static final int[] HomeLeaderCost = {2304, 2330};
@@ -62,8 +64,16 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "carcScheme.txt"};
 
-    public void CLIView(ViewBackEnd backEndController) throws IOException {
+
+
+    public CLI_Controller(ViewBackEnd backEndController){
         this.backEnd = backEndController;
+        backEnd.setEventHandler(this);
+    }
+
+
+    public void CLIView() throws IOException {
+
         char[] home = readSchematics(2);
         char[] production = readSchematics(3);
         char[] cardMarket = readSchematics(4);
@@ -663,5 +673,78 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>>  {
             }
         }
         return colorString.toString();
+    }
+
+
+
+
+    @Override
+    public void handle(ChestUpdate event) {
+
+    }
+
+    @Override
+    public void handle(DevelopmentCardBuyUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ErrorUpdate error) {
+
+    }
+
+    @Override
+    public void handle(MarketResourceAvailable event) {
+
+    }
+
+    @Override
+    public void handle(MarketResourceTaken marketResourceTaken) {
+
+    }
+
+    @Override
+    public void handle(MarketCardUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ModelUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ProductionBufferUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ResourceMarketUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ShelfUpdate event) {
+
+    }
+
+    @Override
+    public void handle(ResourceMarketExtra resourceMarketExtra) {
+
+    }
+
+    @Override
+    public void handle(GameSizeRequest event) {
+
+    }
+
+    @Override
+    public void handle(UsernameSelected event) {
+
+    }
+
+    @Override
+    public void handle(WaitingPlayersUpdate event) {
+
     }
 }

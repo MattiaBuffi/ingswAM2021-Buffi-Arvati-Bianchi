@@ -49,7 +49,7 @@ public class LeaderCardBuilder {
     }
 
 
-    @SerializedName("RequirementType")
+    @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("RequirementType")

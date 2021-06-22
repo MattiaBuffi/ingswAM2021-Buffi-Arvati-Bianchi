@@ -17,9 +17,24 @@ public class Lobby {
 
     public Lobby(){
         this.clientWaitingQueue = new ArrayList<>();
-        this.gameSize = 0;
+        this.gameSize = Integer.MAX_VALUE;
     }
 
+
+    public void removeClient(Client client){
+        clientWaitingQueue.remove(client);
+
+
+        if(clientWaitingQueue.size() == 0){
+            gameSize = Integer.MAX_VALUE;
+            return;
+        }
+
+        if(gameSize == Integer.MAX_VALUE){
+            clientWaitingQueue.get(0).send(new GameSizeRequest(clientWaitingQueue.size()));
+        }
+
+    }
 
     public void join(Client client){
 
@@ -37,16 +52,17 @@ public class Lobby {
         }
 
         if(startGame(gameSize, clientWaitingQueue)){
-            gameSize = 0;
+            gameSize = Integer.MAX_VALUE;
         }
 
 
     }
 
 
+
     public void setGameSize(Client client, int size){
 
-        if (gameSize != 0){
+        if (gameSize != Integer.MAX_VALUE){
             client.send(new ErrorUpdate("game size already set"));
             return;
         }
@@ -56,9 +72,10 @@ public class Lobby {
             return;
         }
 
+        gameSize = size;
 
         if(startGame(gameSize, clientWaitingQueue)){
-            gameSize = 0;
+            gameSize = Integer.MAX_VALUE;
         }
 
 

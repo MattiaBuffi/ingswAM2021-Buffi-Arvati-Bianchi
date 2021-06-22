@@ -1,23 +1,23 @@
 package it.polimi.ingsw.Client;
 
-import com.sun.javafx.iio.ios.IosDescriptor;
+import it.polimi.ingsw.Network.ConnectionHandler;
 
 import java.io.IOException;
 
 import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class ClientApp {
+public class ClientApp implements ConnectionHandler.ShutdownHandler {
 
 
     private Controller controller;
     private ViewBackEnd backEnd;
-    private Executor executor;
+    private ExecutorService executor;
 
     public ClientApp() {
         this.executor = Executors.newCachedThreadPool();
@@ -40,10 +40,13 @@ public class ClientApp {
         }
 
         try {
-            this.controller = new OnlineController(getSocket(ip,port), executor);
+            this.controller = new OnlineController(getSocket(ip,port), executor, this);
         } catch (IOException e) {
+            System.err.println("Socket creation failed");
             return false;
         }
+
+
 
         this.controller.addObserver(backEnd);
         backEnd.addObserver(controller);
@@ -58,9 +61,28 @@ public class ClientApp {
 
 
     public void removeController(){
-        this.backEnd.removeObserver(controller);
-        this.controller.disconnect();
-        this.controller = null;
+        if(controller != null){
+            this.backEnd.removeObserver(controller);
+            this.controller.disconnect();
+            this.controller = null;
+        }
+    }
+
+    public void quit(){
+
+        removeController();
+
+        try {
+            executor.shutdown();
+            executor.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            if (!executor.isTerminated()) {
+                executor.shutdownNow();
+            }
+        }
+
     }
 
 
@@ -79,6 +101,9 @@ public class ClientApp {
     }
 
 
-
-
+    @Override
+    public void close(ConnectionHandler connection) {
+        removeController();
+        App.setScene("home_page");
+    }
 }

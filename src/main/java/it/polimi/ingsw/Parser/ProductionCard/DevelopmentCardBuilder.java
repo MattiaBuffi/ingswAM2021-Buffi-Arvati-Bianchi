@@ -29,37 +29,37 @@ public class DevelopmentCardBuilder {
 
         public CardBuilder setId(String id) {
             this.id = id;
-            return null;
+            return this;
         }
 
         public CardBuilder setVictoryPoint(int point) {
             this.victoryPoints = point;
-            return null;
+            return this;
         }
 
         public CardBuilder setRequire(ResourceList require) {
             this.require = require;
-            return null;
+            return this;
         }
 
         public CardBuilder setProduce(ResourceList produce) {
             this.produce = produce;
-            return null;
+            return this;
         }
 
         public CardBuilder setLevel(int level) {
             this.level = level;
-            return null;
+            return this;
         }
 
         public CardBuilder setColor(DevelopmentCard.Color color) {
             this.color = color;
-            return null;
+            return this;
         }
 
         public CardBuilder setCost(ResourceList cost) {
             this.cost = cost;
-            return null;
+            return this;
         }
     }
 

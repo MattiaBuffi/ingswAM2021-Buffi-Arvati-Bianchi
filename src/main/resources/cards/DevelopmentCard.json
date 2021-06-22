@@ -1,5 +1,6 @@
 [
   {
+    "Id":"DC_1",
     "Color": "GREEN",
     "Level": 1,
     "Victory_Points": 1,
@@ -8,6 +9,7 @@
     "Produce": ["1R"]
   },
   {
+    "Id":"DC_2",
     "Color": "GREEN",
     "Level": 1,
     "Victory_Points": 2,
@@ -16,6 +18,7 @@
     "Produce": ["1P"]
   },
   {
+    "Id":"DC_3",
     "Color": "GREEN",
     "Level": 1,
     "Victory_Points": 3,
@@ -24,6 +27,7 @@
     "Produce": ["1Y", "1B", "1G"]
   },
   {
+    "Id":"DC_4",
     "Color": "GREEN",
     "Level": 1,
     "Victory_Points": 4,
@@ -32,6 +36,7 @@
     "Produce": ["2Y", "1R"]
   },
   {
+    "Id":"DC_5",
     "Color": "PURPLE",
     "Level": 1,
     "Victory_Points": 1,
@@ -40,6 +45,7 @@
     "Produce": ["1R"]
   },
   {
+    "Id":"DC_6",
     "Color": "PURPLE",
     "Level": 1,
     "Victory_Points": 2,
@@ -48,6 +54,7 @@
     "Produce": ["1B"]
   },
   {
+    "Id":"DC_7",
     "Color": "PURPLE",
     "Level": 1,
     "Victory_Points": 3,
@@ -56,6 +63,7 @@
     "Produce": ["1P", "1B", "1G"]
   },
   {
+    "Id":"DC_8",
     "Color": "PURPLE",
     "Level": 1,
     "Victory_Points": 4,
@@ -64,6 +72,7 @@
     "Produce": ["2G", "1R"]
   },
   {
+    "Id":"DC_9",
     "Color": "BLUE",
     "Level": 1,
     "Victory_Points": 1,
@@ -72,6 +81,7 @@
     "Produce": ["1R"]
   },
   {
+    "Id":"DC_10",
     "Color": "BLUE",
     "Level": 1,
     "Victory_Points": 2,
@@ -80,6 +90,7 @@
     "Produce": ["1G"]
   },
   {
+    "Id":"DC_11",
     "Color": "BLUE",
     "Level": 1,
     "Victory_Points": 3,
@@ -88,6 +99,7 @@
     "Produce": ["1Y", "1P", "1B"]
   },
   {
+    "Id":"DC_12",
     "Color": "BLUE",
     "Level": 1,
     "Victory_Points": 4,
@@ -96,6 +108,7 @@
     "Produce": ["2P", "1R"]
   },
   {
+    "Id":"DC_13",
     "Color": "YELLOW",
     "Level": 1,
     "Victory_Points": 1,
@@ -104,6 +117,7 @@
     "Produce": ["1R"]
   },
   {
+    "Id":"DC_14",
     "Color": "YELLOW",
     "Level": 1,
     "Victory_Points": 2,
@@ -112,6 +126,7 @@
     "Produce": ["1Y"]
   },
   {
+    "Id":"DC_15",
     "Color": "YELLOW",
     "Level": 1,
     "Victory_Points": 3,
@@ -120,6 +135,7 @@
     "Produce": ["1Y","1P","1G"]
   },
   {
+    "Id":"DC_16",
     "Color": "YELLOW",
     "Level": 1,
     "Victory_Points": 4,
@@ -128,6 +144,7 @@
     "Produce": ["2B","1R"]
   },
   {
+    "Id":"DC_17",
     "Color": "GREEN",
     "Level": 2,
     "Victory_Points": 5,
@@ -136,6 +153,7 @@
     "Produce": ["2R"]
   },
   {
+    "Id":"DC_18",
     "Color": "GREEN",
     "Level": 2,
     "Victory_Points": 6,
@@ -144,6 +162,7 @@
     "Produce": ["3G"]
   },
   {
+    "Id":"DC_19",
     "Color": "GREEN",
     "Level": 2,
     "Victory_Points": 7,
@@ -152,6 +171,7 @@
     "Produce": ["2G","2R"]
   },
   {
+    "Id":"DC_20",
     "Color": "GREEN",
     "Level": 2,
     "Victory_Points": 8,
@@ -160,6 +180,7 @@
     "Produce": ["2B","1R"]
   },
   {
+    "Id":"DC_21",
     "Color": "PURPLE",
     "Level": 2,
     "Victory_Points": 5,
@@ -168,6 +189,7 @@
     "Produce": ["1R"]
   },
   {
+    "Id":"DC_22",
     "Color": "PURPLE",
     "Level": 2,
     "Victory_Points": 6,
@@ -176,6 +198,7 @@
     "Produce": ["3P"]
   },
   {
+    "Id":"DC_23",
     "Color": "PURPLE",
     "Level": 2,
     "Victory_Points": 7,
@@ -184,6 +207,7 @@
     "Produce": ["2Y","2R"]
   },
   {
+    "Id":"DC_24",
     "Color": "PURPLE",
     "Level": 2,
     "Victory_Points": 8,
@@ -192,6 +216,7 @@
     "Produce": ["2P","1R"]
   },
   {
+    "Id":"DC_25",
     "Color": "BLUE",
     "Level": 2,
     "Victory_Points": 5,
@@ -200,6 +225,7 @@
     "Produce": ["2R"]
   },
   {
+    "Id":"DC_26",
     "Color": "BLUE",
     "Level": 2,
     "Victory_Points": 6,
@@ -208,6 +234,7 @@
     "Produce": ["3P"]
   },
   {
+    "Id":"DC_27",
     "Color": "BLUE",
     "Level": 2,
     "Victory_Points": 7,
@@ -216,6 +243,7 @@
     "Produce": ["2P","2R"]
   },
   {
+    "Id":"DC_28",
     "Color": "BLUE",
     "Level": 2,
     "Victory_Points": 8,
@@ -224,6 +252,7 @@
     "Produce": ["2G","1R"]
   },
   {
+    "Id":"DC_29",
     "Color": "YELLOW",
     "Level": 2,
     "Victory_Points": 5,
@@ -232,6 +261,7 @@
     "Produce": ["2R"]
   },
   {
+    "Id":"DC_30",
     "Color": "YELLOW",
     "Level": 2,
     "Victory_Points": 6,
@@ -240,6 +270,7 @@
     "Produce": ["3Y"]
   },
   {
+    "Id":"DC_31",
     "Color": "YELLOW",
     "Level": 2,
     "Victory_Points": 7,
@@ -248,6 +279,7 @@
     "Produce": ["2P","2R"]
   },
   {
+    "Id":"DC_32",
     "Color": "YELLOW",
     "Level": 2,
     "Victory_Points": 8,
@@ -256,6 +288,7 @@
     "Produce": ["2Y","1R"]
   },
   {
+    "Id":"DC_33",
     "Color": "GREEN",
     "Level": 3,
     "Victory_Points": 9,
@@ -264,6 +297,7 @@
     "Produce": ["3G","2R"]
   },
   {
+    "Id":"DC_34",
     "Color": "GREEN",
     "Level": 3,
     "Victory_Points": 10,
@@ -272,6 +306,7 @@
     "Produce": ["2B","2G", "1R"]
   },
   {
+    "Id":"DC_35",
     "Color": "GREEN",
     "Level": 3,
     "Victory_Points": 11,
@@ -280,6 +315,7 @@
     "Produce": ["1Y", "3R"]
   },
   {
+    "Id":"DC_36",
     "Color": "GREEN",
     "Level": 3,
     "Victory_Points": 12,
@@ -288,6 +324,7 @@
     "Produce": ["3Y","1B"]
   },
   {
+    "Id":"DC_37",
     "Color": "PURPLE",
     "Level": 3,
     "Victory_Points": 9,
@@ -296,6 +333,7 @@
     "Produce": ["3Y","2R"]
   },
   {
+    "Id":"DC_38",
     "Color": "PURPLE",
     "Level": 3,
     "Victory_Points": 10,
@@ -304,6 +342,7 @@
     "Produce": ["2Y","2P","1R"]
   },
   {
+    "Id":"DC_39",
     "Color": "PURPLE",
     "Level": 3,
     "Victory_Points": 11,
@@ -312,6 +351,7 @@
     "Produce": ["1G","3R"]
   },
   {
+    "Id":"DC_40",
     "Color": "PURPLE",
     "Level": 3,
     "Victory_Points": 12,
@@ -320,6 +360,7 @@
     "Produce": ["3G","1P"]
   },
   {
+    "Id":"DC_41",
     "Color": "BLUE",
     "Level": 3,
     "Victory_Points": 9,
@@ -328,6 +369,7 @@
     "Produce": ["3B","2R"]
   },
   {
+    "Id":"DC_42",
     "Color": "BLUE",
     "Level": 3,
     "Victory_Points": 10,
@@ -336,6 +378,7 @@
     "Produce": ["2P","2G","1R"]
   },
   {
+    "Id":"DC_43",
     "Color": "BLUE",
     "Level": 3,
     "Victory_Points": 11,
@@ -344,6 +387,7 @@
     "Produce": ["1B", "3R"]
   },
   {
+    "Id":"DC_44",
     "Color": "BLUE",
     "Level": 3,
     "Victory_Points": 12,
@@ -352,6 +396,7 @@
     "Produce": ["1Y","3B"]
   },
   {
+    "Id":"DC_45",
     "Color": "YELLOW",
     "Level": 3,
     "Victory_Points": 9,
@@ -360,6 +405,7 @@
     "Produce": ["3P","2R"]
   },
   {
+    "Id":"DC_46",
     "Color": "YELLOW",
     "Level": 3,
     "Victory_Points": 10,
@@ -368,6 +414,7 @@
     "Produce": ["2Y","2B", "1R"]
   },
   {
+    "Id":"DC_47",
     "Color": "YELLOW",
     "Level": 3,
     "Victory_Points": 11,
@@ -376,6 +423,7 @@
     "Produce": ["1P", "3R"]
   },
   {
+    "Id":"DC_48",
     "Color": "YELLOW",
     "Level": 3,
     "Victory_Points": 12,

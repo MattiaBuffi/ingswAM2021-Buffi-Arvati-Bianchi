@@ -65,6 +65,10 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     }
 
+    @Override
+    public void handle(Ping event) {
+
+    }
 
 
     @Override

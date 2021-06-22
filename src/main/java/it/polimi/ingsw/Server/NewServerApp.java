@@ -80,6 +80,7 @@ public class NewServerApp implements Server, SocketHandler {
                 connectedClients.add(new ClientHandler(this, builder, new GameController()));
             }
         } catch (Exception e) {
+            System.err.println("Socket creation failed");
             e.printStackTrace();
         }
 
@@ -147,8 +148,9 @@ public class NewServerApp implements Server, SocketHandler {
     @Override
     public void login(Client client, String username){
         synchronized (loginHandler){
-            loginHandler.addUsername(client, username);
-            joinGame(client);
+            if(loginHandler.addUsername(client, username)){
+                joinGame(client);
+            }
         }
     }
 
@@ -179,6 +181,10 @@ public class NewServerApp implements Server, SocketHandler {
 
         synchronized (loginHandler){
             loginHandler.removeUsername(client.getUsername());
+        }
+
+        synchronized (lobby){
+            lobby.removeClient(client);
         }
 
 

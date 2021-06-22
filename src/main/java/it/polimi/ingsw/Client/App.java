@@ -41,6 +41,12 @@ public class App extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        app.quit();
+        super.stop();
+    }
+
     public static void setScene(String fxml) {
         try{
             scene.setRoot(loadFXML(fxml));

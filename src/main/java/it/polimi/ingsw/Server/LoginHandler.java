@@ -38,12 +38,16 @@ public class LoginHandler {
 
     }
 
-    public void addUsername(Client client, String username){
-        if(validUsername( client::update, username)){
-            usernameSet.add(username);
-            client.setUsername(username);
-            client.send(new UsernameSelected(username));
+    public boolean addUsername(Client client, String username){
+        if(!validUsername( client::update, username)){
+            return false;
         }
+
+        usernameSet.add(username);
+        client.setUsername(username);
+        client.send(new UsernameSelected(username));
+        return true;
+
     }
 
 

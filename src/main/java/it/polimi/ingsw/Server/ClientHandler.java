@@ -7,10 +7,10 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Network.ConnectionHandler;
 
+import java.io.IOException;
 
 
-
-public class ClientHandler extends Client implements ClientEventHandler {
+public class ClientHandler extends Client implements ClientEventHandler, ConnectionHandler.ShutdownHandler {
 
 
 
@@ -21,12 +21,14 @@ public class ClientHandler extends Client implements ClientEventHandler {
 
     private GameController gameController;
 
+
     
 
-    public ClientHandler(Server server, ConnectionHandler.Builder<Message<ClientEventHandler>, Message<ModelEventHandler>> builder, GameController controller){
+    public ClientHandler(Server server, ConnectionHandler.Builder<Message<ClientEventHandler>, Message<ModelEventHandler>> builder, GameController controller) throws IOException {
         this.server = server;
-        this.connectionHandler = builder.build(this::handleMessage);
+        this.connectionHandler = builder.build(5000, this::handleMessage, this);
         this.gameController = controller;
+
     }
 
     public void handleMessage(Message<ClientEventHandler> message){
@@ -159,6 +161,10 @@ public class ClientHandler extends Client implements ClientEventHandler {
         server.createGame(this, event.getSize());
     }
 
+    @Override
+    public void handle(Ping event) {
+
+    }
 
     @Override
     public void update(Message<ModelEventHandler> event) {
@@ -176,9 +182,15 @@ public class ClientHandler extends Client implements ClientEventHandler {
 
     @Override
     public void send(Message event) {
-        System.out.println("Server client handler is sending a message");
         connectionHandler.send(event);
     }
 
+    @Override
+    public void close(ConnectionHandler connection) {
+        System.out.println("closing connection");
+        this.active = false;
+        connection.stop();
+        server.removeClient(this);
+    }
 
 }

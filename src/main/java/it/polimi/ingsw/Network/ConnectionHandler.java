@@ -1,18 +1,22 @@
 package it.polimi.ingsw.Network;
 
 
+import it.polimi.ingsw.Utils.Observable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
+import java.net.SocketException;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
 
-public class ConnectionHandler<IN, OUT> implements Runnable {
+public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
 
-
+    public interface ShutdownHandler {
+        void close(ConnectionHandler connection);
+    }
 
     public static class Builder<A, B>{
 
@@ -24,8 +28,8 @@ public class ConnectionHandler<IN, OUT> implements Runnable {
             this.executor = executor;
         }
 
-        public ConnectionHandler<A, B> build(Consumer<A> handler) {
-            ConnectionHandler connectionHandler = new ConnectionHandler(socket, handler);
+        public ConnectionHandler<A, B> build(int readTimeout, Consumer<A> handler, ShutdownHandler closer) throws IOException {
+            ConnectionHandler connectionHandler = new ConnectionHandler(socket, readTimeout, handler, closer);
             executor.execute(connectionHandler);
             return connectionHandler;
         }
@@ -37,20 +41,37 @@ public class ConnectionHandler<IN, OUT> implements Runnable {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+
     private boolean running;
+    private ShutdownHandler closer;
 
     private final Consumer<IN> readHandler;
 
-    public ConnectionHandler(Socket socket, Consumer<IN> readHandler){
+    private int socketTimeout;
+
+    public ConnectionHandler(Socket socket, int readTimeout, Consumer<IN> readHandler, ShutdownHandler closer) throws IOException {
+
         this.socket = socket;
+        this.socketTimeout = readTimeout;
         this.readHandler = readHandler;
-        try {
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.closer = closer;
+
+        this.out = new ObjectOutputStream(socket.getOutputStream());
+        this.in = new ObjectInputStream(socket.getInputStream());
     }
+
+    public ConnectionHandler(Socket socket,Consumer<IN> readHandler, ShutdownHandler closer) throws IOException {
+
+        this.socket = socket;
+        this.socketTimeout = 0;
+        this.readHandler = readHandler;
+        this.closer = closer;
+
+        this.out = new ObjectOutputStream(socket.getOutputStream());
+        this.in = new ObjectInputStream(socket.getInputStream());
+
+    }
+
 
 
     public boolean isRunning() {
@@ -85,6 +106,7 @@ public class ConnectionHandler<IN, OUT> implements Runnable {
 
         while(running){
             try {
+                this.socket.setSoTimeout(socketTimeout);
                 @SuppressWarnings("unchecked")
                 IN event = (IN) in.readObject();
                 handleReadMessage(event);
@@ -92,7 +114,7 @@ public class ConnectionHandler<IN, OUT> implements Runnable {
                 e.printStackTrace();
                 break;
             } catch (IOException e){
-                //e.printStackTrace();//commented out to avoid crash when client disconnect. need fix
+                closer.close(this);
                 break;
             }
         }
