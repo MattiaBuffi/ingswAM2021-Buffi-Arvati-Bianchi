@@ -1,5 +1,6 @@
 [
     {
+      "Id":"LC_1",
       "RequirementType": "CARD",
       "Requirement": ["1-0-Y","1-0-G"],
       "Victory_Points": 2,
@@ -7,6 +8,7 @@
       "ColorEffect": "P"
     },
     {
+      "Id":"LC_2",
       "RequirementType": "CARD",
       "Requirement": ["1-0-B"," 1-0-P"],
       "Victory_Points": 2,
@@ -14,6 +16,7 @@
       "ColorEffect": "B"
     },
     {
+      "Id":"LC_3",
       "RequirementType": "CARD",
       "Requirement": ["1-0-G"," 1-0-B"],
       "Victory_Points": 2,
@@ -21,6 +24,7 @@
       "ColorEffect": "G"
     },
     {
+      "Id":"LC_4",
       "RequirementType": "CARD",
       "Requirement": ["1-0-Y","1-0-P"],
       "Victory_Points": 2,
@@ -28,6 +32,7 @@
       "ColorEffect": "Y"
     },
     {
+      "Id":"LC_5",
       "RequirementType": "RSS",
       "Requirement": ["5-Y"],
       "Victory_Points": 3,
@@ -35,6 +40,7 @@
       "ColorEffect": "G"
     },
     {
+      "Id":"LC_6",
       "RequirementType": "RSS",
       "Requirement": ["5-G"],
       "Victory_Points": 3,
@@ -42,6 +48,7 @@
       "ColorEffect": "P"
     },
     {
+      "Id":"LC_7",
       "RequirementType": "RSS",
       "Requirement": ["5-P"],
       "Victory_Points": 3,
@@ -49,6 +56,7 @@
       "ColorEffect": "B"
     },
     {
+      "Id":"LC_8",
       "RequirementType": "RSS",
       "Requirement": ["5-B"],
       "Victory_Points": 3,
@@ -56,6 +64,7 @@
       "ColorEffect": "Y"
     },
     {
+      "Id":"LC_9",
       "RequirementType": "CARD",
       "Requirement": ["2-0-Y","1-0-B"],
       "Victory_Points": 5,
@@ -63,6 +72,7 @@
       "ColorEffect": "P"
     },
     {
+      "Id":"LC_10",
       "RequirementType": "CARD",
       "Requirement": ["2-0-G","1-0-P"],
       "Victory_Points": 5,
@@ -70,6 +80,7 @@
       "ColorEffect": "B"
     },
     {
+      "Id":"LC_11",
       "RequirementType": "CARD",
       "Requirement": ["2-0-B","1-0-Y"],
       "Victory_Points": 5,
@@ -77,6 +88,7 @@
       "ColorEffect": "G"
     },
     {
+      "Id":"LC_12",
       "RequirementType": "CARD",
       "Requirement": ["2-0-P","1-0-G"],
       "Victory_Points": 5,
@@ -84,6 +96,7 @@
       "ColorEffect": "Y"
     },
     {
+      "Id":"LC_13",
       "RequirementType": "CARD",
       "Requirement": ["1-2-Y"],
       "Victory_Points": 4,
@@ -91,6 +104,7 @@
       "ColorEffect": "B"
     },
     {
+      "Id":"LC_14",
       "RequirementType": "CARD",
       "Requirement": ["1-2-B"],
       "Victory_Points": 4,
@@ -98,6 +112,7 @@
       "ColorEffect": "P"
     },
     {
+      "Id":"LC_15",
       "RequirementType": "CARD",
       "Requirement": ["1-2-P"],
       "Victory_Points": 4,
@@ -105,6 +120,7 @@
       "ColorEffect": "G"
     },
     {
+      "Id":"LC_16",
       "RequirementType": "CARD",
       "Requirement": ["1-2-G"],
       "Victory_Points": 4,

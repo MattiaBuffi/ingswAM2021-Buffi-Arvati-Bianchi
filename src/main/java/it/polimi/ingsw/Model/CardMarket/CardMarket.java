@@ -44,7 +44,7 @@ public class CardMarket implements CardRemover{
         for (int j = 0; j < COLOR_SIZE; j++) {
 
             for (int i = 0; i < MAX_LEVEL; i++) {
-                notifyNewCard(cardMatrix.get(j).get(i).get(-1));
+                notifyNewCard(cardMatrix.get(j).get(i).get(0));
             }
 
         }
@@ -81,7 +81,7 @@ public class CardMarket implements CardRemover{
     }
 
     private void store(PurchasableCard card, int color, int level){
-        cardMatrix.get(color).get(level-1).add(card);
+        cardMatrix.get(color).get(level).add(card);
     }
 
 
@@ -95,7 +95,7 @@ public class CardMarket implements CardRemover{
     }
 
     public PurchasableCard getCard(DevelopmentCard.Color color, int level){
-        return cardMatrix.get(getColorIndex(color)).get(level-1).get(-1);
+        return cardMatrix.get(getColorIndex(color)).get(level-1).get(0);
     }
 
     public PurchasableCard getCard(String id){
@@ -121,7 +121,7 @@ public class CardMarket implements CardRemover{
             return false;
         }
 
-        notifyNewCard(cards.remove(-1));
+        notifyNewCard(cards.remove(0));
 
         return true;
     }

@@ -4,32 +4,47 @@ import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.GameSize;
+import it.polimi.ingsw.Message.Model.WaitingPlayersUpdate;
+import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 
 import java.io.IOException;
 
-public class NumberOfPlayerPage implements Layout{
+public class NumberOfPlayerPage extends ModelEventHandler.Default implements Layout{
     @FXML
     ChoiceBox<Integer> choiceBox;
 
-    private final String NEXT_SCENE = "waiting_page";
+
     private ViewBackEnd backEnd;
 
     @Override
     public void setup(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
     }
 
 
     public void goToWaitingRoom(){
         //System.out.println("ITEM - " + choiceBox.getSelectionModel().getSelectedItem());
-        if(choiceBox.getSelectionModel().getSelectedItem()!=null) {
-            GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
-            backEnd.notify(message);
+        GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
+        backEnd.notify(message);
+        App.setScene("waiting_page");
+        /*try {
+            showPopUp();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
 
-            App.setScene(NEXT_SCENE);
-        }
+    private void showPopUp() throws IOException {
+        App.showPopUp("waiting_page");
+    }
+
+
+    @Override
+    public void invalidMessage() {
+
     }
 
 }

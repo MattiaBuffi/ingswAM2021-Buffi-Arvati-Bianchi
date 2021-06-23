@@ -8,13 +8,13 @@ public class LeaderCard {
 
     private String id;
     private String type;
+    private Marble.Color color;
     private int victoryPoint;
     private boolean active;
     private List<Marble.Color> resourceRequirement;
 
     //not a string----- need custom object
     private List<String> developmentCardRequirement;
-
 
     public String getId() {
         return id;

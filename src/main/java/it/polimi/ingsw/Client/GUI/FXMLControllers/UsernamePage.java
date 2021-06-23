@@ -37,10 +37,11 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ErrorUpdate error) {
-        //usernameLabel.setText(error.getErrorMessage());
+        usernameLabel.setText(error.getErrorMessage());
         usernameLabel.setVisible(true);
         System.out.println("error update");
     }
+
 
     @Override
     public void handle(UsernameSelected event) {
@@ -48,9 +49,10 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
         System.out.println("username event");
     }
 
+
     @Override
     public void invalidMessage() {
-        //usernameLabel.setText("illegal action");
+        usernameLabel.setText("illegal action");
         usernameLabel.setVisible(true);
         System.out.println("invalid action");
     }
