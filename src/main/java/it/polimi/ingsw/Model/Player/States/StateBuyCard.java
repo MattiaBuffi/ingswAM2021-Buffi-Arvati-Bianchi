@@ -4,7 +4,7 @@ package it.polimi.ingsw.Model.Player.States;
 
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.CardStorage;
-import it.polimi.ingsw.Model.GameTerminator;
+import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
@@ -31,7 +31,7 @@ public class StateBuyCard extends PlayerState {
     }
 
 
-    public void changeState(PlayerState.Context context, CardStorage cardStorage, TurnHandler turnHandler, GameTerminator terminator){
+    public void changeState(PlayerState.Context context, CardStorage cardStorage, TurnHandler turnHandler, GameHandler terminator){
         context.setState(StateWait.get());
 
         if(cardStorage.getCards().size() < 7){
@@ -46,7 +46,7 @@ public class StateBuyCard extends PlayerState {
     protected boolean buyCard(Player context, PurchasableCard card, int destinationId) {
 
         if(buyCard(context.getCardStorage(), context.getResourceStorage(), card, destinationId)){
-            changeState(context, context.getCardStorage(), context.getTurnHandler(), context.getGameTerminator());
+            changeState(context, context.getCardStorage(), context.getTurnHandler(), context.getGameHandler());
             return true;
         }
 
@@ -54,6 +54,12 @@ public class StateBuyCard extends PlayerState {
 
     }
 
+
+
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
 
     public static StateBuyCard get(){
         if(instance == null){

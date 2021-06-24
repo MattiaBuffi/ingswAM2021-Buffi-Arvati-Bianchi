@@ -32,11 +32,13 @@ public class CardMarket implements CardRemover{
     public CardMarket(EventBroadcaster broadcaster){
 
         this.broadcaster = broadcaster;
+        this.cardMatrix = new ArrayList<>();
 
-        initMatrix();
+        initMatrix(cardMatrix, COLOR_SIZE, MAX_LEVEL);
 
         List<PurchasableCard> cards = CardParser.getMarketCards(this);
         Collections.shuffle(cards);
+        
         for (PurchasableCard pc: cards){
             store(pc, getColorIndex(pc.getColor()), pc.getLevel()-1);
         }
@@ -51,15 +53,14 @@ public class CardMarket implements CardRemover{
 
     }
 
-    private void initMatrix(){
-        cardMatrix = new ArrayList<>();
+    public void initMatrix(List<List<List<PurchasableCard>>> matrix, int columns, int rows){
 
-        for (int j = 0; j < COLOR_SIZE; j++) {
+        for (int j = 0; j < columns; j++) {
 
-            cardMatrix.add(new ArrayList<>());
+            matrix.add(new ArrayList<>());
 
-            for (int i = 0; i < MAX_LEVEL; i++) {
-                cardMatrix.get(j).add(new ArrayList<>());
+            for (int i = 0; i < rows; i++) {
+                matrix.get(j).add(new ArrayList<>());
             }
 
         }
@@ -86,6 +87,10 @@ public class CardMarket implements CardRemover{
 
 
 
+
+    public List<PurchasableCard> getLevelList(List<List<List<PurchasableCard>>> cardMatrix, int column, int row){
+        return cardMatrix.get(column).get(row);
+    }
 
 
 
@@ -116,7 +121,9 @@ public class CardMarket implements CardRemover{
 
     @Override
     public boolean removeCard(DevelopmentCard.Color color, int level) {
-        List<PurchasableCard> cards = cardMatrix.get(getColorIndex(color)).get(level-1);
+        //List<PurchasableCard> cards = cardMatrix.get(getColorIndex(color)).get(level-1);
+        List<PurchasableCard> cards = getLevelList(cardMatrix, getColorIndex(color),level-1);
+
         if(cards.size() == 0){
             return false;
         }

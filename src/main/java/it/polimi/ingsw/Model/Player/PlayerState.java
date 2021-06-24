@@ -18,7 +18,8 @@ public abstract class PlayerState {
 
 
     public enum Name {
-        NEW_GAME,
+        SETUP_CARD,
+        SETUP_RESOURCES,
         NEW_TURN,
         WAIT,
         BUY_RESOURCE,
@@ -91,7 +92,9 @@ public abstract class PlayerState {
         points += 2 - context.getLeaderCards().size();
         //active leader card point
         for (LeaderCard lc: context.getLeaderCards()){
-            points += lc.getVictoryPoints();
+            if(lc.isActive()){
+                points += lc.getVictoryPoints();
+            }
         }
         //production card point
         for(DevelopmentCard c: context.getCardStorage().getCards()){

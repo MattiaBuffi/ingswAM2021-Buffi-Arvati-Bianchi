@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model.VaticanRoute;
 
+import it.polimi.ingsw.Message.Model.VaticanReport;
+import it.polimi.ingsw.Message.Model.VaticanRoutePosition;
 import it.polimi.ingsw.Model.EventBroadcaster;
-import it.polimi.ingsw.Model.GameTerminator;
+import it.polimi.ingsw.Model.GameHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +20,21 @@ public class VaticanRoute {
     public int popeSpaceReached;
 
     private ArrayList<VaticanToken> tokenList;
-    private GameTerminator gameTerminator;
+    private GameHandler gameHandler;
+    private EventBroadcaster broadcaster;
 
 
-    public VaticanRoute(EventBroadcaster broadcaster, GameTerminator gameTerminator) {
+    public VaticanRoute(EventBroadcaster broadcaster, GameHandler gameHandler) {
         this.tokenList = new ArrayList<>();
-        this.gameTerminator = gameTerminator;
+        this.gameHandler = gameHandler;
+        this.broadcaster = broadcaster;
         this.popeSpaceReached = 0;
     }
 
-    public VaticanRoute(EventBroadcaster broadcaster, GameTerminator gameTerminator, int popeSpaceReached) {
+    public VaticanRoute(EventBroadcaster broadcaster, GameHandler gameHandler, int popeSpaceReached) {
         this.tokenList = new ArrayList<>();
-        this.gameTerminator = gameTerminator;
+        this.gameHandler = gameHandler;
+        this.broadcaster = broadcaster;
         this.popeSpaceReached = popeSpaceReached;
     }
 
@@ -56,20 +61,31 @@ public class VaticanRoute {
 
 
 
+    public boolean vaticanReport(List<VaticanToken> tokens, int newPosition, int triggerPosition, int lowerLimit, int victoryPoints){
+        if(newPosition < triggerPosition){
+            return false;
+        }
+
+        vaticanReport( tokens, lowerLimit, victoryPoints);
+        return true;
+    }
+
+
     protected void advance(VaticanToken token, int points){
 
         int newPosition = token.getPosition() + points;
 
-        if(newPosition >= POPE_SPACES[popeSpaceReached]){
-            vaticanReport( tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached], POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
+        if(vaticanReport(tokenList, newPosition, POPE_SPACES[popeSpaceReached], POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached])){
             popeSpaceReached +=1;
         }
 
         if(newPosition >= LAST_POSITION){
             token.setPosition(LAST_POSITION);
-            gameTerminator.endGame();
+            broadcaster.notifyAllPlayers(new VaticanRoutePosition());
+            gameHandler.endGame();
         } else {
             token.setPosition(newPosition);
+            broadcaster.notifyAllPlayers(new VaticanRoutePosition());
         }
 
     }
@@ -79,6 +95,7 @@ public class VaticanRoute {
         for(VaticanToken t: tokens){
             if(t.getPosition() >= lowerLimit){
                 t.setVictoryPoint( t.getVictoryPoints()+popesFavorVictoryPoints );
+                broadcaster.notifyAllPlayers(new VaticanReport());
             }
         }
     }

@@ -1,20 +1,23 @@
+package it.polimi.ingsw.Server;
 
-package it.polimi.ingsw;
+import it.polimi.ingsw.Controller.GameController;
+import it.polimi.ingsw.Network.ConnectionHandler;
+import it.polimi.ingsw.Network.SocketCreator;
+import it.polimi.ingsw.Network.SocketHandler;
 
-import it.polimi.ingsw.Network.*;
-
-
-import java.net.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+public class ServerApp implements Server, SocketHandler {
 
-public class ServerApp implements SocketHandler {
 
-    public static void main( String[] args )
-    {
+
+    public static void main( String[] args ) {
         ServerApp app = null;
 
         if(args.length>0){
@@ -34,13 +37,21 @@ public class ServerApp implements SocketHandler {
 
     }
 
+
     private final int port;
 
 
-    private SocketCreator networkManager;
-
-
     private ExecutorService executor;
+
+
+    private SocketCreator networkManager;
+    private List<Client> connectedClients;
+
+    private final LoginHandler loginHandler;
+    private final Lobby lobby;
+
+
+
 
 
     private ServerApp(int port){
@@ -48,6 +59,10 @@ public class ServerApp implements SocketHandler {
         this.networkManager = new SocketCreator(port, this);
 
         this.executor = Executors.newCachedThreadPool();
+
+        connectedClients = new ArrayList<>();
+        lobby = new Lobby();
+        loginHandler = new LoginHandler(12);
     }
 
 
@@ -60,20 +75,22 @@ public class ServerApp implements SocketHandler {
     @Override
     public void handleSocket(Socket socket) {
         try {
-
-
+            synchronized (connectedClients){
+                ConnectionHandler.Builder builder = new ConnectionHandler.Builder(executor, socket);
+                connectedClients.add(new ClientHandler(this, builder, new GameController()));
+            }
         } catch (Exception e) {
-           e.printStackTrace();
+            System.err.println("Socket creation failed");
+            e.printStackTrace();
         }
 
     }
 
-    private void shutdown(){
+    private synchronized void shutdown(){
 
-        /*
-        for (VirtualView v: connections){
-            v.getConnection().stop();
-        }*/
+        for (Client client: connectedClients){
+           client.disconnect();
+        }
 
         networkManager.stop();
 
@@ -111,7 +128,7 @@ public class ServerApp implements SocketHandler {
                     System.exit(0);
                     break;
                 case "state":
-                    //System.out.println("Connected:" + connections.size());
+                    System.out.println("Connected:" + connectedClients.size());
                     break;
                 case "ip":
 
@@ -126,6 +143,58 @@ public class ServerApp implements SocketHandler {
         }
 
     }
-*/
+
+
+    @Override
+    public void login(Client client, String username){
+        synchronized (loginHandler){
+            if(loginHandler.addUsername(client, username)){
+                joinGame(client);
+            }
+        }
+    }
+
+    @Override
+    public void joinGame(Client client){
+        synchronized (lobby){
+            lobby.join(client);
+        }
+    }
+
+    @Override
+    public void createGame(Client client, int size){
+        synchronized (lobby){
+            lobby.setGameSize(client, size);
+        }
+    }
+
+    @Override
+    public void removeClient(Client client){
+
+        if(client.isActive()){
+            client.disconnect();
+        }
+
+        synchronized (connectedClients){
+            connectedClients.remove(client);
+        }
+
+        synchronized (loginHandler){
+            loginHandler.removeUsername(client.getUsername());
+        }
+
+        synchronized (lobby){
+            lobby.removeClient(client);
+        }
+
+
+    }
+
+
+
+
+
+
+
 
 }

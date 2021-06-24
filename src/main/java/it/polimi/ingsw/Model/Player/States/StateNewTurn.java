@@ -1,8 +1,12 @@
 package it.polimi.ingsw.Model.Player.States;
 
 
+import it.polimi.ingsw.Message.Model.AvailableLeaderCard;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.LeaderCardActivation;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
+import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
@@ -41,14 +45,56 @@ public class StateNewTurn extends PlayerState {
 
     @Override
     protected boolean discardLeader(Player context, String leaderId) {
-        //...
+        for (LeaderCard lc: context.getLeaderCards()){
+            if(!lc.getId().equals(leaderId)){
+                continue;
+            }
+
+            context.getLeaderCards().remove(lc);
+            context.notifyUser(new AvailableLeaderCard());
+
+            return true;
+        }
+
+        context.notifyUser(new ErrorUpdate("no card found"));
+        return false;
+    }
+
+
+    public boolean activateCard(Player player, LeaderCard card){
+
+        if(!card.getRequirementsStrategy().canActivate(player)){
+            player.notifyUser(new ErrorUpdate("can't fulfill card requirement"));
+            return false;
+        }
+
+        card.getActivationStrategy().activate(player, card);
+        card.setActive(true);
         return true;
     }
 
+
     @Override
     protected boolean activateLeader(Player context, String leaderId) {
-        //...
-        return true;
+        for (LeaderCard lc: context.getLeaderCards()){
+
+            if(!lc.getId().equals(leaderId)){
+                continue;
+            }
+
+            if(lc.isActive()){
+                return false;
+            }
+
+            activateCard(context, lc);
+            context.notifyAllPlayers(new LeaderCardActivation());
+            return true;
+
+        }
+
+        context.notifyUser(new ErrorUpdate("no card found"));
+        return false;
+
     }
 
 
@@ -58,6 +104,12 @@ public class StateNewTurn extends PlayerState {
         return true;
     }
 
+
+
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
 
     public static StateNewTurn get(){
         if(instance == null){

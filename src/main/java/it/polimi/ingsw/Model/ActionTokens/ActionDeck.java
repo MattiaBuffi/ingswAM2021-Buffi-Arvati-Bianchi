@@ -2,7 +2,8 @@
 package it.polimi.ingsw.Model.ActionTokens;
 
 import it.polimi.ingsw.Model.CardMarket.CardRemover;
-import it.polimi.ingsw.Model.GameTerminator;
+import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
 
@@ -14,18 +15,22 @@ public class ActionDeck implements Shuffler {
 
     private List<ActionToken> actionTokens;
     private int currentToken;
+    private EventBroadcaster broadcaster;
 
 
-    public ActionDeck(CardRemover remover, FaithHandler faithToken, GameTerminator terminator) {
+    public ActionDeck(CardRemover remover, FaithHandler faithToken, GameHandler gameHandler, EventBroadcaster broadcaster) {
+
+        this.broadcaster = broadcaster;
 
         actionTokens = new ArrayList<>();
-        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.BLUE, terminator));
-        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.GREEN, terminator));
-        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.PURPLE, terminator));
-        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.YELLOW, terminator));
-        actionTokens.add(new BlackCrossActionToken(this,faithToken,1));
-        actionTokens.add(new BlackCrossActionToken(this,faithToken,1));
-        actionTokens.add(new BlackCrossActionToken(this,faithToken,2));
+        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.BLUE, gameHandler, broadcaster));
+        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.GREEN, gameHandler, broadcaster));
+        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.PURPLE, gameHandler, broadcaster));
+        actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.YELLOW, gameHandler, broadcaster));
+        actionTokens.add(new BlackCrossActionToken(1, faithToken,this, broadcaster));
+        actionTokens.add(new BlackCrossActionToken(1, faithToken,this, broadcaster));
+        actionTokens.add(new BlackCrossActionToken(2, faithToken,this, broadcaster));
+
 
         shuffle();
 

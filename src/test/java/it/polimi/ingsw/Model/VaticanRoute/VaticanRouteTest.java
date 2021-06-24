@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model.VaticanRoute;
 
 import it.polimi.ingsw.Model.TestData.TestBroadcaster;
-import it.polimi.ingsw.Model.TestData.testTerminator;
+import it.polimi.ingsw.Model.TestData.testHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,7 +16,7 @@ class VaticanRouteTest {
 
     @Test
     void testVaticanReport(){
-        VaticanRoute route = new VaticanRoute( new TestBroadcaster(), new testTerminator());
+        VaticanRoute route = new VaticanRoute( new TestBroadcaster(), new testHandler());
         List<VaticanToken> tokens = new ArrayList<>();
         tokens.add(new VaticanToken(route, 1,"one"));
         tokens.add(new VaticanToken(route, "two"));
@@ -43,7 +43,7 @@ class VaticanRouteTest {
             position = VaticanRoute.POPE_SPACES_LOWER_LIMITS[index];
         }
 
-        testTerminator terminator = new testTerminator();
+        testHandler terminator = new testHandler();
         VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator, index);
         List<VaticanToken> tokens = new ArrayList<>();
 

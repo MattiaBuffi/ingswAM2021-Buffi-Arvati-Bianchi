@@ -4,7 +4,7 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.PlayerCardStorage;
 import it.polimi.ingsw.Model.EventBroadcaster;
-import it.polimi.ingsw.Model.GameTerminator;
+import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.CardStorage.CardStorage;
@@ -13,8 +13,7 @@ import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
 
 import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceBuffer;
 import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceMarketHandler;
-import it.polimi.ingsw.Model.Player.States.StateNewGame;
-import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
+import it.polimi.ingsw.Model.Player.States.StateSetupCard;
 import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
 import it.polimi.ingsw.Model.TurnHandler;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanToken;
@@ -27,10 +26,12 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
     private User user;
 
+    private int position;
+    private boolean ready;
 
     private final VaticanToken vaticanToken;
     private final TurnHandler turnHandler;
-    private final GameTerminator gameTerminator;
+    private final GameHandler gameHandler;
 
 
     private List<LeaderCard> leaderCards;
@@ -41,23 +42,30 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
     private PlayerState state;
 
+    private EventBroadcaster globalBroadcaster;
 
 
-    public Player(User user, VaticanToken token, List<LeaderCard> leaderCards, TurnHandler turnHandler, GameTerminator gameTerminator){
+
+    public Player(User user, int position, VaticanToken token, List<LeaderCard> leaderCards, TurnHandler turnHandler, GameHandler gameHandler, EventBroadcaster broadcaster){
 
         this.user = user;
+        this.position = position;
+        this.ready = true;
 
         this.turnHandler = turnHandler;
         this.vaticanToken = token;
-        this.gameTerminator = gameTerminator;
+        this.gameHandler = gameHandler;
+        this.globalBroadcaster = broadcaster;
 
+        
         this.leaderCards = new ArrayList<>(leaderCards);
         this.resourceStorage = new PlayerStorage(this);
         this.cardStorage = new PlayerCardStorage(this);
         this.resourceMarketBuffer = new ResourceBuffer(this.vaticanToken, this);
         this.productionHandler = new ProductionHandler(this);
 
-        this.state = StateNewGame.get();
+        this.state = StateSetupCard.get();
+
     }
 
 
@@ -112,6 +120,16 @@ public class Player implements EventBroadcaster, PlayerState.Context {
         return user;
     }
 
+
+    public int getPosition() {
+        return position;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+
     public List<LeaderCard> getLeaderCards() {
         return leaderCards;
     }
@@ -141,8 +159,8 @@ public class Player implements EventBroadcaster, PlayerState.Context {
         return turnHandler;
     }
 
-    public GameTerminator getGameTerminator() {
-        return gameTerminator;
+    public GameHandler getGameHandler() {
+        return gameHandler;
     }
 
     //***********************************SETTER*************************************************************************
@@ -150,6 +168,11 @@ public class Player implements EventBroadcaster, PlayerState.Context {
     @Override
     public void setState(PlayerState state) {
         this.state = state;
+    }
+
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public void setResourceStorage(PlayerStorage resourceStorage) {
@@ -168,12 +191,12 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
     @Override
     public void notifyAllPlayers(Message event) {
-
+        globalBroadcaster.notifyAllPlayers(event);
     }
 
     @Override
     public void notifyUser(Message event) {
-
+        user.notify(event);
     }
 
 

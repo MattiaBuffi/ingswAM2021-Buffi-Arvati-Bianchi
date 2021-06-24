@@ -11,6 +11,7 @@ public class LeaderCard {
     private int victoryPoints;
     private RequirementStrategy requirementsStrategy;
     private ActivationStrategy activationStrategy;
+    private boolean active;
 
     public LeaderCard(String id, int victoryPoints, RequirementStrategy requirementsStrategy, ActivationStrategy activationStrategy) {
         this.id = id;
@@ -18,6 +19,16 @@ public class LeaderCard {
         this.requirementsStrategy = requirementsStrategy;
         this.activationStrategy = activationStrategy;
     }
+
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 
     public String getId() {
         return id;

@@ -63,6 +63,12 @@ public class StateStoreResource extends PlayerState {
     }
 
 
+
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
+
     public static StateStoreResource get(){
         if(instance == null){
             instance = new StateStoreResource(Name.STORE_RESOURCE);

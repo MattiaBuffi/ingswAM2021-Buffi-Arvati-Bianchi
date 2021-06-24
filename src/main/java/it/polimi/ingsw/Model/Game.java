@@ -23,9 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Game implements TurnHandler, GameTerminator{
+public class Game implements TurnHandler, GameHandler {
 
-    private gameState state;
     private gameStrategy strategy;
 
     private ActionDeck actionDeck;
@@ -52,6 +51,7 @@ public class Game implements TurnHandler, GameTerminator{
         this.cardMarket = new CardMarket(broadcaster);
         this.vaticanRoute = new VaticanRoute(broadcaster,this);
 
+
         List<LeaderCard> leaderCards = CardParser.getLeaderCards();
         Collections.shuffle(leaderCards);
 
@@ -59,16 +59,14 @@ public class Game implements TurnHandler, GameTerminator{
         for (int i = 0; i < users.size(); i++) {
             VaticanToken token = new VaticanToken(vaticanRoute, users.get(i).getUsername());
             vaticanRoute.addPlayer(token);
-            players.add(new Player(users.get(i), token, leaderCards.subList((4*i), 4+(4*i)), this, this));
+            players.add(new Player(users.get(i), i,token, leaderCards.subList((4*i), 4+(4*i)), this, this, broadcaster));
         }
-
 
         if(users.size() ==1){
             VaticanToken blackCrossToken = new VaticanToken(vaticanRoute, "cpu");
-            this.actionDeck = new ActionDeck(cardMarket, blackCrossToken,this);
+            this.actionDeck = new ActionDeck(cardMarket, blackCrossToken,this, broadcaster);
         }
 
-        this.state = new SetupState(users.size());
 
     }
 
@@ -83,9 +81,16 @@ public class Game implements TurnHandler, GameTerminator{
     }
 
 
+
+
+
     public void buyCard(String username, int x, int y, int cardPosition){
 
         Player player = getPlayerByUsername(username);
+
+        if(player == null){
+            return;
+        }
 
         PurchasableCard card = cardMarket.getCard(x ,y );
 
@@ -106,6 +111,10 @@ public class Game implements TurnHandler, GameTerminator{
     public void buyResources(String username, int position){
 
         Player player = getPlayerByUsername(username);
+
+        if(player == null){
+            return;
+        }
 
         List<Marble> marbles = resourceMarket.get(position);
 
@@ -128,6 +137,11 @@ public class Game implements TurnHandler, GameTerminator{
 
         Player player = getPlayerByUsername(username);
 
+        if(player == null){
+            return;
+        }
+
+
         if(!player.storeResource(color, shelfPosition)){
             broadcaster.emptyMessages();
             return;
@@ -137,9 +151,31 @@ public class Game implements TurnHandler, GameTerminator{
 
     }
 
+    public void moveResources(String username, int firstShelf, int secondShelf){
+
+        Player player = getPlayerByUsername(username);
+
+        if(player == null){
+            return;
+        }
+
+        if(!player.moveResources(firstShelf, secondShelf)){
+            broadcaster.emptyMessages();
+            return;
+        }
+
+        broadcaster.sendMessages();
+
+    }
+
+
     public void basicProduction(String username, Marble.Color input_1,Marble.Color input_2,Marble.Color output){
 
         Player player = getPlayerByUsername(username);
+
+        if(player == null){
+            return;
+        }
 
         if(!player.production(new SelectBasic(input_1, input_2, output))){
             broadcaster.emptyMessages();
@@ -154,6 +190,10 @@ public class Game implements TurnHandler, GameTerminator{
 
         Player player = getPlayerByUsername(username);
 
+        if(player == null){
+            return;
+        }
+
         if(!player.production(new SelectDevelopmentCard(cardPosition))){
             broadcaster.emptyMessages();
             return;
@@ -167,21 +207,11 @@ public class Game implements TurnHandler, GameTerminator{
 
         Player player = getPlayerByUsername(username);
 
-        if(!player.production(new SelectLeader(cardId, outputColor))){
-            broadcaster.emptyMessages();
+        if(player == null){
             return;
         }
 
-        broadcaster.sendMessages();
-
-    }
-
-
-    public void moveResources(String username, int firstShelf, int secondShelf){
-
-        Player player = getPlayerByUsername(username);
-
-        if(!player.moveResources(firstShelf, secondShelf)){
+        if(!player.production(new SelectLeader(cardId, outputColor))){
             broadcaster.emptyMessages();
             return;
         }
@@ -195,6 +225,10 @@ public class Game implements TurnHandler, GameTerminator{
 
         Player player = getPlayerByUsername(username);
 
+        if(player == null){
+            return;
+        }
+
         if(!player.activateLeader(cardId)){
             broadcaster.emptyMessages();
             return;
@@ -206,14 +240,41 @@ public class Game implements TurnHandler, GameTerminator{
 
 
     public void discardLeaderCard(String username, String cardId){
-        state.discardCard(username, cardId);
-    }
+        //state.discardCard(username, cardId);
+        Player player = getPlayerByUsername(username);
 
+        if(player == null){
+            return;
+        }
+
+        if(!player.discardLeader(cardId)){
+            broadcaster.emptyMessages();
+            return;
+        }
+
+        broadcaster.sendMessages();
+    }
 
 
     @Override
     public void endTurn() {
         strategy.endTurn();
+    }
+
+
+
+    @Override
+    public void startGame() {
+        for(Player p: players){
+            if (!p.isReady()){
+                return;
+            }
+        }
+
+        currentPlayer = 0;
+        players.get(currentPlayer).setActive();
+        broadcaster.sendMessages();
+
     }
 
 
@@ -226,55 +287,6 @@ public class Game implements TurnHandler, GameTerminator{
 
 
 
-    private interface gameState {
-        void discardCard(String username, String cardId);
-
-    }
-
-    private class SetupState implements gameState{
-
-        private int missing;
-
-        public SetupState(int numPlayer) {
-            missing = 2*numPlayer;
-        }
-
-        @Override
-        public void discardCard(String username, String cardId) {
-
-            Player player = getPlayerByUsername(username);
-
-            if(! player.discardLeader(cardId)){
-                broadcaster.emptyMessages();
-                return;
-            }
-
-            missing-= 1;
-            if(missing== 0){
-                state = new DefaultState();
-            }
-            broadcaster.sendMessages();
-        }
-    }
-
-
-    private class DefaultState implements gameState{
-
-        @Override
-        public void discardCard(String username, String cardId) {
-
-            Player player = getPlayerByUsername(username);
-            if(! player.discardLeader(cardId)){
-                broadcaster.emptyMessages();
-                return;
-            }
-            broadcaster.sendMessages();
-        }
-
-    }
-
-
-
     private interface gameStrategy{
 
         void endTurn();
@@ -282,6 +294,8 @@ public class Game implements TurnHandler, GameTerminator{
         void endGame();
 
     }
+
+
 
     private class SinglePlayerStrategy implements  gameStrategy{
 
@@ -295,6 +309,7 @@ public class Game implements TurnHandler, GameTerminator{
 
         }
     }
+
 
     private class MultiPlayerStrategy implements  gameStrategy{
 
@@ -337,12 +352,12 @@ public class Game implements TurnHandler, GameTerminator{
 
         @Override
         public void notifyAllPlayers(Message event) {
-            //messages.add(event);
+            messages.add(event);
         }
 
         @Override
         public void notifyUser(Message event) {
-            //currentPlayer.getUser().notify(event);
+            players.get(currentPlayer).getUser().notify(event);
         }
 
     }

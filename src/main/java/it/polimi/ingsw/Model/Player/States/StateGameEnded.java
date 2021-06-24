@@ -20,12 +20,19 @@ public class StateGameEnded extends PlayerState {
 
     }
 
+
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
+
     public static StateGameEnded get(){
         if(instance == null){
             instance = new StateGameEnded(Name.END_GAME);
         }
         return instance;
     }
+
 
 
 

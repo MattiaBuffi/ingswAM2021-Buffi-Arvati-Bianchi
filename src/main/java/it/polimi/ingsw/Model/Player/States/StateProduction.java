@@ -53,6 +53,11 @@ public class StateProduction extends PlayerState {
 
 
 
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
+
 
     public static StateProduction get(){
         if(instance == null){

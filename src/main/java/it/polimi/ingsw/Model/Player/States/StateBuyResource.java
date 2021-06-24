@@ -40,6 +40,11 @@ public class StateBuyResource extends PlayerState {
     }
 
 
+    public static void setState(Player context){
+        context.setState(get());
+
+    }
+
     public static StateBuyResource get(){
         if(instance == null){
             instance = new StateBuyResource(Name.BUY_RESOURCE);

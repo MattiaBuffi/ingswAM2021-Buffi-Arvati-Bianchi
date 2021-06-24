@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Model.ActionTokens;
 
 import it.polimi.ingsw.Model.CardMarket.CardRemover;
+import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
+import it.polimi.ingsw.Model.TestData.TestBroadcaster;
 import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
-import it.polimi.ingsw.Model.TestData.testTerminator;
+import it.polimi.ingsw.Model.TestData.testHandler;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -18,7 +20,8 @@ class ActionTokenTest {
     void testBlackActionToken(int index) {
         testFaithHandler faithHandler = new testFaithHandler();
         testShuffler shuffler = new testShuffler();
-        BlackCrossActionToken actionToken = new BlackCrossActionToken(shuffler,faithHandler, index);
+        EventBroadcaster broadcaster = new TestBroadcaster();
+        BlackCrossActionToken actionToken = new BlackCrossActionToken(index, faithHandler, shuffler, broadcaster);
 
         actionToken.activate();
 
@@ -37,10 +40,12 @@ class ActionTokenTest {
     @ValueSource(booleans={true,false})
     void testDiscardCardToken(boolean canRemove) {
 
-        testTerminator terminator = new testTerminator();
+        testHandler terminator = new testHandler();
         testRemover remover = new testRemover(canRemove);
 
-        DiscardActionToken actionToken = new DiscardActionToken(remover, DevelopmentCard.Color.BLUE, terminator);
+        EventBroadcaster broadcaster = new TestBroadcaster();
+
+        DiscardActionToken actionToken = new DiscardActionToken(remover, DevelopmentCard.Color.BLUE, terminator, broadcaster);
 
         actionToken.activate();
         assertEquals(DevelopmentCard.Color.BLUE, remover.color);

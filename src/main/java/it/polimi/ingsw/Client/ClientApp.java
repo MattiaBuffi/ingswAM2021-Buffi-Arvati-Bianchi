@@ -106,4 +106,5 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
         removeController();
         App.setScene("home_page");
     }
+
 }

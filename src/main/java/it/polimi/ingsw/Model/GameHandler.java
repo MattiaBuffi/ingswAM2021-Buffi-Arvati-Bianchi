@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model;
 
-public interface GameTerminator {
+public interface GameHandler {
+
+    void startGame();
 
     void endGame();
 
