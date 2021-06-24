@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_error" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.ErrorPopup">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_error" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ErrorPopup">
    <children>
       <Label alignment="CENTER" prefHeight="90.0" prefWidth="611.0" text="ERROR!" textAlignment="CENTER" textFill="#a10000">
          <font>

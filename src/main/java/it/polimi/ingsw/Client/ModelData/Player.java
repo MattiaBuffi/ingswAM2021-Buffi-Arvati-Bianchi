@@ -46,13 +46,6 @@ public class Player {
     }
 
 
-
-
-
-
-
-
-
     public String getUsername() {
         return username;
     }

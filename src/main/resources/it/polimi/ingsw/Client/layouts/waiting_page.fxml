@@ -5,15 +5,32 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="shadowPane" prefHeight="720.0" prefWidth="1280.0"
-            styleClass="bg_basic" stylesheets="@../styles/background.css"
-            xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.WaitingPage">
+<AnchorPane fx:id="shadowPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="bg_basic" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.WaitingPage">
    <children>
       <Label alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" text="WAITING FOR PLAYERS TO CONNECT..." textAlignment="CENTER">
          <font>
             <Font name="Franklin Gothic Demi" size="54.0" />
+         </font>
+         <textFill>
+            <LinearGradient startX="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9700000286102295" green="0.8730000257492065" blue="0.24250000715255737" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.8196078538894653" green="0.4901960790157318" blue="0.16862745583057404" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label fx:id="playerNumber" alignment="CENTER" layoutX="14.0" layoutY="380.0" prefHeight="55.0" prefWidth="1274.0" textAlignment="CENTER">
+         <font>
+            <Font name="Franklin Gothic Demi" size="24.0" />
          </font>
          <textFill>
             <LinearGradient startX="1.0">

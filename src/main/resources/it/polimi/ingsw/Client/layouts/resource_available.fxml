@@ -7,19 +7,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_beige" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.ResourceAvailablePopup">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_popup" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceAvailablePopup">
    <children>
       <Label alignment="CENTER" prefHeight="74.0" prefWidth="611.0" text="RESOURCE AVAILABLE" textAlignment="CENTER" textFill="#565033">
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Label>
       <ImageView fx:id="ivMarble" fitHeight="150.0" fitWidth="150.0" layoutX="46.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="441.0" layoutY="93.0" mnemonicParsing="false" onAction="#discardResource" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="DISCARD" textFill="#cec4a6">
+      <Button fx:id="discardButton" layoutX="441.0" layoutY="180.0" mnemonicParsing="false" onAction="#discardResource" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="DISCARD" textFill="#cec4a6">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="441.0" layoutY="188.0" mnemonicParsing="false" onAction="#depositResource" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="DEPOSIT" textFill="#cec4a6">
+      <Button layoutX="441.0" layoutY="104.0" mnemonicParsing="false" onAction="#depositResource" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="DEPOSIT" textFill="#cec4a6">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

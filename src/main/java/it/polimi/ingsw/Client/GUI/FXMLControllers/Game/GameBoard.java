@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceAvailablePopup;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.*;
@@ -31,6 +33,8 @@ public class GameBoard implements Layout, ModelEventHandler {
     public Tab scoreboardTab;
     public ScoreboardTab scoreboardTab_Controller;
 
+    public ResourceAvailablePopup resourceAvailablePopup_Controller;
+
     private ViewBackEnd backEnd;
 
     @Override
@@ -42,6 +46,7 @@ public class GameBoard implements Layout, ModelEventHandler {
         productionTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);
         storageTab_Controller.setup(backEnd);
+        resourceMarket_Controller.setup(backEnd);
     }
 
 
@@ -60,7 +65,7 @@ public class GameBoard implements Layout, ModelEventHandler {
     @Override
     public void handle(ErrorUpdate error) {
         try {
-            App.showErrorPopUp(error.getErrorMessage());
+            PopUpManager.showErrorPopUp(error.getErrorMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }

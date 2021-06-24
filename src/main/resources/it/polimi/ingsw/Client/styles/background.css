@@ -56,3 +56,7 @@
     -fx-background-image: url("../images/backgrounds/error.png");
     -fx-background-size: 100% 100%;
 }
+.bg_popup{
+    -fx-background-image: url("../images/backgrounds/popUp.png");
+    -fx-background-size: 100% 100%;
+}

@@ -6,6 +6,8 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
 import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.Marble.ResourceMarble;
+import it.polimi.ingsw.Model.Marble.SelectableMarble;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;

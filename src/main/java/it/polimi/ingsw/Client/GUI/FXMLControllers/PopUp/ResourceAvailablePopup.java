@@ -1,14 +1,13 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 
-import it.polimi.ingsw.Client.App;
-import it.polimi.ingsw.Client.GUI.Layout;
-import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Model.Marble.*;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -16,58 +15,37 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceAvailablePopup implements Layout {
+public class ResourceAvailablePopup extends ResourceViewer {
     @FXML
     ImageView ivMarble;
     @FXML
-    Pane shelfSelectionPane;
+    Pane shelfSelectionPane, marbleSelectionPane;
     @FXML
     ChoiceBox<Integer> shelfSelector;
     @FXML
     ChoiceBox<String> colorSelector;
+    @FXML
+    Button discardButton;
 
     private ColorHandler handler = new ColorHandler();
     private boolean whiteMarble = false;
     private Marble marble;
-    private ViewBackEnd backEnd;
+    private StorageTab mainController;
 
-    @Override
-    public void setup(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
-    }
 
     public void depositResource() {
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
             if(!whiteMarble){
                 DepositResource message = new DepositResource(marble.getColor(), shelfSelector.getSelectionModel().getSelectedItem());
-                backEnd.notify(message);
+                mainController.getBackEnd().notify(message);
             } else {
                 if(colorSelector.getSelectionModel().getSelectedItem() != null) {
                     DepositResource message = new DepositResource(getColor(colorSelector.getSelectionModel().getSelectedItem()),
                             shelfSelector.getSelectionModel().getSelectedItem());
-                    backEnd.notify(message);
+                    mainController.getBackEnd().notify(message);
                 }
             }
         }
-    }
-
-    private Marble.Color getColor(String color){
-        Marble.Color colorToReturn = null;
-        switch (color){
-            case "YELLOW":
-                colorToReturn = Marble.Color.YELLOW;
-                break;
-            case "PURPLE":
-                colorToReturn = Marble.Color.PURPLE;
-                break;
-            case "BLUE":
-                colorToReturn = Marble.Color.BLUE;
-                break;
-            case "GREY":
-                colorToReturn = Marble.Color.GREY;
-                break;
-        }
-        return colorToReturn;
     }
 
     public void discardResource() {
@@ -75,13 +53,12 @@ public class ResourceAvailablePopup implements Layout {
         stage.close();
     }
 
-    public void initData(Marble marble){
+    public void initData(Marble marble, StorageTab mainController, boolean discardVisibility){
         marble.accept(handler);
         this.marble = marble;
-    }
+        this.mainController = mainController;
 
-    public Image getMarbleImage(Marble.Color color){
-        return new Image(App.class.getResourceAsStream("images/marbles/" + color.toString() + ".png"));
+        discardButton.setVisible(discardVisibility);
     }
 
     private class ColorHandler implements MarbleHandler {
@@ -99,7 +76,7 @@ public class ResourceAvailablePopup implements Layout {
 
         @Override
         public void handle(SelectableMarble marble){
-            shelfSelectionPane.setVisible(true);
+            marbleSelectionPane.setVisible(true);
             whiteMarble = true;
             ivMarble.setImage(getMarbleImage(Marble.Color.WHITE));
 

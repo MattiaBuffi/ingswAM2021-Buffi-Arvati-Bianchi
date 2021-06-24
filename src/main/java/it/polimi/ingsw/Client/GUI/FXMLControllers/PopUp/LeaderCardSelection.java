@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.GUI.FXMLControllers;
+package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;

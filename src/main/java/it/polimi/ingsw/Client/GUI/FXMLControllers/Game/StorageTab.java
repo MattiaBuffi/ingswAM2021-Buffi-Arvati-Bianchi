@@ -2,19 +2,22 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
 
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
+import it.polimi.ingsw.Model.Marble.SelectableMarble;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -28,12 +31,11 @@ public class StorageTab implements Layout {
     @FXML
     Pane leaderStorageContainer;
 
-    private Rectangle lastSelection = new Rectangle();
+    private Rectangle[] rectArray;
     private ImageView[] shelf_1;
     private ImageView[] shelf_2;
     private ImageView[] shelf_3;
-
-
+    private int selection = 0;
 
     private ViewBackEnd backEnd;
 
@@ -50,7 +52,7 @@ public class StorageTab implements Layout {
         shelf_2 = new ImageView[]{res2_1, res2_2};
         shelf_3 = new ImageView[]{res3_1, res3_2, res3_3};
 
-        lastSelection = shelfSel1;
+        rectArray = new Rectangle[]{shelfSel1, shelfSel2, shelfSel3};
     }
 
 
@@ -84,6 +86,10 @@ public class StorageTab implements Layout {
                 ivShelf[i].imageProperty().set(null); //Not sure!!
             }
         }
+    }
+
+    public void moveResources() throws IOException {
+        PopUpManager.showMoveResourcePopUp(selection, this);
     }
 
     private void changeResourceValue(Marble.Color color, int value){
@@ -131,32 +137,41 @@ public class StorageTab implements Layout {
 
 
     public void res11selected() {
-        showSelection(shelfSel1);
+        showSelection(shelfSel1, 0);
+        try {
+            PopUpManager.showStartingResourcesPopUp(2, this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void res21selected() {
-        showSelection(shelfSel2);
+        showSelection(shelfSel2, 1);
     }
 
     public void res22selected() {
-        showSelection(shelfSel2);
+        showSelection(shelfSel2, 1);
     }
 
     public void res31selected() {
-        showSelection(shelfSel3);
+        showSelection(shelfSel3, 2);
     }
 
     public void res32selected() {
-        showSelection(shelfSel3);
+        showSelection(shelfSel3, 2);
     }
 
     public void res33selected() {
-        showSelection(shelfSel3);
+        showSelection(shelfSel3, 2);
     }
 
-    private void showSelection(Rectangle rectangle){
-        lastSelection.setVisible(false);
+    private void showSelection(Rectangle rectangle, int shelf){
+        rectArray[selection].setVisible(false);
         rectangle.setVisible(!rectangle.isVisible());
-        lastSelection = rectangle;
+        selection = shelf;
+    }
+
+    public ViewBackEnd getBackEnd(){
+        return backEnd;
     }
 }

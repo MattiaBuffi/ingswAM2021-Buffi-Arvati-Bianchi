@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.GUI.FXMLControllers.ErrorPopup;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ErrorPopup;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.LeaderCardSelection;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.LeaderCardSelection;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceAvailablePopup;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
+import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -76,39 +79,6 @@ public class App extends Application {
 
         return root;
 
-    }
-
-    public static void showErrorPopUp(String errorMessage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/error_popup.fxml"));
-        AnchorPane shadowPane = loader.load();
-
-        Scene scene = new Scene(shadowPane);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-
-        ErrorPopup controller = loader.getController();
-        controller.setMessage(errorMessage);
-
-        scene.setFill(Color.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
-    public static void showLeaderCardsPopUp(List<LeaderCard> leaderCards, LeaderCardsTab mainController) throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/leader_card_selection.fxml"));
-        AnchorPane shadowPane = loader.load();
-
-        Scene scene = new Scene(shadowPane);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-
-        LeaderCardSelection controller = loader.getController();
-        controller.initData(leaderCards, mainController);
-
-        scene.setFill(Color.TRANSPARENT);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
     }
 
     public static void main(String[] args) {
