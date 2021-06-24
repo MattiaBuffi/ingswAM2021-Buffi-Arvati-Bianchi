@@ -10,6 +10,7 @@ import javafx.application.Platform;
 
 public class ViewBackEnd extends Observable<Message<ClientEventHandler>> implements Observer<Message<ModelEventHandler>> {
 
+    private String username;
 
     private ClientApp app;
 
@@ -43,8 +44,6 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     }
 
 
-
-
     public void setModel(ViewModel model){
         this.model = model;
     }
@@ -53,6 +52,9 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
         return model;
     }
 
+    public String getMyUsername() {
+        return username;
+    }
 
     @Override
     public void update(Message<ModelEventHandler> event) {

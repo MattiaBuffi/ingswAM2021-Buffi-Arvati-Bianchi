@@ -5,12 +5,15 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 
 public class WaitingPage extends ModelEventHandler.Default implements Layout{
 
-    public Label playerNumber;
+    @FXML
+    Label playerNumber;
+
     private ViewBackEnd backEnd;
 
 
@@ -28,7 +31,7 @@ public class WaitingPage extends ModelEventHandler.Default implements Layout{
 
     @Override
     public void handle(WaitingPlayersUpdate event) {
-        playerNumber.setText(event.getLobbyCurrentSize() +" players connected");
+        playerNumber.setText("Players connected: " + event.getLobbyCurrentSize());
     }
 
     @Override

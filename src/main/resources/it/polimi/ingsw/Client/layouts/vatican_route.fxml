@@ -5,19 +5,19 @@
 
 <AnchorPane prefHeight="270.0" prefWidth="1920.0" styleClass="bg_vatican_route" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.VaticanRoutePane">
    <children>
-      <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/redCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross2" fitHeight="50.0" fitWidth="50.0" layoutX="112.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cross2" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/greenCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross3" fitHeight="50.0" fitWidth="50.0" layoutX="66.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cross3" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/blueCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross4" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cross4" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/purpleCross.png" />
          </image></ImageView>

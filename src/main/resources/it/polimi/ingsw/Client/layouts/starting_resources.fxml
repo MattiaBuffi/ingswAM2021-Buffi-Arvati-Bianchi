@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_popup" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.StartingResourcesPopUp">
+   <children>
+      <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="611.0" text="CHOOSE RESOURCES" textAlignment="CENTER" textFill="#565033">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font></Label>
+      <Button layoutX="425.0" layoutY="145.0" mnemonicParsing="false" onAction="#chooseResources" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="CHOOSE" textFill="#cec4a6">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="40.0" layoutY="86.0" prefHeight="34.0" prefWidth="357.0" text="Choose your initial resources" textFill="#565033" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="resSelector1" layoutX="174.0" layoutY="147.0" prefHeight="25.0" prefWidth="90.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="YELLOW" />
+               <String fx:value="PURPLE" />
+               <String fx:value="BLUE" />
+               <String fx:value="GREY" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <ChoiceBox fx:id="resSelector2" layoutX="174.0" layoutY="210.0" prefHeight="25.0" prefWidth="90.0" visible="false">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="YELLOW" />
+               <String fx:value="PURPLE" />
+               <String fx:value="BLUE" />
+               <String fx:value="GREY" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+   </children>
+</AnchorPane>

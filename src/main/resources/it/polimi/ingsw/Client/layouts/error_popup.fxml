@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_error" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ErrorPopup">
+   <children>
+      <Label alignment="CENTER" prefHeight="90.0" prefWidth="611.0" text="ERROR!" textAlignment="CENTER" textFill="#a10000">
+         <font>
+            <Font name="System Bold" size="64.0" />
+         </font></Label>
+      <Label fx:id="errorMessage" alignment="CENTER" layoutX="26.0" layoutY="96.0" prefHeight="139.0" prefWidth="560.0" textAlignment="CENTER" textFill="#a10000" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

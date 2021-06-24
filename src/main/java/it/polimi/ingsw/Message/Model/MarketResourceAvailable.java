@@ -13,7 +13,7 @@ public class MarketResourceAvailable implements Message<ModelEventHandler> {
     }
 
 
-    public Marble getColor() {
+    public Marble getMarble() {
         return marble;
     }
 

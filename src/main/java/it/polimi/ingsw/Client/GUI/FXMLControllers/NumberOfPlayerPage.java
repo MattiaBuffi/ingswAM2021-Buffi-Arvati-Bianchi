@@ -37,11 +37,6 @@ public class NumberOfPlayerPage extends ModelEventHandler.Default implements Lay
         }*/
     }
 
-    private void showPopUp() throws IOException {
-        App.showPopUp("waiting_page");
-    }
-
-
     @Override
     public void invalidMessage() {
 

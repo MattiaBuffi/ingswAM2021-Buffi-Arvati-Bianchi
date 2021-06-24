@@ -4,16 +4,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="780.0" prefWidth="480.0" styleClass="bg_storage" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab">
    <children>
-      <ImageView fx:id="res1_1" fitHeight="70.0" fitWidth="70.0" layoutX="237.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="res2_1" fitHeight="70.0" fitWidth="70.0" layoutX="191.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="res2_2" fitHeight="70.0" fitWidth="70.0" layoutX="269.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="res3_1" fitHeight="70.0" fitWidth="70.0" layoutX="153.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="res3_2" fitHeight="70.0" fitWidth="70.0" layoutX="229.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="res3_3" fitHeight="70.0" fitWidth="70.0" layoutX="304.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res1_1" fitHeight="70.0" fitWidth="70.0" layoutX="237.0" layoutY="121.0" onMouseClicked="#res11selected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res2_1" fitHeight="70.0" fitWidth="70.0" layoutX="191.0" layoutY="226.0" onMouseClicked="#res21selected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res2_2" fitHeight="70.0" fitWidth="70.0" layoutX="269.0" layoutY="226.0" onMouseClicked="#res22selected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_1" fitHeight="70.0" fitWidth="70.0" layoutX="153.0" layoutY="326.0" onMouseClicked="#res31selected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_2" fitHeight="70.0" fitWidth="70.0" layoutX="229.0" layoutY="326.0" onMouseClicked="#res32selected" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="res3_3" fitHeight="70.0" fitWidth="70.0" layoutX="304.0" layoutY="326.0" onMouseClicked="#res33selected" pickOnBounds="true" preserveRatio="true" />
       <HBox layoutX="53.0" layoutY="511.0" prefHeight="70.0" prefWidth="366.0">
          <children>
             <ImageView fitHeight="86.0" fitWidth="89.0" pickOnBounds="true">
@@ -69,15 +70,22 @@
                </font>
             </Label>
          </children></HBox>
-      <Pane fx:id="leaderStorageContainer" layoutX="58.0" layoutY="616.0" prefHeight="159.0" prefWidth="386.0">
+      <Pane fx:id="leaderStorageContainer" layoutX="58.0" layoutY="616.0" prefHeight="159.0" prefWidth="386.0" visible="false">
          <children>
             <ImageView fitHeight="152.0" fitWidth="386.0" layoutX="26.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/leaderPowers/leaderStorageblue.png" />
+                  <Image url="@../images/leaderPowers/leaderStorageBLUE.png" />
                </image>
             </ImageView>
             <ImageView fx:id="resLeader1" fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="resLeader2" fitHeight="80.0" fitWidth="80.0" layoutX="211.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
          </children></Pane>
+      <Rectangle fx:id="shelfSel1" arcHeight="5.0" arcWidth="5.0" fill="#ffffffcc" height="10.0" layoutX="237.0" layoutY="192.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="70.0" />
+      <Rectangle fx:id="shelfSel2" arcHeight="5.0" arcWidth="5.0" fill="#ffffffcc" height="10.0" layoutX="190.0" layoutY="298.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="145.0" />
+      <Rectangle fx:id="shelfSel3" arcHeight="5.0" arcWidth="5.0" fill="#ffffffcc" height="10.0" layoutX="153.0" layoutY="403.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" width="220.0" />
+      <Button layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#moveResources" prefHeight="63.0" prefWidth="79.0" styleClass="produce_button" stylesheets="@../styles/buttons.css" text="MOVE" textFill="#565033">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>

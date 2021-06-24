@@ -22,7 +22,4 @@ public class Shelf {
         this.size = size;
         this.color = color;
     }
-
-
-
 }

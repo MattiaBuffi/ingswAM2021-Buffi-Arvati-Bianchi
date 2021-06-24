@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" styleClass="bg_popup" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.MoveResourcePopup">
+   <children>
+      <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="611.0" text="MOVE RESOURCES" textAlignment="CENTER" textFill="#565033">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font></Label>
+      <Button layoutX="439.0" layoutY="131.0" mnemonicParsing="false" onAction="#moveResource" prefHeight="55.0" prefWidth="115.0" styleClass="buy_button" stylesheets="@../styles/buttons.css" text="MOVE" textFill="#cec4a6">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="46.0" layoutY="187.0" prefHeight="74.0" prefWidth="206.0" text="In which shelf do you want to move the selected resource?" textAlignment="CENTER" textFill="#565033" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="shelfSelector" layoutX="285.0" layoutY="212.0" prefHeight="25.0" prefWidth="90.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <Integer fx:value="1" />
+               <Integer fx:value="2" />
+               <Integer fx:value="3" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+      <ImageView fx:id="resource1" fitHeight="80.0" fitWidth="80.0" layoutX="76.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="resource2" fitHeight="80.0" fitWidth="80.0" layoutX="177.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="resource3" fitHeight="80.0" fitWidth="80.0" layoutX="279.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

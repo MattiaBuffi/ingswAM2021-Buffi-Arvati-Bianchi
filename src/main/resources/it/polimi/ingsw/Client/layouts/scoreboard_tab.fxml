@@ -36,7 +36,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="hbox1" layoutX="10.0" layoutY="113.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css">
+            <HBox fx:id="hbox1" layoutX="10.0" layoutY="113.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css" visible="false">
                <children>
                   <Label alignment="CENTER" prefHeight="60.0" prefWidth="65.0" text="1">
                      <font>
@@ -48,14 +48,14 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="points1" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="10">
+                  <Label fx:id="points1" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="0">
                      <font>
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="hbox2" layoutX="10.0" layoutY="153.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css">
+            <HBox fx:id="hbox2" layoutX="10.0" layoutY="153.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css" visible="false">
                <children>
                   <Label alignment="CENTER" prefHeight="60.0" prefWidth="65.0" text="2">
                      <font>
@@ -67,14 +67,14 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="points2" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="10">
+                  <Label fx:id="points2" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="0">
                      <font>
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="hbox3" layoutX="10.0" layoutY="193.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css">
+            <HBox fx:id="hbox3" layoutX="10.0" layoutY="193.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css" visible="false">
                <children>
                   <Label alignment="CENTER" prefHeight="60.0" prefWidth="65.0" text="3">
                      <font>
@@ -86,14 +86,14 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="points3" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="10">
+                  <Label fx:id="points3" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="0">
                      <font>
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="hbox4" layoutX="10.0" layoutY="233.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css">
+            <HBox fx:id="hbox4" layoutX="10.0" layoutY="233.0" prefHeight="40.0" prefWidth="351.0" stylesheets="@../styles/background.css" visible="false">
                <children>
                   <Label alignment="CENTER" prefHeight="60.0" prefWidth="65.0" text="4">
                      <font>
@@ -105,7 +105,7 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="points4" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="10">
+                  <Label fx:id="points4" alignment="CENTER" layoutX="75.0" layoutY="10.0" prefHeight="40.0" prefWidth="135.0" text="0">
                      <font>
                         <Font name="System Italic" size="18.0" />
                      </font>
