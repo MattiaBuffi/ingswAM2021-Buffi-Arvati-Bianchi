@@ -7,8 +7,6 @@ public class AvailableLeaderCard implements Message<ModelEventHandler> {
 
 
 
-
-
     @Override
     public void accept(ModelEventHandler handler) {
 

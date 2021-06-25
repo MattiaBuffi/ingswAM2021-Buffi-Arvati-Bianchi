@@ -70,6 +70,16 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     }
 
+    @Override
+    public void handle(MoveResources event) {
+
+    }
+
+    @Override
+    public void handle(DepositResource event) {
+
+    }
+
 
     @Override
     public void update(Message<ClientEventHandler> event) {

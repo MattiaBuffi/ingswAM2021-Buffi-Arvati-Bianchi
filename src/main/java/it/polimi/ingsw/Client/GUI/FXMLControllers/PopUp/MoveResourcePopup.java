@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
+import it.polimi.ingsw.Message.ClientMessages.MoveResources;
 import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -22,9 +23,11 @@ public class MoveResourcePopup extends ResourceViewer{
     ChoiceBox<String> shelfSelector;
 
     private StorageTab mainController;
+    private int shelfSelected;
 
     public void initData(StorageTab mainController, int shelfSelected) {
         this.mainController = mainController;
+        this.shelfSelected = shelfSelected;
 
         ImageView[] resourceArray = new ImageView[]{resource1, resource2, resource3};
         List<String> choiceBoxList = new ArrayList<>();
@@ -49,7 +52,8 @@ public class MoveResourcePopup extends ResourceViewer{
 
     public void moveResource() {
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
-             // MOVE RESOURCE MESSAGE
+            MoveResources message = new MoveResources(shelfSelected, shelfSelector.getSelectionModel().getSelectedIndex());
+            mainController.getBackEnd().notify(message);
         }
     }
 }

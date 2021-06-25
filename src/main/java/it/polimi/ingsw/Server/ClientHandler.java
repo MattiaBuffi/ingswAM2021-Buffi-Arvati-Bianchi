@@ -167,6 +167,16 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
     }
 
     @Override
+    public void handle(MoveResources event) {
+
+    }
+
+    @Override
+    public void handle(DepositResource event) {
+
+    }
+
+    @Override
     public void update(Message<ModelEventHandler> event) {
         this.send(event);
     }

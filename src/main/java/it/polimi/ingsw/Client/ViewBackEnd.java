@@ -37,8 +37,6 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
         //app.removeController();
     }
 
-
-
     public void setEventHandler(ModelEventHandler handler){
         this.eventHandler = handler;
     }

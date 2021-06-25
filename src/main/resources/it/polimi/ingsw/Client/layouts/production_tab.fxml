@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -7,22 +9,27 @@
 
 <AnchorPane prefHeight="780.0" prefWidth="1440.0" styleClass="bg_production_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.ProductionTab">
     <children>
-        <ImageView fx:id="ivProductionLeader" fitHeight="210.0" fitWidth="258.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard1" fitHeight="390.0" fitWidth="260.0" layoutX="316.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard2" fitHeight="390.0" fitWidth="260.0" layoutX="316.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard3" fitHeight="390.0" fitWidth="260.0" layoutX="316.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivCenterCard1" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivCenterCard2" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivCenterCard3" fitHeight="450.0" fitWidth="300.0" layoutX="662.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivRightCard1" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivRightCard2" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivRightCard3" fitHeight="450.0" fitWidth="300.0" layoutX="1034.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
-      <CheckBox fx:id="checkBasicProduction" layoutX="115.0" layoutY="617.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
+        <ImageView fx:id="ivProductionLeader1" fitHeight="153.0" fitWidth="188.0" layoutX="16.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard1" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard2" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard3" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivCenterCard1" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivCenterCard2" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivCenterCard3" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard1" fitHeight="390.0" fitWidth="260.0" layoutX="1062.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard2" fitHeight="390.0" fitWidth="260.0" layoutX="1062.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivRightCard3" fitHeight="390.0" fitWidth="260.0" layoutX="1062.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
+      <CheckBox fx:id="checkBasicProduction" layoutX="125.0" layoutY="617.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0">
          <font>
             <Font size="20.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkLeaderProduction" layoutX="125.0" layoutY="352.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0" visible="false">
+      <CheckBox fx:id="checkLeaderProduction1" layoutX="216.0" layoutY="147.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="checkLeaderProduction2" layoutX="216.0" layoutY="298.0" mnemonicParsing="false" opacity="0.8" prefHeight="17.0" prefWidth="13.0" visible="false">
          <font>
             <Font size="20.0" />
          </font>
@@ -47,6 +54,57 @@
             <Font name="System Bold" size="24.0" />
         </font>
       </Button>
+        <ChoiceBox fx:id="in1" layoutX="65.0" layoutY="466.0" opacity="0.6" prefHeight="25.0" prefWidth="28.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="YELLOW" />
+                    <String fx:value="PURPLE" />
+                    <String fx:value="BLUE" />
+                    <String fx:value="GREY" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+        <ChoiceBox fx:id="in2" layoutX="66.0" layoutY="518.0" opacity="0.6" prefHeight="25.0" prefWidth="28.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="YELLOW" />
+                    <String fx:value="PURPLE" />
+                    <String fx:value="BLUE" />
+                    <String fx:value="GREY" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+        <ChoiceBox fx:id="out" layoutX="181.0" layoutY="492.0" opacity="0.6" prefHeight="25.0" prefWidth="28.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="YELLOW" />
+                    <String fx:value="PURPLE" />
+                    <String fx:value="BLUE" />
+                    <String fx:value="GREY" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+      <ImageView fx:id="ivProductionLeader2" fitHeight="153.0" fitWidth="188.0" layoutX="16.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ChoiceBox fx:id="resLeader2" layoutX="214.0" layoutY="256.0" prefHeight="25.0" prefWidth="15.0" visible="false">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="YELLOW" />
+                    <String fx:value="PURPLE" />
+                    <String fx:value="BLUE" />
+                    <String fx:value="GREY" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+      <ChoiceBox fx:id="resLeader1" layoutX="214.0" layoutY="100.0" prefHeight="25.0" prefWidth="15.0" visible="false">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="YELLOW" />
+               <String fx:value="PURPLE" />
+               <String fx:value="BLUE" />
+               <String fx:value="GREY" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
     </children>
 
 </AnchorPane>

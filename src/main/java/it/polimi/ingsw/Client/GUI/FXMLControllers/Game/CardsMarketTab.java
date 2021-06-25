@@ -1,19 +1,17 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
-//import it.polimi.ingsw.Utils.StaticMessageObservable;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
 import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Model.Marble.ResourceMarble;
-import it.polimi.ingsw.Model.Marble.SelectableMarble;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class CardsMarketTab implements Layout{
@@ -77,16 +75,37 @@ public class CardsMarketTab implements Layout{
         }
     }
 
-    public void showLeaderDiscount(int index, Marble.Color color){
-        leaderDiscount[index].setImage(getLeaderPowerImage(color));
+    public void showLeaderPower(String id){
+        if(!leaderDiscount1.isVisible()){
+            leaderDiscount1.setVisible(true);
+            leaderDiscount1.setImage(getLeaderPowerImage(id));
+        } else {
+            leaderDiscount2.setVisible(true);
+            leaderDiscount2.setImage(getLeaderPowerImage(id));
+        }
     }
 
     private Image getCardImage(int cardID){
         return new Image(App.class.getResourceAsStream("images/cards/developmentCards/DC_" + cardID + ".png"));
     }
 
-    private Image getLeaderPowerImage(Marble.Color color) {
-        return new Image(App.class.getResourceAsStream("images/leaderPowers/leaderDiscount" + color.toString() + ".png"));
+    private Image getLeaderPowerImage(String id) {
+        Image image = null;
+        switch (id){
+            case "1":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderDiscountPURPLE.png"));
+                break;
+            case "2":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderDiscountBLUE.png"));
+                break;
+            case "3":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderDiscountGREY.png"));
+                break;
+            case "4":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderDiscountYELLOW.png"));
+                break;
+        }
+        return image;
     }
 
     private void hideRectangle(int cardSelected){

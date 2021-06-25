@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
+import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -98,6 +99,22 @@ public class PopUpManager {
 
         scene.setFill(Color.TRANSPARENT);
         stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void showPlayerBoardPopUp(String username, ViewBackEnd backend) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/player_board.fxml"));
+        AnchorPane shadowPane = loader.load();
+
+        Scene scene = new Scene(shadowPane);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        PlayerBoard controller = loader.getController();
+        controller.initData(username, backend);
+
+        scene.setFill(Color.TRANSPARENT);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }

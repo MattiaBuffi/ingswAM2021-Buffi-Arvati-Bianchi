@@ -4,8 +4,6 @@ import it.polimi.ingsw.Message.ClientMessages.*;
 
 public interface ClientEventHandler {
 
-
-
     abstract class Default implements ClientEventHandler{
 
         public abstract void invalidMessage();
@@ -64,6 +62,16 @@ public interface ClientEventHandler {
         public void handle(Ping event) {
             invalidMessage();
         }
+
+        @Override
+        public void handle(MoveResources event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(DepositResource event) {
+            invalidMessage();
+        }
     }
 
     void handle(ActivateLeaderCard event);
@@ -88,4 +96,7 @@ public interface ClientEventHandler {
 
     void handle(Ping event);
 
+    void handle(MoveResources event);
+
+    void handle(DepositResource event);
 }

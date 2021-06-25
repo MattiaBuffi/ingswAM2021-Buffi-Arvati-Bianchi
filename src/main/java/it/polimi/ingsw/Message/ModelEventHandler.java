@@ -64,7 +64,6 @@ public interface ModelEventHandler {
             invalidMessage();
         }
 
-
         @Override
         public void handle(GameSizeRequest event) {
             invalidMessage();
@@ -79,10 +78,26 @@ public interface ModelEventHandler {
         public void handle(WaitingPlayersUpdate event) {
             invalidMessage();
         }
+
+        @Override
+        public void handle(VaticanReport vaticanReport) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(VaticanRoutePosition vaticanRoutePosition) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(LeaderCardActivation leaderCardActivation) {
+            invalidMessage();
+        }
     }
 
+    void handle(VaticanReport vaticanReport);
 
-
+    void handle(VaticanRoutePosition vaticanRoutePosition);
 
     void handle(ChestUpdate event);
 
@@ -105,6 +120,8 @@ public interface ModelEventHandler {
     void handle( ShelfUpdate event);
 
     void handle(ResourceMarketExtra resourceMarketExtra);
+
+    void handle(LeaderCardActivation leaderCardActivation);
 
     void handle(GameSizeRequest event);
 

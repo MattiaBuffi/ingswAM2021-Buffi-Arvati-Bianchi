@@ -12,8 +12,6 @@ public class LeaderCard {
     private int victoryPoint;
     private boolean active;
     private List<Marble.Color> resourceRequirement;
-
-    //not a string----- need custom object
     private List<String> developmentCardRequirement;
 
     public String getId() {

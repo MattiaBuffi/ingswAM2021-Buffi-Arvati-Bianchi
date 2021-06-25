@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
-import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceAvailablePopup;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -33,9 +33,11 @@ public class GameBoard implements Layout, ModelEventHandler {
     public Tab scoreboardTab;
     public ScoreboardTab scoreboardTab_Controller;
 
-    public ResourceAvailablePopup resourceAvailablePopup_Controller;
+    public Pane vaticanRoutePane;
+    public VaticanRoutePane vaticanRoute_Controller;
 
     private ViewBackEnd backEnd;
+    private boolean resourceBufferUpdate = false;
 
     @Override
     public void setup(ViewBackEnd backEnd) {
@@ -47,6 +49,8 @@ public class GameBoard implements Layout, ModelEventHandler {
         resourceMarket_Controller.setup(backEnd);
         storageTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);
+        leaderCardsTab_Controller.setup(backEnd);
+        vaticanRoute_Controller.setup(backEnd);
     }
 
 
@@ -60,6 +64,8 @@ public class GameBoard implements Layout, ModelEventHandler {
     @Override
     public void handle(DevelopmentCardBuyUpdate event) {
         backEnd.getModel().updateModel(event);
+
+        productionTab_Controller.showDevCard(event.getPosition(), event.getId());
     }
 
     @Override
@@ -74,6 +80,7 @@ public class GameBoard implements Layout, ModelEventHandler {
     @Override
     public void handle(MarketResourceAvailable event) {
         backEnd.getModel().updateModel(event);
+        resourceBufferUpdate = true;
     }
 
     @Override
@@ -90,7 +97,14 @@ public class GameBoard implements Layout, ModelEventHandler {
 
     @Override
     public void handle(ModelUpdate event) {
-
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            e.accept(this);
+        }
+        if(resourceBufferUpdate){
+            storageTab_Controller.manageResourceBuffer();
+            resourceBufferUpdate = false;
+        }
+        scoreboardTab_Controller.updateScoreboard();
     }
 
     @Override
@@ -119,6 +133,26 @@ public class GameBoard implements Layout, ModelEventHandler {
         resourceMarket_Controller.updateBonusMarble(event.getMarble().getColor());
     }
 
+    @Override
+    public void handle(LeaderCardActivation event) {
+        //backEnd.something
+
+        leaderPowerSelector(event.getId());
+    }
+
+    @Override
+    public void handle(VaticanReport event) {
+        //backEnd.something
+
+        vaticanRoute_Controller.activatePopeFavor(event.getIndex());
+    }
+
+    @Override
+    public void handle(VaticanRoutePosition event) {
+        //backEnd.something
+
+        vaticanRoute_Controller.updateCross(event.getUsername(), event.getPosition());
+    }
 
     @Override
     public void handle(GameSizeRequest event) {
@@ -135,4 +169,16 @@ public class GameBoard implements Layout, ModelEventHandler {
 
     }
 
+    private void leaderPowerSelector(String s){
+        int id = Integer.parseInt(s);
+        if(id < 5) {
+            cardsMarketTab_Controller.showLeaderPower(s);
+        } else if(id < 9){
+            storageTab_Controller.showLeaderPower(s);
+        } else if(id <13){
+            resourceMarket_Controller.showLeaderPower(s);
+        } else {
+            productionTab_Controller.showLeaderPower(s);
+        }
+    }
 }

@@ -81,11 +81,11 @@ public class VaticanRoute {
 
         if(newPosition >= LAST_POSITION){
             token.setPosition(LAST_POSITION);
-            broadcaster.notifyAllPlayers(new VaticanRoutePosition());
+            broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), LAST_POSITION));
             gameHandler.endGame();
         } else {
             token.setPosition(newPosition);
-            broadcaster.notifyAllPlayers(new VaticanRoutePosition());
+            broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), newPosition));
         }
 
     }
@@ -95,7 +95,7 @@ public class VaticanRoute {
         for(VaticanToken t: tokens){
             if(t.getPosition() >= lowerLimit){
                 t.setVictoryPoint( t.getVictoryPoints()+popesFavorVictoryPoints );
-                broadcaster.notifyAllPlayers(new VaticanReport());
+                broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached));
             }
         }
     }

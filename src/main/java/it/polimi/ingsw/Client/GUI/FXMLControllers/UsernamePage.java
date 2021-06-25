@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.Login;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.Model.UsernameSelected;
+import it.polimi.ingsw.Message.Model.VaticanReport;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,6 +35,7 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
         tfUsername.clear();
 
     }
+
 
     @Override
     public void handle(ErrorUpdate error) {
