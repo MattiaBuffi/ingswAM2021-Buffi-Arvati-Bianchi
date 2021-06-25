@@ -54,8 +54,8 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <ImageView fx:id="leaderDiscount1" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="leaderDiscount2" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leaderDiscount1" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <ImageView fx:id="leaderDiscount2" fitHeight="82.0" fitWidth="171.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ChoiceBox fx:id="columnChoice" layoutX="1217.0" layoutY="361.0" prefHeight="25.0" prefWidth="95.0">
           <items>
               <FXCollections fx:factory="observableArrayList">

@@ -20,8 +20,8 @@
       </TabPane>
    </center>
    <top>
-       <Pane prefHeight="270.0" prefWidth="1920.0" BorderPane.alignment="CENTER" >
-           <fx:include fx:id="vaticanRoute" source="vatican_route.fxml" />
+       <Pane fx:id="vaticanRoutePane" prefHeight="270.0" prefWidth="1920.0" BorderPane.alignment="CENTER" >
+           <fx:include fx:id="vaticanRoute_" source="vatican_route.fxml" />
        </Pane>
    </top>
    <left>

@@ -27,7 +27,7 @@ public class ResourceAvailablePopup extends ResourceViewer {
     @FXML
     Button discardButton;
 
-    private ColorHandler handler = new ColorHandler();
+    private final ColorHandler handler = new ColorHandler();
     private boolean whiteMarble = false;
     private Marble marble;
     private StorageTab mainController;

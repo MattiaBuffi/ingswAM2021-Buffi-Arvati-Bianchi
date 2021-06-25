@@ -16,6 +16,6 @@ public class DepositResource implements Message<ClientEventHandler> {
 
     @Override
     public void accept(ClientEventHandler handler) {
-        //handler.handle(this); Need to add method in the interface!!
+        handler.handle(this);
     }
 }

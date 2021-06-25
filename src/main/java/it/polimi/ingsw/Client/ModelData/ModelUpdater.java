@@ -15,6 +15,16 @@ public class ModelUpdater implements ModelEventHandler {
     }
 
     @Override
+    public void handle(VaticanReport vaticanReport) {
+
+    }
+
+    @Override
+    public void handle(VaticanRoutePosition vaticanRoutePosition) {
+
+    }
+
+    @Override
     public void handle(ChestUpdate event) {
         model.current.addToChest(event.getResources());
     }
@@ -65,9 +75,6 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(ModelUpdate event) {
-        for (Message<ModelEventHandler> e: event.getMessages()){
-            e.accept(this);
-        }
     }
 
 
@@ -91,6 +98,11 @@ public class ModelUpdater implements ModelEventHandler {
     @Override
     public void handle(ResourceMarketExtra event) {
         model.resourceMarket.setBonusMarble(event.getMarble());
+
+    }
+
+    @Override
+    public void handle(LeaderCardActivation leaderCardActivation) {
 
     }
 

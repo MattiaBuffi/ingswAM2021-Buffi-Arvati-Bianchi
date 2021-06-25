@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -44,10 +46,11 @@ public class ScoreboardTab implements Layout {
 
     public void viewPlayerSelected() {
         if(selection!=-1 && !playersLabelsArray[selection].getText().equals(backEnd.getMyUsername())){
-            /**
-             * TODO: Show player selected board
-             */
-            backEnd.getModel().getPlayer(playersLabelsArray[selection].getText());
+            try {
+                PopUpManager.showPlayerBoardPopUp(playersLabelsArray[selection].getText(), backEnd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

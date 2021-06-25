@@ -28,7 +28,6 @@ public class ResourceMarketTab implements Layout{
 
     private int selection = -1;
     private ImageView[][] rowsColumnSelectable;
-    private ImageView[] leaderImageViews;
 
     private ViewBackEnd backEnd;
 
@@ -45,7 +44,6 @@ public class ResourceMarketTab implements Layout{
         ImageView[] row2 = new ImageView[]{ivMarble13, ivMarble12, ivMarble11, ivMarble10};
         ImageView[] row3 = new ImageView[]{ivMarble03, ivMarble02, ivMarble01, ivMarble00};
         rowsColumnSelectable = new ImageView[][]{column1, column2, column3, column4, row1, row2, row3};
-        leaderImageViews = new ImageView[]{leaderPower1, leaderPower2};
     }
 
 
@@ -70,16 +68,37 @@ public class ResourceMarketTab implements Layout{
         ivMarbleBonus.setImage(getMarbleImage(color));
     }
 
-    public void showLeaderMarble(int index, Marble.Color color){
-        leaderImageViews[index].setImage(getLeaderPowerImage(color));
+    public void showLeaderPower(String id){
+        if(!leaderPower1.isVisible()){
+            leaderPower1.setVisible(true);
+            leaderPower1.setImage(getLeaderPowerImage(id));
+        } else {
+            leaderPower2.setVisible(true);
+            leaderPower2.setImage(getLeaderPowerImage(id));
+        }
     }
 
     public Image getMarbleImage(Marble.Color color){
         return new Image(App.class.getResourceAsStream("images/marbles/" + color.toString() + ".png"));
     }
 
-    private Image getLeaderPowerImage(Marble.Color color) {
-        return new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarble" + color.toString() + ".png"));
+    private Image getLeaderPowerImage(String id) {
+        Image image = null;
+        switch (id){
+            case "9":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarblePURPLE.png"));
+                break;
+            case "10":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleBLUE.png"));
+                break;
+            case "11":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleGREY.png"));
+                break;
+            case "12":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleYELLOW.png"));
+                break;
+        }
+        return image;
     }
 
     private void get(int position, Rectangle rectangle){

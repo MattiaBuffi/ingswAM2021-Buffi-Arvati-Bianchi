@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
@@ -23,18 +24,19 @@ import java.util.List;
 
 public class StorageTab implements Layout {
     @FXML
-    ImageView res1_1, res2_1, res2_2, res3_1, res3_2, res3_3, resLeader1, resLeader2;
+    ImageView res1_1, res2_1, res2_2, res3_1, res3_2, res3_3, resLeader1_1, resLeader1_2, resLeader2_1, resLeader2_2,
+            leaderStorage1, leaderStorage2;
     @FXML
     Label yellowValue, purpleValue, blueValue, greyValue;
     @FXML
-    Rectangle shelfSel1, shelfSel2, shelfSel3;
-    @FXML
-    Pane leaderStorageContainer;
+    Rectangle shelfSel1, shelfSel2, shelfSel3, shelfSel4, shelfSel5;
 
     private Rectangle[] rectArray;
     private ImageView[] shelf_1;
     private ImageView[] shelf_2;
     private ImageView[] shelf_3;
+    private ImageView[] shelf_4;
+    private ImageView[] shelf_5;
     private int selection = 0;
 
     private ViewBackEnd backEnd;
@@ -44,27 +46,50 @@ public class StorageTab implements Layout {
         System.out.println("StorageTab");
         this.backEnd = backEnd;
 
-
-        leaderStorageContainer.setVisible(false);
         resetValue();
 
         shelf_1 = new ImageView[]{res1_1};
         shelf_2 = new ImageView[]{res2_1, res2_2};
         shelf_3 = new ImageView[]{res3_1, res3_2, res3_3};
+        shelf_4 = new ImageView[]{resLeader1_1, resLeader1_2};
+        shelf_5 = new ImageView[]{resLeader2_1, resLeader2_2};
 
-        rectArray = new Rectangle[]{shelfSel1, shelfSel2, shelfSel3};
+        rectArray = new Rectangle[]{shelfSel1, shelfSel2, shelfSel3, shelfSel4, shelfSel5};
     }
 
+    public void manageResourceBuffer() {
+        while(backEnd.getModel().productionBuffer.getAll().size() != 0) {
+            List<Marble> marbles = backEnd.getModel().productionBuffer.getAll();
+            for (Marble m : marbles) {
+                try {
+                    PopUpManager.showDeposiResourcePopUp(m, this, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void updateShelves() {
         List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
-        for(Shelf s: shelves){
-            if(s.maxSize == 1){
-                updateSingleShelf(shelf_1, s);
-            } else if(s.maxSize == 2){
-                updateSingleShelf(shelf_2, s);
-            } else {
-                updateSingleShelf(shelf_3, s);
+
+        for(int i= 0; i<shelves.size(); i++){
+            switch (i){
+                case 0:
+                    updateSingleShelf(shelf_1, shelves.get(i));
+                    break;
+                case 1:
+                    updateSingleShelf(shelf_2, shelves.get(i));
+                    break;
+                case 2:
+                    updateSingleShelf(shelf_3, shelves.get(i));
+                    break;
+                case 3:
+                    updateSingleShelf(shelf_4, shelves.get(i));
+                    break;
+                case 4:
+                    updateSingleShelf(shelf_5, shelves.get(i));
+                    break;
             }
         }
     }
@@ -109,6 +134,32 @@ public class StorageTab implements Layout {
         }
     }
 
+    public void showLeaderPower(String id){
+        if(!leaderStorage1.isVisible()){
+            leaderStorage1.setVisible(true);
+            leaderStorage1.setImage(getLeaderPowerImage(id));
+        }
+    }
+
+    private Image getLeaderPowerImage(String id) {
+        Image image = null;
+        switch (id){
+            case "5":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageGREY.png"));
+                break;
+            case "6":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStoragePURPLE.png"));
+                break;
+            case "7":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageBLUE.png"));
+                break;
+            case "8":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageYELLOW.png"));
+                break;
+        }
+        return image;
+    }
+
     private Image getResourceImage(Marble.Color color){
         Image resource = null;
         switch (color){
@@ -135,14 +186,8 @@ public class StorageTab implements Layout {
         greyValue.setText("0");
     }
 
-
     public void res11selected() {
         showSelection(shelfSel1, 0);
-        try {
-            PopUpManager.showStartingResourcesPopUp(2, this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void res21selected() {
@@ -163,6 +208,14 @@ public class StorageTab implements Layout {
 
     public void res33selected() {
         showSelection(shelfSel3, 2);
+    }
+
+    public void resLeader1selected() {
+        showSelection(shelfSel4, 3);
+    }
+
+    public void resLeader2selected() {
+        showSelection(shelfSel5, 4);
     }
 
     private void showSelection(Rectangle rectangle, int shelf){

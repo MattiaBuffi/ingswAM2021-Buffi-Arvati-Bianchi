@@ -23,11 +23,15 @@ public class Lobby {
 
     public void removeClient(Client client){
         clientWaitingQueue.remove(client);
-
+        sendToAllClients(clientWaitingQueue, new WaitingPlayersUpdate(clientWaitingQueue.size()));
 
         if(clientWaitingQueue.size() == 0){
             gameSize = Integer.MAX_VALUE;
             return;
+        }
+
+        if(clientWaitingQueue.size() == 1){
+            gameSize = Integer.MAX_VALUE;
         }
 
         if(gameSize == Integer.MAX_VALUE){
