@@ -1,21 +1,23 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
-import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
+import it.polimi.ingsw.Message.Model.ChestUpdate;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.LeaderCardActivation;
+import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
-public class HomePage {
+public class HomePage extends ModelEventHandler.Default {
 
     private static int lastPosition = 0;
     private static final int TurnPosition = 2235;
@@ -34,34 +36,44 @@ public class HomePage {
     ViewBackEnd backEnd;
     char[] homePage;
 
-    public HomePage(ViewBackEnd backEnd, char[] homePage) {
-        this.backEnd = backEnd;
+    public HomePage(char[] homePage) {
         this.homePage = homePage;
     }
 
-    public void HomePageView() throws FileNotFoundException {
+    public void SelectInitialRss(ViewBackEnd backEnd){
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+        CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
+        int x = 0;
+        int y = 0;
+        System.out.println("You are Player Number" + x + ", you can get: " + y +
+                "initial Resources for free, please insert the color of the resource that you want to take " +
+                "[(P/G/B/Y) if more than 1 rss please insert the two colors dividded by a -]" );
+        String freeRssTaken = input.next();
 
+
+        HomePageView(backEnd);
+    }
+
+
+
+    public void HomePageView(ViewBackEnd backEnd){
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+        Scanner input = new Scanner(System.in);
+        CLI_Controller.cls();
         //Printing Name of Current Player
-        String customName = backEnd.getModel().current.getUsername() + "'s Turn";
+        String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
         System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
 
-        //Printing Rank
-        for (int i = 0; i < backEnd.getModel().players.size(); i++) {
-            Player user = backEnd.getModel().players.get(i);
-            String posName = "" + (i + 1);
-            char[] posNameArray = posName.toCharArray();
-            homePage[(19 + i) * 133 + 103] = posNameArray[0];
-            homePage[(19 + i) * 133 + 104] = '.';
-            System.arraycopy(user.getUsername().toCharArray(), 0, homePage, HomeRankPosition[i], user.getUsername().toCharArray().length);
-        }
-
         //Printing Shelves
-        List<Shelf> playerShelf = backEnd.getModel().current.getShelves();
+        List<Shelf> playerShelf = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getShelves();
         CLI_Controller.ShelfExtractor(homePage, playerShelf);
 
         //Printing Chest
-        ResourceList playerChest = backEnd.getModel().current.getChest();
+        ResourceList playerChest = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getChest();
         List<Marble> playerChestMarble = playerChest.getAll();
         String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
         for (int i = 0; i < playerChestRss.length; i++) {
@@ -69,7 +81,7 @@ public class HomePage {
         }
 
 
-        int position = backEnd.getModel().current.getFaithPoints();
+        int position = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getFaithPoints();
         if ( position != lastPosition){
             String lastPosString = Integer.toString(lastPosition);
             char[] lastPositionArray = lastPosString.toCharArray();
@@ -82,9 +94,9 @@ public class HomePage {
             lastPosition = position;
         }
 
-        List<LeaderCard> leaderCard = backEnd.getModel().current.getLeaderCard();
+        List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < 2; i++) {
-            CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost);
+            CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
         }
 
         System.out.println(homePage);
@@ -97,13 +109,13 @@ public class HomePage {
             String activateLeader = input.nextLine();
 
             if (activateLeader.equals("1")){
-                ActivateLeaderCard messageActivate = new ActivateLeaderCard(backEnd.getModel().current.getLeaderCard().get(0).getId());
-                backEnd.notify(messageActivate);
+                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+                this.backEnd.notify(messageActivate);
                 //Clausola attivazione possibile
                 System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
             }else if (activateLeader.equals("2")){
-                ActivateLeaderCard messageActivate = new ActivateLeaderCard(backEnd.getModel().current.getLeaderCard().get(1).getId());
-                backEnd.notify(messageActivate);
+                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+                this.backEnd.notify(messageActivate);
                 //Clausola attivazione possibile
                 System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
             }
@@ -112,16 +124,16 @@ public class HomePage {
             System.out.println("Which Leader card do you want to Discard (1/2): ");
             String discardLeader = input.nextLine();
             if (discardLeader.equals("1")){
-                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(0).getId());
-                backEnd.notify(messageDiscard);
+                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+                this.backEnd.notify(messageDiscard);
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 20; j++) {
                         homePage[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
                     }
                 }
             }else if (discardLeader.equals("2")){
-                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(1).getId());
-                backEnd.notify(messageDiscard);
+                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+                this.backEnd.notify(messageDiscard);
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 20; j++) {
                         homePage[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
@@ -129,8 +141,54 @@ public class HomePage {
                 }
             }
         }else {
-            CLI_Controller.scene = command;
+            switch (command) {
+                case "PRODUCE":
+                    CLI_Controller.productionPage.ProductionPageView(backEnd);
+                    break;
+                case "CARDMARKET":
+                    CLI_Controller.cardMarketPage.CardMarketPageView(backEnd);
+                    break;
+                case "RSSMARKET":
+                    CLI_Controller.rssMarketPage.RssMarketPageView(backEnd);
+                    break;
+                case "VIEW":
+                    CLI_Controller.viewPage.ViewPageView(backEnd);
+                    break;
+                case "QUIT":
+                    CLI_Controller.quitPage.QuitPageView(backEnd);
+                    break;
+            }
+
         }
 
     }
+
+    @Override
+    public void invalidMessage() {
+
+    }
+
+    @Override
+    public void handle(ErrorUpdate event) {
+        CLI_Controller.cls();
+        System.out.println(event.getErrorMessage());
+        System.out.println("Here is a free time travel, enjoy it");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ChestUpdate event) {
+        backEnd.getModel().updateModel(event);
+    }
+
+    @Override
+    public void handle(ShelfUpdate event) {
+        backEnd.getModel().updateModel(event);
+    }
+
 }

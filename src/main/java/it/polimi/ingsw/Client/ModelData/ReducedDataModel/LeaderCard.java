@@ -8,6 +8,7 @@ public class LeaderCard {
 
     private String id;
     private String type;
+    private Marble.Color colorEffect;
     private Marble.Color color;
     private int victoryPoint;
     private boolean active;
@@ -46,6 +47,14 @@ public class LeaderCard {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Marble.Color getColorEffected() {
+        return colorEffect;
+    }
+
+    public void setColorEffected(Marble.Color color) {
+        this.colorEffect = color;
     }
 
     public List<Marble.Color> getResourceRequirement() {

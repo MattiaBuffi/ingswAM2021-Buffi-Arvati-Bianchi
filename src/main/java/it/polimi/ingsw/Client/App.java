@@ -39,8 +39,8 @@ public class App extends Application {
 
         app.setBackEnd(backEnd);
 
-        //scene = new Scene(loadFXML("home_page"));
-        scene = new Scene(loadFXML("game_board"));
+        scene = new Scene(loadFXML("home_page"));
+        //scene = new Scene(loadFXML("game_board"));
         //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(true);

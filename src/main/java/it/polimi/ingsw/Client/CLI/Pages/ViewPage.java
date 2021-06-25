@@ -3,12 +3,16 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ViewPage {
+public class ViewPage extends ModelEventHandler.Default {
 
     private static final int[] BigFaithCellPosition ={1739,1745,1751,1086,421,427,433,439,445,451,1116,1781,1787,1793,1799,1805,1811,1146,481,487,493,499,505,511,517,
             1742,1748,1754,1089,424,430,436,442,448,454,1119,1784,1790,1796,1802,1808,1814,1149,484,490,496,502,508,514,520,
@@ -21,20 +25,28 @@ public class ViewPage {
 
     ViewBackEnd backEnd;
 
-    public ViewPage(ViewBackEnd backEnd) {
+    public void ViewPageView(ViewBackEnd backEnd){
         this.backEnd = backEnd;
-    }
-
-    public void ViewPageView() throws FileNotFoundException {
+        this.backEnd.setEventHandler(this);
+        CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        char[] bigView = CLI_Controller.readSchematics(10);
+        char[] bigView = new char[0];
+        try {
+            bigView = CLI_Controller.readSchematics(10);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         int i = 0;
-        List<Player> users = backEnd.getModel().players;
+        List<Player> users = this.backEnd.getModel().players;
         for (Player user: users) {
             System.arraycopy(((char)(i+1)+ " " + user.getUsername()).toCharArray(), 0, bigView, BigFaithPlayerNamePos[i], user.getUsername().toCharArray().length);
             System.arraycopy(Integer.toString(user.getProductions().size()).toCharArray(), 0, bigView, BigFaithPlayerProdPos[i], Integer.toString(user.getProductions().size()).toCharArray().length);
-            System.arraycopy(Integer.toString(user.getChest().getSize()).toCharArray(), 0, bigView, BigFaithPlayerRssPos[i], Integer.toString(user.getChest().getSize()).toCharArray().length);
-            System.arraycopy(Integer.toString(user.getVictoryPoints()).toCharArray(), 0, bigView, BigFaithPlayerPVPos[i], Integer.toString(user.getVictoryPoints()).toCharArray().length);
+
+            ResourceList playerChest = this.backEnd.getModel().getPlayer(user.getUsername()).getChest();
+            List<Marble> playerChestMarble = playerChest.getAll();
+            char[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).toCharArray();
+            System.arraycopy(playerChestRss, 0, bigView, BigFaithPlayerRssPos[i], playerChestRss.length);
+            System.arraycopy((user.getVictoryPoints() + " VP").toCharArray(), 0, bigView, BigFaithPlayerPVPos[i], (user.getVictoryPoints() + " VP").toCharArray().length);
             bigView[BigFaithCellPosition[user.getFaithPoints() + i*25]] = (char)(i+1);
             i++;
         }
@@ -46,6 +58,24 @@ public class ViewPage {
         } else {
             System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
         }
-        CLI_Controller.scene="HOME";
+        CLI_Controller.homePage.HomePageView(backEnd);
+    }
+
+    @Override
+    public void invalidMessage() {
+
+    }
+
+    @Override
+    public void handle(ErrorUpdate event) {
+        CLI_Controller.cls();
+        System.out.println(event.getErrorMessage());
+        System.out.println("Here is a free time travel, enjoy it");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ViewPageView(this.backEnd);
     }
 }
