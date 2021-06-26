@@ -97,7 +97,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
         cardsMarketTab_Controller.update();
         leaderCardsTab_Controller.update();
-        //resourceMarketTab.
+        resourceMarket_Controller.update();
 
         storageTab_Controller.manageResourceBuffer();
 

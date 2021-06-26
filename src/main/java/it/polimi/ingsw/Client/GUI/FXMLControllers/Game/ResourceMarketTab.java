@@ -28,6 +28,7 @@ public class ResourceMarketTab implements Layout, GameTab{
 
     private int selection = -1;
     private ImageView[][] rowsColumnSelectable;
+    private ImageView[][] resourceMatrix;
 
     private ViewBackEnd backEnd;
 
@@ -43,13 +44,16 @@ public class ResourceMarketTab implements Layout, GameTab{
         ImageView[] row2 = new ImageView[]{ivMarble13, ivMarble12, ivMarble11, ivMarble10};
         ImageView[] row3 = new ImageView[]{ivMarble03, ivMarble02, ivMarble01, ivMarble00};
         rowsColumnSelectable = new ImageView[][]{column1, column2, column3, column4, row1, row2, row3};
+
+        resourceMatrix = new ImageView[][]{{ivMarble00, ivMarble01, ivMarble02, ivMarble03},
+                {ivMarble10, ivMarble11, ivMarble12, ivMarble13},
+                {ivMarble20, ivMarble21, ivMarble22, ivMarble23}};
     }
 
     @Override
     public void update() {
         ResourceMarket market = backEnd.getModel().resourceMarket;
 
-/*
         for (int i = 0; i < 4; i++) {
 
             List<Marble.Color> colors = new ArrayList<>();
@@ -58,23 +62,12 @@ public class ResourceMarketTab implements Layout, GameTab{
                 colors.add(m.getColor());
             }
 
-            for(int i=0; i<colors.size(); i++){
-                rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
+            for(int j=0; j<colors.size(); j++){
+                resourceMatrix[j][i].setImage(getMarbleImage(colors.get(j)));
             }
         }
 
-        for(Marble m: marbles){
-            colors.add(m.getColor());
-        }
-
-        for(int i=0; i<colors.size(); i++){
-            rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
-        }
-
-
-
-        ivMarbleBonus.setImage(getMarbleImage(color));*/
-
+        ivMarbleBonus.setImage(getMarbleImage(market.getBonusMarble().getColor()));
     }
 
 
@@ -86,23 +79,6 @@ public class ResourceMarketTab implements Layout, GameTab{
         }
     }
 
-    public void updateMarket(List<Marble> marbles, int position) {
-        List<Marble.Color> colors = new ArrayList<>();
-        for(Marble m: marbles){
-            colors.add(m.getColor());
-        }
-        for(int i=0; i<colors.size(); i++){
-            rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
-        }
-    }
-
-    public void updateBonusMarble(Marble.Color color){
-        ivMarbleBonus.setImage(getMarbleImage(color));
-    }
-
-
-
-
     public void showLeaderPower(String id){
         if(!leaderPower1.isVisible()){
             leaderPower1.setVisible(true);
@@ -112,11 +88,6 @@ public class ResourceMarketTab implements Layout, GameTab{
             leaderPower2.setImage(getLeaderPowerImage(id));
         }
     }
-
-
-
-
-
 
 
 
