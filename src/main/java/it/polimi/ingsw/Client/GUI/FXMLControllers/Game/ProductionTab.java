@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductionTab extends ResourceViewer implements Layout {
+public class ProductionTab extends ResourceViewer implements Layout, GameTab {
 
     @FXML
     ImageView ivProductionLeader1, ivProductionLeader2;
@@ -50,6 +50,13 @@ public class ProductionTab extends ResourceViewer implements Layout {
         cardGrid = new ImageView[][]{{ivLeftCard1, ivLeftCard2, ivLeftCard3},{ivCenterCard1, ivCenterCard2, ivCenterCard3},{ivRightCard1, ivRightCard2, ivRightCard3}};
 
     }
+
+    @Override
+    public void update() {
+
+    }
+
+
 
     public void showLeaderPower(String id){
         if(!checkLeaderProduction1.isVisible()) {
@@ -153,5 +160,7 @@ public class ProductionTab extends ResourceViewer implements Layout {
             }
         }
     }
+
+
 
 }

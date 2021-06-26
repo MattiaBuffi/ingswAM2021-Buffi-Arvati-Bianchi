@@ -1,9 +1,10 @@
 package it.polimi.ingsw.Model.Marble;
 
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ResourceList{
+public class ResourceList implements Serializable {
 
     private Map<Marble.Color, Integer> marbles;
     private int size;

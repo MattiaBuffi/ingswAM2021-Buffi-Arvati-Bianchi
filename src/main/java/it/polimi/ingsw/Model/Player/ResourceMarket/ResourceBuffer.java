@@ -16,17 +16,6 @@ import java.util.function.BiFunction;
 
 public class ResourceBuffer implements ResourceMarketHandler{
 
-    /*
-    private static final BiFunction<SelectableMarble, Marble.Color, Boolean> selectableComparator = (m1, m2)->{
-        for(Marble.Color m: m1.getSelectableColors()){
-            if(m == m2){
-                return true;
-            }
-        }
-        return false;
-    };
-    private static final BiFunction<ResourceMarble, Marble.Color, Boolean> normalComparator = (m1, m2)-> m1.getColor() == m2;
-*/
 
     private final FaithHandler faithHandler;
     private final EventBroadcaster broadcaster;

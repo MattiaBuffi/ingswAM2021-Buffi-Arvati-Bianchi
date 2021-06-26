@@ -26,6 +26,7 @@ public class Player {
     private Player(){
         this.productions = new ArrayList<>();
         this.shelves = new ArrayList<>();
+        this.leaderCard = new ArrayList<>();
     }
 
 

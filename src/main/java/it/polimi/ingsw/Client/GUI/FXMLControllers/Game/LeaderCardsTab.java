@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 
-public class LeaderCardsTab implements Layout{
+public class LeaderCardsTab implements Layout, GameTab{
     @FXML
     ImageView leaderCard1, leaderCard2;
     @FXML
@@ -24,12 +24,19 @@ public class LeaderCardsTab implements Layout{
     private ViewBackEnd backEnd;
 
 
+    @Override
     public void setup(ViewBackEnd backEnd) {
         System.out.println("LeaderCardTab");
         this.backEnd = backEnd;
 
-        System.out.println(getClass().getResource(""));
+        //System.out.println(getClass().getResource(""));
     }
+
+    @Override
+    public void update() {
+
+    }
+
 
     public void activateLeaderCard() {
         switch (selection){
@@ -62,6 +69,10 @@ public class LeaderCardsTab implements Layout{
         backEnd.notify(message);
     }
 
+
+
+
+
     public void cardOneSelected() {
         selection = 0;
         rectangle2.setFill(Color.BLACK);
@@ -84,5 +95,7 @@ public class LeaderCardsTab implements Layout{
         leaderCard1.setImage(getImage(leaderCardsIds.get(0)));
         leaderCard2.setImage(getImage(leaderCardsIds.get(1)));
     }
+
+
 
 }

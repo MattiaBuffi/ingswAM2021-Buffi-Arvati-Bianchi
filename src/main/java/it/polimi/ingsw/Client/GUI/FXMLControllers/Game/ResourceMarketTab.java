@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
-//import it.polimi.ingsw.Utils.StaticMessageObservable;
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ModelData.ResourceMarket;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -15,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceMarketTab implements Layout{
+public class ResourceMarketTab implements Layout, GameTab{
     @FXML
     ImageView ivMarble00, ivMarble01, ivMarble02, ivMarble03, ivMarble10, ivMarble11, ivMarble12, ivMarble13, ivMarble20, ivMarble21, ivMarble22, ivMarble23, ivMarbleBonus;
     @FXML
@@ -33,7 +33,6 @@ public class ResourceMarketTab implements Layout{
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("ResourceMarketTab");
         this.backEnd = backEnd;
 
         ImageView[] column1 = new ImageView[]{ivMarble00, ivMarble10, ivMarble20};
@@ -45,6 +44,39 @@ public class ResourceMarketTab implements Layout{
         ImageView[] row3 = new ImageView[]{ivMarble03, ivMarble02, ivMarble01, ivMarble00};
         rowsColumnSelectable = new ImageView[][]{column1, column2, column3, column4, row1, row2, row3};
     }
+
+    @Override
+    public void update() {
+        ResourceMarket market = backEnd.getModel().resourceMarket;
+
+/*
+        for (int i = 0; i < 4; i++) {
+
+            List<Marble.Color> colors = new ArrayList<>();
+
+            for(Marble m: market.get(i)){
+                colors.add(m.getColor());
+            }
+
+            for(int i=0; i<colors.size(); i++){
+                rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
+            }
+        }
+
+        for(Marble m: marbles){
+            colors.add(m.getColor());
+        }
+
+        for(int i=0; i<colors.size(); i++){
+            rowsColumnSelectable[position - 1][i].setImage(getMarbleImage(colors.get(i)));
+        }
+
+
+
+        ivMarbleBonus.setImage(getMarbleImage(color));*/
+
+    }
+
 
 
     public void takeResources(){
@@ -68,6 +100,9 @@ public class ResourceMarketTab implements Layout{
         ivMarbleBonus.setImage(getMarbleImage(color));
     }
 
+
+
+
     public void showLeaderPower(String id){
         if(!leaderPower1.isVisible()){
             leaderPower1.setVisible(true);
@@ -78,34 +113,19 @@ public class ResourceMarketTab implements Layout{
         }
     }
 
-    public Image getMarbleImage(Marble.Color color){
-        return new Image(App.class.getResourceAsStream("images/marbles/" + color.toString() + ".png"));
-    }
 
-    private Image getLeaderPowerImage(String id) {
-        Image image = null;
-        switch (id){
-            case "9":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarblePURPLE.png"));
-                break;
-            case "10":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleBLUE.png"));
-                break;
-            case "11":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleGREY.png"));
-                break;
-            case "12":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleYELLOW.png"));
-                break;
-        }
-        return image;
-    }
+
+
+
+
+
 
     private void get(int position, Rectangle rectangle){
         hideRectangle(selection);
         this.selection = position;
         rectangle.setVisible(true);
     }
+
 
     public void getColumn1() {
         get(1, rectangle1);
@@ -160,6 +180,31 @@ public class ResourceMarketTab implements Layout{
                 break;
         }
     }
+
+
+    public Image getMarbleImage(Marble.Color color){
+        return new Image(App.class.getResourceAsStream("images/marbles/" + color.toString() + ".png"));
+    }
+
+    private Image getLeaderPowerImage(String id) {
+        Image image = null;
+        switch (id){
+            case "9":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarblePURPLE.png"));
+                break;
+            case "10":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleBLUE.png"));
+                break;
+            case "11":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleGREY.png"));
+                break;
+            case "12":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderMarbleYELLOW.png"));
+                break;
+        }
+        return image;
+    }
+
 
 
 }

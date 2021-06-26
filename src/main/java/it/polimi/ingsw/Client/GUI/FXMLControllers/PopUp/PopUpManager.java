@@ -52,7 +52,7 @@ public class PopUpManager {
         stage.show();
     }
 
-    public static void showDeposiResourcePopUp(Marble marble, StorageTab mainController, boolean discardVisibility) throws IOException {
+    public static void showDepositResourcePopUp(Marble marble, StorageTab mainController, boolean discardVisibility) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/resource_available.fxml"));
         AnchorPane shadowPane = loader.load();
 

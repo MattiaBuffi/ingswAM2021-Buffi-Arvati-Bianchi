@@ -146,7 +146,8 @@ public class CardMarket implements CardRemover{
 
     private void notifyNewCard(PurchasableCard purchasableCard){
         DevelopmentCard card = purchasableCard.getCard();
-        broadcaster.notifyAllPlayers(new MarketCardUpdate(getColorIndex(card.getColor()),
+        broadcaster.notifyAllPlayers(new MarketCardUpdate(
+                getColorIndex(card.getColor()),
                 card.getLevel()-1,
                 card.getId(),
                 card.getVictoryPoint(),

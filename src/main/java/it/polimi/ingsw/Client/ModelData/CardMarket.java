@@ -13,6 +13,11 @@ public class CardMarket {
 
     public CardMarket(){
         cards = new ArrayList<>();
+        cards.add(new ArrayList<>());
+        cards.add(new ArrayList<>());
+        cards.add(new ArrayList<>());
+        cards.add(new ArrayList<>());
+        System.err.println("mercanto inizializzato");
     }
 
 
@@ -23,6 +28,7 @@ public class CardMarket {
 
     public void setCard(int x, int y, DevelopmentCardData card){
         cards.get(x).add(y, card);
+        System.err.println("aggiungo carta");
     }
 
 

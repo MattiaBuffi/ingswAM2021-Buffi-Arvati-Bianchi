@@ -66,6 +66,8 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
         this.state = StateSetupCard.get();
 
+
+
     }
 
 

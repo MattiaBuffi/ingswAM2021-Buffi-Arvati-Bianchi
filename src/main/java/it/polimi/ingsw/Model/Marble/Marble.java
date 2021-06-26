@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model.Marble;
 
-public abstract class Marble {
+import java.io.Serializable;
+
+public abstract class Marble implements Serializable {
 
     public enum Color {
         RED,

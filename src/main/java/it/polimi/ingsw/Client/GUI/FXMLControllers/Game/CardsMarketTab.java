@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class CardsMarketTab implements Layout{
+public class CardsMarketTab implements Layout, GameTab{
 
     @FXML
     ImageView ivGreenCardLvl1, ivGreenCardLvl2, ivGreenCardLvl3,
@@ -41,8 +41,10 @@ public class CardsMarketTab implements Layout{
 
     private ViewBackEnd backEnd;
 
+
+    @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("CardsMarketCard");
+
         this.backEnd = backEnd;
 
         cardsMatrix = new ImageView[][]{{ivGreenCardLvl3, ivBlueCardLvl3, ivYellowCardLvl3, ivPurpleCardLvl3},
@@ -50,8 +52,18 @@ public class CardsMarketTab implements Layout{
                 {ivGreenCardLvl1, ivBlueCardLvl1, ivYellowCardLvl1, ivPurpleCardLvl1}};
         leaderDiscount = new ImageView[]{leaderDiscount1, leaderDiscount2};
 
-        updateAllCards();
     }
+
+    @Override
+    public void update() {
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                cardsMatrix[i][j].setImage(getCardImage(backEnd.getModel().cardMarket.getCard(j,i).id));
+            }
+        }
+    }
+
+
 
     public void buyCardSelected(){
         if(cardSelectedX != -1 && cardSelectedY != -1){
@@ -63,17 +75,6 @@ public class CardsMarketTab implements Layout{
         }
     }
 
-    public void updateCard(int x, int y, int id){
-        cardsMatrix[y][x].setImage(getCardImage(id));
-    }
-
-    public void updateAllCards(){
-        for(int i=0;i<3;i++){
-            for(int j=0;j<4;j++){
-                //cardsMatrix[i][j].setImage(getImage(Integer.parseInt(backEnd.getModel().cardMarket.getCard(i,j).id)));
-            }
-        }
-    }
 
     public void showLeaderPower(String id){
         if(!leaderDiscount1.isVisible()){
@@ -85,8 +86,8 @@ public class CardsMarketTab implements Layout{
         }
     }
 
-    private Image getCardImage(int cardID){
-        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/DC_" + cardID + ".png"));
+    private Image getCardImage(String cardID){
+        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/" + cardID + ".png"));
     }
 
     private Image getLeaderPowerImage(String id) {
@@ -150,12 +151,21 @@ public class CardsMarketTab implements Layout{
     }
 
 
+
+
+
+
+
+
+
     private void selectCard(int cardSelected, Rectangle rectangle, int x, int y){
         hideRectangle(this.cardSelected);
         this.cardSelected = cardSelected;
         rectangle.setVisible(true);
         setCoordinate(x,y);
     }
+
+
 
     public void greenCardLvl3selected() {
         selectCard(0, rectangle00, 0, 0);
@@ -209,5 +219,6 @@ public class CardsMarketTab implements Layout{
         cardSelectedX = x;
         cardSelectedY = y;
     }
+
 
 }

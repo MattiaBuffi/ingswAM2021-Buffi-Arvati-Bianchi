@@ -8,21 +8,17 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-import it.polimi.ingsw.Model.Marble.SelectableMarble;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.util.List;
 
 
-public class StorageTab implements Layout {
+public class StorageTab implements Layout, GameTab {
     @FXML
     ImageView res1_1, res2_1, res2_2, res3_1, res3_2, res3_3, resLeader1_1, resLeader1_2, resLeader2_1, resLeader2_2,
             leaderStorage1, leaderStorage2;
@@ -57,18 +53,29 @@ public class StorageTab implements Layout {
         rectArray = new Rectangle[]{shelfSel1, shelfSel2, shelfSel3, shelfSel4, shelfSel5};
     }
 
+    @Override
+    public void update() {
+
+    }
+
+    public ViewBackEnd getBackEnd(){
+        return backEnd;
+    }
+
+
     public void manageResourceBuffer() {
         while(backEnd.getModel().productionBuffer.getAll().size() != 0) {
             List<Marble> marbles = backEnd.getModel().productionBuffer.getAll();
             for (Marble m : marbles) {
                 try {
-                    PopUpManager.showDeposiResourcePopUp(m, this, true);
+                    PopUpManager.showDepositResourcePopUp(m, this, true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
 
     public void updateShelves() {
         List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
@@ -103,6 +110,8 @@ public class StorageTab implements Layout {
         }
     }
 
+
+
     private void updateSingleShelf(ImageView[] ivShelf, Shelf shelf){
         for(int i=0; i<shelf.maxSize; i++){
             if(i<shelf.size) {
@@ -113,9 +122,13 @@ public class StorageTab implements Layout {
         }
     }
 
+
+
     public void moveResources() throws IOException {
         PopUpManager.showMoveResourcePopUp(selection, this);
     }
+
+
 
     private void changeResourceValue(Marble.Color color, int value){
         switch (color){
@@ -141,43 +154,7 @@ public class StorageTab implements Layout {
         }
     }
 
-    private Image getLeaderPowerImage(String id) {
-        Image image = null;
-        switch (id){
-            case "5":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageGREY.png"));
-                break;
-            case "6":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStoragePURPLE.png"));
-                break;
-            case "7":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageBLUE.png"));
-                break;
-            case "8":
-                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageYELLOW.png"));
-                break;
-        }
-        return image;
-    }
 
-    private Image getResourceImage(Marble.Color color){
-        Image resource = null;
-        switch (color){
-            case YELLOW:
-                resource = new Image(App.class.getResourceAsStream("images/token/coin"));
-                break;
-            case PURPLE:
-                resource = new Image(App.class.getResourceAsStream("images/token/servant"));
-                break;
-            case BLUE:
-                resource = new Image(App.class.getResourceAsStream("images/token/shield"));
-                break;
-            case GREY:
-                resource = new Image(App.class.getResourceAsStream("images/token/stone"));
-                break;
-        }
-        return resource;
-    }
 
     private void resetValue(){
         yellowValue.setText("0");
@@ -185,6 +162,9 @@ public class StorageTab implements Layout {
         blueValue.setText("0");
         greyValue.setText("0");
     }
+
+
+
 
     public void res11selected() {
         showSelection(shelfSel1, 0);
@@ -224,7 +204,45 @@ public class StorageTab implements Layout {
         selection = shelf;
     }
 
-    public ViewBackEnd getBackEnd(){
-        return backEnd;
+
+    private Image getLeaderPowerImage(String id) {
+        Image image = null;
+        switch (id){
+            case "5":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageGREY.png"));
+                break;
+            case "6":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStoragePURPLE.png"));
+                break;
+            case "7":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageBLUE.png"));
+                break;
+            case "8":
+                image = new Image(App.class.getResourceAsStream("images/leaderPowers/leaderStorageYELLOW.png"));
+                break;
+        }
+        return image;
     }
+
+    private Image getResourceImage(Marble.Color color){
+        Image resource = null;
+        switch (color){
+            case YELLOW:
+                resource = new Image(App.class.getResourceAsStream("images/token/coin"));
+                break;
+            case PURPLE:
+                resource = new Image(App.class.getResourceAsStream("images/token/servant"));
+                break;
+            case BLUE:
+                resource = new Image(App.class.getResourceAsStream("images/token/shield"));
+                break;
+            case GREY:
+                resource = new Image(App.class.getResourceAsStream("images/token/stone"));
+                break;
+        }
+        return resource;
+    }
+
+
+
 }

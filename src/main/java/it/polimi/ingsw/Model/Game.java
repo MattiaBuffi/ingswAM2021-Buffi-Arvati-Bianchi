@@ -25,6 +25,7 @@ import java.util.List;
 
 public class Game implements TurnHandler, GameHandler {
 
+
     private gameStrategy strategy;
 
     private ActionDeck actionDeck;
@@ -40,16 +41,14 @@ public class Game implements TurnHandler, GameHandler {
     private Broadcaster broadcaster;
 
 
-
-
     public<U extends User> Game(List<U> users){
 
         this.players = new ArrayList<>();
         this.broadcaster = new Broadcaster();
-
         this.resourceMarket = new ResourceMarket(broadcaster);
         this.cardMarket = new CardMarket(broadcaster);
         this.vaticanRoute = new VaticanRoute(broadcaster,this);
+
 
 
         List<LeaderCard> leaderCards = CardParser.getLeaderCards();
@@ -62,11 +61,16 @@ public class Game implements TurnHandler, GameHandler {
             players.add(new Player(users.get(i), i,token, leaderCards.subList((4*i), 4+(4*i)), this, this, broadcaster));
         }
 
+
         if(users.size() ==1){
             VaticanToken blackCrossToken = new VaticanToken(vaticanRoute, "cpu");
             this.actionDeck = new ActionDeck(cardMarket, blackCrossToken,this, broadcaster);
+            this.strategy = new SinglePlayerStrategy();
+        } else {
+            this.strategy = new MultiPlayerStrategy();
         }
 
+        broadcaster.sendMessages();
 
     }
 

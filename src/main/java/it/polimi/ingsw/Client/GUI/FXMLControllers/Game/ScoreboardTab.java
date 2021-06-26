@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class ScoreboardTab implements Layout {
+public class ScoreboardTab implements Layout, GameTab {
 
     @FXML
     Label player1, player2, player3, player4;
@@ -35,14 +35,21 @@ public class ScoreboardTab implements Layout {
 
     @Override
     public void setup(ViewBackEnd backEnd) {
+
         System.out.println("ScoreBoardTab");
         playersLabelsArray = new Label[]{player1, player2, player3, player4};
         pointsLabelsArray = new Label[]{points1, points2, points3, points4};
         hboxArray = new HBox[]{hbox1, hbox2, hbox3, hbox4};
         this.backEnd = backEnd;
 
-        setupView();
     }
+
+    @Override
+    public void update() {
+
+    }
+
+
 
     public void viewPlayerSelected() {
         if(selection!=-1 && !playersLabelsArray[selection].getText().equals(backEnd.getMyUsername())){
@@ -121,6 +128,8 @@ public class ScoreboardTab implements Layout {
                 break;
         }
     }
+
+
 
     private class PlayerScore{
         private final String username;

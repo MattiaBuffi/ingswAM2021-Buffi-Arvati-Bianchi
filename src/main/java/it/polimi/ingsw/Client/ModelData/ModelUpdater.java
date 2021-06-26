@@ -75,6 +75,9 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(ModelUpdate event) {
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            e.accept(this);
+        }
     }
 
 

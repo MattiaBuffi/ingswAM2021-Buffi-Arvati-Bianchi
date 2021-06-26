@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VaticanRoutePane implements Layout  {
+public class VaticanRoutePane implements Layout,GameTab  {
     @FXML
     public ImageView cross1, cross2, cross3, cross4;
     @FXML
@@ -34,15 +34,23 @@ public class VaticanRoutePane implements Layout  {
     private final Map<String, ImageView> imageViewMap = new HashMap<>();
     private final Map<String, Position> crossInitialPositions = new HashMap<>();
 
+
     @Override
     public void setup(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
 
+        this.backEnd = backEnd;
         crossArray = new ImageView[]{cross1, cross2, cross3, cross4};
-        //intializeCrosses();
+
     }
 
-    private void intializeCrosses() {
+    @Override
+    public void update() {
+
+    }
+
+
+
+    private void initializeCrosses() {
         int playersNumber = backEnd.getModel().players.size();
         if(playersNumber == 1){
             cross1.setVisible(true);

@@ -26,6 +26,7 @@ public class ViewModel {
     public ViewModel(){
         this.players = new ArrayList<>();
         this.resourceMarketBuffer = new ArrayList<>();
+        this.productionBuffer = new ResourceList();
         this.usedProduction = new ArrayList<>();
         this.cardMarket = new CardMarket();
         this.resourceMarket = new ResourceMarket();

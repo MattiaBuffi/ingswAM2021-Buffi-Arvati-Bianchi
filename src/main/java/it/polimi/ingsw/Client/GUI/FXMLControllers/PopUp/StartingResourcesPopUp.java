@@ -2,8 +2,6 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Model.Marble.MarbleFactory;
-import it.polimi.ingsw.Model.Marble.ResourceMarble;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 
@@ -20,12 +18,12 @@ public class StartingResourcesPopUp extends ResourceViewer{
     public void chooseResources() throws IOException {
         if(resourceNumber == 1) {
             if (resSelector1.getSelectionModel().getSelectedItem() != null) {
-                PopUpManager.showDeposiResourcePopUp(MarbleFactory.getMarble(getColor(resSelector1.getSelectionModel().getSelectedItem())), mainController, false);
+                PopUpManager.showDepositResourcePopUp(MarbleFactory.getMarble(getColor(resSelector1.getSelectionModel().getSelectedItem())), mainController, false);
             }
         } else {
             if (resSelector1.getSelectionModel().getSelectedItem() != null && resSelector2.getSelectionModel().getSelectedItem() != null) {
-                PopUpManager.showDeposiResourcePopUp(MarbleFactory.getMarble(getColor(resSelector1.getSelectionModel().getSelectedItem())), mainController, false);
-                PopUpManager.showDeposiResourcePopUp(MarbleFactory.getMarble(getColor(resSelector2.getSelectionModel().getSelectedItem())), mainController, false);
+                PopUpManager.showDepositResourcePopUp(MarbleFactory.getMarble(getColor(resSelector1.getSelectionModel().getSelectedItem())), mainController, false);
+                PopUpManager.showDepositResourcePopUp(MarbleFactory.getMarble(getColor(resSelector2.getSelectionModel().getSelectedItem())), mainController, false);
             }
         }
     }

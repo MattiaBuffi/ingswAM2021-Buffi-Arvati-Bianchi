@@ -54,6 +54,10 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
         return username;
     }
 
+
+
+
+
     @Override
     public void update(Message<ModelEventHandler> event) {
         Platform.runLater( ()->event.accept(eventHandler) );
