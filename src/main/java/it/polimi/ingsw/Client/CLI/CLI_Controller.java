@@ -1,14 +1,12 @@
 package it.polimi.ingsw.Client.CLI;
 
 import it.polimi.ingsw.Client.CLI.Pages.*;
+import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Utils.Observable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,12 +15,28 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
+public class CLI_Controller {
+
+    private static ViewBackEnd backEnd;
+    private ClientApp app;
+
+
+    public static StartPage start;
+    public static LoadingPage loading;
+    public static UsernamePage username;
+    public static SelectNumberPlayerPage selectNumber;
+    public static WaitPage waitPage;
+    public static SelectionPage selectionPage;
+    public static HomePage homePage;
+    public static ProductionPage productionPage;
+    public static CardMarketPage cardMarketPage;
+    public static RssMarketPage rssMarketPage;
+    public static ViewPage viewPage;
+    public static QuitPage quitPage;
+
+
     private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
 
-    private final ViewBackEnd backEnd;
-
-    public static String scene;
     private static final String rssPath = "src/main/resources/CLI/";
     private static final String[] currentFile =
             {"StartMenuView.txt","LoadingView.txt","NoActionView.txt",
@@ -30,101 +44,34 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "carcScheme.txt"};
 
-    public CLI_Controller(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
+    public CLI_Controller() throws FileNotFoundException {
+        app = new ClientApp();
+        backEnd = new ViewBackEnd(app);
+        app.setBackEnd(backEnd);
 
-    }
-
-    public void CLIView() throws IOException{
         char[] home = readSchematics(2);
         char[] production = readSchematics(3);
         char[] cardMarket = readSchematics(4);
         char[] rssMarket = readSchematics(5);
 
-        StartPage start = new StartPage(backEnd);
-        LoadingPage loading = new LoadingPage(backEnd);
-        NewGamePage newGame = new NewGamePage(backEnd);
-        JoinGamePage joinGame = new JoinGamePage(backEnd);
-        WaitPage waitPage = new WaitPage(backEnd);
-        SelectionPage selectionPage = new SelectionPage(backEnd);
-        HomePage homePage = new HomePage(backEnd, home);
-        ProductionPage productionPage = new ProductionPage(backEnd, production);
-        CardMarketPage cardMarketPage = new CardMarketPage(backEnd, cardMarket);
-        RssMarketPage rssMarketPage = new RssMarketPage(backEnd, rssMarket);
-        ViewPage viewPage = new ViewPage(backEnd);
-        QuitPage quitPage = new QuitPage(backEnd);
-
-        scene = "START";
-        while(!scene.equals("exit")) {
-            switch (scene) {
-                case "START":
-                    //cls();
-                    start.StartPageView();
-                    break;
-
-                case "LOADING":
-                   // cls();
-                    loading.LoadingPageView();
-                    break;
-
-                case "NEWGAME":
-                    // cls();
-                    newGame.NewGamePageView();
-                    break;
-
-                case "JOINGAME":
-                    // cls();
-                    joinGame.JoinGamePageView();
-                    break;
-
-                case "WAIT":
-                    //cls();
-                    waitPage.WaitPageView();
-                    break;
-
-                case "SELECTION":
-                    //cls();
-                    selectionPage.SelectionPageView();
-                    break;
-
-                case "HOME":
-                    // cls();
-                    homePage.HomePageView();
-                    break;
-
-                case "PRODUCE":
-                  //  cls();
-                    productionPage.ProductionPageView();
-                    break;
-
-                case "CARDMARKET":
-                    //cls();
-                    cardMarketPage.CardMarketPageView();
-                    break;
-
-                case "RSSMARKET":
-                    //cls();
-                    rssMarketPage.RssMarketPageView();
-                    break;
+        start = new StartPage();
+        loading = new LoadingPage();
+        username = new UsernamePage();
+        selectNumber = new SelectNumberPlayerPage();
+        waitPage = new WaitPage();
+        selectionPage = new SelectionPage();
+        homePage = new HomePage(home);
+        productionPage = new ProductionPage(production);
+        cardMarketPage = new CardMarketPage(cardMarket);
+        rssMarketPage = new RssMarketPage(rssMarket);
+        viewPage = new ViewPage();
+        quitPage = new QuitPage();
+    }
 
 
-                case "VIEW":
-                    //cls();
-                    viewPage.ViewPageView();
-                    break;
 
-                case "QUIT":
-                    //cls();
-                    quitPage.QuitPageView();
-                    break;
-
-                default:
-                   // cls();
-                    System.out.println("Wrong Command, please insert a real command, redirecting to Home..");
-                    scene = "HOME";
-                    break;
-            }
-        }
+    public void CLIView() {
+        start.StartPageView(backEnd);
     }
 
     public static void ShelfExtractor(char[] scheme, List<Shelf> playerShelf) {
@@ -156,29 +103,47 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
     }
 
 
-    public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost) {
-        String leaderTypeString = leaderCard.get(i).getType();
-        char[] leaderTypeArray = leaderTypeString.toCharArray();
-        System.arraycopy(leaderTypeArray, 0, home, homeLeaderType[i], leaderTypeArray.length);
+    public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost, int[] homeLeaderEffect) {
+        String leaderType = leaderCard.get(i).getType();
+        System.arraycopy(leaderType.toCharArray(), 0, home, homeLeaderType[i], leaderType.toCharArray().length);
 
-        String leaderPVString = leaderCard.get(i).getVictoryPoint() + "PV";
-        char[] leaderPvArray = leaderPVString.toCharArray();
-        System.arraycopy(leaderPvArray, 0, home, homeLeaderPV[i], leaderPvArray.length);
+        String leaderPV = leaderCard.get(i).getVictoryPoint() + "PV";
+        System.arraycopy(leaderPV.toCharArray(), 0, home, homeLeaderPV[i], leaderPV.toCharArray().length);
 
         List<Marble.Color> leaderCostMarbles = leaderCard.get(i).getResourceRequirement();
         if (leaderCostMarbles != null) {
-            String leaderCostString = getColorString(leaderCostMarbles);
-            char[] leaderCostArray = leaderCostString.toCharArray();
-            System.arraycopy(leaderCostArray, 0, home, homeLeaderCost[i], leaderCostArray.length);
+            String leaderCost = getColorString(leaderCostMarbles);
+            System.arraycopy(leaderCost.toCharArray(), 0, home, homeLeaderCost[i], leaderCost.toCharArray().length);
         }else {
             List<String> leaderCostDevCard = leaderCard.get(i).getDevelopmentCardRequirement();
             StringBuilder costString = new StringBuilder();
-            String col = "";
             for (String s : leaderCostDevCard) {
-                costString.append(s).append(col).append(" ");
+                costString.append(s).append(" ");
             }
             System.arraycopy(costString.toString().toCharArray(), 0, home, homeLeaderCost[i], costString.toString().toCharArray().length);
         }
+
+        Marble.Color colorEffect = leaderCard.get(i).getColorEffected();
+        String colorEffected = getColorString(colorEffect);
+        String effect;
+        switch (leaderType) {
+            case "DISCOUNT":
+                 effect = "-1" + colorEffected;
+                break;
+            case "WHITE":
+                 effect = "White = " + colorEffected;
+                break;
+            case "STORAGE":
+                 effect = "2 " + colorEffected + " Slot";
+                break;
+            case "DEVELOPMENT":
+                 effect = "1" + colorEffected + " -> 1? + 1R";
+                break;
+            default:
+                effect = "";
+        }
+        System.arraycopy(effect.toCharArray(), 0, home, homeLeaderEffect[i], effect.toCharArray().length);
+
     }
 
 
@@ -238,38 +203,59 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
     }
 
 
-    public static String getColorStringFromMarble(List<Marble> colorList){
+    public static String getColorStringFromMarble(List<Marble> marbleList){
         int[] colorMarble = {0,0,0,0};
-        for (Marble marble: colorList) {
-            String color = marble.getColor().toString();
+        for (Marble marble: marbleList) {
+            Marble.Color color = marble.getColor();
             colorExtractor(colorMarble, color);
         }
         return stringBuilder(colorMarble);
+    }
+
+    public static String getColorString(Marble.Color color){
+        String returnedColor;
+        switch (color){
+            case YELLOW:
+                returnedColor = "Y";
+                break;
+            case BLUE:
+                returnedColor = "B";
+                break;
+            case GREY:
+                returnedColor = "G";
+                break;
+            case PURPLE:
+                returnedColor = "P";
+                break;
+            default:
+                returnedColor = "";
+                break;
+        }
+        return returnedColor;
     }
 
 
     public static String getColorString(List<Marble.Color> colorList){
         int[] colorMarble = {0,0,0,0};
         for (Marble.Color marble: colorList) {
-            String color = marble.toString();
-            colorExtractor(colorMarble, color);
+            colorExtractor(colorMarble, marble);
         }
         return stringBuilder(colorMarble);
     }
 
 
-    public static void colorExtractor(int[] colorMarble, String color) {
+    public static void colorExtractor(int[] colorMarble, Marble.Color color) {
         switch (color) {
-            case "YELLOW":
+            case YELLOW:
                 colorMarble[0]++;
                 break;
-            case "BLUE":
+            case BLUE:
                 colorMarble[1]++;
                 break;
-            case "GREY":
+            case GREY:
                 colorMarble[2]++;
                 break;
-            case "PURPLE":
+            case PURPLE:
                 colorMarble[3]++;
                 break;
         }
@@ -294,4 +280,10 @@ public class CLI_Controller extends Observable<Message<ClientEventHandler>> {
         }
         return colorString.toString();
     }
-}
+
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+        CLI_Controller controller = new CLI_Controller();
+        controller.CLIView();
+    }
+ }

@@ -20,5 +20,4 @@ public class WaitingPlayersUpdate implements Message<ModelEventHandler> {
         handler.handle(this);
     }
 
-
 }

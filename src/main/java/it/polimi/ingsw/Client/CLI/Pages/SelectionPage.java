@@ -4,12 +4,14 @@ import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.ModelEventHandler;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-public class SelectionPage {
+public class SelectionPage extends ModelEventHandler.Default{
 
     private static final int[] LeaderSelectionCostPos = {1616,1641,1666,1691};
     private static final int[] LeaderSelectionTypePos = {1882,1907,1932,1957};
@@ -18,25 +20,48 @@ public class SelectionPage {
 
     ViewBackEnd backEnd;
 
-    public SelectionPage(ViewBackEnd backEnd) {
+    public void SelectionPageView(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
-    }
-
-    public void SelectionPageView() throws FileNotFoundException {
+        this.backEnd.setEventHandler(this);
+        CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        char[] charArray = CLI_Controller.readSchematics(11);
-        List<LeaderCard> leaderCardSelection = backEnd.getModel().current.getLeaderCard();
+        char[] charArray = new char[0];
+        try {
+            charArray = CLI_Controller.readSchematics(11);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        List<LeaderCard> leaderCardSelection = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < 4; i++) {
-            CLI_Controller.LeaderCardInfoExtractor(charArray, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos);
+            CLI_Controller.LeaderCardInfoExtractor(charArray, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos, LeaderSelectionEffectPos);
         }
         System.out.println(charArray);
         System.out.println("Which Leader Cards do you want to discard (pos-pos)[pos starts from zero]: ");
         String discardedCard = input.nextLine();
         String[] cardArray = discardedCard.split("-");
         for (String s : cardArray) {
-            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().current.getLeaderCard().get(Integer.parseInt(s)).getId());
-            backEnd.notify(messageDiscard);
+            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(s)).getId());
+            this.backEnd.notify(messageDiscard);
         }
-        CLI_Controller.scene = "HOME";
+        CLI_Controller.homePage.SelectInitialRss(this.backEnd);
+    }
+
+    @Override
+    public void invalidMessage() {
+
+    }
+
+    @Override
+    public void handle(ErrorUpdate event) {
+        CLI_Controller.cls();
+        System.out.println(event.getErrorMessage());
+        System.out.println("Here is a free time travel, enjoy it");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        SelectionPageView(this.backEnd);
     }
 }
