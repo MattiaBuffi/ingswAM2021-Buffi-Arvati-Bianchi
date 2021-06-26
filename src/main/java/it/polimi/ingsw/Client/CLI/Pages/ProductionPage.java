@@ -2,15 +2,12 @@ package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.Model.ChestUpdate;
-import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.ProductionBufferUpdate;
-import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -20,7 +17,8 @@ public class ProductionPage extends ModelEventHandler.Default{
 
     private static final int[] singleCardPosition = {21, 59, 97, 166};
     private static final int[] ProductionPosition = {2451,2475,2499,1786,1810,1834,1121,1145,1169};
-    private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
+    private static final int[] leaderDevelopmentPosition = {842,1640};
+    private static final int singleLeaderDevPosition = 13;
 
     ViewBackEnd backEnd;
     char[] production;
@@ -71,15 +69,35 @@ public class ProductionPage extends ModelEventHandler.Default{
             row++;
         }
 
-        List<Shelf> playerShelf = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getShelves();
-        CLI_Controller.ShelfExtractor(production, playerShelf);
+        CLI_Controller.UpdateShelf(this.backEnd, production);
+        CLI_Controller.UpdateChest(this.backEnd, production);
 
-        ResourceList playerChest = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getChest();
-        List<Marble> playerChestMarble = playerChest.getAll();
+        if(CLI_Controller.leaderActive[1]>0){
+            CLI_Controller.showLeaderShelf(production);
+        }
 
-        String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
-        for (int i = 0; i < 4; i++) {
-            System.arraycopy(playerChestRss[i].toCharArray(), 0, production, RssPosition[i+6], playerChestRss[i].toCharArray().length);
+        if(CLI_Controller.leaderActive[3]>0){
+            List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
+            int i = 0;
+            for (LeaderCard leaderCard : card) {
+                if(leaderCard.getType().equals("DEVELOPMENT")){
+                    char[] scheme = new char[0];
+                    try {
+                        scheme = CLI_Controller.readSchematics(14);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Marble.Color colorEffect = leaderCard.getColorEffected();
+                    String colorEffected = CLI_Controller.getColorString(colorEffect);
+                    scheme[singleLeaderDevPosition] = colorEffected.charAt(0);
+                    for (int j = 0; j < 6; j++){
+                        for (int k = 0; k < 5; k++){
+                            production[leaderDevelopmentPosition[i]+j+133*k] = scheme[j+6*k];
+                        }
+                    }
+                    i++;
+                }
+            }
         }
 
         System.out.println(production);
@@ -119,26 +137,23 @@ public class ProductionPage extends ModelEventHandler.Default{
         backEnd.getModel().updateModel(event);
     }
 
+
     @Override
     public void handle(ChestUpdate event) {
         backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateChest(backEnd, production);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
         backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateShelf(backEnd, production);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         ProductionPageView(this.backEnd);
     }
+
 }

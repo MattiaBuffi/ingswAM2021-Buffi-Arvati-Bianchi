@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.Model.GameSizeRequest;
+import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.Model.WaitingPlayersUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
@@ -41,20 +42,18 @@ public class WaitPage extends ModelEventHandler.Default {
         String playerWaiting =  "player currently joined: " + event.getLobbyCurrentSize();
         System.arraycopy(playerWaiting.toCharArray(),0, waitPage, 3910, playerWaiting.toCharArray().length);
         System.out.println(waitPage);
-        //CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         WaitPageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ModelUpdate event) {
+        this.backEnd.update(event);
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
 

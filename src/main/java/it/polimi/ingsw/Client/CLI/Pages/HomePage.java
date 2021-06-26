@@ -2,18 +2,12 @@ package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
-import it.polimi.ingsw.Message.Model.ChestUpdate;
-import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.LeaderCardActivation;
-import it.polimi.ingsw.Message.Model.ShelfUpdate;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
-import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Model.Marble.ResourceList;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,10 +19,9 @@ public class HomePage extends ModelEventHandler.Default {
     private static final int[] HomeLeaderType = {2570, 2596};
     private static final int[] HomeLeaderEffect = {2836, 2862};
     private static final int[] HomeLeaderPV = {3247, 3273};
-    private static final int[] HomeRankPosition = {2633,2766,2899,3032};
+    private static final int[] HomePopeFavourPosition = {726,751,780};
     private static final int[] FaithCellPosition = {1102, 1107,1112,713,314, 319, 324, 329, 334,339,738,1137,
                                                     1142,1147,1152,1157,1162,763,364,369,374,379,384,389,394,399};
-    private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
     private static final int[] LeaderCardHomePosActive = {3502,3528};
     private static final int[] LeaderCardHomePosDiscard = {2169,2195};
     private static final String active = "Active";
@@ -51,8 +44,6 @@ public class HomePage extends ModelEventHandler.Default {
                 "initial Resources for free, please insert the color of the resource that you want to take " +
                 "[(P/G/B/Y) if more than 1 rss please insert the two colors dividded by a -]" );
         String freeRssTaken = input.next();
-
-
         HomePageView(backEnd);
     }
 
@@ -68,17 +59,10 @@ public class HomePage extends ModelEventHandler.Default {
         String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
         System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
 
-        //Printing Shelves
-        List<Shelf> playerShelf = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getShelves();
-        CLI_Controller.ShelfExtractor(homePage, playerShelf);
 
-        //Printing Chest
-        ResourceList playerChest = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getChest();
-        List<Marble> playerChestMarble = playerChest.getAll();
-        String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
-        for (int i = 0; i < playerChestRss.length; i++) {
-            System.arraycopy(playerChestRss[i].toCharArray(), 0, homePage, RssPosition[i+6], playerChestRss[i].toCharArray().length);
-        }
+        CLI_Controller.UpdateShelf(this.backEnd, homePage);
+        CLI_Controller.UpdateChest(this.backEnd, homePage);
+
 
 
         int position = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getFaithPoints();
@@ -94,9 +78,19 @@ public class HomePage extends ModelEventHandler.Default {
             lastPosition = position;
         }
 
+        for (int i = 0; i < CLI_Controller.popeFavourActive.length; i++){
+            if(CLI_Controller.popeFavourActive[i] == 1){
+                homePage[HomePopeFavourPosition[i]] = 'X';
+            }
+        }
+
         List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < 2; i++) {
             CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
+        }
+
+        if(CLI_Controller.leaderActive[1]>0){
+            CLI_Controller.showLeaderShelf(homePage);
         }
 
         System.out.println(homePage);
@@ -111,13 +105,11 @@ public class HomePage extends ModelEventHandler.Default {
             if (activateLeader.equals("1")){
                 ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
                 this.backEnd.notify(messageActivate);
-                //Clausola attivazione possibile
-                System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
+
             }else if (activateLeader.equals("2")){
                 ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
                 this.backEnd.notify(messageActivate);
-                //Clausola attivazione possibile
-                System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
+
             }
         }else if (command.equals("DISCARD")){
 
@@ -163,6 +155,8 @@ public class HomePage extends ModelEventHandler.Default {
 
     }
 
+
+
     @Override
     public void invalidMessage() {
 
@@ -170,25 +164,47 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ChestUpdate event) {
         backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
         backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateShelf(backEnd, homePage);
+    }
+
+    @Override
+    public void handle(LeaderCardActivation event) {
+        if (event.getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
+            System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
+        }else{
+            System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
+        }
+
+        CLI_Controller.leaderPowerSelector(event.getId());
+    }
+
+    @Override
+    public void handle(VaticanReport event) {
+        //backEnd.something
+
+        CLI_Controller.activatePopeFavor(event.getIndex());
+    }
+
+    @Override
+    public void handle(VaticanRoutePosition event) {
+        //backEnd.something
+
+        if(event.getUsername().equals(this.backEnd.getMyUsername())){
+            HomePageView(this.backEnd);
+        }
     }
 
 }

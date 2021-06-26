@@ -6,7 +6,9 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.*;
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,13 +38,18 @@ public class CLI_Controller {
 
 
     private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
+    private static final int[] LeaderShelfPosition = {1864,1879};
+
+
+    public static int[] leaderActive = {0,0,0,0};
+    public static int[] popeFavourActive = {0,0,0};
 
     private static final String rssPath = "src/main/resources/CLI/";
     private static final String[] currentFile =
             {"StartMenuView.txt","LoadingView.txt","NoActionView.txt",
                     "ProductionView.txt","CardMarketView.txt","ResourceMarketView.txt",
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
-                    "BigFaithTrack.txt", "LeaderSelectionView.txt", "carcScheme.txt"};
+                    "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
 
     public CLI_Controller() throws FileNotFoundException {
         app = new ClientApp();
@@ -68,13 +75,12 @@ public class CLI_Controller {
         quitPage = new QuitPage();
     }
 
-
-
     public void CLIView() {
         start.StartPageView(backEnd);
     }
 
-    public static void ShelfExtractor(char[] scheme, List<Shelf> playerShelf) {
+    public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
+        List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
         for (int i = 0; i < playerShelf.size(); i++) {
             int size = playerShelf.get(i).size;
             switch (playerShelf.get(i).color.toString()) {
@@ -281,9 +287,63 @@ public class CLI_Controller {
         return colorString.toString();
     }
 
+    public static void UpdateChest(ViewBackEnd backEnd, char[] page ){
+        ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getChest();
+        List<Marble> playerChestMarble = playerChest.getAll();
+        String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
+        for (int i = 0; i < playerChestRss.length; i++) {
+            System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i+6], playerChestRss[i].toCharArray().length);
+        }
+    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         CLI_Controller controller = new CLI_Controller();
         controller.CLIView();
+    }
+
+    public static void showError(ErrorUpdate event){
+        cls();
+        System.out.println(event.getErrorMessage());
+        System.out.println("Here is a free time travel, enjoy it");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void leaderPowerSelector(String s){
+        int id = Integer.parseInt(s);
+        if(id < 5) {
+            leaderActive[0] += 1;
+            //cardMarketPage.showLeaderPower(s);
+        } else if(id < 9){
+            leaderActive[1] += 1;
+        } else if(id <13){
+            leaderActive[2] += 1;
+        } else {
+            leaderActive[3] += 1;
+        }
+    }
+
+    public static void showLeaderShelf(char[] page){
+        char[] shelf = new char[0];
+        try {
+             shelf = readSchematics(13);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < leaderActive[1]; i++){
+            for (int j = 0; j < 15; j++){
+                for (int k = 0; k < 4; k++){
+                    page[LeaderShelfPosition[i]+j+133*k] = shelf[j+15*k];
+                }
+            }
+        }
+    }
+
+    public static void activatePopeFavor(int index) {
+        popeFavourActive[index] = 1;
     }
  }

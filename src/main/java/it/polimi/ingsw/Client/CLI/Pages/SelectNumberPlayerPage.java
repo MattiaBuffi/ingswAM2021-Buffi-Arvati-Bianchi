@@ -49,16 +49,4 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
 
     }
 
-    @Override
-    public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        SelectNumberPlayerPageView(this.backEnd);
-    }
 }

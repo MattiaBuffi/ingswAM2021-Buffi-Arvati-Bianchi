@@ -1,9 +1,10 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
 import java.io.FileNotFoundException;
@@ -56,14 +57,8 @@ public class StartPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         StartPageView(this.backEnd);
     }
+
 }

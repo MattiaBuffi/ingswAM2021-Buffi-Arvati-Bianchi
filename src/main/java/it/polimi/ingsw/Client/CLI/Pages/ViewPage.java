@@ -3,7 +3,9 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
@@ -22,6 +24,7 @@ public class ViewPage extends ModelEventHandler.Default {
     private static final int[] BigFaithPlayerRssPos = {3068,3088,3108,3128};
     private static final int[] BigFaithPlayerProdPos = {3201,3221,3241,3261};
     private static final int[] BigFaithPlayerPVPos = {3334,3354,3374,3394};
+    private static final int[] BigFaithPopeFavourPosition = {1235,1266,1302};
 
     ViewBackEnd backEnd;
 
@@ -50,6 +53,13 @@ public class ViewPage extends ModelEventHandler.Default {
             bigView[BigFaithCellPosition[user.getFaithPoints() + i*25]] = (char)(i+1);
             i++;
         }
+
+        for (int j = 0; j < CLI_Controller.popeFavourActive.length; j++){
+            if(CLI_Controller.popeFavourActive[j] == 1){
+                bigView[BigFaithPopeFavourPosition[j]] = 'X';
+            }
+        }
+
         System.out.println(bigView);
         System.out.println("Insert Command (Exit): ");
         String command = input.nextLine().toUpperCase();
@@ -68,14 +78,8 @@ public class ViewPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         ViewPageView(this.backEnd);
     }
+
 }

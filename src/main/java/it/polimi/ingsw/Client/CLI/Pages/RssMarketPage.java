@@ -1,22 +1,20 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
-import it.polimi.ingsw.Model.Marble.ResourceList;
-
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
 public class RssMarketPage extends ModelEventHandler.Default {
 
     private static final int[] RssMarket = {578,593,608,623,1509,1524,1539,1554,2440,2455,2470,2485,3439};
-    private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
+    private static final int[] leaderWhiteBall = {3824, 3957};
 
     ViewBackEnd backEnd;
     char[] rssMarket;
@@ -30,52 +28,62 @@ public class RssMarketPage extends ModelEventHandler.Default {
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        for (int i = 0; i < 3; i++){
-            List<Marble> rssRow = this.backEnd.getModel().resourceMarket.get(i);
-            for (int j=0; j<rssRow.size(); j++) {
-                String color = rssRow.get(j).getColor().toString();
+        for (int i = 0; i < 4; i++){
+            List<Marble> rssColumn = this.backEnd.getModel().resourceMarket.get(i);
+            for (int j=0; j<rssColumn.size(); j++) {
+                Marble.Color color = rssColumn.get(j).getColor();
                 switch (color) {
-                    case "YELLOW":
-                        rssMarket[RssMarket[j+i*4]] = 'Y';
+                    case YELLOW:
+                        rssMarket[RssMarket[j*4+i]] = 'Y';
                         break;
-                    case "BLUE":
-                        rssMarket[RssMarket[j+i*4]] = 'B';
+                    case BLUE:
+                        rssMarket[RssMarket[j*4+i]] = 'B';
                         break;
-                    case "GREY":
-                        rssMarket[RssMarket[j+i*4]] = 'G';
+                    case GREY:
+                        rssMarket[RssMarket[j*4+i]] = 'G';
                         break;
-                    case "PURPLE":
-                        rssMarket[RssMarket[j+i*4]] = 'P';
+                    case PURPLE:
+                        rssMarket[RssMarket[j*4+i]] = 'P';
                         break;
                 }
             }
         }
         Marble bonusMarble = this.backEnd.getModel().resourceMarket.getBonusMarble();
-        String bonusColor = bonusMarble.getColor().toString();
+        Marble.Color bonusColor = bonusMarble.getColor();
         switch (bonusColor) {
-            case "YELLOW":
+            case YELLOW:
                 rssMarket[RssMarket[12]] = 'Y';
                 break;
-            case "BLUE":
+            case BLUE:
                 rssMarket[RssMarket[12]] = 'B';
                 break;
-            case "GREY":
+            case GREY:
                 rssMarket[RssMarket[12]] = 'G';
                 break;
-            case "PURPLE":
+            case PURPLE:
                 rssMarket[RssMarket[12]] = 'P';
                 break;
         }
 
-        List<Shelf> playerShelf = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getShelves();
-        CLI_Controller.ShelfExtractor(rssMarket, playerShelf);
+        CLI_Controller.UpdateShelf(this.backEnd, rssMarket);
+        CLI_Controller.UpdateChest(this.backEnd, rssMarket);
 
-        ResourceList playerChest = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getChest();
-        List<Marble> playerChestMarble = playerChest.getAll();
+        if(CLI_Controller.leaderActive[1]>0){
+            CLI_Controller.showLeaderShelf(rssMarket);
+        }
 
-        String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
-        for (int i = 0; i < 4; i++) {
-            System.arraycopy(playerChestRss[i].toCharArray(), 0, rssMarket, RssPosition[i+6], playerChestRss[i].toCharArray().length);
+        if(CLI_Controller.leaderActive[2]>0){
+            List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
+            int i = 0;
+            for (LeaderCard leaderCard : card) {
+                if(leaderCard.getType().equals("WHITE")){
+                    Marble.Color colorEffect = leaderCard.getColorEffected();
+                    String colorEffected = "W -> " + CLI_Controller.getColorString(colorEffect);
+                    System.arraycopy(colorEffected.toCharArray(), 0, rssMarket, leaderWhiteBall[i], colorEffected.toCharArray().length);
+                    i++;
+                }
+
+            }
         }
 
         System.out.println(rssMarket);
@@ -105,12 +113,14 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        this.backEnd.getModel().updateModel(event);
+        backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateChest(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        this.backEnd.getModel().updateModel(event);
+        backEnd.getModel().updateModel(event);
+        CLI_Controller.UpdateShelf(backEnd, rssMarket);
     }
 
     @Override
@@ -125,14 +135,18 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        CLI_Controller.showError(event);
         RssMarketPageView(this.backEnd);
+    }
+
+
+    @Override
+    public void handle(MarketResourceAvailable event) {
+        backEnd.getModel().updateModel(event);
+    }
+
+    @Override
+    public void handle(MarketResourceTaken event) {
+        backEnd.getModel().updateModel(event);
     }
 }
