@@ -210,7 +210,7 @@ public class CLI_Controller {
 
 
     public static String getColorStringFromMarble(List<Marble> marbleList){
-        int[] colorMarble = {0,0,0,0};
+        int[] colorMarble = {0,0,0,0,0};
         for (Marble marble: marbleList) {
             Marble.Color color = marble.getColor();
             colorExtractor(colorMarble, color);
@@ -233,6 +233,9 @@ public class CLI_Controller {
             case PURPLE:
                 returnedColor = "P";
                 break;
+            case RED:
+                returnedColor = "R";
+                break;
             default:
                 returnedColor = "";
                 break;
@@ -242,7 +245,7 @@ public class CLI_Controller {
 
 
     public static String getColorString(List<Marble.Color> colorList){
-        int[] colorMarble = {0,0,0,0};
+        int[] colorMarble = {0,0,0,0,0};
         for (Marble.Color marble: colorList) {
             colorExtractor(colorMarble, marble);
         }
@@ -264,6 +267,9 @@ public class CLI_Controller {
             case PURPLE:
                 colorMarble[3]++;
                 break;
+            case RED:
+                colorMarble[4]++;
+                break;
         }
     }
 
@@ -271,7 +277,7 @@ public class CLI_Controller {
     public static String stringBuilder(int[] colorMarble) {
         StringBuilder colorString = new StringBuilder();
         String col;
-        for (int k = 0; k < 4; k++) {
+        for (int k = 0; k < 5; k++) {
             if(colorMarble[k]>0){
                 if(k == 0)
                     col = "Y";
@@ -279,8 +285,10 @@ public class CLI_Controller {
                     col = "B";
                 else if (k == 2)
                     col = "G";
-                else
+                else if (k == 3)
                     col = "P";
+                else
+                    col = "R";
                 colorString.append(colorMarble[k]).append(col).append(" ");
             }
         }
