@@ -4,12 +4,11 @@ import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,12 +31,8 @@ public class ProductionPage extends ModelEventHandler.Default{
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        char[] customCard = new char[0];
-        try {
-            customCard = CLI_Controller.readSchematics(12);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        char[] customCard;
+        customCard = CLI_Controller.readSchematics(12);
         int row = 0;
         int column = 0;
 
@@ -81,12 +76,7 @@ public class ProductionPage extends ModelEventHandler.Default{
             int i = 0;
             for (LeaderCard leaderCard : card) {
                 if(leaderCard.getType().equals("DEVELOPMENT")){
-                    char[] scheme = new char[0];
-                    try {
-                        scheme = CLI_Controller.readSchematics(14);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    char[] scheme = CLI_Controller.readSchematics(14);
                     Marble.Color colorEffect = leaderCard.getColorEffected();
                     String colorEffected = CLI_Controller.getColorString(colorEffect);
                     scheme[singleLeaderDevPosition] = colorEffected.charAt(0);
@@ -101,7 +91,7 @@ public class ProductionPage extends ModelEventHandler.Default{
         }
 
         System.out.println(production);
-        System.out.println("Insert Command (Produce,Exit): ");
+        System.out.println("Insert Command (Produce,Exit, EndTurn): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "PRODUCE":
@@ -121,6 +111,10 @@ public class ProductionPage extends ModelEventHandler.Default{
                 System.out.println("redirecting to Home..");
                 CLI_Controller.homePage.HomePageView(this.backEnd);
                 break;
+            case "ENDTURN":
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
             default:
                 System.out.println("Wrong Command, please insert a real command");
                 break;
@@ -142,12 +136,14 @@ public class ProductionPage extends ModelEventHandler.Default{
     public void handle(ChestUpdate event) {
         backEnd.getModel().updateModel(event);
         CLI_Controller.UpdateChest(backEnd, production);
+        CLI_Controller.productionPage.ProductionPageView(backEnd);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
         backEnd.getModel().updateModel(event);
         CLI_Controller.UpdateShelf(backEnd, production);
+        CLI_Controller.productionPage.ProductionPageView(backEnd);
     }
 
     @Override

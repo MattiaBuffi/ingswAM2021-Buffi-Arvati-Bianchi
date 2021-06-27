@@ -3,13 +3,8 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.GameSizeRequest;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
-import it.polimi.ingsw.Message.Model.WaitingPlayersUpdate;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
-
-import java.io.FileNotFoundException;
 
 public class WaitPage extends ModelEventHandler.Default {
 
@@ -20,11 +15,7 @@ public class WaitPage extends ModelEventHandler.Default {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
-        try {
-            waitPage = CLI_Controller.readSchematics(9);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        waitPage = CLI_Controller.readSchematics(9);
         System.out.println(waitPage);
     }
 
@@ -53,11 +44,11 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event) {
-
-        this.backEnd.setModel(new ViewModel());
+        this.backEnd.setModel(new ViewModel(UsernamePage.getName()));
         this.backEnd.getModel().updateModel(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
+
 
 
 }

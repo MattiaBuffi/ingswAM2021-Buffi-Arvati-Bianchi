@@ -3,8 +3,8 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -76,10 +76,10 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 rssMarket[RssMarket[12]] = 'W';
                 break;
         }
-    /*
+
         CLI_Controller.UpdateShelf(this.backEnd, rssMarket);
         CLI_Controller.UpdateChest(this.backEnd, rssMarket);
-*/
+
         if(CLI_Controller.leaderActive[1]>0){
             CLI_Controller.showLeaderShelf(rssMarket);
         }
@@ -99,7 +99,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         }
 
         System.out.println(rssMarket);
-        System.out.println("Insert Command (Buy,Exit): ");
+        System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
@@ -114,6 +114,10 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 System.out.println("redirecting to Home..");
                 CLI_Controller.homePage.HomePageView(backEnd);
                 break;
+            case "ENDTURN":
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
             default:
                 System.out.println("Wrong Command, please insert a real command");
                 break;

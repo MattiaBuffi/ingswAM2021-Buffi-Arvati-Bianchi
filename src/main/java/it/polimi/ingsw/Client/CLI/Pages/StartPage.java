@@ -2,12 +2,8 @@ package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
-
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class StartPage extends ModelEventHandler.Default{
@@ -22,13 +18,7 @@ public class StartPage extends ModelEventHandler.Default{
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        char[] charArray = new char[0];
-
-        try {
-            charArray = CLI_Controller.readSchematics(0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        char[] charArray = CLI_Controller.readSchematics(0);
         System.out.println(charArray);
         System.out.println("Insert Server IP: ");
         String server = input.nextLine();

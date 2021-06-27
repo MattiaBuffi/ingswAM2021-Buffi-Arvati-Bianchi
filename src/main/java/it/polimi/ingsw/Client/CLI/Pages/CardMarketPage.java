@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -63,7 +64,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
         CLI_Controller.UpdateChest(this.backEnd, cardMarket);
 */
         System.out.println(cardMarket);
-        System.out.println("Insert Command (Buy,Exit): ");
+        System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
@@ -78,6 +79,10 @@ public class CardMarketPage extends ModelEventHandler.Default {
                 System.out.println("redirecting to Home..");
                 CLI_Controller.homePage.HomePageView(this.backEnd);
                 break;
+            case "ENDTURN":
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
             default:
                 System.out.println("Wrong Command, please insert a real command");
                 CLI_Controller.cardMarketPage.CardMarketPageView(this.backEnd);
