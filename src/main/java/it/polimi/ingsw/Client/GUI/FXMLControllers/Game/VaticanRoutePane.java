@@ -3,14 +3,10 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
-import it.polimi.ingsw.Message.Message;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import jdk.dynalink.linker.LinkerServices;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +19,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
     @FXML
     public ImageView popeToken1, popeToken2, popeToken3;
 
-    private final Position[] CROSS_SHIFT = {new Position(0,0), new Position(94,0), new Position(94,0), new Position(0,-62),
+    private final Position[] CROSS_SHIFT = {new Position(94,0), new Position(94,0), new Position(0,-62),
             new Position(0,-62), new Position(94,0), new Position(94,0), new Position(94,0), new Position(94,0),
             new Position(94,0), new Position(0,62), new Position(0,62), new Position(94,0), new Position(94,0),
             new Position(94,0), new Position(94,0), new Position(94,0),new Position(0,-62), new Position(0,-62),
@@ -36,7 +32,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
     private boolean firstUpdate = true;
     private final Map<String, ImageView> imageViewMap = new HashMap<>();
     private final Map<String, Position> crossInitialPositions = new HashMap<>();
-    private List<String> players = new ArrayList<>();
+    private List<String> usernames = new ArrayList<>();
 
 
     @Override
@@ -49,31 +45,36 @@ public class VaticanRoutePane implements Layout,GameTab  {
     @Override
     public void update() {
         if(firstUpdate) initializeCrosses();
-        //updateCrosses();
+        updateCrosses();
     }
 
     private void initializeCrosses() {
-        if(players.size() == 1){
+        System.out.println(backEnd.getModel().players.size());
+        if(backEnd.getModel().players.size() == 1){
             cross1.setVisible(true);
             imageViewMap.put(backEnd.getMyUsername(), cross1);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[0]);
+
             cross2.setImage(new Image(App.class.getResourceAsStream("images/token/blackCross.png")));
+            cross2.setVisible(true);
             imageViewMap.put("cpu", cross2);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[1]);
-            players.add(backEnd.getMyUsername());
+
+            usernames.add(backEnd.getMyUsername());
         } else {
             for (int i = 0; i < backEnd.getModel().players.size(); i++) {
                 crossArray[i].setVisible(true);
                 imageViewMap.put(backEnd.getModel().players.get(i).getUsername(), crossArray[i]);
                 crossInitialPositions.put(backEnd.getModel().players.get(i).getUsername(), INITIAL_POSITION[i]);
-                players.add(backEnd.getModel().players.get(i).getUsername());
+                usernames.add(backEnd.getModel().players.get(i).getUsername());
             }
         }
         firstUpdate = false;
     }
 
     private void updateCrosses() {
-        for(String s: players){
+        System.out.println(usernames);
+        for(String s: usernames){
             updateCross(s, backEnd.getModel().vaticanRoute.getPlayerFaithPoint(s));
         }
     }

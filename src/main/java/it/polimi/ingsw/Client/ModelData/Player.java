@@ -36,6 +36,7 @@ public class Player {
         this.productions = new ArrayList<>();
         this.shelves = new ArrayList<>();
         this.leaderCard = new ArrayList<>();
+        this.chest = new ResourceList();
 
         initShelves(this.shelves);
 

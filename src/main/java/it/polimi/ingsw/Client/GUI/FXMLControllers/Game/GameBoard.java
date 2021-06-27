@@ -75,6 +75,14 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         updateTabs();
     }
 
+    @Override
+    public void handle(ErrorUpdate error) {
+        try {
+            PopUpManager.showErrorPopUp(error.getErrorMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void handle(GameSizeRequest event) {

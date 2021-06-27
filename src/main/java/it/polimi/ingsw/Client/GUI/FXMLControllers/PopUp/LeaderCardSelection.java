@@ -97,7 +97,7 @@ public class LeaderCardSelection implements Layout{
         showLeaderCard();
     }
 
-    private void showLeaderCard(){ //???
+    private void showLeaderCard(){
         for(int i=0; i<leaderCards.size(); i++){
             imageArray[i].setImage(getCardImage(leaderCards.get(i).getId()));
         }
