@@ -42,6 +42,7 @@ public class UsernamePage extends ModelEventHandler.Default  {
     @Override
     public void handle(UsernameSelected event){
         CLI_Controller.waitPage.WaitPageView(this.backEnd);
+        backEnd.setUsername(event.getUsername());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.Player.States;
 
+import it.polimi.ingsw.Message.Model.ActivePlayer;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 
@@ -18,6 +19,7 @@ public class StateWait extends PlayerState {
         }
 
         context.setState(StateNewTurn.get());
+        context.notifyAllPlayers(new ActivePlayer(context.getUser().getUsername()));
 
         return true;
     }
