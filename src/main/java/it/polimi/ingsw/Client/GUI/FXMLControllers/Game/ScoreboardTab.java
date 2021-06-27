@@ -10,9 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 public class ScoreboardTab implements Layout, GameTab {
@@ -24,11 +22,11 @@ public class ScoreboardTab implements Layout, GameTab {
     @FXML
     HBox hbox1, hbox2, hbox3, hbox4;
 
+    private HBox[] hboxArray;
     private Label[] playersLabelsArray;
     private Label[] pointsLabelsArray;
-    private HBox[] hboxArray;
 
-    private int selection = -1;
+    private Label selection = null;
     private List<PlayerScore> players = new ArrayList<>();
     private ViewBackEnd backEnd;
 
@@ -37,43 +35,47 @@ public class ScoreboardTab implements Layout, GameTab {
     public void setup(ViewBackEnd backEnd) {
 
         System.out.println("ScoreBoardTab");
+        this.backEnd = backEnd;
+        hboxArray = new HBox[]{hbox1, hbox2, hbox3, hbox4};
         playersLabelsArray = new Label[]{player1, player2, player3, player4};
         pointsLabelsArray = new Label[]{points1, points2, points3, points4};
-        hboxArray = new HBox[]{hbox1, hbox2, hbox3, hbox4};
-        this.backEnd = backEnd;
 
+        try {
+            List<Player> playerList = backEnd.getModel().players;
+
+            for (Player player : playerList) {
+                players.add(new PlayerScore(player.getUsername()));
+            }
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            System.out.println("Players not initialized!");
+        }
+
+        setupView();
     }
 
     @Override
     public void update() {
-
-    }
-
-
-
-    public void viewPlayerSelected() {
-        if(selection!=-1 && !playersLabelsArray[selection].getText().equals(backEnd.getMyUsername())){
-            try {
-                PopUpManager.showPlayerBoardPopUp(playersLabelsArray[selection].getText(), backEnd);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        updatePoints();
+        updateView();
     }
 
     private void setupView(){
-        for(Player p: backEnd.getModel().players){
-            players.add(new PlayerScore(p.getUsername()));
-        }
+
         for(int i=0; i<players.size(); i++){
-            playersLabelsArray[i].setText(players.get(i).getUsername());
+            playersLabelsArray[i].setText(players.get(i).username);
             hboxArray[i].setVisible(true);
         }
     }
 
-    public void updateScoreboard(){
-        updatePoints();
-        updateView();
+    public void viewPlayerSelected() {
+        if(selection != null && !selection.getText().equals(backEnd.getMyUsername()) && !selection.getText().equals("cpu")){
+            try {
+                PopUpManager.showPlayerBoardPopUp(selection.getText(), backEnd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void updatePoints() {
@@ -92,44 +94,26 @@ public class ScoreboardTab implements Layout, GameTab {
     }
 
     public void playerSelected(MouseEvent mouseEvent) {
-        Label tmp = (Label) mouseEvent.getSource();
-        if(tmp.equals(player1)){
-            cleanSelection();
-            selection = 0;
-            hbox1.getStyleClass().add("bg_beige_chiaro");
-        }else if(tmp.equals(player2)){
-            cleanSelection();
-            selection = 1;
-            hbox2.getStyleClass().add("bg_beige_chiaro");
-        } else if(tmp.equals(player3)){
-            cleanSelection();
-            selection = 2;
-            hbox3.getStyleClass().add("bg_beige_chiaro");
-        } else if(tmp.equals(player4)){
-            cleanSelection();
-            selection = 3;
-            hbox4.getStyleClass().add("bg_beige_chiaro");
-        }
+
+        cleanSelection();
+        selection = (Label) mouseEvent.getSource();
+        hbox1.getStyleClass().add("bg_beige_chiaro");
+
     }
 
     private void cleanSelection(){
-        switch (selection){
-            case 1:
+        if(selection != null){
+            if(selection == player1){
                 hbox1.getStyleClass().clear();
-                break;
-            case 2:
+            } else if(selection == player2){
                 hbox2.getStyleClass().clear();
-                break;
-            case 3:
+            } else if(selection == player3){
                 hbox3.getStyleClass().clear();
-                break;
-            case 4:
+            } else if(selection == player4){
                 hbox4.getStyleClass().clear();
-                break;
+            }
         }
     }
-
-
 
     private class PlayerScore{
         private final String username;

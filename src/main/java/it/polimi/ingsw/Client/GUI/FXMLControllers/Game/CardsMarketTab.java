@@ -1,17 +1,15 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
-import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class CardsMarketTab implements Layout, GameTab{
@@ -71,6 +69,12 @@ public class CardsMarketTab implements Layout, GameTab{
                 System.out.println(columnChoice.getSelectionModel().getSelectedItem());
                 BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, columnChoice.getSelectionModel().getSelectedItem());
                 backEnd.notify(message);
+            } else {
+                try {
+                    PopUpManager.showErrorPopUp("Choose the column where you want to place the selected card");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

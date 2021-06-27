@@ -10,3 +10,7 @@
     -fx-background-color: #cec4a6;
     -fx-background-radius: 2%;
 }
+.end_turn_button{
+    -fx-background-color: #9a3737;
+    -fx-background-radius: 2%;
+}

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Message;
@@ -11,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class GameBoard extends ModelEventHandler.Default implements Layout {
@@ -38,9 +40,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     public VaticanRoutePane vaticanRoute_Controller;
 
     private ViewBackEnd backEnd;
-    private boolean resourceBufferUpdate = false;
 
-
+    private List<String> leaderActivated;
 
     @Override
     public void setup(ViewBackEnd backEnd) {
@@ -71,7 +72,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         backEnd.getModel().updateModel(event);
 
         updateTabs();
-
     }
 
 
@@ -90,24 +90,18 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     }
 
-
-
-
     private void updateTabs(){
 
         cardsMarketTab_Controller.update();
-        leaderCardsTab_Controller.update();
+        //leaderCardsTab_Controller.update();
+        checkLeaderCardActivation();
         resourceMarket_Controller.update();
 
-        storageTab_Controller.manageResourceBuffer();
+        //storageTab_Controller.update();
 
-        scoreboardTab_Controller.updateScoreboard();
-
+        //scoreboardTab_Controller.update();
 
     }
-
-
-
 
     private void leaderPowerSelector(String s){
         int id = Integer.parseInt(s);
@@ -119,6 +113,17 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
             resourceMarket_Controller.showLeaderPower(s);
         } else {
             productionTab_Controller.showLeaderPower(s);
+        }
+    }
+
+    private void checkLeaderCardActivation(){
+        List<LeaderCard> leaderCards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
+
+        for(LeaderCard card: leaderCards){
+            if(card.isActive() && !leaderActivated.contains(card.getId())){
+                leaderPowerSelector(card.getId());
+                leaderActivated.add(card.getId());
+            }
         }
     }
 }

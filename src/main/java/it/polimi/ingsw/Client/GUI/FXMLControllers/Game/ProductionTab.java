@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceViewer;
 import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.BasicProduction;
@@ -38,7 +39,6 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
     private ViewBackEnd backEnd;
     private CheckBox[] checkBoxArray;
     private ImageView[][] cardGrid;
-    private boolean[][] cardVisualized = new boolean[][]{{false, false, false},{false, false, false},{false, false, false}};
     private Map<CheckBox, String> leaderPowerMap= new HashMap<>();
 
     @Override
@@ -48,15 +48,22 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
 
         checkBoxArray = new CheckBox[]{checkLeaderProduction1, checkLeaderProduction2, checkBasicProduction, checkLeftProduction, checkCenterProduction, checkRightProduction};
         cardGrid = new ImageView[][]{{ivLeftCard1, ivLeftCard2, ivLeftCard3},{ivCenterCard1, ivCenterCard2, ivCenterCard3},{ivRightCard1, ivRightCard2, ivRightCard3}};
-
     }
 
     @Override
-    public void update() {
+    public void update() throws NullPointerException {
+        List<List<DevelopmentCardData>> cards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getProductions();
 
+        for(int i=0; i<3; i++){
+            showCards(i, cards.get(i));
+        }
     }
 
-
+    private void showCards(int column, List<DevelopmentCardData> cardList){
+        for(int i=0; i<cardList.size(); i++){
+            cardGrid[column][i].setImage(getDevCardImage(cardList.get(i).id));
+        }
+    }
 
     public void showLeaderPower(String id){
         if(!checkLeaderProduction1.isVisible()) {
@@ -150,17 +157,4 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
             backEnd.notify(m);
         }
     }
-
-    public void showDevCard(int column, String id){
-        for(int i=0; i<3; i++){
-            if(!cardVisualized[column - 1][i]){
-                cardVisualized[column - 1][i] = true;
-                cardGrid[column][i].setImage(getDevCardImage(id));
-                break;
-            }
-        }
-    }
-
-
-
 }

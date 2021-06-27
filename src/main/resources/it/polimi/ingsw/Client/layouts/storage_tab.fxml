@@ -77,11 +77,11 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <ImageView fx:id="leaderStorage1" fitHeight="109.0" fitWidth="229.0" layoutX="12.0" layoutY="643.0" onMouseClicked="#resLeader1selected" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="leaderStorage1" fitHeight="109.0" fitWidth="229.0" layoutX="12.0" layoutY="643.0" onMouseClicked="#resLeader1selected" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/leaderPowers/leaderStorageBLUE.png" />
          </image></ImageView>
-      <ImageView fx:id="leaderStorage2" fitHeight="109.0" fitWidth="229.0" layoutX="236.0" layoutY="645.0" onMouseClicked="#resLeader2selected" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="leaderStorage2" fitHeight="109.0" fitWidth="229.0" layoutX="236.0" layoutY="645.0" onMouseClicked="#resLeader2selected" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/leaderPowers/leaderStorageBLUE.png" />
          </image></ImageView>

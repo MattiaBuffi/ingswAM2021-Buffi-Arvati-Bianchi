@@ -3,6 +3,10 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.ClientEventHandler;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.Message;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,11 +19,6 @@ public class VaticanRoutePane implements Layout,GameTab  {
     public ImageView cross1, cross2, cross3, cross4;
     @FXML
     public ImageView popeToken1, popeToken2, popeToken3;
-
-    /*private final int[] CROSS_SHIFT_X = {0, 94, 94, 0, 0, 94, 94, 94, 94, 94, 0, 0, 94, 94, 94, 94, 94, 0, 0, 94, 94, 94, 94, 94, 94};
-    private final int[] CROSS_SHIFT_Y = {0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 62, 62, 0, 0, 0, 0, 0, -62, -62, 0, 0, 0, 0, 0, 0};
-    private final int[] INITIAL_POS_X = {68, 115, 68, 115};
-    private final int[] INITIAL_POS_Y = {148, 201, 201, 148};*/
 
     private final Position[] CROSS_SHIFT = {new Position(0,0), new Position(94,0), new Position(94,0), new Position(0,-62),
             new Position(0,-62), new Position(94,0), new Position(94,0), new Position(94,0), new Position(94,0),
@@ -41,6 +40,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
         this.backEnd = backEnd;
         crossArray = new ImageView[]{cross1, cross2, cross3, cross4};
 
+        initializeCrosses();
     }
 
     @Override
@@ -49,15 +49,13 @@ public class VaticanRoutePane implements Layout,GameTab  {
     }
 
 
-
     private void initializeCrosses() {
-        int playersNumber = backEnd.getModel().players.size();
-        if(playersNumber == 1){
+        if(backEnd.getModel().singlePlayer){
             cross1.setVisible(true);
             imageViewMap.put(backEnd.getMyUsername(), cross1);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[0]);
             cross2.setImage(new Image(App.class.getResourceAsStream("images/token/blackCross.png")));
-            imageViewMap.put("blackCross", cross2);//??
+            imageViewMap.put("cpu", cross2);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[1]);
         } else {
             for (int i = 0; i < backEnd.getModel().players.size(); i++) {
@@ -105,6 +103,11 @@ public class VaticanRoutePane implements Layout,GameTab  {
                 popeToken3.setImage(new Image(App.class.getResourceAsStream("images/token/popeFavorON_3.png")));
                 break;
         }
+    }
+
+    public void endTurn() {
+        EndTurn message = new EndTurn();
+        backEnd.notify(message);
     }
 
     private class Position{

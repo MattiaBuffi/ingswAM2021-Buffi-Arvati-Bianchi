@@ -55,7 +55,9 @@ public class StorageTab implements Layout, GameTab {
 
     @Override
     public void update() {
-
+        manageResourceBuffer();
+        updateShelves();
+        updateChest();
     }
 
     public ViewBackEnd getBackEnd(){
@@ -80,7 +82,7 @@ public class StorageTab implements Layout, GameTab {
     public void updateShelves() {
         List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
 
-        for(int i= 0; i<shelves.size(); i++){
+        for(int i = 0; i<shelves.size(); i++){
             switch (i){
                 case 0:
                     updateSingleShelf(shelf_1, shelves.get(i));
@@ -154,17 +156,12 @@ public class StorageTab implements Layout, GameTab {
         }
     }
 
-
-
     private void resetValue(){
         yellowValue.setText("0");
         purpleValue.setText("0");
         blueValue.setText("0");
         greyValue.setText("0");
     }
-
-
-
 
     public void res11selected() {
         showSelection(shelfSel1, 0);

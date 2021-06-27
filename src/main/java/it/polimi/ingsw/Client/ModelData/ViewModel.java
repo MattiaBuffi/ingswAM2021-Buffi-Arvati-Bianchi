@@ -21,6 +21,8 @@ public class ViewModel {
     public CardMarket cardMarket;
     public ResourceMarket resourceMarket;
 
+    public boolean singlePlayer;
+
     private ModelUpdater updater;
 
     public ViewModel(){
