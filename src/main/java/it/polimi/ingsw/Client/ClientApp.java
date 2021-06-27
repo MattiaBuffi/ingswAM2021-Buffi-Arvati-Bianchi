@@ -19,8 +19,13 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
     private ViewBackEnd backEnd;
     private ExecutorService executor;
 
-    public ClientApp() {
+    private Runnable resetScreen;
+
+
+    //Here runnable is used as a functional interface that has no input and no output. still, it might be confusing
+    public ClientApp(Runnable resetScreen) {
         this.executor = Executors.newCachedThreadPool();
+        this.resetScreen = resetScreen;
     }
 
     public void setBackEnd(ViewBackEnd backEnd) {
@@ -104,7 +109,9 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
     @Override
     public void close(ConnectionHandler connection) {
         removeController();
-        App.setScene("home_page");
+        resetScreen.run();
     }
+
+
 
 }

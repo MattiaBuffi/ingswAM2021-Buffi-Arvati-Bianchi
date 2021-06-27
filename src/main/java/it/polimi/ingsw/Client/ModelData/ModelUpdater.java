@@ -1,10 +1,13 @@
 package it.polimi.ingsw.Client.ModelData;
 
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
+
+import java.util.List;
 
 public class ModelUpdater implements ModelEventHandler {
 
@@ -15,12 +18,12 @@ public class ModelUpdater implements ModelEventHandler {
     }
 
     @Override
-    public void handle(VaticanReport vaticanReport) {
+    public void handle(VaticanReport event) {
 
     }
 
     @Override
-    public void handle(VaticanRoutePosition vaticanRoutePosition) {
+    public void handle(VaticanRoutePosition event) {
 
     }
 
@@ -43,11 +46,6 @@ public class ModelUpdater implements ModelEventHandler {
                         event.getProduce(),
                         event.getRequire())
         );
-    }
-
-    @Override
-    public void handle(ErrorUpdate error) {
-        //
     }
 
     @Override
@@ -101,29 +99,62 @@ public class ModelUpdater implements ModelEventHandler {
     @Override
     public void handle(ResourceMarketExtra event) {
         model.resourceMarket.setBonusMarble(event.getMarble());
+    }
+
+    @Override
+    public void handle(LeaderCardActivation event) {
 
     }
 
     @Override
-    public void handle(LeaderCardActivation leaderCardActivation) {
+    public void handle(ActivePlayer event) {
+        model.current = model.getPlayer(event.getUsername());
+    }
+
+    @Override
+    public void handle(AvailableLeaderCard event) {
+        List<LeaderCard> cards = model.getPlayer(model.myUsername).getLeaderCard();
+        //doSomething
+    }
+
+    @Override
+    public void handle(PlayersSetup event) {
+        model.players.add( new Player(event.getUsername()));
+    }
+
+    @Override
+    public void handle(ResourceSetup event) {
 
     }
 
+
+
+
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        //do nothing
+    }
+
+    @Override
+    public void handle(ErrorUpdate error) {
+        //do nothing
+    }
 
     @Override
     public void handle(GameSizeRequest event) {
-
+        //do nothing
     }
 
     @Override
     public void handle(UsernameSelected event) {
-
+        //do nothing
     }
 
     @Override
     public void handle(WaitingPlayersUpdate event) {
-
+        //do nothing
     }
+
 
 
 }

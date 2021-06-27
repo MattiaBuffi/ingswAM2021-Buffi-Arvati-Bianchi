@@ -12,6 +12,15 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
     private String username;
 
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
 
     @Override
     public void handle(ActivateLeaderCard event) {

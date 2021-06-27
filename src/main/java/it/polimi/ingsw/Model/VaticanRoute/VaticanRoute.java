@@ -38,6 +38,21 @@ public class VaticanRoute {
         this.popeSpaceReached = popeSpaceReached;
     }
 
+    public int getInitialPosition(int playOrder){
+        if(playOrder < 3){
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    public VaticanToken addPlayer(String username){
+        VaticanToken token = new VaticanToken(this, username);
+        token.setPosition(getInitialPosition(tokenList.size()));
+        broadcaster.notifyAllPlayers(new VaticanRoutePosition(username, token.getPosition()));
+        tokenList.add(token);
+        return token;
+    }
 
 
     public boolean addPlayer(VaticanToken token){

@@ -49,7 +49,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         this.backEnd = backEnd;
         backEnd.setEventHandler(this);
 
-        backEnd.setModel(new ViewModel());
+        backEnd.setModel(new ViewModel(backEnd.getMyUsername()));
 
         productionTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);

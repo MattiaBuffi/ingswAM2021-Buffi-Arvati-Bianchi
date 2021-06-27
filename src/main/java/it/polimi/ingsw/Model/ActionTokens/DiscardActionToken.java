@@ -33,7 +33,7 @@ public class DiscardActionToken implements ActionToken{
             terminator.endGame();
             return;
         }
-        broadcaster.notifyAllPlayers(new ActionTokenPlayed());
+        broadcaster.notifyAllPlayers(new ActionTokenPlayed(color+" card token played"));
     }
 
 }
