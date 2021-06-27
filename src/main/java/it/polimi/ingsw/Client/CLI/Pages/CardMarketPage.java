@@ -50,7 +50,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
             int i = 0;
             for (LeaderCard leaderCard : card) {
                 if(leaderCard.getType().equals("DISCOUNT")){
-                    Marble.Color colorEffect = leaderCard.getColorEffected();
+                    Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = "Discount -1" + CLI_Controller.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, cardMarket, leaderDiscount[i], colorEffected.toCharArray().length);
                     i++;

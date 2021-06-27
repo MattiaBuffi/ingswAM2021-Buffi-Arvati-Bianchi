@@ -31,10 +31,11 @@ public class ViewPage extends ModelEventHandler.Default {
         CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
         char[] bigView = CLI_Controller.readSchematics(10);
-        int i = 0;
+
         List<Player> users = this.backEnd.getModel().players;
-        for (Player user: users) {
-            System.arraycopy(((char)(i+1)+ " " + user.getUsername()).toCharArray(), 0, bigView, BigFaithPlayerNamePos[i], user.getUsername().toCharArray().length);
+        for (int i = 0; i < users.size(); i++) {
+            Player user = users.get(i);
+            System.arraycopy((((i+1) + " " + user.getUsername()).toCharArray()), 0, bigView, BigFaithPlayerNamePos[i], (((i+1)+" "+ user.getUsername()).toCharArray()).length);
             System.arraycopy(Integer.toString(user.getProductions().size()).toCharArray(), 0, bigView, BigFaithPlayerProdPos[i], Integer.toString(user.getProductions().size()).toCharArray().length);
 
             ResourceList playerChest = this.backEnd.getModel().getPlayer(user.getUsername()).getChest();
@@ -42,8 +43,7 @@ public class ViewPage extends ModelEventHandler.Default {
             char[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).toCharArray();
             System.arraycopy(playerChestRss, 0, bigView, BigFaithPlayerRssPos[i], playerChestRss.length);
             System.arraycopy((user.getVictoryPoints() + " VP").toCharArray(), 0, bigView, BigFaithPlayerPVPos[i], (user.getVictoryPoints() + " VP").toCharArray().length);
-            bigView[BigFaithCellPosition[this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(user.getUsername())  + i*25]] = (char)(i+1);
-            i++;
+            bigView[BigFaithCellPosition[this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(user.getUsername()) + i * 25]] = ((i+1) + " ").toCharArray()[0];
         }
 
         for (int j = 0; j < CLI_Controller.popeFavourActive.length; j++){

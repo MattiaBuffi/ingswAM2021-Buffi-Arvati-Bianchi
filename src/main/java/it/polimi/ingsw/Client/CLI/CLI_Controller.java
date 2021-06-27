@@ -51,7 +51,7 @@ public class CLI_Controller {
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
 
     public CLI_Controller(){
-        app = new ClientApp(this::CLIView); //need to be checked
+        app = new ClientApp(this::CLIView);
         backEnd = ViewBackEnd.getCLIBackend(app);
         app.setBackEnd(backEnd);
 
@@ -79,7 +79,6 @@ public class CLI_Controller {
     }
 
     public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
-        if(backEnd.getModel().getPlayer(backEnd.getModel().myUsername) != null) {
             List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getShelves();
             for (int i = 0; i < playerShelf.size(); i++) {
                 int size = playerShelf.get(i).size;
@@ -113,8 +112,6 @@ public class CLI_Controller {
                 }
             }
             }
-
-        }
     }
 
 
@@ -138,7 +135,7 @@ public class CLI_Controller {
             System.arraycopy(costString.toString().toCharArray(), 0, home, homeLeaderCost[i], costString.toString().toCharArray().length);
         }
 
-        Marble.Color colorEffect = leaderCard.get(i).getColorEffected();
+        Marble.Color colorEffect = leaderCard.get(i).getColor();
         String colorEffected = getColorString(colorEffect);
         String effect;
         switch (leaderType) {
@@ -311,7 +308,6 @@ public class CLI_Controller {
     }
 
     public static void UpdateChest(ViewBackEnd backEnd, char[] page ){
-        if(backEnd.getModel().getPlayer(backEnd.getModel().myUsername) != null) {
             ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
             if(playerChest != null) {
                 List<Marble> playerChestMarble = playerChest.getAll();
@@ -320,7 +316,6 @@ public class CLI_Controller {
                     System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i + 6], playerChestRss[i].toCharArray().length);
                 }
             }
-        }
     }
 
     public static void main(String[] args) {
@@ -333,7 +328,7 @@ public class CLI_Controller {
         System.out.println(event.getErrorMessage());
         System.out.println("Here is a free time travel, enjoy it");
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

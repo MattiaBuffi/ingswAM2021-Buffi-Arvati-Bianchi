@@ -33,6 +33,7 @@ public class Player {
     public Player(String username){
 
         this.username = username;
+        this.chest = new ResourceList();
         this.productions = new ArrayList<>();
         this.shelves = new ArrayList<>();
         this.leaderCard = new ArrayList<>();
