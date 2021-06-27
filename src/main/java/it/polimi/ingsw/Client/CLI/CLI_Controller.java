@@ -52,8 +52,8 @@ public class CLI_Controller {
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
 
     public CLI_Controller() throws FileNotFoundException {
-        app = new ClientApp();
-        backEnd = new ViewBackEnd(app);
+        app = new ClientApp(this::CLIView); //need to be checked
+        backEnd = ViewBackEnd.getCLIBackend(app);
         app.setBackEnd(backEnd);
 
         char[] home = readSchematics(2);

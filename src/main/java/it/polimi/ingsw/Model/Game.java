@@ -2,7 +2,9 @@ package it.polimi.ingsw.Model;
 
 
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.AvailableLeaderCard;
 import it.polimi.ingsw.Message.Model.ModelUpdate;
+import it.polimi.ingsw.Message.Model.PlayersSetup;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.CardMarket.CardMarket;
@@ -53,12 +55,15 @@ public class Game implements TurnHandler, GameHandler {
 
         List<LeaderCard> leaderCards = CardParser.getLeaderCards();
         Collections.shuffle(leaderCards);
+        Collections.shuffle(users);
 
 
         for (int i = 0; i < users.size(); i++) {
-            VaticanToken token = new VaticanToken(vaticanRoute, users.get(i).getUsername());
-            vaticanRoute.addPlayer(token);
+
+            VaticanToken token = vaticanRoute.addPlayer(users.get(i).getUsername());
             players.add(new Player(users.get(i), i,token, leaderCards.subList((4*i), 4+(4*i)), this, this, broadcaster));
+            broadcaster.notifyAllPlayers(new PlayersSetup(users.get(i).getUsername(), i));
+
         }
 
 
@@ -71,6 +76,10 @@ public class Game implements TurnHandler, GameHandler {
         }
 
         broadcaster.sendMessages();
+
+        for (Player p: players){
+            p.notifyUser(new AvailableLeaderCard());
+        }
 
     }
 

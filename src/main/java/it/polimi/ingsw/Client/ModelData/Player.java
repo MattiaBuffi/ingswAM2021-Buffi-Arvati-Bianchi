@@ -18,15 +18,27 @@ public class Player {
     private List<List<DevelopmentCardData>> productions;
 
     private int victoryPoints;
-    private int faithPoints;
+
 
     private List<Shelf> shelves;
     private ResourceList chest;
 
-    private Player(){
+
+    public void initShelves(List<Shelf> shelves){
+        shelves.add(new Shelf(0,1,0, null));
+        shelves.add(new Shelf(1,2,0, null));
+        shelves.add(new Shelf(2,3,0, null));
+    }
+
+    public Player(String username){
+
+        this.username = username;
         this.productions = new ArrayList<>();
         this.shelves = new ArrayList<>();
         this.leaderCard = new ArrayList<>();
+
+        initShelves(this.shelves);
+
     }
 
 
@@ -63,9 +75,6 @@ public class Player {
         return victoryPoints;
     }
 
-    public int getFaithPoints() {
-        return faithPoints;
-    }
 
     public List<Shelf> getShelves() {
         return shelves;

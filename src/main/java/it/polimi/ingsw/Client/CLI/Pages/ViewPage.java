@@ -50,7 +50,7 @@ public class ViewPage extends ModelEventHandler.Default {
             char[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).toCharArray();
             System.arraycopy(playerChestRss, 0, bigView, BigFaithPlayerRssPos[i], playerChestRss.length);
             System.arraycopy((user.getVictoryPoints() + " VP").toCharArray(), 0, bigView, BigFaithPlayerPVPos[i], (user.getVictoryPoints() + " VP").toCharArray().length);
-            bigView[BigFaithCellPosition[user.getFaithPoints() + i*25]] = (char)(i+1);
+            bigView[BigFaithCellPosition[this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(user.getUsername())  + i*25]] = (char)(i+1);
             i++;
         }
 
