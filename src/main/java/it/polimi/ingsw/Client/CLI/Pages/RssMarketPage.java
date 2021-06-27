@@ -45,6 +45,12 @@ public class RssMarketPage extends ModelEventHandler.Default {
                     case PURPLE:
                         rssMarket[RssMarket[j*4+i]] = 'P';
                         break;
+                    case RED:
+                        rssMarket[RssMarket[j*4+i]] = 'R';
+                        break;
+                    case WHITE:
+                        rssMarket[RssMarket[j*4+i]] = 'W';
+                        break;
                 }
             }
         }
@@ -63,11 +69,17 @@ public class RssMarketPage extends ModelEventHandler.Default {
             case PURPLE:
                 rssMarket[RssMarket[12]] = 'P';
                 break;
+            case RED:
+                rssMarket[RssMarket[12]] = 'R';
+                break;
+            case WHITE:
+                rssMarket[RssMarket[12]] = 'W';
+                break;
         }
-
+    /*
         CLI_Controller.UpdateShelf(this.backEnd, rssMarket);
         CLI_Controller.UpdateChest(this.backEnd, rssMarket);
-
+*/
         if(CLI_Controller.leaderActive[1]>0){
             CLI_Controller.showLeaderShelf(rssMarket);
         }

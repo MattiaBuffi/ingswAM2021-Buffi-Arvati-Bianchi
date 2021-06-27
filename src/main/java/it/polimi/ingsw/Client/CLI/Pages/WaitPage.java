@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.Model.GameSizeRequest;
@@ -52,7 +53,9 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event) {
-        this.backEnd.update(event);
+
+        this.backEnd.setModel(new ViewModel());
+        this.backEnd.getModel().updateModel(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 

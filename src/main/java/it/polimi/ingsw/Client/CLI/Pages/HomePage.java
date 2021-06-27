@@ -149,6 +149,9 @@ public class HomePage extends ModelEventHandler.Default {
                 case "QUIT":
                     CLI_Controller.quitPage.QuitPageView(backEnd);
                     break;
+                default:
+                    System.out.println("Wrong Command");
+                    CLI_Controller.homePage.HomePageView(backEnd);
             }
 
         }
