@@ -58,6 +58,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         resourceMarket_Controller.setup(backEnd);
         leaderCardsTab_Controller.setup(backEnd);
         vaticanRoute_Controller.setup(backEnd);
+        scoreboardTab_Controller.setup(backEnd);
     }
 
 
@@ -93,13 +94,13 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     private void updateTabs(){
 
         cardsMarketTab_Controller.update();
-        //leaderCardsTab_Controller.update();
-        checkLeaderCardActivation();
+        leaderCardsTab_Controller.update();
+        //checkLeaderCardActivation();
         resourceMarket_Controller.update();
 
         //storageTab_Controller.update();
-
-        //scoreboardTab_Controller.update();
+        vaticanRoute_Controller.update();
+        scoreboardTab_Controller.update();
 
     }
 

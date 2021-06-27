@@ -10,8 +10,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import jdk.dynalink.linker.LinkerServices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VaticanRoutePane implements Layout,GameTab  {
@@ -30,8 +33,10 @@ public class VaticanRoutePane implements Layout,GameTab  {
     private ImageView[] crossArray;
 
     private ViewBackEnd backEnd;
+    private boolean firstUpdate = true;
     private final Map<String, ImageView> imageViewMap = new HashMap<>();
     private final Map<String, Position> crossInitialPositions = new HashMap<>();
+    private List<String> players = new ArrayList<>();
 
 
     @Override
@@ -39,30 +44,37 @@ public class VaticanRoutePane implements Layout,GameTab  {
 
         this.backEnd = backEnd;
         crossArray = new ImageView[]{cross1, cross2, cross3, cross4};
-
-        initializeCrosses();
     }
 
     @Override
     public void update() {
-
+        if(firstUpdate) initializeCrosses();
+        //updateCrosses();
     }
 
-
     private void initializeCrosses() {
-        if(backEnd.getModel().singlePlayer){
+        if(players.size() == 1){
             cross1.setVisible(true);
             imageViewMap.put(backEnd.getMyUsername(), cross1);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[0]);
             cross2.setImage(new Image(App.class.getResourceAsStream("images/token/blackCross.png")));
             imageViewMap.put("cpu", cross2);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[1]);
+            players.add(backEnd.getMyUsername());
         } else {
             for (int i = 0; i < backEnd.getModel().players.size(); i++) {
                 crossArray[i].setVisible(true);
                 imageViewMap.put(backEnd.getModel().players.get(i).getUsername(), crossArray[i]);
                 crossInitialPositions.put(backEnd.getModel().players.get(i).getUsername(), INITIAL_POSITION[i]);
+                players.add(backEnd.getModel().players.get(i).getUsername());
             }
+        }
+        firstUpdate = false;
+    }
+
+    private void updateCrosses() {
+        for(String s: players){
+            updateCross(s, backEnd.getModel().vaticanRoute.getPlayerFaithPoint(s));
         }
     }
 

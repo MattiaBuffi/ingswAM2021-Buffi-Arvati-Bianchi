@@ -29,6 +29,7 @@ public class ScoreboardTab implements Layout, GameTab {
     private Label selection = null;
     private List<PlayerScore> players = new ArrayList<>();
     private ViewBackEnd backEnd;
+    private boolean firstUpdate = true;
 
 
     @Override
@@ -39,6 +40,17 @@ public class ScoreboardTab implements Layout, GameTab {
         hboxArray = new HBox[]{hbox1, hbox2, hbox3, hbox4};
         playersLabelsArray = new Label[]{player1, player2, player3, player4};
         pointsLabelsArray = new Label[]{points1, points2, points3, points4};
+
+    }
+
+    @Override
+    public void update() {
+        if(firstUpdate) setupView();
+        updatePoints();
+        updateView();
+    }
+
+    private void setupView(){
 
         try {
             List<Player> playerList = backEnd.getModel().players;
@@ -51,21 +63,12 @@ public class ScoreboardTab implements Layout, GameTab {
             System.out.println("Players not initialized!");
         }
 
-        setupView();
-    }
-
-    @Override
-    public void update() {
-        updatePoints();
-        updateView();
-    }
-
-    private void setupView(){
-
         for(int i=0; i<players.size(); i++){
             playersLabelsArray[i].setText(players.get(i).username);
             hboxArray[i].setVisible(true);
         }
+
+        firstUpdate = false;
     }
 
     public void viewPlayerSelected() {

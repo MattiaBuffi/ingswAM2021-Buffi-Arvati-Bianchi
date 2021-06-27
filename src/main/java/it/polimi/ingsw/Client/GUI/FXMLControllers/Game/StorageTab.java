@@ -79,7 +79,7 @@ public class StorageTab implements Layout, GameTab {
     }
 
 
-    public void updateShelves() {
+    public void updateShelves() throws NullPointerException {
         List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
 
         for(int i = 0; i<shelves.size(); i++){
@@ -103,7 +103,7 @@ public class StorageTab implements Layout, GameTab {
         }
     }
 
-    public void updateChest() {
+    public void updateChest() throws NullPointerException{
         ResourceList resourceList = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getChest();
         Marble.Color[] colors = new Marble.Color[]{Marble.Color.YELLOW, Marble.Color.PURPLE, Marble.Color.BLUE, Marble.Color.GREY};
 
