@@ -3,8 +3,8 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -45,6 +45,12 @@ public class RssMarketPage extends ModelEventHandler.Default {
                     case PURPLE:
                         rssMarket[RssMarket[j*4+i]] = 'P';
                         break;
+                    case RED:
+                        rssMarket[RssMarket[j*4+i]] = 'R';
+                        break;
+                    case WHITE:
+                        rssMarket[RssMarket[j*4+i]] = 'W';
+                        break;
                 }
             }
         }
@@ -62,6 +68,12 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 break;
             case PURPLE:
                 rssMarket[RssMarket[12]] = 'P';
+                break;
+            case RED:
+                rssMarket[RssMarket[12]] = 'R';
+                break;
+            case WHITE:
+                rssMarket[RssMarket[12]] = 'W';
                 break;
         }
 
@@ -87,7 +99,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         }
 
         System.out.println(rssMarket);
-        System.out.println("Insert Command (Buy,Exit): ");
+        System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
@@ -102,6 +114,10 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 System.out.println("redirecting to Home..");
                 CLI_Controller.homePage.HomePageView(backEnd);
                 break;
+            case "ENDTURN":
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
             default:
                 System.out.println("Wrong Command, please insert a real command");
                 break;

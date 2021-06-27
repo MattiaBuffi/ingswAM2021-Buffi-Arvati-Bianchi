@@ -3,14 +3,11 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
-
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,12 +30,7 @@ public class ViewPage extends ModelEventHandler.Default {
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
         Scanner input = new Scanner(System.in);
-        char[] bigView = new char[0];
-        try {
-            bigView = CLI_Controller.readSchematics(10);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        char[] bigView = CLI_Controller.readSchematics(10);
         int i = 0;
         List<Player> users = this.backEnd.getModel().players;
         for (Player user: users) {
@@ -61,10 +53,14 @@ public class ViewPage extends ModelEventHandler.Default {
         }
 
         System.out.println(bigView);
-        System.out.println("Insert Command (Exit): ");
+        System.out.println("Insert Command (Exit,EndTurn): ");
         String command = input.nextLine().toUpperCase();
         if (command.equals("EXIT")) {
             System.out.println("redirecting to Home..");
+        }else if (command.equals("ENDTURN")){
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
         } else {
             System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
         }

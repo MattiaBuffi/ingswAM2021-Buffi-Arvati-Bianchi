@@ -5,7 +5,7 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
-import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import java.util.List;
@@ -55,20 +55,18 @@ public class HomePage extends ModelEventHandler.Default {
 
         Scanner input = new Scanner(System.in);
         CLI_Controller.cls();
+        System.out.println(this.backEnd.getMyUsername());
         //Printing Name of Current Player
-        String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
-        System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
-
+       // String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
+     //   System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
 
         CLI_Controller.UpdateShelf(this.backEnd, homePage);
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 
 
-        int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
+        int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getModel().myUsername);
         if ( position != lastPosition){
-            String lastPosString = Integer.toString(lastPosition);
-            char[] lastPositionArray = lastPosString.toCharArray();
-            System.arraycopy(lastPositionArray, 0, homePage, FaithCellPosition[lastPosition], lastPositionArray.length);
+            System.arraycopy(Integer.toString(lastPosition).toCharArray(), 0, homePage, FaithCellPosition[lastPosition], Integer.toString(lastPosition).toCharArray().length);
             if(position>=10){
                 homePage[FaithCellPosition[position]]= '+';
                 homePage[FaithCellPosition[position]+1]= ' ';
@@ -83,8 +81,8 @@ public class HomePage extends ModelEventHandler.Default {
             }
         }
 
-        List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
-        for (int i = 0; i < 2; i++) {
+        List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getModel().myUsername).getLeaderCard();
+        for (int i = 0; i < leaderCard.size(); i++) {
             CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
         }
 
@@ -94,7 +92,7 @@ public class HomePage extends ModelEventHandler.Default {
 
         System.out.println(homePage);
 
-        System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, Quit): ");
+        System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard,EndTurn, Quit): ");
         String command = input.nextLine().toUpperCase();
         if(command.equals("ACTIVATE")){
 
@@ -148,10 +146,15 @@ public class HomePage extends ModelEventHandler.Default {
                 case "QUIT":
                     CLI_Controller.quitPage.QuitPageView(backEnd);
                     break;
+                case "ENDTURN":
+                    EndTurn message = new EndTurn();
+                    this.backEnd.notify(message);
+                    CLI_Controller.homePage.HomePageView(backEnd);
+                default:
+                    System.out.println("Wrong Command");
+                    CLI_Controller.homePage.HomePageView(backEnd);
             }
-
         }
-
     }
 
 
@@ -164,6 +167,12 @@ public class HomePage extends ModelEventHandler.Default {
     @Override
     public void handle(ErrorUpdate event) {
         CLI_Controller.showError(event);
+        HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ActivePlayer event) {
+        backEnd.getModel().updateModel(event);
         HomePageView(this.backEnd);
     }
 

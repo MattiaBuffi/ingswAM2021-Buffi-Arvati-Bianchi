@@ -5,7 +5,7 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
-import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -15,8 +15,8 @@ import java.util.Scanner;
 public class CardMarketPage extends ModelEventHandler.Default {
 
     private static final int[] CardMarketCostPosition = {307,330,353,376,1637,1660,1683,1706,2967,2990,3013,3036};
-    private static final int[] CardMarketInputPosition = {573,596,619,642,1903,1926,1949,1972,3233,3256,2379,2402};
-    private static final int[] CardMarketOutputPosition = {839,862,885,908,2169,2192,2215,2238,3499,3522,3545,3568};
+    private static final int[] CardMarketOutputPosition = {573,596,619,642,1903,1926,1949,1972,3233,3256,3279,3302};
+    private static final int[] CardMarketInputPosition = {839,862,885,908,2169,2192,2215,2238,3499,3522,3545,3568};
     private static final int[] CardMarketVPPosition = {1251,1274,1297,1320,2581,2604,2627,2650,3911,3934,3957,3980};
     private static final int[] leaderDiscount = {135,147};
 
@@ -58,13 +58,13 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
             }
         }
-
+        /*
 
         CLI_Controller.UpdateShelf(this.backEnd, cardMarket);
         CLI_Controller.UpdateChest(this.backEnd, cardMarket);
-
+*/
         System.out.println(cardMarket);
-        System.out.println("Insert Command (Buy,Exit): ");
+        System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
@@ -79,6 +79,10 @@ public class CardMarketPage extends ModelEventHandler.Default {
                 System.out.println("redirecting to Home..");
                 CLI_Controller.homePage.HomePageView(this.backEnd);
                 break;
+            case "ENDTURN":
+                EndTurn message = new EndTurn();
+                this.backEnd.notify(message);
+                CLI_Controller.homePage.HomePageView(backEnd);
             default:
                 System.out.println("Wrong Command, please insert a real command");
                 CLI_Controller.cardMarketPage.CardMarketPageView(this.backEnd);
@@ -86,22 +90,22 @@ public class CardMarketPage extends ModelEventHandler.Default {
     }
 
     public void updateCard(int i, int j){
-        cardMatrix[i][j] = this.backEnd.getModel().cardMarket.getCard(i,j);
+        cardMatrix[i][j] = this.backEnd.getModel().cardMarket.getCard(j,i);
 
         List<Marble> costList = cardMatrix[i][j].price.getAll();
         String costString = CLI_Controller.getColorStringFromMarble(costList);
-        System.arraycopy(costString.toCharArray(), 0, cardMarket, CardMarketCostPosition[i*4+j], costString.toCharArray().length);
+        System.arraycopy(("COST: " + costString).toCharArray(), 0, cardMarket, CardMarketCostPosition[i*4+j], ("COST: " + costString).toCharArray().length);
 
         List<Marble> requireList = cardMatrix[i][j].require.getAll();
         String requireString = CLI_Controller.getColorStringFromMarble(requireList);
-        System.arraycopy(requireString.toCharArray(), 0, cardMarket, CardMarketInputPosition[i*4+j], requireString.toCharArray().length);
+        System.arraycopy(("IN: " + requireString).toCharArray(), 0, cardMarket, CardMarketInputPosition[i*4+j], ("IN: " + requireString).toCharArray().length);
 
         List<Marble> produceList = cardMatrix[i][j].produce.getAll();
         String produceString = CLI_Controller.getColorStringFromMarble(produceList);
-        System.arraycopy(produceString.toCharArray(), 0, cardMarket, CardMarketOutputPosition[i*4+j], produceString.toCharArray().length);
+        System.arraycopy(("OUT: " + produceString).toCharArray(), 0, cardMarket, CardMarketOutputPosition[i*4+j], ("OUT: " + produceString).toCharArray().length);
 
         String vp = Integer.toString(cardMatrix[i][j].victoryPoints);
-        System.arraycopy(vp.toCharArray(), 0, cardMarket, CardMarketVPPosition[i*4+j], vp.toCharArray().length);
+        System.arraycopy((vp + "VP").toCharArray(), 0, cardMarket, CardMarketVPPosition[i*4+j], (vp + "VP").toCharArray().length);
     }
 
     @Override

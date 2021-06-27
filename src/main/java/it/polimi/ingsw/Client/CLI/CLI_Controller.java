@@ -12,7 +12,6 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,7 +50,7 @@ public class CLI_Controller {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
 
-    public CLI_Controller() throws FileNotFoundException {
+    public CLI_Controller(){
         app = new ClientApp(this::CLIView); //need to be checked
         backEnd = ViewBackEnd.getCLIBackend(app);
         app.setBackEnd(backEnd);
@@ -80,31 +79,41 @@ public class CLI_Controller {
     }
 
     public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
-        List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
-        for (int i = 0; i < playerShelf.size(); i++) {
-            int size = playerShelf.get(i).size;
-            switch (playerShelf.get(i).color.toString()) {
-                case "YELLOW":
-                    for (int j = 0; j < size; j++) {
-                        scheme[RssPosition[i+j]]= 'Y';
-                    }
-                    break;
-                case "BLUE":
-                    for (int j = 0; j < size; j++) {
-                        scheme[RssPosition[i+j]]= 'B';
-                    }
-                    break;
-                case "PURPLE":
-                    for (int j = 0; j < size; j++) {
-                        scheme[RssPosition[i+j]]= 'P';
-                    }
-                    break;
-                case "GREY":
-                    for (int j = 0; j < size; j++) {
-                        scheme[RssPosition[i+j]]= 'G';
-                    }
-                    break;
+        if(backEnd.getModel().getPlayer(backEnd.getModel().myUsername) != null) {
+            List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getShelves();
+            for (int i = 0; i < playerShelf.size(); i++) {
+                int size = playerShelf.get(i).size;
+                if(playerShelf.get(i).color!= null){
+                switch (playerShelf.get(i).color) {
+                    case YELLOW:
+                        for (int j = 0; j < size; j++) {
+                            scheme[RssPosition[i + j]] = 'Y';
+                        }
+                        break;
+                    case BLUE:
+                        for (int j = 0; j < size; j++) {
+                            scheme[RssPosition[i + j]] = 'B';
+                        }
+                        break;
+                    case PURPLE:
+                        for (int j = 0; j < size; j++) {
+                            scheme[RssPosition[i + j]] = 'P';
+                        }
+                        break;
+                    case GREY:
+                        for (int j = 0; j < size; j++) {
+                            scheme[RssPosition[i + j]] = 'G';
+                        }
+                        break;
+                    default:
+                        for (int j = 0; j < size; j++) {
+                            scheme[RssPosition[i + j]] = ' ';
+                        }
+                        break;
+                }
             }
+            }
+
         }
     }
 
@@ -198,9 +207,15 @@ public class CLI_Controller {
     }
 
 
-    public static char[] readSchematics(int x) throws FileNotFoundException {
+    public static char[] readSchematics(int x) {
         File file = new File(rssPath + currentFile[x]);
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert scanner != null;
         StringBuilder theString = new StringBuilder(scanner.nextLine());
         while (scanner.hasNextLine()) {
             theString.append("\n").append(scanner.nextLine());
@@ -210,7 +225,7 @@ public class CLI_Controller {
 
 
     public static String getColorStringFromMarble(List<Marble> marbleList){
-        int[] colorMarble = {0,0,0,0};
+        int[] colorMarble = {0,0,0,0,0};
         for (Marble marble: marbleList) {
             Marble.Color color = marble.getColor();
             colorExtractor(colorMarble, color);
@@ -233,6 +248,9 @@ public class CLI_Controller {
             case PURPLE:
                 returnedColor = "P";
                 break;
+            case RED:
+                returnedColor = "R";
+                break;
             default:
                 returnedColor = "";
                 break;
@@ -242,7 +260,7 @@ public class CLI_Controller {
 
 
     public static String getColorString(List<Marble.Color> colorList){
-        int[] colorMarble = {0,0,0,0};
+        int[] colorMarble = {0,0,0,0,0};
         for (Marble.Color marble: colorList) {
             colorExtractor(colorMarble, marble);
         }
@@ -264,6 +282,9 @@ public class CLI_Controller {
             case PURPLE:
                 colorMarble[3]++;
                 break;
+            case RED:
+                colorMarble[4]++;
+                break;
         }
     }
 
@@ -271,7 +292,7 @@ public class CLI_Controller {
     public static String stringBuilder(int[] colorMarble) {
         StringBuilder colorString = new StringBuilder();
         String col;
-        for (int k = 0; k < 4; k++) {
+        for (int k = 0; k < 5; k++) {
             if(colorMarble[k]>0){
                 if(k == 0)
                     col = "Y";
@@ -279,8 +300,10 @@ public class CLI_Controller {
                     col = "B";
                 else if (k == 2)
                     col = "G";
-                else
+                else if (k == 3)
                     col = "P";
+                else
+                    col = "R";
                 colorString.append(colorMarble[k]).append(col).append(" ");
             }
         }
@@ -288,15 +311,19 @@ public class CLI_Controller {
     }
 
     public static void UpdateChest(ViewBackEnd backEnd, char[] page ){
-        ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getChest();
-        List<Marble> playerChestMarble = playerChest.getAll();
-        String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
-        for (int i = 0; i < playerChestRss.length; i++) {
-            System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i+6], playerChestRss[i].toCharArray().length);
+        if(backEnd.getModel().getPlayer(backEnd.getModel().myUsername) != null) {
+            ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
+            if(playerChest != null) {
+                List<Marble> playerChestMarble = playerChest.getAll();
+                String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
+                for (int i = 0; i < playerChestRss.length; i++) {
+                    System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i + 6], playerChestRss[i].toCharArray().length);
+                }
+            }
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         CLI_Controller controller = new CLI_Controller();
         controller.CLIView();
     }
@@ -316,7 +343,6 @@ public class CLI_Controller {
         int id = Integer.parseInt(s);
         if(id < 5) {
             leaderActive[0] += 1;
-            //cardMarketPage.showLeaderPower(s);
         } else if(id < 9){
             leaderActive[1] += 1;
         } else if(id <13){
@@ -327,12 +353,8 @@ public class CLI_Controller {
     }
 
     public static void showLeaderShelf(char[] page){
-        char[] shelf = new char[0];
-        try {
-             shelf = readSchematics(13);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        char[] shelf;
+        shelf = readSchematics(13);
 
         for (int i = 0; i < leaderActive[1]; i++){
             for (int j = 0; j < 15; j++){

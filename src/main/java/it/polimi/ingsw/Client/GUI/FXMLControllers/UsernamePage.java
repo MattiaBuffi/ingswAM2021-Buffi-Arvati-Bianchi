@@ -48,7 +48,7 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
     @Override
     public void handle(UsernameSelected event) {
         App.setScene("waiting_page");
-        System.out.println("username event");
+        backEnd.setUsername(event.getUsername());
     }
 
 

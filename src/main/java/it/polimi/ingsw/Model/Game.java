@@ -2,9 +2,7 @@ package it.polimi.ingsw.Model;
 
 
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.Model.AvailableLeaderCard;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
-import it.polimi.ingsw.Message.Model.PlayersSetup;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.CardMarket.CardMarket;
@@ -268,6 +266,19 @@ public class Game implements TurnHandler, GameHandler {
         broadcaster.sendMessages();
     }
 
+    public void endTurn(String username){
+        Player player = getPlayerByUsername(username);
+
+        if(player == null){
+            return;
+        }
+
+        if(!player.endTurn()){
+            broadcaster.emptyMessages();
+            return;
+        }
+        broadcaster.sendMessages();
+    }
 
     @Override
     public void endTurn() {
@@ -314,13 +325,15 @@ public class Game implements TurnHandler, GameHandler {
 
         @Override
         public void endTurn() {
-
+            actionDeck.playToken();
+            broadcaster.notifyAllPlayers(new ActivePlayer(players.get(0).getUser().getUsername()));
         }
 
         @Override
         public void endGame() {
 
         }
+
     }
 
 
@@ -330,13 +343,17 @@ public class Game implements TurnHandler, GameHandler {
         public void endTurn() {
             currentPlayer = (currentPlayer+1)%players.size();
             players.get(currentPlayer).setActive();
-            broadcaster.sendMessages();
+            for (Player p: players){
+                broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
+            }
+            
         }
 
         @Override
         public void endGame() {
 
         }
+
     }
 
 
@@ -364,12 +381,12 @@ public class Game implements TurnHandler, GameHandler {
 
 
         @Override
-        public void notifyAllPlayers(Message event) {
+        public void notifyAllPlayers(Message<ModelEventHandler> event) {
             messages.add(event);
         }
 
         @Override
-        public void notifyUser(Message event) {
+        public void notifyUser(Message<ModelEventHandler> event) {
             players.get(currentPlayer).getUser().notify(event);
         }
 
