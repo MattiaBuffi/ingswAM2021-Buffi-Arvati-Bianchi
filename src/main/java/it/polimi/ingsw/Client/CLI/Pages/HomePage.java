@@ -64,8 +64,7 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 
 
-
-        int position = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getFaithPoints();
+        int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
         if ( position != lastPosition){
             String lastPosString = Integer.toString(lastPosition);
             char[] lastPositionArray = lastPosString.toCharArray();

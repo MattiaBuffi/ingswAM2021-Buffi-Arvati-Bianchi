@@ -3,16 +3,16 @@ package it.polimi.ingsw.Message.Model;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
-public class ActionTokenPlayed implements Message<ModelEventHandler> {
+public class ActivePlayer implements Message<ModelEventHandler> {
 
-    private String message;
+    private String username;
 
-    public ActionTokenPlayed(String message) {
-        this.message = message;
+    public ActivePlayer(String username) {
+        this.username = username;
     }
 
-    public String getMessage() {
-        return message;
+    public String getUsername() {
+        return username;
     }
 
     @Override

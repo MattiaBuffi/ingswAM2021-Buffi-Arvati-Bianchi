@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.Model.*;
 
 public interface ModelEventHandler {
 
+
     abstract class Default implements ModelEventHandler{
 
         public abstract void invalidMessage();
@@ -30,7 +31,7 @@ public interface ModelEventHandler {
         }
 
         @Override
-        public void handle(MarketResourceTaken marketResourceTaken) {
+        public void handle(MarketResourceTaken event) {
             invalidMessage();
         }
 
@@ -60,7 +61,7 @@ public interface ModelEventHandler {
         }
 
         @Override
-        public void handle(ResourceMarketExtra resourceMarketExtra) {
+        public void handle(ResourceMarketExtra event) {
             invalidMessage();
         }
 
@@ -80,24 +81,49 @@ public interface ModelEventHandler {
         }
 
         @Override
-        public void handle(VaticanReport vaticanReport) {
+        public void handle(VaticanReport event) {
             invalidMessage();
         }
 
         @Override
-        public void handle(VaticanRoutePosition vaticanRoutePosition) {
+        public void handle(VaticanRoutePosition event) {
             invalidMessage();
         }
 
         @Override
-        public void handle(LeaderCardActivation leaderCardActivation) {
+        public void handle(LeaderCardActivation event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(ActionTokenPlayed event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(ActivePlayer event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(AvailableLeaderCard event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(PlayersSetup event) {
+            invalidMessage();
+        }
+
+        @Override
+        public void handle(ResourceSetup event) {
             invalidMessage();
         }
     }
 
-    void handle(VaticanReport vaticanReport);
+    void handle(VaticanReport event);
 
-    void handle(VaticanRoutePosition vaticanRoutePosition);
+    void handle(VaticanRoutePosition event);
 
     void handle(ChestUpdate event);
 
@@ -107,7 +133,7 @@ public interface ModelEventHandler {
 
     void handle( MarketResourceAvailable event);
 
-    void handle(MarketResourceTaken marketResourceTaken);
+    void handle(MarketResourceTaken event);
 
     void handle( MarketCardUpdate event);
 
@@ -119,14 +145,25 @@ public interface ModelEventHandler {
 
     void handle( ShelfUpdate event);
 
-    void handle(ResourceMarketExtra resourceMarketExtra);
+    void handle(ResourceMarketExtra event);
 
-    void handle(LeaderCardActivation leaderCardActivation);
+    void handle(LeaderCardActivation event);
 
     void handle(GameSizeRequest event);
 
     void handle(UsernameSelected event);
 
     void handle(WaitingPlayersUpdate event);
+
+    void handle(ActionTokenPlayed event);
+
+    void handle(ActivePlayer event);
+
+    void handle(AvailableLeaderCard event);
+
+    void handle(PlayersSetup event);
+
+    void handle(ResourceSetup event);
+
 
 }

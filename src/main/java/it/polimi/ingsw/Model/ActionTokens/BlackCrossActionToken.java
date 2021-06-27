@@ -26,7 +26,7 @@ public class BlackCrossActionToken implements ActionToken{
         if(level == 1){
             shuffler.shuffle();
         }
-        broadcaster.notifyAllPlayers(new ActionTokenPlayed());
+        broadcaster.notifyAllPlayers(new ActionTokenPlayed("Black cross token lv "+level+" played"));
     }
 
 

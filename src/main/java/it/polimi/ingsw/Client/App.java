@@ -34,8 +34,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        app = new ClientApp();
-        backEnd = new ViewBackEnd(app);
+        app = new ClientApp(()-> App.setScene("home_page"));
+        backEnd = ViewBackEnd.getGUiBackend(app);
 
         app.setBackEnd(backEnd);
 

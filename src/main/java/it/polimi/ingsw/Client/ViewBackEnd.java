@@ -8,6 +8,8 @@ import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
 import javafx.application.Platform;
 
+import java.util.function.Consumer;
+
 public class ViewBackEnd extends Observable<Message<ClientEventHandler>> implements Observer<Message<ModelEventHandler>> {
 
     private String username;
@@ -18,9 +20,34 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     private ModelEventHandler eventHandler;
 
+    private Consumer<Message<ModelEventHandler>> eventDispatcher;
 
 
-    public ViewBackEnd(ClientApp app){
+    private void cliEventDispatcher(Message<ModelEventHandler> event){
+        event.accept(eventHandler);
+    }
+
+    private void guiEventDispatcher(Message<ModelEventHandler> event){
+        Platform.runLater( ()->event.accept(eventHandler) );
+    }
+
+    public static ViewBackEnd getCLIBackend(ClientApp app){
+        ViewBackEnd backEnd = new ViewBackEnd(app);
+        backEnd.setEventDispatcher(backEnd::cliEventDispatcher);
+        return backEnd;
+    }
+
+    public static ViewBackEnd getGUiBackend(ClientApp app){
+        ViewBackEnd backEnd = new ViewBackEnd(app);
+        backEnd.setEventDispatcher(backEnd::guiEventDispatcher);
+        return backEnd;
+    }
+
+    public void setEventDispatcher(Consumer<Message<ModelEventHandler>> eventDispatcher) {
+        this.eventDispatcher = eventDispatcher;
+    }
+
+    private ViewBackEnd(ClientApp app){
         this.app = app;
     }
 
@@ -60,8 +87,7 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     @Override
     public void update(Message<ModelEventHandler> event) {
-        //Platform.runLater( ()->event.accept(eventHandler) );
-        event.accept(eventHandler);
+        eventDispatcher.accept(event);
     }
 
 

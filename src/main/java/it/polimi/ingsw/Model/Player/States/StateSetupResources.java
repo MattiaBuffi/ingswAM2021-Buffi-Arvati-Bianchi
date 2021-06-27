@@ -59,7 +59,7 @@ public class StateSetupResources extends PlayerState {
     public static void setState(Player context){
         if (!completeSetup(context)){
             context.setState(get());
-            context.notifyUser(new ResourceSetup());
+            context.notifyUser(new ResourceSetup(availableResources(context.getPosition())));
         }
     }
 
