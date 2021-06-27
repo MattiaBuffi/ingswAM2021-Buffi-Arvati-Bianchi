@@ -48,9 +48,9 @@ public class VaticanRoute {
 
     public VaticanToken addPlayer(String username){
         VaticanToken token = new VaticanToken(this, username);
+        tokenList.add(token);
         token.setPosition(getInitialPosition(tokenList.size()));
         broadcaster.notifyAllPlayers(new VaticanRoutePosition(username, token.getPosition()));
-        tokenList.add(token);
         return token;
     }
 

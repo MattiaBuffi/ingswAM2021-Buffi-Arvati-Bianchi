@@ -77,7 +77,7 @@ public class ProductionPage extends ModelEventHandler.Default{
             for (LeaderCard leaderCard : card) {
                 if(leaderCard.getType().equals("DEVELOPMENT")){
                     char[] scheme = CLI_Controller.readSchematics(14);
-                    Marble.Color colorEffect = leaderCard.getColorEffected();
+                    Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = CLI_Controller.getColorString(colorEffect);
                     scheme[singleLeaderDevPosition] = colorEffected.charAt(0);
                     for (int j = 0; j < 6; j++){

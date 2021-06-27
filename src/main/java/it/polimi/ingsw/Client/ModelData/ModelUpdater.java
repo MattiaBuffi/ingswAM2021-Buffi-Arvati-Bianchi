@@ -24,7 +24,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(VaticanRoutePosition event) {
-
+        model.vaticanRoute.tokenPosition.put(event.getUsername(), event.getPosition());
     }
 
     @Override

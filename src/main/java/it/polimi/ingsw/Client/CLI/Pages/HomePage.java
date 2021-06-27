@@ -42,7 +42,7 @@ public class HomePage extends ModelEventHandler.Default {
         int y = 0;
         System.out.println("You are Player Number" + x + ", you can get: " + y +
                 "initial Resources for free, please insert the color of the resource that you want to take " +
-                "[(P/G/B/Y) if more than 1 rss please insert the two colors dividded by a -]" );
+                "[(P/G/B/Y) if more than 1 rss please insert the two colors divided by a -]" );
         String freeRssTaken = input.next();
         HomePageView(backEnd);
     }
@@ -55,7 +55,6 @@ public class HomePage extends ModelEventHandler.Default {
 
         Scanner input = new Scanner(System.in);
         CLI_Controller.cls();
-        System.out.println(this.backEnd.getMyUsername());
         //Printing Name of Current Player
        // String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
      //   System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
@@ -64,15 +63,18 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 
 
-        int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getModel().myUsername);
-        if ( position != lastPosition){
+        int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
+        System.out.println("Position ->" + position);
+        if ( position != lastPosition && lastPosition!= 0){
             System.arraycopy(Integer.toString(lastPosition).toCharArray(), 0, homePage, FaithCellPosition[lastPosition], Integer.toString(lastPosition).toCharArray().length);
             if(position>=10){
-                homePage[FaithCellPosition[position]]= '+';
+                homePage[FaithCellPosition[position]]= 'X';
                 homePage[FaithCellPosition[position]+1]= ' ';
             }else
-                homePage[FaithCellPosition[position]]= '+';
+                homePage[FaithCellPosition[position]]= 'X';
             lastPosition = position;
+        }else{
+            homePage[FaithCellPosition[position]]= 'X';
         }
 
         for (int i = 0; i < CLI_Controller.popeFavourActive.length; i++){
@@ -81,7 +83,7 @@ public class HomePage extends ModelEventHandler.Default {
             }
         }
 
-        List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getModel().myUsername).getLeaderCard();
+        List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < leaderCard.size(); i++) {
             CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
         }
@@ -92,7 +94,7 @@ public class HomePage extends ModelEventHandler.Default {
 
         System.out.println(homePage);
 
-        System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard,EndTurn, Quit): ");
+        System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
         String command = input.nextLine().toUpperCase();
         if(command.equals("ACTIVATE")){
 
@@ -149,7 +151,6 @@ public class HomePage extends ModelEventHandler.Default {
                 case "ENDTURN":
                     EndTurn message = new EndTurn();
                     this.backEnd.notify(message);
-                    CLI_Controller.homePage.HomePageView(backEnd);
                 default:
                     System.out.println("Wrong Command");
                     CLI_Controller.homePage.HomePageView(backEnd);

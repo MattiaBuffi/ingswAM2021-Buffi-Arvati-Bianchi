@@ -49,7 +49,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
     @Override
     public void update() {
         if(firstUpdate) initializeCrosses();
-        //updateCrosses();
+        updateCrosses();
     }
 
     private void initializeCrosses() {
@@ -58,6 +58,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
             imageViewMap.put(backEnd.getMyUsername(), cross1);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[0]);
             cross2.setImage(new Image(App.class.getResourceAsStream("images/token/blackCross.png")));
+            cross2.setVisible(true);
             imageViewMap.put("cpu", cross2);
             crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[1]);
             players.add(backEnd.getMyUsername());

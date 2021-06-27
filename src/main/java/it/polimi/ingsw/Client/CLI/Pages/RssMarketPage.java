@@ -89,7 +89,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             int i = 0;
             for (LeaderCard leaderCard : card) {
                 if(leaderCard.getType().equals("WHITE")){
-                    Marble.Color colorEffect = leaderCard.getColorEffected();
+                    Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = "W -> " + CLI_Controller.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, rssMarket, leaderWhiteBall[i], colorEffected.toCharArray().length);
                     i++;
@@ -107,8 +107,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 String buyRss = input.nextLine();
                 TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss));
                 this.backEnd.notify(messageBuyRss);
-
-                CLI_Controller.homePage.HomePageView(backEnd);
                 break;
             case "EXIT":
                 System.out.println("redirecting to Home..");
@@ -142,11 +140,13 @@ public class RssMarketPage extends ModelEventHandler.Default {
     @Override
     public void handle(ResourceMarketUpdate event) {
         this.backEnd.getModel().updateModel(event);
+        CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
     }
 
     @Override
     public void handle(ResourceMarketExtra event) {
         this.backEnd.getModel().updateModel(event);
+        CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
     }
 
     @Override
