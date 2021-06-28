@@ -14,6 +14,11 @@ public class WhiteMarble implements ActivationStrategy {
     }
 
     @Override
+    public Type getType() {
+        return Type.MARBLE_CONVERSION;
+    }
+
+    @Override
     public Marble.Color getColor() {
         return color;
     }

@@ -28,6 +28,8 @@ public class AvailableLeaderCard implements Message<ModelEventHandler> {
         leaderCard.setActive(card.isActive());
         leaderCard.setColor(card.getActivationStrategy().getColor());
         leaderCard.setVictoryPoint(card.getVictoryPoints());
+        leaderCard.setType(card.getActivationStrategy().getType());
+
         switch (card.getRequirementsStrategy().getType()){
             case CARD:{
                 RequireCards requireCards = (RequireCards)card.getRequirementsStrategy();

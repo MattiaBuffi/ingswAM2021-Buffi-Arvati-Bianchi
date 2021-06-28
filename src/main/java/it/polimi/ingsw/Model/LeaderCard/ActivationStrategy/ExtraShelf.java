@@ -15,6 +15,11 @@ public class ExtraShelf  implements ActivationStrategy {
     }
 
     @Override
+    public Type getType() {
+        return Type.EXTRA_SHELF;
+    }
+
+    @Override
     public Marble.Color getColor() {
         return color;
     }
