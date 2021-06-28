@@ -3,9 +3,10 @@ package it.polimi.ingsw.Client.ModelData.ReducedDataModel;
 import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.Marble;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LeaderCard {
+public class LeaderCard implements Serializable {
 
     private String id; //ok
     private ActivationStrategy.Type type;//ok
