@@ -47,6 +47,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     private ViewBackEnd backEnd;
 
     private List<String> leaderActivated;
+    private boolean setupGame = true;
 
     @Override
     public void setup(ViewBackEnd backEnd) {
@@ -83,19 +84,24 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ErrorUpdate error) {
+
         try {
             PopUpManager.showErrorPopUp(error.getErrorMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void handle(AvailableLeaderCard event) {
-        try {
-            PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(setupGame) {
+            try {
+                PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setupGame = false;
         }
     }
 
@@ -128,6 +134,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     }
 
     private void leaderPowerSelector(String s){
+        //String tmp = s.charAt(3) + s.charAt(4);
         int id = Integer.parseInt(s);
         if(id < 5) {
             cardsMarketTab_Controller.showLeaderPower(s);

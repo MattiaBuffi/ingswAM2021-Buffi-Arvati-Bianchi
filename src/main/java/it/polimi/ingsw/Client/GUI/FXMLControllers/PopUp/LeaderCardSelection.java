@@ -97,6 +97,6 @@ public class LeaderCardSelection{
     }
 
     private Image getCardImage(String cardID){
-        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/LC_" + cardID + ".png"));
+        return new Image(App.class.getResourceAsStream("images/cards/leaderCards/" + cardID + ".png"));
     }
 }

@@ -25,7 +25,7 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     @Override
     public void handle(DiscardLeaderCard event) {
-        game.activateLeaderCard(username, event.getCardId());
+        game.discardLeaderCard(username, event.getCardId());
     }
 
     @Override

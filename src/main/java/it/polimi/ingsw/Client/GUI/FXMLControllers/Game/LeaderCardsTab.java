@@ -86,7 +86,7 @@ public class LeaderCardsTab implements Layout, GameTab{
     }
 
     private Image getImage(String cardID){
-        String BASE_PATH = "images/cards/leaderCards/LC_";
+        String BASE_PATH = "images/cards/leaderCards/";
         return new Image(App.class.getResourceAsStream(BASE_PATH + cardID + ".png"));
     }
 
