@@ -113,15 +113,15 @@ public class DevelopmentCardBuilder {
     }
 
     private ResourceList getCost() {
-        return Decoder.decodeList(cost);
+        return Decoder.decodeList(cost,0,1);
     }
 
     private ResourceList getRequire() {
-        return Decoder.decodeList(require);
+        return Decoder.decodeList(require,0,1);
     }
 
     private ResourceList getProduce() {
-        return Decoder.decodeList(produce);
+        return Decoder.decodeList(produce,0,1);
     }
 
 

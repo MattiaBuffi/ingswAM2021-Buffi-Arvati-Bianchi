@@ -13,10 +13,10 @@ import java.util.List;
 
 public class Decoder {
 
-    public static ResourceList decodeList(List<String> list){
+    public static ResourceList decodeList(List<String> list, int quantity, int color){
         ResourceList decodedList = new ResourceList();
         for(String s: list){
-            decodedList.add(decodeMarbleColor(s.charAt(2)), Character.getNumericValue(s.charAt(0)));
+            decodedList.add(decodeMarbleColor(s.charAt(color)), Character.getNumericValue(s.charAt(quantity)));
         }
         return decodedList;
     }
@@ -77,7 +77,7 @@ public class Decoder {
             case "CARD":
                 return new RequireCards(extractCardRequirements(requiredResource));
             case "RSS":
-                return new RequireResources(decodeList(requiredResource));
+                return new RequireResources(decodeList(requiredResource, 0,2));
             default:
                 return null;
         }
