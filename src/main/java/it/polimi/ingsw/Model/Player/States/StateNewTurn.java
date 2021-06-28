@@ -87,7 +87,7 @@ public class StateNewTurn extends PlayerState {
             }
 
             activateCard(context, lc);
-            context.notifyAllPlayers(new LeaderCardActivation());
+            context.notifyAllPlayers(new LeaderCardActivation(lc));
             return true;
 
         }

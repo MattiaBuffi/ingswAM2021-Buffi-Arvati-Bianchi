@@ -19,6 +19,8 @@ public class StateSetupCard extends PlayerState {
     @Override
     protected boolean discardLeader(Player context, String leaderId) {
 
+        System.err.println("SELECTING LEADER CARD");
+
         for (LeaderCard lc: context.getLeaderCards()){
             if(lc.getId().equals(leaderId)){
                 context.getLeaderCards().remove(lc);
@@ -28,7 +30,7 @@ public class StateSetupCard extends PlayerState {
         }
 
         if(context.getLeaderCards().size() == 2){
-            context.setState(StateWait.get());
+            StateSetupResources.setState(context);
         }
 
         return true;
