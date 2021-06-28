@@ -35,12 +35,7 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     @Override
     public void handle(TakeResources event) {
-        //game.storeResource(username, event.);
-    }
-
-    @Override
-    public void handle(EndTurn event) {
-
+        game.buyResources(username, event.getSelection());
     }
 
     @Override
@@ -57,6 +52,24 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
     public void handle(LeaderCardProduction event) {
         game.leaderProduction(username, event.getCardId(), event.getOut());
     }
+
+    @Override
+    public void handle(MoveResources event) {
+        game.moveResources(username, event.getStartPos(), event.getEndPos());
+    }
+
+    @Override
+    public void handle(DepositResource event) {
+        game.storeResource(username, event.getColor(), event.getShelf());
+    }
+
+
+
+    @Override
+    public void handle(EndTurn event) {
+
+    }
+
 
 
 
@@ -75,15 +88,6 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     }
 
-    @Override
-    public void handle(MoveResources event) {
-
-    }
-
-    @Override
-    public void handle(DepositResource event) {
-
-    }
 
 
     @Override

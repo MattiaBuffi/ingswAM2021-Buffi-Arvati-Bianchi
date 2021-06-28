@@ -14,6 +14,14 @@ public class DepositResource implements Message<ClientEventHandler> {
         this.shelf = shelf;
     }
 
+    public Marble.Color getColor() {
+        return color;
+    }
+
+    public int getShelf() {
+        return shelf;
+    }
+
     @Override
     public void accept(ClientEventHandler handler) {
         handler.handle(this);
