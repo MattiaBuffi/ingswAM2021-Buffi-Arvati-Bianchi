@@ -64,6 +64,8 @@ public class PlayerBoard {
                 case GREY:
                     resources[3] += s.size;
                     break;
+                default:
+                    break;
             }
         }
 

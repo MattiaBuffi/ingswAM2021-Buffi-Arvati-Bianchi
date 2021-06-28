@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Model.Marble.MarbleFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -26,6 +27,8 @@ public class StartingResourcesPopUp extends ResourceViewer{
                 PopUpManager.showDepositResourcePopUp(MarbleFactory.getMarble(getColor(resSelector2.getSelectionModel().getSelectedItem())), mainController, false);
             }
         }
+        Stage stage = (Stage) resSelector1.getScene().getWindow();
+        stage.close();
     }
 
     public void initData(StorageTab mainController, int resourceNumber) {

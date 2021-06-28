@@ -100,7 +100,7 @@ public class ScoreboardTab implements Layout, GameTab {
 
         cleanSelection();
         selection = (Label) mouseEvent.getSource();
-        hbox1.getStyleClass().add("bg_beige_chiaro");
+        selection.getParent().getStyleClass().add("bg_beige_chiaro");
 
     }
 

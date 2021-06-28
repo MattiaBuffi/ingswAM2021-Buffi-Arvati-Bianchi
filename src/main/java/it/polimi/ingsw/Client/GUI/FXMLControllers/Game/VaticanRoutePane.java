@@ -49,7 +49,6 @@ public class VaticanRoutePane implements Layout,GameTab  {
     }
 
     private void initializeCrosses() {
-        System.out.println(backEnd.getModel().players.size());
         if(backEnd.getModel().players.size() == 1){
             cross1.setVisible(true);
             imageViewMap.put(backEnd.getMyUsername(), cross1);
@@ -73,7 +72,6 @@ public class VaticanRoutePane implements Layout,GameTab  {
     }
 
     private void updateCrosses() {
-        System.out.println(usernames);
         for(String s: usernames){
             setPosition(imageViewMap.get(s), crossInitialPositions.get(s), backEnd.getModel().vaticanRoute.getPlayerFaithPoint(s));
         }
