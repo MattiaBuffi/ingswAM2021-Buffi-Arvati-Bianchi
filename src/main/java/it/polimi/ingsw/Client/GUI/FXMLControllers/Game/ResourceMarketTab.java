@@ -89,54 +89,54 @@ public class ResourceMarketTab implements Layout, GameTab{
 
 
     public void getColumn1() {
-        get(1, rectangle1);
+        get(0, rectangle1);
     }
 
     public void getColumn2() {
-        get(2, rectangle2);
+        get(1, rectangle2);
     }
 
     public void getColumn3() {
-        get(3, rectangle3);
+        get(2, rectangle3);
     }
 
     public void getColumn4() {
-        get(4, rectangle4);
+        get(3, rectangle4);
     }
 
     public void getRow1() {
-        get(7, rectangle7);
+        get(4, rectangle7);
     }
 
     public void getRow2() {
-        get(6, rectangle6);
+        get(5, rectangle6);
     }
 
     public void getRow3() {
-        get(5, rectangle5);
+        get(6, rectangle5);
     }
 
     private void hideRectangle(int cardSelected){
         switch (cardSelected){
-            case 1:
+            case 0:
                 rectangle1.setVisible(false);
                 break;
-            case 2:
+            case 1:
                 rectangle2.setVisible(false);
                 break;
-            case 3:
+            case 2:
                 rectangle3.setVisible(false);
                 break;
-            case 4:
+            case 3:
                 rectangle4.setVisible(false);
                 break;
-            case 5:
+            case 4:
                 rectangle5.setVisible(false);
                 break;
-            case 6:
+            case 5:
                 rectangle6.setVisible(false);
                 break;
-            case 7:
+            case 6:
                 rectangle7.setVisible(false);
                 break;
         }

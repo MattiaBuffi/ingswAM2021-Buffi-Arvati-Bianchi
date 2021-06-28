@@ -129,7 +129,7 @@ public class ResourceMarket {
     private void insertInRow(int position){
         Marble tmpBonusMarble = bonusMarble;
 
-        bonusMarble = marblesGrid[ROW_SIZE -1][position];
+        bonusMarble = marblesGrid[0][position];
 
         for(int i = 0; i<(ROW_SIZE - 1); i++){
             marblesGrid[i][position] = marblesGrid[i+1][position];
@@ -146,7 +146,7 @@ public class ResourceMarket {
     private void insertInColumn(int position){
         Marble tmpBonusMarble = bonusMarble;
 
-        bonusMarble = marblesGrid[position][COLUMN_SIZE -1];
+        bonusMarble = marblesGrid[position][0];
 
         for(int i = 0; i<(COLUMN_SIZE - 1); i++){
             marblesGrid[position][i] = marblesGrid[position][i+1];
