@@ -108,7 +108,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             case "BUY":
                 System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 7 = first row from the top]) : ");
                 String buyRss = input.nextLine();
-                TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss));
+                TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss)-1);
                 this.backEnd.notify(messageBuyRss);
                 break;
             case "MOVERSS":
@@ -118,7 +118,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                 System.out.println("Where do you want to move this rss? ");
                 System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
                 String shelfTo = input.nextLine();
-                MoveResources moveMessage = new MoveResources(Integer.parseInt(shelfFrom), Integer.parseInt(shelfTo));
+                MoveResources moveMessage = new MoveResources(Integer.parseInt(shelfFrom)-1, Integer.parseInt(shelfTo)-1);
                 this.backEnd.notify(moveMessage);
                 break;
             case "EXIT":

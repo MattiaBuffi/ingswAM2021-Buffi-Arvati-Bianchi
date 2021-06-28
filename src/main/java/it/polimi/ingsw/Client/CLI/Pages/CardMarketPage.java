@@ -72,7 +72,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
                 System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
                 String buyCard = input.nextLine();
                 String[] buyCardArray = buyCard.split("-");
-                BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]), Integer.parseInt(buyCardArray[1]), Integer.parseInt(buyCardArray[2]));
+                BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0])-1, Integer.parseInt(buyCardArray[1])-1, Integer.parseInt(buyCardArray[2])-1);
                 this.backEnd.notify(messageBuyDev);
 
                 break;

@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class HomePage extends ModelEventHandler.Default {
 
     private static int lastPosition = 0;
-    private static final int TurnPosition = 2235;
+    private static final int TurnPosition = 2228;
     private static final int[] HomeLeaderCost = {2304, 2330};
     private static final int[] HomeLeaderType = {2570, 2596};
     private static final int[] HomeLeaderEffect = {2836, 2862};
@@ -40,11 +40,11 @@ public class HomePage extends ModelEventHandler.Default {
         Scanner input = new Scanner(System.in);
         CLI_Controller.cls();
         //Printing Name of Current Player
-        String currentName;
-        /*if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
+        /*String currentName;
+        if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
             currentName = "It's your Turn";
         }else{
-            currentName = this.backEnd.getModel().current.getUsername() + "'s Turn";
+            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn";
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
         */
