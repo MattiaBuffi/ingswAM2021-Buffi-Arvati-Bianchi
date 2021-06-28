@@ -4,6 +4,7 @@ import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
+import it.polimi.ingsw.Message.Model.ActivePlayer;
 import it.polimi.ingsw.Message.Model.AvailableLeaderCard;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -64,6 +65,13 @@ public class SelectionPage extends ModelEventHandler.Default{
         }else{
             SelectionPageView(this.backEnd);
         }
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        this.backEnd.getModel().updateModel(event);
+        System.out.println("SOS");
+        //CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
 
