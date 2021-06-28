@@ -16,6 +16,8 @@ public interface ActivationStrategy {
 
     Marble.Color getColor();
 
+    Type getType();
+
     boolean activate(Player player, LeaderCard card);
 
 

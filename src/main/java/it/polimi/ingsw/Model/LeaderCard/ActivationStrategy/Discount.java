@@ -14,9 +14,15 @@ public class Discount implements ActivationStrategy{
     }
 
 
+
     @Override
     public Marble.Color getColor() {
         return color;
+    }
+
+    @Override
+    public Type getType() {
+        return Type.DISCOUNT;
     }
 
     @Override

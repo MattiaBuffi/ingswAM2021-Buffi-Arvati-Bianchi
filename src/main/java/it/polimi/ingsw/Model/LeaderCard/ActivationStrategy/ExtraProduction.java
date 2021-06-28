@@ -15,6 +15,11 @@ public class ExtraProduction implements ActivationStrategy {
     }
 
     @Override
+    public Type getType() {
+        return Type.EXTRA_PRODUCTION;
+    }
+
+    @Override
     public Marble.Color getColor() {
         return color;
     }
