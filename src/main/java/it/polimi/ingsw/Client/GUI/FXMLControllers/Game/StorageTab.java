@@ -74,11 +74,19 @@ public class StorageTab implements Layout, GameTab {
         List<Marble> marbles = backEnd.getModel().resourceMarketBuffer;
         System.out.println("marbles: " + marbles);
 
-        if(marbles.size() != 0 && !discarded.contains(marbles.get(0))) {
-            try {
-                PopUpManager.showDepositResourcePopUp(marbles.get(0), this, true);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(marbles.size() != 0) {
+            if(!discarded.contains(marbles.get(0))) {
+                try {
+                    PopUpManager.showDepositResourcePopUp(marbles.get(0), this, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(discarded.size() != marbles.size()){
+                try {
+                    PopUpManager.showDepositResourcePopUp(marbles.get(discarded.size()), this, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -250,7 +258,4 @@ public class StorageTab implements Layout, GameTab {
         discarded.add(marble);
     }
 
-    public List<Marble> getDiscarded() {
-        return discarded;
-    }
 }

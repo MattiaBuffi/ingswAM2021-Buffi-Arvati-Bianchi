@@ -53,6 +53,7 @@ public class ResourceAvailablePopup extends ResourceViewer {
 
     public void discardResource() {
         mainController.addDiscardedMarble(marble);
+        mainController.manageResourceBuffer();
 
         Stage stage = (Stage) ivMarble.getScene().getWindow();
         stage.close();
