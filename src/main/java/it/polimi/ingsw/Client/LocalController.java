@@ -13,7 +13,7 @@ public class LocalController extends Controller {
 
 
     public LocalController(){
-        this.controller = new GameController();
+        //this.controller = new GameController();
     }
 
 

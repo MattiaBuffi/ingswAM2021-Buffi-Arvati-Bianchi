@@ -12,9 +12,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Controller of the game_board.fxml. The class has a reference to all the tab and pane contained in it and works as message handler
+ * for the message coming from Model. Every ModelUpdate will be forwarded to the backend where a ModelUpdater will update the light model.
+ * After every ModelUpdate the tabs of the game board will be updated to show the new data.
+ */
 public class GameBoard extends ModelEventHandler.Default implements Layout {
 
 
@@ -50,6 +55,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         backEnd.setEventHandler(this);
 
         backEnd.setModel(new ViewModel(backEnd.getMyUsername()));
+        leaderActivated = new ArrayList<>();
 
         productionTab_Controller.setup(backEnd);
         resourceMarket_Controller.setup(backEnd);
@@ -79,6 +85,15 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     public void handle(ErrorUpdate error) {
         try {
             PopUpManager.showErrorPopUp(error.getErrorMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void handle(AvailableLeaderCard event) {
+        try {
+            PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);
         } catch (IOException e) {
             e.printStackTrace();
         }

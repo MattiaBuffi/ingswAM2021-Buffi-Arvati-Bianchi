@@ -78,7 +78,7 @@ public class ServerApp implements Server, SocketHandler {
         try {
             synchronized (connectedClients){
                 ConnectionHandler.Builder builder = new ConnectionHandler.Builder(executor, socket);
-                connectedClients.add(new ClientHandler(this, builder, new GameController()));
+                connectedClients.add(new ClientHandler(this, builder));
             }
         } catch (Exception e) {
             System.err.println("Socket creation failed");

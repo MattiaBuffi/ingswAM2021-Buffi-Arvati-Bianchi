@@ -36,12 +36,12 @@ public class ResourceAvailablePopup extends ResourceViewer {
     public void depositResource() {
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
             if(!whiteMarble){
-                DepositResource message = new DepositResource(marble.getColor(), shelfSelector.getSelectionModel().getSelectedItem());
+                DepositResource message = new DepositResource(marble.getColor(), shelfSelector.getSelectionModel().getSelectedItem() - 1);
                 mainController.getBackEnd().notify(message);
             } else {
                 if(colorSelector.getSelectionModel().getSelectedItem() != null) {
                     DepositResource message = new DepositResource(getColor(colorSelector.getSelectionModel().getSelectedItem()),
-                            shelfSelector.getSelectionModel().getSelectedItem());
+                            shelfSelector.getSelectionModel().getSelectedItem() - 1);
                     mainController.getBackEnd().notify(message);
                 }
             }

@@ -25,7 +25,7 @@ public class LeaderCardSelection implements Layout{
     private ArrayList<Integer> indexSelected = new ArrayList<>();
     private Rectangle[] rectArray;
     private ImageView[] imageArray;
-    private List<LeaderCard> leaderCards;
+    private List<it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard> leaderCards;
     private LeaderCardsTab mainController;
 
 

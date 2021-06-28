@@ -75,12 +75,8 @@ public class VaticanRoutePane implements Layout,GameTab  {
     private void updateCrosses() {
         System.out.println(usernames);
         for(String s: usernames){
-            updateCross(s, backEnd.getModel().vaticanRoute.getPlayerFaithPoint(s));
+            setPosition(imageViewMap.get(s), crossInitialPositions.get(s), backEnd.getModel().vaticanRoute.getPlayerFaithPoint(s));
         }
-    }
-
-    public void updateCross(String username, int position){
-        setPosition(imageViewMap.get(username), crossInitialPositions.get(username), position);
     }
 
     private void setPosition(ImageView cross, Position initialPosition, int position){

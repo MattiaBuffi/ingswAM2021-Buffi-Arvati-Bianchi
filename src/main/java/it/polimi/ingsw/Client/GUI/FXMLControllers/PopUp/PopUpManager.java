@@ -18,6 +18,10 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class to manage all the pop-up windows that can be displayed by the GUI. Every method of the class is static and
+ * load a different fxml file.
+ */
 public class PopUpManager {
 
     public static void showErrorPopUp(String errorMessage) throws IOException {
