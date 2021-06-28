@@ -97,5 +97,7 @@ public class LeaderCardsTab implements Layout, GameTab{
     }
 
 
-
+    public ViewBackEnd getBackend() {
+        return backEnd;
+    }
 }

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaderCardSelection implements Layout{
+public class LeaderCardSelection{
     @FXML
     ImageView leaderCard1, leaderCard2, leaderCard3, leaderCard4;
     @FXML
@@ -27,17 +27,6 @@ public class LeaderCardSelection implements Layout{
     private ImageView[] imageArray;
     private List<it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard> leaderCards;
     private LeaderCardsTab mainController;
-
-
-    private ViewBackEnd backEnd;
-
-    @Override
-    public void setup(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
-
-        rectArray = new Rectangle[]{rect1, rect2, rect3, rect4};
-        imageArray = new ImageView[]{leaderCard1, leaderCard2, leaderCard3, leaderCard4};
-    }
 
 
     public void selectCard(int position, Rectangle rectangle){
@@ -79,7 +68,7 @@ public class LeaderCardSelection implements Layout{
         for(int i=0; i<selection.length; i++){
             if(!selection[i]){
                 DiscardLeaderCard message = new DiscardLeaderCard(leaderCards.get(i).getId());
-                backEnd.notify(message);
+                mainController.getBackend().notify(message);
             } else {
                 id.add(leaderCards.get(i).getId());
             }
@@ -94,6 +83,10 @@ public class LeaderCardSelection implements Layout{
     public void initData(List<LeaderCard> leaderCards, LeaderCardsTab mainController) {
         this.leaderCards = leaderCards;
         this.mainController = mainController;
+
+        rectArray = new Rectangle[]{rect1, rect2, rect3, rect4};
+        imageArray = new ImageView[]{leaderCard1, leaderCard2, leaderCard3, leaderCard4};
+
         showLeaderCard();
     }
 
