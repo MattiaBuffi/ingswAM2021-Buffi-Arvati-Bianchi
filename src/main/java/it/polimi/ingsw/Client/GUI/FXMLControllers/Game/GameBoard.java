@@ -136,7 +136,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         //checkLeaderCardActivation();
         resourceMarket_Controller.update();
 
-        //storageTab_Controller.update();
+        storageTab_Controller.update();
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
 

@@ -225,16 +225,16 @@ public class StorageTab implements Layout, GameTab {
         Image resource = null;
         switch (color){
             case YELLOW:
-                resource = new Image(App.class.getResourceAsStream("images/token/coin"));
+                resource = new Image(App.class.getResourceAsStream("images/token/coin.png"));
                 break;
             case PURPLE:
-                resource = new Image(App.class.getResourceAsStream("images/token/servant"));
+                resource = new Image(App.class.getResourceAsStream("images/token/servant.png"));
                 break;
             case BLUE:
-                resource = new Image(App.class.getResourceAsStream("images/token/shield"));
+                resource = new Image(App.class.getResourceAsStream("images/token/shield.png"));
                 break;
             case GREY:
-                resource = new Image(App.class.getResourceAsStream("images/token/stone"));
+                resource = new Image(App.class.getResourceAsStream("images/token/stone.png"));
                 break;
         }
         return resource;

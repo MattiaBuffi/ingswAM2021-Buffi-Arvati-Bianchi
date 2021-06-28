@@ -152,6 +152,35 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     }
 
+    @Override
+    public void handle(MoveResources event) {
+        this.active = true;
+
+        if (game == null){
+            return;
+        }
+
+        synchronized (game){
+            gameController.handle(event);
+        }
+    }
+
+    @Override
+    public void handle(DepositResource event) {
+        this.active = true;
+
+        if (game == null){
+            return;
+        }
+
+        synchronized (game){
+            gameController.handle(event);
+        }
+    }
+
+
+
+
 
 
     @Override
@@ -171,15 +200,6 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     }
 
-    @Override
-    public void handle(MoveResources event) {
-
-    }
-
-    @Override
-    public void handle(DepositResource event) {
-
-    }
 
     @Override
     public void update(Message<ModelEventHandler> event) {
@@ -209,7 +229,7 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     @Override
     public void close(ConnectionHandler connection) {
-        synchronized (connectionHandler) {
+        synchronized (connectionHandler){
             System.out.println("closing connection");
             this.active = false;
             connection.stop();

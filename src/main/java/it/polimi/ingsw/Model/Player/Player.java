@@ -50,7 +50,7 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
         this.user = user;
         this.position = position;
-        this.ready = true;
+        this.ready = false;
 
         this.turnHandler = turnHandler;
         this.vaticanToken = token;
