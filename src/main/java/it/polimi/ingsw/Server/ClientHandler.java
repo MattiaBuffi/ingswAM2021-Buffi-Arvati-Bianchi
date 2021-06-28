@@ -152,25 +152,6 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     }
 
-
-
-    @Override
-    public void handle(Login event) {
-        this.active = true;
-        server.login(this, event.getUsername());
-    }
-
-    @Override
-    public void handle(GameSize event) {
-        this.active = true;
-        server.createGame(this, event.getSize());
-    }
-
-    @Override
-    public void handle(Ping event) {
-
-    }
-
     @Override
     public void handle(MoveResources event) {
         this.active = true;
@@ -196,6 +177,29 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
             gameController.handle(event);
         }
     }
+
+
+
+
+
+
+    @Override
+    public void handle(Login event) {
+        this.active = true;
+        server.login(this, event.getUsername());
+    }
+
+    @Override
+    public void handle(GameSize event) {
+        this.active = true;
+        server.createGame(this, event.getSize());
+    }
+
+    @Override
+    public void handle(Ping event) {
+
+    }
+
 
     @Override
     public void update(Message<ModelEventHandler> event) {
@@ -225,7 +229,7 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     @Override
     public void close(ConnectionHandler connection) {
-        synchronized (connectionHandler) {
+        synchronized (connectionHandler){
             System.out.println("closing connection");
             this.active = false;
             connection.stop();

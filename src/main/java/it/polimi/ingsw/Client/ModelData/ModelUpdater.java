@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.ModelData;
 
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.ResourceList;
@@ -10,9 +11,20 @@ public class ModelUpdater implements ModelEventHandler {
 
     private ViewModel model;
 
+    private Player player;
+
     public ModelUpdater(ViewModel model){
         this.model = model;
     }
+
+    private void setPlayer(Player player){
+        this.player = player;
+    }
+
+    private Player getPlayer(){
+        return player;
+    }
+
 
     @Override
     public void handle(VaticanReport event) {
@@ -25,27 +37,6 @@ public class ModelUpdater implements ModelEventHandler {
     }
 
     @Override
-    public void handle(ChestUpdate event) {
-        model.current.addToChest(event.getResources());
-    }
-
-    @Override
-    public void handle(ShelfUpdate event) {
-        model.current.updateShelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor());
-    }
-
-    @Override
-    public void handle(DevelopmentCardBuyUpdate event) {
-
-        model.current.buyCard(event.getPosition(),new DevelopmentCardData(event.getId(),
-                        event.getVictoryPoints(),
-                        new ResourceList(),
-                        event.getProduce(),
-                        event.getRequire())
-        );
-    }
-
-    @Override
     public void handle(MarketResourceAvailable event) {
         model.resourceMarketBuffer.add(event.getMarble());
     }
@@ -54,7 +45,6 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(MarketResourceTaken event) {
         model.resourceMarketBuffer.remove(event.getColor());
     }
-
 
     @Override
     public void handle(MarketCardUpdate event) {
@@ -65,17 +55,6 @@ public class ModelUpdater implements ModelEventHandler {
                 event.getRequire())
         );
     }
-
-
-
-    @Override
-    public void handle(ModelUpdate event) {
-        for (Message<ModelEventHandler> e: event.getMessages()){
-            e.accept(this);
-        }
-    }
-
-
 
     @Override
     public void handle(ProductionBufferUpdate event) {
@@ -91,16 +70,9 @@ public class ModelUpdater implements ModelEventHandler {
 
     }
 
-
-
     @Override
     public void handle(ResourceMarketExtra event) {
         model.resourceMarket.setBonusMarble(event.getMarble());
-    }
-
-    @Override
-    public void handle(LeaderCardActivation event) {
-
     }
 
     @Override
@@ -118,13 +90,69 @@ public class ModelUpdater implements ModelEventHandler {
         model.players.add( new Player(event.getUsername()));
     }
 
+
+
+
+
     @Override
-    public void handle(ResourceSetup event) {
+    public void handle(ModelUpdate event) {
+
+        //set the player who is doing the action
+        setPlayer(model.getPlayer(event.getPlayerUsername()));
+
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            e.accept(this);
+        }
+    }
+
+
+    @Override
+    public void handle(DevelopmentCardBuyUpdate event) {
+
+        getPlayer().buyCard(event.getPosition(),new DevelopmentCardData(event.getId(),
+                event.getVictoryPoints(),
+                new ResourceList(),
+                event.getProduce(),
+                event.getRequire())
+        );
+    }
+
+    @Override
+    public void handle(ChestUpdate event) {
+        getPlayer().addToChest(event.getResources());
+    }
+
+    @Override
+    public void handle(ShelfUpdate event) {
+        getPlayer().updateShelf(event.getPosition(), event.getMaxSize(), event.getSize(), event.getColor());
+    }
+
+    @Override
+    public void handle(LeaderCardActivation event) {
+
+        if(getPlayer().getUsername() == model.myUsername){
+            for (LeaderCard card : getPlayer().getLeaderCard()){
+                if(card.getId() == event.getLeaderCard().getId()){
+                    card.setActive(true);
+                }
+            }
+        } else {
+            getPlayer().getLeaderCard().add(event.getLeaderCard());
+        }
 
     }
 
 
 
+
+
+
+    //*******************currently these method does nothing*************************************************
+
+    @Override
+    public void handle(ResourceSetup event) {
+        //doNothing
+    }
 
     @Override
     public void handle(ActionTokenPlayed event) {

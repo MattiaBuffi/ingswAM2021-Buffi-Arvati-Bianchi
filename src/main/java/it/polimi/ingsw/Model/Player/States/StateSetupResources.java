@@ -20,9 +20,7 @@ public class StateSetupResources extends PlayerState {
             return false;
         }
 
-        if(!completeSetup(context)){
-            return false;
-        }
+        endSetup(context);
 
         return true;
 
@@ -44,25 +42,26 @@ public class StateSetupResources extends PlayerState {
         }
     }
 
+
+    public static void endSetup(Player context){
+        context.setReady(true);
+        StateWait.setState(context);
+        context.getGameHandler().startGame();
+    }
+
     public static boolean completeSetup(Player context){
 
-        if ( context.getResourceStorage().getResources().getSize() ==  availableResources(context.getPosition()) ){
-            context.setReady(true);
-            StateWait.setState(context);
-            context.getGameHandler().startGame();
-            return true;
-        }
+        return context.getResourceStorage().getResources().getSize() ==  availableResources(context.getPosition());
 
-        return false;
     }
 
     public static void setState(Player context){
         if (!completeSetup(context)){
             context.setState(get());
             context.notifyUser(new ResourceSetup(availableResources(context.getPosition())));
+            return;
         }
-        StateWait.setState(context);
-        context.getGameHandler().startGame();
+        endSetup(context);
     }
 
 

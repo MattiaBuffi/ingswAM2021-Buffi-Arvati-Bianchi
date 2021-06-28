@@ -45,6 +45,9 @@ public class ViewModel {
         message.accept(updater);
     }
 
+
+
+
     public Player getPlayer(String username){
         Player playerToReturn = null;
         for(Player p: players){

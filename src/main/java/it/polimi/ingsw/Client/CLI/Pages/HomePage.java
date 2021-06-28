@@ -191,13 +191,13 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(LeaderCardActivation event) {
-        if (event.getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
+        if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
         }else{
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
         }
 
-        CLI_Controller.leaderPowerSelector(event.getId());
+        CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
     }
 
     @Override
