@@ -41,13 +41,13 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.cls();
         //Printing Name of Current Player
         String currentName;
-        if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
+        /*if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
             currentName = "It's your Turn";
         }else{
             currentName = this.backEnd.getModel().current.getUsername() + "'s Turn";
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
-
+        */
         CLI_Controller.UpdateShelf(this.backEnd, homePage);
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 

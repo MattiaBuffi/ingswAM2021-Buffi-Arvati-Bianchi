@@ -7,6 +7,7 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.Marble;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class ProductionPage extends ModelEventHandler.Default{
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
             int i = 0;
             for (LeaderCard leaderCard : card) {
-                if(leaderCard.getType().equals("DEVELOPMENT")){
+                if(leaderCard.getType() == ActivationStrategy.Type.EXTRA_PRODUCTION){
                     char[] scheme = CLI_Controller.readSchematics(14);
                     Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = CLI_Controller.getColorString(colorEffect);

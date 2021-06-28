@@ -9,6 +9,7 @@ import it.polimi.ingsw.Message.ClientMessages.MoveResources;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.*;
 import java.util.List;
 import java.util.Scanner;
@@ -90,7 +91,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
             int i = 0;
             for (LeaderCard leaderCard : card) {
-                if(leaderCard.getType().equals("WHITE")){
+                if(leaderCard.getType() == ActivationStrategy.Type.MARBLE_CONVERSION){
                     Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = "W -> " + CLI_Controller.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, rssMarket, leaderWhiteBall[i], colorEffected.toCharArray().length);

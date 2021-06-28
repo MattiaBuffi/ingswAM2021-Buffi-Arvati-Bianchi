@@ -349,7 +349,6 @@ public class CLI_Controller {
     public static void showLeaderShelf(char[] page){
         char[] shelf;
         shelf = readSchematics(13);
-
         for (int i = 0; i < leaderActive[1]; i++){
             for (int j = 0; j < 15; j++){
                 for (int k = 0; k < 4; k++){

@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.Marble;
 import java.util.List;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
             int i = 0;
             for (LeaderCard leaderCard : card) {
-                if(leaderCard.getType().equals("DISCOUNT")){
+                if(leaderCard.getType() == ActivationStrategy.Type.DISCOUNT){
                     Marble.Color colorEffect = leaderCard.getColor();
                     String colorEffected = "Discount -1" + CLI_Controller.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, cardMarket, leaderDiscount[i], colorEffected.toCharArray().length);
@@ -58,11 +59,11 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
             }
         }
-        /*
+
 
         CLI_Controller.UpdateShelf(this.backEnd, cardMarket);
         CLI_Controller.UpdateChest(this.backEnd, cardMarket);
-*/
+
         System.out.println(cardMarket);
         System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
