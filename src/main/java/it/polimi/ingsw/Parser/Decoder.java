@@ -16,7 +16,7 @@ public class Decoder {
     public static ResourceList decodeList(List<String> list){
         ResourceList decodedList = new ResourceList();
         for(String s: list){
-            decodedList.add(decodeMarbleColor(s.charAt(1)), Character.getNumericValue(s.charAt(0)));
+            decodedList.add(decodeMarbleColor(s.charAt(2)), Character.getNumericValue(s.charAt(0)));
         }
         return decodedList;
     }

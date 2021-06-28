@@ -25,11 +25,9 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     
 
-    public ClientHandler(Server server, ConnectionHandler.Builder<Message<ClientEventHandler>, Message<ModelEventHandler>> builder, GameController controller) throws IOException {
+    public ClientHandler(Server server, ConnectionHandler.Builder<Message<ClientEventHandler>, Message<ModelEventHandler>> builder) throws IOException {
         this.server = server;
         this.connectionHandler = builder.build(5000, this::handleMessage, this);
-        this.gameController = controller;
-
     }
 
     public void handleMessage(Message<ClientEventHandler> message){
