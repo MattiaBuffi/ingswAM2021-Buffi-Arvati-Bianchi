@@ -33,22 +33,6 @@ public class HomePage extends ModelEventHandler.Default {
         this.homePage = homePage;
     }
 
-    public void SelectInitialRss(ViewBackEnd backEnd){
-        this.backEnd = backEnd;
-        this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
-        Scanner input = new Scanner(System.in);
-        int x = 0;
-        int y = 0;
-        System.out.println("You are Player Number" + x + ", you can get: " + y +
-                "initial Resources for free, please insert the color of the resource that you want to take " +
-                "[(P/G/B/Y) if more than 1 rss please insert the two colors divided by a -]" );
-        String freeRssTaken = input.next();
-        HomePageView(backEnd);
-    }
-
-
-
     public void HomePageView(ViewBackEnd backEnd){
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
@@ -56,15 +40,19 @@ public class HomePage extends ModelEventHandler.Default {
         Scanner input = new Scanner(System.in);
         CLI_Controller.cls();
         //Printing Name of Current Player
-       // String customName = this.backEnd.getModel().current.getUsername() + "'s Turn";
-     //   System.arraycopy(customName.toCharArray(), 0, homePage, TurnPosition, customName.toCharArray().length);
+        String currentName;
+        if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
+            currentName = "It's your Turn";
+        }else{
+            currentName = this.backEnd.getModel().current.getUsername() + "'s Turn";
+        }
+        System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
 
         CLI_Controller.UpdateShelf(this.backEnd, homePage);
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 
 
         int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
-        System.out.println("Position ->" + position);
         if ( position != lastPosition && lastPosition!= 0){
             System.arraycopy(Integer.toString(lastPosition).toCharArray(), 0, homePage, FaithCellPosition[lastPosition], Integer.toString(lastPosition).toCharArray().length);
             if(position>=10){
@@ -79,7 +67,8 @@ public class HomePage extends ModelEventHandler.Default {
 
         for (int i = 0; i < CLI_Controller.popeFavourActive.length; i++){
             if(CLI_Controller.popeFavourActive[i] == 1){
-                homePage[HomePopeFavourPosition[i]] = 'X';
+                homePage[HomePopeFavourPosition[i]] = 'O';
+                homePage[HomePopeFavourPosition[i]+1] = 'K';
             }
         }
 
@@ -202,18 +191,27 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        //backEnd.something
-
         CLI_Controller.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
-        //backEnd.something
 
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);
         }
     }
 
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
 }

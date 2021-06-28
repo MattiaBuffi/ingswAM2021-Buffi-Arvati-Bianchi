@@ -3,11 +3,13 @@ package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.ClientMessages.MoveResources;
 import it.polimi.ingsw.Message.ClientMessages.TakeResources;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
-import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.Marble.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -99,14 +101,24 @@ public class RssMarketPage extends ModelEventHandler.Default {
         }
 
         System.out.println(rssMarket);
-        System.out.println("Insert Command (Buy,EndTurn,Exit): ");
+        System.out.println("Insert Command (Buy,MoveRss,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
-                System.out.println("Which card do you want to buy? (value between 1 and 7 [1 = first column on the left, 7 = first row from the top]) : ");
+                System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 7 = first row from the top]) : ");
                 String buyRss = input.nextLine();
                 TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss));
                 this.backEnd.notify(messageBuyRss);
+                break;
+            case "MOVERSS":
+                System.out.println("Which shelf do you want to move?");
+                System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
+                String shelfFrom = input.nextLine();
+                System.out.println("Where do you want to move this rss? ");
+                System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
+                String shelfTo = input.nextLine();
+                MoveResources moveMessage = new MoveResources(Integer.parseInt(shelfFrom), Integer.parseInt(shelfTo));
+                this.backEnd.notify(moveMessage);
                 break;
             case "EXIT":
                 System.out.println("redirecting to Home..");
@@ -155,14 +167,22 @@ public class RssMarketPage extends ModelEventHandler.Default {
         RssMarketPageView(this.backEnd);
     }
 
-
     @Override
     public void handle(MarketResourceAvailable event) {
         backEnd.getModel().updateModel(event);
+        Scanner input = new Scanner(System.in);
+        String[] rssAvailable = CLI_Controller.getColorStringFromMarble(this.backEnd.getModel().resourceMarketBuffer).split(" ");
+        for (int i = 0; i < rssAvailable.length; i++) {
+            System.out.println("You take a "+ rssAvailable[i] + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+            String selectedShelf = input.nextLine();
+            if(selectedShelf.equals("0")){
+                System.out.println("Resource Discarded");
+            }else{
+                DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(i).getColor(),Integer.parseInt(selectedShelf)-1);
+                this.backEnd.notify(deposit);
+            }
+        }
     }
 
-    @Override
-    public void handle(MarketResourceTaken event) {
-        backEnd.getModel().updateModel(event);
-    }
+
 }

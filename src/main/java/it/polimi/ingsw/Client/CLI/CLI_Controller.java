@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -119,7 +120,7 @@ public class CLI_Controller {
         String leaderType = String.valueOf(leaderCard.get(i).getType());
         System.arraycopy(leaderType.toCharArray(), 0, home, homeLeaderType[i], leaderType.toCharArray().length);
 
-        String leaderPV = leaderCard.get(i).getVictoryPoint() + "PV";
+        String leaderPV = leaderCard.get(i).getVictoryPoint() + "VP";
         System.arraycopy(leaderPV.toCharArray(), 0, home, homeLeaderPV[i], leaderPV.toCharArray().length);
 
         List<Marble.Color> leaderCostMarbles = leaderCard.get(i).getResourceRequirement();
@@ -142,20 +143,19 @@ public class CLI_Controller {
             case "DISCOUNT":
                  effect = "-1" + colorEffected;
                 break;
-            case "WHITE":
+            case "MARBLE_CONVERSION":
                  effect = "White = " + colorEffected;
                 break;
-            case "STORAGE":
+            case "EXTRA_SHELF":
                  effect = "2 " + colorEffected + " Slot";
                 break;
-            case "DEVELOPMENT":
+            case "EXTRA_PRODUCTION":
                  effect = "1" + colorEffected + " -> 1? + 1R";
                 break;
             default:
                 effect = "";
         }
         System.arraycopy(effect.toCharArray(), 0, home, homeLeaderEffect[i], effect.toCharArray().length);
-
     }
 
 
@@ -194,13 +194,12 @@ public class CLI_Controller {
 
     public static void cls()
     {
-        try
-        {
-            new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
-        }catch(Exception E)
-        {
-            System.out.println(E);
-        }
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch (InterruptedException | IOException ignored) {}
     }
 
 

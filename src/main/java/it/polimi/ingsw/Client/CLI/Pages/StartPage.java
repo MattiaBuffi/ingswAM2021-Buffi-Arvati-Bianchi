@@ -30,13 +30,9 @@ public class StartPage extends ModelEventHandler.Default{
         System.out.println(charArray);
 
         if(this.backEnd.connectToServer(server, Integer.parseInt(port))){
-            try {
-                CLI_Controller.loading.LoadingPageView(backEnd);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            CLI_Controller.username.UsernamePageView(this.backEnd);
         } else {
-            CLI_Controller.start.StartPageView(backEnd);
+            CLI_Controller.start.StartPageView(this.backEnd);
         }
     }
 

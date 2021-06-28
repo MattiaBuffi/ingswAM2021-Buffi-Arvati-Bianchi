@@ -32,6 +32,7 @@ public class WaitPage extends ModelEventHandler.Default {
     @Override
     public void handle(WaitingPlayersUpdate event){
         String playerWaiting =  "player currently joined: " + event.getLobbyCurrentSize();
+        CLI_Controller.cls();
         System.arraycopy(playerWaiting.toCharArray(),0, waitPage, 3910, playerWaiting.toCharArray().length);
         System.out.println(waitPage);
     }
@@ -46,9 +47,13 @@ public class WaitPage extends ModelEventHandler.Default {
     public void handle(ModelUpdate event) {
         this.backEnd.setModel(new ViewModel(UsernamePage.getName()));
         this.backEnd.getModel().updateModel(event);
-        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
+    @Override
+    public void handle(AvailableLeaderCard event) {
+        this.backEnd.getModel().updateModel(event);
 
+        CLI_Controller.selectionPage.SelectionPageView(this.backEnd);
+    }
 
 }
