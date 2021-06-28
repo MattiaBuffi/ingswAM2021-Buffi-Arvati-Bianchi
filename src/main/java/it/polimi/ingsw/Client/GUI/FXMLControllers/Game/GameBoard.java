@@ -106,6 +106,15 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     }
 
     @Override
+    public void handle(ResourceSetup event) {
+        try {
+            PopUpManager.showStartingResourcesPopUp(event.getAvailableResources(), storageTab_Controller);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void handle(GameSizeRequest event) {
 
     }

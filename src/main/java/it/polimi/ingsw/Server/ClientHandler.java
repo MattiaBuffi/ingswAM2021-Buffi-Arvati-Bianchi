@@ -200,15 +200,21 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     @Override
     public void send(Message event) {
-        connectionHandler.send(event);
+        synchronized (connectionHandler){
+            if(connectionHandler.isRunning()){
+                connectionHandler.send(event);
+            }
+        }
     }
 
     @Override
     public void close(ConnectionHandler connection) {
-        System.out.println("closing connection");
-        this.active = false;
-        connection.stop();
-        server.removeClient(this);
+        synchronized (connectionHandler) {
+            System.out.println("closing connection");
+            this.active = false;
+            connection.stop();
+            server.removeClient(this);
+        }
     }
 
 }
