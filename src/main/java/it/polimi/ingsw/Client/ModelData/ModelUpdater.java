@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client.ModelData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
+import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -43,7 +44,13 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(MarketResourceTaken event) {
-        model.resourceMarketBuffer.remove(event.getColor());
+        for(Marble m: model.resourceMarketBuffer){
+            if(m.getColor() == event.getColor()){
+                model.resourceMarketBuffer.remove(m);
+                return;
+            }
+        }
+
     }
 
     @Override

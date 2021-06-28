@@ -33,6 +33,7 @@ public class ResourceAvailablePopup extends ResourceViewer {
     private StorageTab mainController;
 
 
+
     public void depositResource() {
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
             if(!whiteMarble){
@@ -51,6 +52,8 @@ public class ResourceAvailablePopup extends ResourceViewer {
     }
 
     public void discardResource() {
+        mainController.addDiscardedMarble(marble);
+
         Stage stage = (Stage) ivMarble.getScene().getWindow();
         stage.close();
     }

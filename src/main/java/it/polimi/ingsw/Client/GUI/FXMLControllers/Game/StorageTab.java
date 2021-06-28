@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,6 +35,7 @@ public class StorageTab implements Layout, GameTab {
     private ImageView[] shelf_4;
     private ImageView[] shelf_5;
     private int selection = 0;
+    private List<Marble> discarded;
 
     private ViewBackEnd backEnd;
 
@@ -51,6 +53,7 @@ public class StorageTab implements Layout, GameTab {
         shelf_5 = new ImageView[]{resLeader2_1, resLeader2_2};
 
         rectArray = new Rectangle[]{shelfSel1, shelfSel2, shelfSel3, shelfSel4, shelfSel5};
+        discarded = new ArrayList<>();
     }
 
     @Override
@@ -71,7 +74,7 @@ public class StorageTab implements Layout, GameTab {
         List<Marble> marbles = backEnd.getModel().resourceMarketBuffer;
         System.out.println("marbles: " + marbles);
 
-        if(marbles.size() != 0) {
+        if(marbles.size() != 0 && !discarded.contains(marbles.get(0))) {
             try {
                 PopUpManager.showDepositResourcePopUp(marbles.get(0), this, true);
             } catch (IOException e) {
@@ -243,6 +246,11 @@ public class StorageTab implements Layout, GameTab {
         return resource;
     }
 
+    public void addDiscardedMarble(Marble marble){
+        discarded.add(marble);
+    }
 
-
+    public List<Marble> getDiscarded() {
+        return discarded;
+    }
 }
