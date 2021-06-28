@@ -12,14 +12,10 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
     private String username;
 
 
-    public void setGame(Game game) {
+    public GameController(Game game, String username) {
         this.game = game;
-    }
-
-    public void setUsername(String username) {
         this.username = username;
     }
-
 
 
     @Override

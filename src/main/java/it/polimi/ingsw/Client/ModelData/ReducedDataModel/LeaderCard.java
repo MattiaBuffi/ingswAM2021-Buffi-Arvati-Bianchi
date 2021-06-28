@@ -1,18 +1,20 @@
 package it.polimi.ingsw.Client.ModelData.ReducedDataModel;
 
+import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.Marble;
 
 import java.util.List;
 
 public class LeaderCard {
 
-    private String id;
-    private String type;
-    private Marble.Color color;
-    private int victoryPoint;
-    private boolean active;
+    private String id; //ok
+    private ActivationStrategy.Type type;//ok
+    private Marble.Color color; //ok
+    private int victoryPoint;//ok
+    private boolean active;//ok
     private List<Marble.Color> resourceRequirement;
     private List<String> developmentCardRequirement;
+
 
     public String getId() {
         return id;
@@ -22,12 +24,20 @@ public class LeaderCard {
         this.id = id;
     }
 
-    public String getType() {
+    public ActivationStrategy.Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ActivationStrategy.Type type) {
         this.type = type;
+    }
+
+    public Marble.Color getColor() {
+        return color;
+    }
+
+    public void setColor(Marble.Color color) {
+        this.color = color;
     }
 
     public int getVictoryPoint() {
@@ -52,10 +62,6 @@ public class LeaderCard {
 
     public void setResourceRequirement(List<Marble.Color> resourceRequirement) {
         this.resourceRequirement = resourceRequirement;
-    }
-
-    public Marble.Color getColor() {
-        return this.color;
     }
 
     public List<String> getDevelopmentCardRequirement() {

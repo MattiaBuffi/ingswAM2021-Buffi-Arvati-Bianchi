@@ -15,6 +15,11 @@ public class ExtraProduction implements ActivationStrategy {
     }
 
     @Override
+    public Marble.Color getColor() {
+        return color;
+    }
+
+    @Override
     public boolean activate(Player player, LeaderCard card) {
         player.setCardStorage(new ExtraProductionDecorator(player.getCardStorage(), new LeaderProduction(card.getId(), color)));
         return false;

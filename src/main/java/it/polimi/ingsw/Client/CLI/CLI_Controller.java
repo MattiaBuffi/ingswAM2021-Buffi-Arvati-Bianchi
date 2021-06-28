@@ -116,7 +116,7 @@ public class CLI_Controller {
 
 
     public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost, int[] homeLeaderEffect) {
-        String leaderType = leaderCard.get(i).getType();
+        String leaderType = String.valueOf(leaderCard.get(i).getType());
         System.arraycopy(leaderType.toCharArray(), 0, home, homeLeaderType[i], leaderType.toCharArray().length);
 
         String leaderPV = leaderCard.get(i).getVictoryPoint() + "PV";
@@ -310,7 +310,7 @@ public class CLI_Controller {
     public static void UpdateChest(ViewBackEnd backEnd, char[] page ){
             ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
             if(playerChest != null) {
-                List<Marble> playerChestMarble = playerChest.getAll();
+                List<Marble> playerChestMarble = playerChest.getAllMarble();
                 String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
                 for (int i = 0; i < playerChestRss.length; i++) {
                     System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i + 6], playerChestRss[i].toCharArray().length);

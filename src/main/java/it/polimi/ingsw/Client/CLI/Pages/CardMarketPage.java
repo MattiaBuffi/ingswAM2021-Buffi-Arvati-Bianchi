@@ -92,15 +92,15 @@ public class CardMarketPage extends ModelEventHandler.Default {
     public void updateCard(int i, int j){
         cardMatrix[i][j] = this.backEnd.getModel().cardMarket.getCard(j,i);
 
-        List<Marble> costList = cardMatrix[i][j].price.getAll();
+        List<Marble> costList = cardMatrix[i][j].price.getAllMarble();
         String costString = CLI_Controller.getColorStringFromMarble(costList);
         System.arraycopy(("COST: " + costString).toCharArray(), 0, cardMarket, CardMarketCostPosition[i*4+j], ("COST: " + costString).toCharArray().length);
 
-        List<Marble> requireList = cardMatrix[i][j].require.getAll();
+        List<Marble> requireList = cardMatrix[i][j].require.getAllMarble();
         String requireString = CLI_Controller.getColorStringFromMarble(requireList);
         System.arraycopy(("IN: " + requireString).toCharArray(), 0, cardMarket, CardMarketInputPosition[i*4+j], ("IN: " + requireString).toCharArray().length);
 
-        List<Marble> produceList = cardMatrix[i][j].produce.getAll();
+        List<Marble> produceList = cardMatrix[i][j].produce.getAllMarble();
         String produceString = CLI_Controller.getColorStringFromMarble(produceList);
         System.arraycopy(("OUT: " + produceString).toCharArray(), 0, cardMarket, CardMarketOutputPosition[i*4+j], ("OUT: " + produceString).toCharArray().length);
 

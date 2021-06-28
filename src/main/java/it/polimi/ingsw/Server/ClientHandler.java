@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.ClientMessages.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Network.ConnectionHandler;
 
 import java.io.IOException;
@@ -35,6 +36,12 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
         message.accept(this);
     }
 
+
+    @Override
+    public void setGame(Game game) {
+        super.setGame(game);
+        gameController = new GameController(game, username);
+    }
 
     @Override
     public void handle(ActivateLeaderCard event) {
@@ -180,6 +187,9 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
     public void update(Message<ModelEventHandler> event) {
         this.send(event);
     }
+
+
+
 
 
     @Override

@@ -14,6 +14,10 @@ public class ExtraShelf  implements ActivationStrategy {
         this.color = color;
     }
 
+    @Override
+    public Marble.Color getColor() {
+        return color;
+    }
 
     @Override
     public boolean activate(Player player, LeaderCard card) {

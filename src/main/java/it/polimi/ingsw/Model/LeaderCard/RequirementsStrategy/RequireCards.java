@@ -25,6 +25,10 @@ public class RequireCards implements RequirementStrategy {
         return playerCardInfo;
     }
 
+    public List<DevelopmentCard.Info> getRequiredCards() {
+        return requiredCards;
+    }
+
     @Override
     public boolean canActivate(Player player) {
 
@@ -51,5 +55,8 @@ public class RequireCards implements RequirementStrategy {
 
     }
 
-
+    @Override
+    public Type getType() {
+        return Type.CARD;
+    }
 }

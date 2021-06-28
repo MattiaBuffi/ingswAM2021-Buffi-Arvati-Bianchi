@@ -51,7 +51,7 @@ public class StateNewTurn extends PlayerState {
             }
 
             context.getLeaderCards().remove(lc);
-            context.notifyUser(new AvailableLeaderCard());
+            context.notifyUser(new AvailableLeaderCard(context.getLeaderCards()));
 
             return true;
         }

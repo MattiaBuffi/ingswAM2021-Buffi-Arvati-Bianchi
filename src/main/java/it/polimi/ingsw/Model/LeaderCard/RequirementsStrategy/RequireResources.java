@@ -11,6 +11,10 @@ public class RequireResources implements RequirementStrategy {
         this.resource = resource;
     }
 
+    public ResourceList getResource() {
+        return resource;
+    }
+
     @Override
     public boolean canActivate(Player player) {
 
@@ -21,6 +25,9 @@ public class RequireResources implements RequirementStrategy {
         return true;
     }
 
-
+    @Override
+    public Type getType() {
+        return Type.RESOURCE;
+    }
 
 }

@@ -21,6 +21,10 @@ public class DevelopmentCard extends ProductionCard{
             this.color = color;
         }
 
+        public String toString(){
+            return level+"-"+String.valueOf(color).toUpperCase().charAt(0);
+        }
+
     }
 
 

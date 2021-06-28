@@ -39,15 +39,15 @@ public class ProductionPage extends ModelEventHandler.Default{
         List<List<DevelopmentCardData>> playerProductions = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getProductions();
         for (List<DevelopmentCardData> productionColumn : playerProductions) {
             for (DevelopmentCardData devCard : productionColumn) {
-                List<Marble> costList = devCard.price.getAll();
+                List<Marble> costList = devCard.price.getAllMarble();
                 String costString = CLI_Controller.getColorStringFromMarble(costList);
                 System.arraycopy(costString.toCharArray(), 0, customCard, singleCardPosition[0], costString.toCharArray().length);
 
-                List<Marble> requireList = devCard.require.getAll();
+                List<Marble> requireList = devCard.require.getAllMarble();
                 String requireString = CLI_Controller.getColorStringFromMarble(requireList);
                 System.arraycopy(requireString.toCharArray(), 0, customCard, singleCardPosition[1], requireString.toCharArray().length);
 
-                List<Marble> produceList = devCard.produce.getAll();
+                List<Marble> produceList = devCard.produce.getAllMarble();
                 String produceString = CLI_Controller.getColorStringFromMarble(produceList);
                 System.arraycopy(produceString.toCharArray(), 0, customCard, singleCardPosition[2], produceString.toCharArray().length);
 

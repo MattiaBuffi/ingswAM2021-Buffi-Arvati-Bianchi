@@ -15,6 +15,11 @@ public class Discount implements ActivationStrategy{
 
 
     @Override
+    public Marble.Color getColor() {
+        return color;
+    }
+
+    @Override
     public boolean activate(Player player, LeaderCard card) {
         player.setCardStorage(new CardDiscountDecorator(player.getCardStorage(), color));
         return false;

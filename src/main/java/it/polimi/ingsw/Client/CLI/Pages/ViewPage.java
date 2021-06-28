@@ -39,7 +39,7 @@ public class ViewPage extends ModelEventHandler.Default {
             System.arraycopy(Integer.toString(user.getProductions().size()).toCharArray(), 0, bigView, BigFaithPlayerProdPos[i], Integer.toString(user.getProductions().size()).toCharArray().length);
 
             ResourceList playerChest = this.backEnd.getModel().getPlayer(user.getUsername()).getChest();
-            List<Marble> playerChestMarble = playerChest.getAll();
+            List<Marble> playerChestMarble = playerChest.getAllMarble();
             char[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).toCharArray();
             System.arraycopy(playerChestRss, 0, bigView, BigFaithPlayerRssPos[i], playerChestRss.length);
             System.arraycopy((user.getVictoryPoints() + " VP").toCharArray(), 0, bigView, BigFaithPlayerPVPos[i], (user.getVictoryPoints() + " VP").toCharArray().length);

@@ -16,12 +16,12 @@ public class Decoder {
     public static ResourceList decodeList(List<String> list){
         ResourceList decodedList = new ResourceList();
         for(String s: list){
-            decodedList.add(decodeColor(s.charAt(1)), Character.getNumericValue(s.charAt(0)));
+            decodedList.add(decodeMarbleColor(s.charAt(1)), Character.getNumericValue(s.charAt(0)));
         }
         return decodedList;
     }
 
-    public static Marble.Color decodeColor(Character string){
+    public static Marble.Color decodeMarbleColor(Character string){
         switch (string){
             case 'R':
                 return Marble.Color.RED;
@@ -89,13 +89,13 @@ public class Decoder {
     public static ActivationStrategy decodeActivationStrategy(String activationType, String color){
         switch (activationType){
             case "DISCOUNT":
-                return new Discount(decodeColor(color.charAt(0)));
+                return new Discount(decodeMarbleColor(color.charAt(0)));
             case "STORAGE":
-                return new ExtraShelf(decodeColor(color.charAt(0)));
+                return new ExtraShelf(decodeMarbleColor(color.charAt(0)));
             case "WHITE":
-                return new WhiteMarble(decodeColor(color.charAt(0)));
+                return new WhiteMarble(decodeMarbleColor(color.charAt(0)));
             case "DEVELOPMENT":
-                return new ExtraProduction(decodeColor(color.charAt(0)));
+                return new ExtraProduction(decodeMarbleColor(color.charAt(0)));
         }
         return null;
     }

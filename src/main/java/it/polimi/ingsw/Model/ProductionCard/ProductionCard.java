@@ -36,7 +36,7 @@ public class ProductionCard {
         if(!storage.withdrawal(require)){
             return null;
         }
-        return produce.getAll();
+        return produce.getAllMarble();
     }
 
 

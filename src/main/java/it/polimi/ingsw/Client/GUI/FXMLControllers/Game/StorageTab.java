@@ -66,8 +66,8 @@ public class StorageTab implements Layout, GameTab {
 
 
     public void manageResourceBuffer() {
-        while(backEnd.getModel().productionBuffer.getAll().size() != 0) {
-            List<Marble> marbles = backEnd.getModel().productionBuffer.getAll();
+        while(backEnd.getModel().productionBuffer.getAllMarble().size() != 0) {
+            List<Marble> marbles = backEnd.getModel().productionBuffer.getAllMarble();
             for (Marble m : marbles) {
                 try {
                     PopUpManager.showDepositResourcePopUp(m, this, true);

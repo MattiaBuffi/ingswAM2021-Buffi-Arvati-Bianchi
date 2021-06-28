@@ -39,6 +39,7 @@ public class UsernamePage extends ModelEventHandler.Default {
         name = event.getUsername();
         this.backEnd.setUsername(event.getUsername());
         CLI_Controller.waitPage.WaitPageView(this.backEnd);
+
     }
 
     @Override

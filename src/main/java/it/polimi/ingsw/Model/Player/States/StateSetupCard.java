@@ -37,7 +37,7 @@ public class StateSetupCard extends PlayerState {
 
     public static void setState(Player context){
         context.setState(get());
-        context.notifyUser(new AvailableLeaderCard());
+        context.notifyUser(new AvailableLeaderCard(context.getLeaderCards()));
     }
 
 

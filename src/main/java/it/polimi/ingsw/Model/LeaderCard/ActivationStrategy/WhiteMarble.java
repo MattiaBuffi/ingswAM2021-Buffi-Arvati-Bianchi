@@ -14,6 +14,11 @@ public class WhiteMarble implements ActivationStrategy {
     }
 
     @Override
+    public Marble.Color getColor() {
+        return color;
+    }
+
+    @Override
     public boolean activate(Player player, LeaderCard card){
         player.setResourceMarketBuffer(new WhiteMarbleConversion(player.getResourceMarketBuffer(), color));
         return true;

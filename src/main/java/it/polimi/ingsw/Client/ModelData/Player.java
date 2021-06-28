@@ -60,6 +60,11 @@ public class Player {
         productions.get(position).add(cardData);
     }
 
+    public void updateLeaderCards(List<LeaderCard> cards){
+        this.leaderCard = cards;
+    }
+
+
 
     public String getUsername() {
         return username;

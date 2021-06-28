@@ -1,13 +1,10 @@
 package it.polimi.ingsw.Client.ModelData;
 
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
-
-import java.util.List;
 
 public class ModelUpdater implements ModelEventHandler {
 
@@ -113,8 +110,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(AvailableLeaderCard event) {
-        List<LeaderCard> cards = model.getPlayer(model.myUsername).getLeaderCard();
-        //doSomething
+        model.getPlayer(model.myUsername).updateLeaderCards(event.getLeaderCard());
     }
 
     @Override

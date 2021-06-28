@@ -45,7 +45,7 @@ public class ResourceList implements Serializable {
     }
 
     public void addAll(ResourceList list){
-        addAll(list.getAll());
+        addAll(list.getAllMarble());
     }
 
     public void addAll(List<Marble> marbles){
@@ -64,7 +64,7 @@ public class ResourceList implements Serializable {
         }
     }
 
-    public List<Marble> getAll(){
+    public List<Marble> getAllMarble(){
         List<Marble> marbles = new ArrayList();
         for(Marble.Color color: this.marbles.keySet()){
             for(int i=0; i<this.marbles.get(color); i++){
@@ -73,6 +73,16 @@ public class ResourceList implements Serializable {
         }
         return marbles;
     }
+
+    public static List<Marble.Color> getAllColor(List<Marble> marbles){
+        List<Marble.Color> colors = new ArrayList();
+        for(Marble marble: marbles){
+            colors.add(marble.getColor());
+        }
+        return colors;
+    }
+
+
 
     public ResourceList sum(ResourceList list){
         ResourceList newList= new ResourceList();
