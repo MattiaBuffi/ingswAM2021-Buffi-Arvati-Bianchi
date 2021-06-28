@@ -28,7 +28,7 @@ public class StateSetupCard extends PlayerState {
         }
 
         if(context.getLeaderCards().size() == 2){
-            context.setState(StateWait.get());
+            StateSetupResources.setState(context);
         }
 
         return true;

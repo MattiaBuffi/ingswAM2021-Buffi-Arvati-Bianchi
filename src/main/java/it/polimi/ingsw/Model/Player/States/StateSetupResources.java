@@ -31,13 +31,13 @@ public class StateSetupResources extends PlayerState {
 
     public static int availableResources(int playerPosition){
         switch (playerPosition){
-            case 1:
+            case 0:
                 return 0;
+            case 1:
+                return 1;
             case 2:
                 return 1;
             case 3:
-                return 1;
-            case 4:
                 return 2;
             default:
                 return 0;
@@ -61,6 +61,8 @@ public class StateSetupResources extends PlayerState {
             context.setState(get());
             context.notifyUser(new ResourceSetup(availableResources(context.getPosition())));
         }
+        StateWait.setState(context);
+        context.getGameHandler().startGame();
     }
 
 

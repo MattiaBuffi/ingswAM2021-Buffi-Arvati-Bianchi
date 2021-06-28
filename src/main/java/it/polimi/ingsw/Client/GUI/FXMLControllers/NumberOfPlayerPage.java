@@ -26,15 +26,11 @@ public class NumberOfPlayerPage extends ModelEventHandler.Default implements Lay
 
 
     public void goToWaitingRoom(){
-        //System.out.println("ITEM - " + choiceBox.getSelectionModel().getSelectedItem());
-        GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
-        backEnd.notify(message);
-        App.setScene("waiting_page");
-        /*try {
-            showPopUp();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(choiceBox.getSelectionModel().getSelectedItem() != null) {
+            GameSize message = new GameSize(choiceBox.getSelectionModel().getSelectedItem());
+            backEnd.notify(message);
+            App.setScene("waiting_page");
+        }
     }
 
     @Override

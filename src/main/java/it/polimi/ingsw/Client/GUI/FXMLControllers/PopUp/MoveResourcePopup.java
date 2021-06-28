@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,9 @@ public class MoveResourcePopup extends ResourceViewer{
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
             MoveResources message = new MoveResources(shelfSelected, shelfSelector.getSelectionModel().getSelectedIndex());
             mainController.getBackEnd().notify(message);
+            Stage stage = (Stage) resource1.getScene().getWindow();
+            stage.close();
         }
+
     }
 }

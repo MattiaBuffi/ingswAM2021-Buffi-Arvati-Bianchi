@@ -45,6 +45,8 @@ public class ResourceAvailablePopup extends ResourceViewer {
                     mainController.getBackEnd().notify(message);
                 }
             }
+            Stage stage = (Stage) ivMarble.getScene().getWindow();
+            stage.close();
         }
     }
 

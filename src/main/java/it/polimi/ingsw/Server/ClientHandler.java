@@ -173,12 +173,28 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
 
     @Override
     public void handle(MoveResources event) {
+        this.active = true;
 
+        if (game == null){
+            return;
+        }
+
+        synchronized (game){
+            gameController.handle(event);
+        }
     }
 
     @Override
     public void handle(DepositResource event) {
+        this.active = true;
 
+        if (game == null){
+            return;
+        }
+
+        synchronized (game){
+            gameController.handle(event);
+        }
     }
 
     @Override
