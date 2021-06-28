@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.Layout;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
@@ -19,6 +20,8 @@ public class LeaderCardsTab implements Layout, GameTab{
     @FXML
     Rectangle rectangle1, rectangle2;
 
+    private ImageView[] ivArray;
+    private Rectangle[] rectArray;
     private List<String> leaderCardsIds;
     private int selection = -1;
     private ViewBackEnd backEnd;
@@ -29,11 +32,13 @@ public class LeaderCardsTab implements Layout, GameTab{
         System.out.println("LeaderCardTab");
         this.backEnd = backEnd;
 
-        //System.out.println(getClass().getResource(""));
+        ivArray = new ImageView[]{leaderCard1, leaderCard2};
+        rectArray = new Rectangle[]{rectangle1, rectangle2};
     }
 
     @Override
     public void update() {
+        List<LeaderCard> cards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
 
     }
 

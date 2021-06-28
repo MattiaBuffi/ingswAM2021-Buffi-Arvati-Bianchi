@@ -57,8 +57,9 @@ public class VaticanRoutePane implements Layout,GameTab  {
             cross2.setImage(new Image(App.class.getResourceAsStream("images/token/blackCross.png")));
             cross2.setVisible(true);
             imageViewMap.put("cpu", cross2);
-            crossInitialPositions.put(backEnd.getMyUsername(), INITIAL_POSITION[1]);
+            crossInitialPositions.put("cpu", INITIAL_POSITION[1]);
 
+            usernames.add(backEnd.getMyUsername());
             usernames.add(backEnd.getMyUsername());
         } else {
             for (int i = 0; i < backEnd.getModel().players.size(); i++) {

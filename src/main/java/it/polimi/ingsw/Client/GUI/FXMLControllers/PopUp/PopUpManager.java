@@ -82,7 +82,7 @@ public class PopUpManager {
         controller.initData(marble, mainController, discardVisibility);
 
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
