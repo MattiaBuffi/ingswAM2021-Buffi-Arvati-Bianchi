@@ -22,6 +22,7 @@ public class StateSetupCard extends PlayerState {
         for (LeaderCard lc: context.getLeaderCards()){
             if(lc.getId().equals(leaderId)){
                 context.getLeaderCards().remove(lc);
+                context.notifyUser(new AvailableLeaderCard(context.getLeaderCards()));
                 break;
             }
         }
@@ -37,7 +38,6 @@ public class StateSetupCard extends PlayerState {
 
     public static void setState(Player context){
         context.setState(get());
-        context.notifyUser(new AvailableLeaderCard(context.getLeaderCards()));
     }
 
 

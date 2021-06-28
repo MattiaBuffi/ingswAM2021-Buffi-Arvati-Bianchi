@@ -76,7 +76,7 @@ public class Game implements TurnHandler, GameHandler {
         broadcaster.sendMessages();
 
         for (Player p: players){
-            //p.notifyUser(new AvailableLeaderCard());
+            p.notifyUser(new AvailableLeaderCard(p.getLeaderCards()));
         }
 
     }
