@@ -53,10 +53,7 @@ public class Game implements TurnHandler, GameHandler {
 
         List<LeaderCard> leaderCards = CardParser.getLeaderCards();
         Collections.shuffle(leaderCards);
-        /**
-         * TODO: Remove comment
-         */
-        //Collections.shuffle(users);
+        Collections.shuffle(users);
 
 
         for (int i = 0; i < users.size(); i++) {

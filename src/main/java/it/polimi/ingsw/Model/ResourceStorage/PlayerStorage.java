@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.Model.ChestUpdate;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.Marble.Marble;
+import it.polimi.ingsw.Model.Marble.MarbleFactory;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.Shelves;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.ShelvesBase;
@@ -16,10 +17,20 @@ public class PlayerStorage implements ResourceStorage{
     private ResourceList chest;
     private Shelves shelves;
 
+    ResourceList tmp = new ResourceList();
+
     public PlayerStorage(EventBroadcaster broadcaster){
         shelves = new ShelvesBase(broadcaster);
         chest = new ResourceList();
         this.broadcaster = broadcaster;
+
+
+        for(int i=0; i<10; i++){
+            tmp.add(MarbleFactory.getMarble(Marble.Color.YELLOW));
+            tmp.add(MarbleFactory.getMarble(Marble.Color.BLUE));
+            tmp.add(MarbleFactory.getMarble(Marble.Color.GREY));
+            tmp.add(MarbleFactory.getMarble(Marble.Color.PURPLE));
+        }
     }
 
 
@@ -39,6 +50,7 @@ public class PlayerStorage implements ResourceStorage{
 
 
     public boolean store(Marble.Color color, int dest) {
+        deposit(tmp);
         return shelves.store(color, dest);
     }
 
