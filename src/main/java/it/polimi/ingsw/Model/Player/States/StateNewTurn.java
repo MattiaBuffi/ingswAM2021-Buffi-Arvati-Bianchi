@@ -103,9 +103,12 @@ public class StateNewTurn extends PlayerState {
                 return true;
             }
 
+            return false;
+
         }
 
         context.notifyUser(new ErrorUpdate("no card found"));
+
         return false;
 
     }

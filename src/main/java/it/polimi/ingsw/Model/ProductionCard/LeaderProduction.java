@@ -29,7 +29,7 @@ public class LeaderProduction {
             return null;
         }
 
-        ResourceList production = new ResourceList().sum(produce);
+        ResourceList production = new ResourceList().sum(produce).sum(color);
         return new ProductionCard(id,require, production);
     }
 
