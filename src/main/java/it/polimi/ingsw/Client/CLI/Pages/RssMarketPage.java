@@ -33,6 +33,14 @@ public class RssMarketPage extends ModelEventHandler.Default {
         this.rssMarket = rssMarket;
     }
 
+
+    private void buy(String line){
+        TakeResources messageBuyRss = new TakeResources(Integer.parseInt(line)-1);
+        this.backEnd.notify(messageBuyRss);
+    }
+
+
+
     public void RssMarketPageView(ViewBackEnd backEnd){
 
         this.backEnd = backEnd;
@@ -41,23 +49,21 @@ public class RssMarketPage extends ModelEventHandler.Default {
         updatePage();
         System.out.println("Insert Command (Buy,MoveRss,EndTurn,Exit): ");
 
-        CLI_Controller.read(
-                (input)->{
-                    String command = input.nextLine().toUpperCase();
-                    switch (command){
+        CLI_Controller.setReadHandler(
+                (line)->{
+                    line = line.toUpperCase();
+                    switch (line){
                         case "BUY":
                             System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 5 = first row from the top]) : ");
-                            String buyRss = input.nextLine();
-                            TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss)-1);
-                            this.backEnd.notify(messageBuyRss);
+                            CLI_Controller.setReadHandler(this::buy);
                             break;
                         case "MOVERSS":
                             System.out.println("Which shelf do you want to move?");
                             System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-                            String shelfFrom = input.nextLine();
+                            String shelfFrom = CLI_Controller.scanner.nextLine();
                             System.out.println("Where do you want to move this rss? ");
                             System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-                            String shelfTo = input.nextLine();
+                            String shelfTo = CLI_Controller.scanner.nextLine();
                             MoveResources moveMessage = new MoveResources(Integer.parseInt(shelfFrom)-1, Integer.parseInt(shelfTo)-1);
                             this.backEnd.notify(moveMessage);
                             break;
@@ -80,53 +86,53 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     }
 
+
+
+
     public void rssHandler(){
 
-        CLI_Controller.read(
-            (input)->{
-                if(this.backEnd.getModel().resourceMarketBuffer.size()>0) {
-                    if (!discarded.contains(this.backEnd.getModel().resourceMarketBuffer.get(0))) {
-                        String rssAvailable = CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(0));
-                        System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                        String selectedShelf = input.nextLine();
-                        while (Integer.parseInt(selectedShelf) < 0 || Integer.parseInt(selectedShelf) > 5) {
-                            System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                            selectedShelf = input.nextLine();
-                        }
-                        if (selectedShelf.equals("0")) {
-                            discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(0));
-                            rssHandler();
-                        } else {
-                            DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(selectedShelf) - 1);
-                            this.backEnd.notify(deposit);
-                        }
-                    } else if (discarded.size() != this.backEnd.getModel().resourceMarketBuffer.size()) {
-                        String rssAvailable = CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()));
-                        System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                        String selectedShelf = input.nextLine();
-                        while (selectedShelf.equals("")) {
-                            System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                            selectedShelf = input.nextLine();
-                        }
-                        while (Integer.parseInt(selectedShelf) < 0 || Integer.parseInt(selectedShelf) > 5) {
-                            System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                            selectedShelf = input.nextLine();
-                        }
-                        if (selectedShelf.equals("0")) {
-                            discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()));
-                            rssHandler();
-                        } else {
-                            DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()).getColor(), Integer.parseInt(selectedShelf) - 1);
-                            this.backEnd.notify(deposit);
-                        }
-                    }
-                }else{
-                    CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
+        if(this.backEnd.getModel().resourceMarketBuffer.size()>0) {
+            if (!discarded.contains(this.backEnd.getModel().resourceMarketBuffer.get(0))) {
+                String rssAvailable = CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(0));
+                System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                String selectedShelf = CLI_Controller.scanner.nextLine();
+                while (Integer.parseInt(selectedShelf) < 0 || Integer.parseInt(selectedShelf) > 5) {
+                    System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                    selectedShelf =CLI_Controller.scanner.nextLine();
+                }
+                if (selectedShelf.equals("0")) {
+                    discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(0));
+                    rssHandler();
+                } else {
+                    DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(selectedShelf) - 1);
+                    this.backEnd.notify(deposit);
+                }
+            } else if (discarded.size() != this.backEnd.getModel().resourceMarketBuffer.size()) {
+                String rssAvailable = CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()));
+                System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                String selectedShelf = CLI_Controller.scanner.nextLine();
+                while (selectedShelf.equals("")) {
+                    System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                    selectedShelf = CLI_Controller.scanner.nextLine();
+                }
+                while (Integer.parseInt(selectedShelf) < 0 || Integer.parseInt(selectedShelf) > 5) {
+                    System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                    selectedShelf =CLI_Controller.scanner.nextLine();
+                }
+                if (selectedShelf.equals("0")) {
+                    discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()));
+                    rssHandler();
+                } else {
+                    DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(discarded.size()).getColor(), Integer.parseInt(selectedShelf) - 1);
+                    this.backEnd.notify(deposit);
                 }
             }
-        );
-
+        }else{
+            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
+        }
     }
+
+
 
 
 

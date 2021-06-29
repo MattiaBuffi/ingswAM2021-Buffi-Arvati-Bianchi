@@ -95,28 +95,35 @@ public class ProductionPage extends ModelEventHandler.Default{
     }
 
 
+    private void produce(String line){
+
+        if(line.length()>1) {
+            String[] productionArray = line.split("-");
+            for(String x: productionArray){
+                CLI_Controller.Production(x, this.backEnd);
+            }
+        }else{
+            CLI_Controller.Production(line, backEnd);
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+
+
+    }
+
+
     public void ProductionPageView(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
 
         print();
 
-        CLI_Controller.read(
-                (input)->{
-                    String command = input.nextLine().toUpperCase();
-                    switch (command){
+        CLI_Controller.setReadHandler(
+                (line)->{
+                    line = line.toUpperCase();
+                    switch (line){
                         case "PRODUCE":
                             System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production, insert the numbers divided by '-') : ");
-                            String productionString = input.nextLine();
-                            if(productionString.length()>1) {
-                                String[] productionArray = productionString.split("-");
-                                for(String x: productionArray){
-                                    CLI_Controller.Production(x, this.backEnd);
-                                }
-                            }else{
-                                CLI_Controller.Production(productionString, backEnd);
-                            }
-                            CLI_Controller.homePage.HomePageView(this.backEnd);
+                            CLI_Controller.setReadHandler(this::produce);
                             break;
                         case "EXIT":
                             System.out.println("redirecting to Home..");

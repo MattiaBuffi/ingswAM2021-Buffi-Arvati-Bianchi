@@ -58,7 +58,7 @@ public class CLI_Controller {
     public CLI_Controller(){
 
         app = new ClientApp(this::CLIView);
-        backEnd = new ViewBackEnd(app, (M,H)->M.accept(H));
+        backEnd = ViewBackEnd.getCLIBackend(app);
         app.setBackEnd(backEnd);
 
         char[] home = readSchematics(2);
@@ -80,22 +80,65 @@ public class CLI_Controller {
         quitPage = new QuitPage();
     }
 
+
+
+    public static void main(String[] args) {
+        CLI_Controller controller = new CLI_Controller();
+        controller.CLIView();
+
+        new Thread(()->readLine()).run();
+
+
+    }
+
+
+
+
+
     public void CLIView() {
         start.StartPageView(backEnd);
     }
 
 
+    public static void defaultHandler(String line){
+        System.out.println(line);
+    }
+
+
+    public static Scanner scanner = new Scanner(System.in);
+    private static boolean running = true;
+    private static Consumer<String> lineHandler = CLI_Controller::defaultHandler;
+    private static Consumer<String> newHandler = CLI_Controller::defaultHandler;
+
+    private static void readLine(){
+
+        while (running){
+
+            String line = scanner.nextLine();
+
+            synchronized (newHandler){
+                lineHandler = newHandler;
+            }
+
+            lineHandler.accept(line);
+
+        }
+
+    }
+
+
+    public static void setReadHandler(Consumer<String> readHandler){
+        synchronized (newHandler){
+            newHandler = readHandler;
+        }
+
+    }
+
+
+
+
 
     private static Executor executor= Executors.newCachedThreadPool();
-    private static Scanner input = new Scanner(System.in);
-
-
-    public static void readLine(Consumer<String> lineHandler){
-        executor.execute(()->{
-            String command = input.nextLine().toUpperCase();
-            lineHandler.accept(command);
-        });
-    }
 
     public static void read(Consumer<Scanner> lineHandler){
         executor.execute(()->{
@@ -368,11 +411,6 @@ public class CLI_Controller {
                     System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i + 6], playerChestRss[i].toCharArray().length);
                 }
             }
-    }
-
-    public static void main(String[] args) {
-        CLI_Controller controller = new CLI_Controller();
-        controller.CLIView();
     }
 
     public static void showError(ErrorUpdate event){

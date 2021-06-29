@@ -40,6 +40,7 @@ public class LeaderCardsTab implements Layout, GameTab{
         ivArray = new ImageView[]{leaderCard1, leaderCard2};
         rectArray = new Rectangle[]{rectangle1, rectangle2};
         cardsMap = new HashMap<>();
+        ivMap = new HashMap<>();
     }
 
     @Override
