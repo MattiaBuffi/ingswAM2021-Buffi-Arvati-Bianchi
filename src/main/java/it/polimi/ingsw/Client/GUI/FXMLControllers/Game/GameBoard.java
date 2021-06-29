@@ -98,6 +98,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(AvailableLeaderCard event) {
+        backEnd.getModel().updateModel(event);
         if(setupGame) {
             try {
                 PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);
@@ -148,7 +149,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     }
 
     private void updateTabs(ModelUpdate event){
-
         if(event.getPlayerUsername() != null && event.getPlayerUsername().equals(backEnd.getMyUsername())){
             storageTab_Controller.update();
         }
@@ -162,6 +162,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     private void leaderPowerSelector(String s){
         int id = Integer.parseInt(s.substring(3));
+        System.out.println("-- leader ID: " + id);
         if(id < 5) {
             cardsMarketTab_Controller.showLeaderPower(s);
         } else if(id < 9){
