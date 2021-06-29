@@ -109,7 +109,7 @@ public class ResourceList implements Serializable {
 
         for(Marble.Color color: list.getColorSet()){
             int size = this.getSize(color)-list.getSize(color);
-            if( size > 0){
+            if( size >= 0){
                 newList.marbles.put(color, size);
             }
         }

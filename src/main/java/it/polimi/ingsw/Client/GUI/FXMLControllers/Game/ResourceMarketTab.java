@@ -133,13 +133,13 @@ public class ResourceMarketTab implements Layout, GameTab{
                 rectangle4.setVisible(false);
                 break;
             case 4:
-                rectangle5.setVisible(false);
+                rectangle7.setVisible(false);
                 break;
             case 5:
                 rectangle6.setVisible(false);
                 break;
             case 6:
-                rectangle7.setVisible(false);
+                rectangle5.setVisible(false);
                 break;
         }
     }

@@ -67,7 +67,7 @@ public class CardsMarketTab implements Layout, GameTab{
         if(cardSelectedX != -1 && cardSelectedY != -1){
             if(columnChoice.getSelectionModel().getSelectedItem() != null) {
                 System.out.println(columnChoice.getSelectionModel().getSelectedItem());
-                BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, columnChoice.getSelectionModel().getSelectedItem());
+                BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, columnChoice.getSelectionModel().getSelectedItem() - 1);
                 backEnd.notify(message);
             } else {
                 try {
@@ -76,6 +76,7 @@ public class CardsMarketTab implements Layout, GameTab{
                     e.printStackTrace();
                 }
             }
+            hideRectangle(cardSelected);
         }
     }
 
@@ -153,12 +154,6 @@ public class CardsMarketTab implements Layout, GameTab{
                 break;
         }
     }
-
-
-
-
-
-
 
 
 

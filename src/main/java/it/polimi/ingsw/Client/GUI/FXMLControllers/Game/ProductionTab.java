@@ -118,11 +118,11 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
                         }
                     }
                 }else if(cb==checkLeftProduction){
-                    productionMessages.add(new CardProduction(1));
+                    productionMessages.add(new CardProduction(0));
                 }else if(cb==checkCenterProduction){
-                    productionMessages.add(new CardProduction(2));
+                    productionMessages.add(new CardProduction(1));
                 }else if(cb==checkRightProduction){
-                    productionMessages.add(new CardProduction(3));
+                    productionMessages.add(new CardProduction(2));
                 }else if(cb == checkLeaderProduction1){
                     if(resLeader1.getSelectionModel().getSelectedItem() != null){
                         productionMessages.add(new LeaderCardProduction(leaderPowerMap.get(cb), getColor(resLeader1.getSelectionModel().getSelectedItem())));
@@ -139,6 +139,7 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
                     }
                 }
             }
+            if(cb.isSelected()) cb.setSelected(false);
         }
         notifyProductions(productionMessages);
     }
