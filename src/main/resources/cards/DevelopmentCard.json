@@ -240,7 +240,7 @@
     "Victory_Points": 7,
     "Cost": ["5Y"],
     "Require": ["2P"],
-    "Produce": ["2P","2R"]
+    "Produce": ["2B","2R"]
   },
   {
     "Id":"DC_28",

@@ -22,7 +22,6 @@ public class CardMarket {
 
 
     public void setCard(int x, int y, DevelopmentCardData card){
-        System.err.println("coordinates"+x+"--"+y);
         cards[x][y] = card;
     }
 

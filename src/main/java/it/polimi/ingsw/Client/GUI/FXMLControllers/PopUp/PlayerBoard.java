@@ -102,10 +102,10 @@ public class PlayerBoard {
     }
 
     private Image getLeaderCardImage(String cardID){
-        return new Image(App.class.getResourceAsStream("images/cards/leaderCards/LC_" + cardID + ".png"));
+        return new Image(App.class.getResourceAsStream("images/cards/leaderCards/" + cardID + ".png"));
     }
 
     private Image getDevCardImage(String cardID){
-        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/DC_" + cardID + ".png"));
+        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/" + cardID + ".png"));
     }
 }
