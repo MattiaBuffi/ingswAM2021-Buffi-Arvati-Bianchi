@@ -56,7 +56,9 @@ public class ProductionHandler {
 
         ProductionCard card = cardStorage.getCard(selector);
 
-        if(card == null) return false;
+        if(card == null){
+            return false;
+        }
 
         if(usedCard.contains(card.getId())){
             broadcaster.notifyUser(new ErrorUpdate( "production already used"));
