@@ -30,10 +30,8 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
 
 
     public void checkUsername() {
-
         backEnd.notify(new Login(tfUsername.getText()));
         tfUsername.clear();
-
     }
 
 
@@ -58,11 +56,5 @@ public class UsernamePage extends ModelEventHandler.Default implements Layout {
         usernameLabel.setVisible(true);
         System.out.println("invalid action");
     }
-
-
-
-
-
-
 
 }

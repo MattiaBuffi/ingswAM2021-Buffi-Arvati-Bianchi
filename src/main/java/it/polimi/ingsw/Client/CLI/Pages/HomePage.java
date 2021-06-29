@@ -40,9 +40,9 @@ public class HomePage extends ModelEventHandler.Default {
         //Printing Name of Current Player
         String currentName;
         if (this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())) {
-            currentName = "It's your Turn";
+            currentName = "It's your Turn     ";
         } else {
-            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn";
+            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn     ";
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
 
@@ -180,6 +180,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
+        System.err.println("");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
@@ -195,11 +196,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActivePlayer event){
+        System.err.println("ActivePlayer");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
+        System.err.println("ErrorUpdate");
+
         CLI_Controller.showError(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
@@ -207,35 +211,42 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
+        System.err.println("ChestUpdate");
 
         CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
+        System.err.println("ShelfUpdate");
 
         CLI_Controller.UpdateShelf(backEnd, homePage);
     }
 
     @Override
     public void handle(LeaderCardActivation event) {
+        System.out.println(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size());
         if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
-        }else{
+            CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
+        }else if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
+            CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
         }
 
-        CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(VaticanReport event) {
+        System.err.println("");
         CLI_Controller.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
+
+        System.err.println("vatican route");
 
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);

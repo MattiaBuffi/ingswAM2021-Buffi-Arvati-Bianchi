@@ -86,7 +86,6 @@ public class SelectionPage extends ModelEventHandler.Default{
     public void handle(AvailableLeaderCard event){
 
         if(event.getLeaderCard().size() == 2){
-            //CLI_Controller.homePage.SelectInitialRss(this.backEnd);
             CLI_Controller.loading.LoadingPageView(this.backEnd);
         }else{
             SelectionPageView(this.backEnd);

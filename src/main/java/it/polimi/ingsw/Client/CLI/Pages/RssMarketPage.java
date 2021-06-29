@@ -25,9 +25,12 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     ViewBackEnd backEnd;
     char[] rssMarket;
-    List<Marble> discarded = new ArrayList<>();
+    //List<Marble> discarded = new ArrayList<>();
 
     boolean firstRssAvailable = true;
+
+    private int selectedMarble;
+
 
     public RssMarketPage(char[] rssMarket) {
         this.rssMarket = rssMarket;
@@ -36,6 +39,8 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     private void buy(String line){
         TakeResources messageBuyRss = new TakeResources(Integer.parseInt(line)-1);
+        selectedMarble = 0;
+
         this.backEnd.notify(messageBuyRss);
     }
 
@@ -101,51 +106,47 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
 
 
+    private String getMarble(int position){
+        return CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(position));
+    }
+
     public void rssHandler(){
 
-        String rssAvailable = CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(0));
-        System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+
+        System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
 
         CLI_Controller.setReadHandler(
                 (line)->{
                     if(this.backEnd.getModel().resourceMarketBuffer.size()>0) {
-                        if (!discarded.contains(this.backEnd.getModel().resourceMarketBuffer.get(0))) {
+                        if (line.isEmpty()) {
+                            System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                            return;
+                        }
+                        if (Integer.parseInt(line) < 0 || Integer.parseInt(line) > 5) {
+                            System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                            return;
+                        }
+                        if (line.equals("0")) {
+                            //discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(0));
+                            selectedMarble+=1;
 
-                            if (line.isEmpty()) {
-                                System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
+                            if(selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()){
+                                backEnd.notify( new EndTurn());
+                                backEnd.setEventHandler(CLI_Controller.homePage);
                                 return;
                             }
-                            if (Integer.parseInt(line) < 0 || Integer.parseInt(line) > 5) {
-                                System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                                return;
+
+                            System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
+                        } else {
+                            DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(line) - 1);
+
+                            this.backEnd.notify(deposit);
+
+                            if(selectedMarble+1 == this.backEnd.getModel().resourceMarketBuffer.size()){
+                                backEnd.notify( new EndTurn());
+                                backEnd.setEventHandler(CLI_Controller.homePage);
                             }
-                            if (line.equals("0")) {
-                                discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(0));
-                                rssHandler();
-                            } else {
-                                DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(line) - 1);
-                                this.backEnd.notify(deposit);
-                            }
-                            /*
-                            CLI_Controller.setReadHandler(
-                                    (checkedLine)->{
-                                        if (checkedLine.isEmpty()) {
-                                            System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                                            return;
-                                        }
-                                        if (Integer.parseInt(checkedLine) < 0 || Integer.parseInt(checkedLine) > 5) {
-                                            System.out.println("You take a " + rssAvailable + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                                            return;
-                                        }
-                                        if (checkedLine.equals("0")) {
-                                            discarded.add(this.backEnd.getModel().resourceMarketBuffer.get(0));
-                                            rssHandler();
-                                        } else {
-                                            DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(checkedLine) - 1);
-                                            this.backEnd.notify(deposit);
-                                        }
-                                    }
-                            );*/
+
                         }
                         /*
                         else if (discarded.size() != this.backEnd.getModel().resourceMarketBuffer.size()) {
@@ -260,15 +261,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         CLI_Controller.UpdateShelf(backEnd, rssMarket);
     }
 
-    @Override
-    public void handle(ResourceMarketUpdate event) {
 
-    }
-
-    @Override
-    public void handle(ResourceMarketExtra event) {
-
-    }
 
     @Override
     public void handle(ErrorUpdate event) {
@@ -276,19 +269,25 @@ public class RssMarketPage extends ModelEventHandler.Default {
         RssMarketPageView(this.backEnd);
     }
 
+
+    @Override
+    public void handle(ActivePlayer event) {
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
     @Override
     public void handle(ModelUpdate event){
 
         for (Message<ModelEventHandler> message: event.getMessages()) {
+            message.accept(this);
+            /*
             if (message instanceof ActivePlayer) {
-                this.discarded.clear();
+                //this.discarded.clear();
                 CLI_Controller.homePage.HomePageView(this.backEnd);
-            }
+            }*/
         }
 
-        if(this.discarded.size() == this.backEnd.getModel().resourceMarketBuffer.size()){
-            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
-        }else{
+        if(this.backEnd.getModel().resourceMarketBuffer.size() > 0){
             rssHandler();
         }
 
