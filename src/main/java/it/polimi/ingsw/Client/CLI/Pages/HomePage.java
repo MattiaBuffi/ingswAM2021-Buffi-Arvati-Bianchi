@@ -180,12 +180,12 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
+        System.err.println("");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ModelUpdate event){
-
 
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
@@ -195,11 +195,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActivePlayer event){
+        System.err.println("ActivePlayer");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
+        System.err.println("ErrorUpdate");
+
         CLI_Controller.showError(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
@@ -207,18 +210,23 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
+        System.err.println("ChestUpdate");
 
         CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
+        System.err.println("ShelfUpdate");
 
         CLI_Controller.UpdateShelf(backEnd, homePage);
     }
 
     @Override
     public void handle(LeaderCardActivation event) {
+
+        System.err.println("LeaderCardActivation");
+
         if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
         }else{
@@ -231,11 +239,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
+        System.err.println("");
         CLI_Controller.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
+
+        System.err.println("vatican route");
 
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);
