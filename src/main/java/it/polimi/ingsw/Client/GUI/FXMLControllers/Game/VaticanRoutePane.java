@@ -46,6 +46,12 @@ public class VaticanRoutePane implements Layout,GameTab  {
     public void update() {
         if(firstUpdate) initializeCrosses();
         updateCrosses();
+
+        for (Integer i: backEnd.getModel().vaticanRoute.getVaticanReports(backEnd.getMyUsername())){
+            System.out.println(backEnd.getMyUsername()+"--"+i);
+            activatePopeFavor(i);
+        }
+
     }
 
     private void initializeCrosses() {

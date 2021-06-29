@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
+import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -11,8 +11,6 @@ import javafx.application.Platform;
 import java.util.function.Consumer;
 
 public class ViewBackEnd extends Observable<Message<ClientEventHandler>> implements Observer<Message<ModelEventHandler>> {
-
-    private String username;
 
     private ClientApp app;
 
@@ -53,6 +51,7 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
 
     public boolean connectToServer(String ip, int port){
+        model = new ViewModel();
         return app.onlineController( ip, port);
     }
 
@@ -68,30 +67,25 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
         this.eventHandler = handler;
     }
 
-
-    public void setModel(ViewModel model){
-        this.model = model;
-    }
-
     public ViewModel getModel() {
         return model;
     }
 
     public String getMyUsername() {
-        return username;
+        return model.myUsername;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        model.myUsername = username;
     }
 
     @Override
     public void update(Message<ModelEventHandler> event) {
-        if(model != null){
-            model.updateModel(event);
-        }
+
+        model.updateModel(event);
 
         eventDispatcher.accept(event);
+
     }
 
 

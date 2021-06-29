@@ -3,7 +3,6 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
@@ -55,7 +54,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         this.backEnd = backEnd;
         backEnd.setEventHandler(this);
 
-        backEnd.setModel(new ViewModel(backEnd.getMyUsername()));
         leaderActivated = new ArrayList<>();
 
         productionTab_Controller.setup(backEnd);
@@ -140,11 +138,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void handle(VaticanReport event) {
-        vaticanRoute_Controller.activatePopeFavor(event.getIndex());
     }
 
     private void updateTabs(ModelUpdate event){

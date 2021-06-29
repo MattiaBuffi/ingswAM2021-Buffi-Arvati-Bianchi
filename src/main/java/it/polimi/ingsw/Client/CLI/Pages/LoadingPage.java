@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
-import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Message.Message;
@@ -10,9 +9,6 @@ import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.Model.ResourceSetup;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
-
-import java.util.Locale;
-import java.util.Scanner;
 
 public class LoadingPage extends ModelEventHandler.Default{
 
@@ -116,6 +112,7 @@ public class LoadingPage extends ModelEventHandler.Default{
         for (Message<ModelEventHandler> e: event.getMessages()){
             if(e instanceof ActivePlayer){
                 CLI_Controller.homePage.HomePageView(this.backEnd);
+                backEnd.update(event);
             }
         }
     }

@@ -21,7 +21,7 @@ class VaticanRouteTest {
         tokens.add(new VaticanToken(route, 1,"one"));
         tokens.add(new VaticanToken(route, "two"));
 
-        route.vaticanReport(tokens, 1, 5);
+        route.applyVaticanReport(tokens, 1, 5);
         assertEquals(5, tokens.get(0).getVictoryPoints());
         assertEquals(0, tokens.get(1).getVictoryPoints());
 

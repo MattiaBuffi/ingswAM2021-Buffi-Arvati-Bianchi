@@ -1,13 +1,15 @@
 package it.polimi.ingsw.Client.ModelData;
 
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ModelUpdater implements ModelEventHandler {
 
@@ -30,7 +32,19 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(VaticanReport event) {
+        for (String username: event.getPlayers()){
 
+            System.out.println("VATICAN REPORT OF "+username+"  "+event.getIndex());
+
+            Set<Integer> set = model.vaticanRoute.getVaticanReports(username);
+            if(set.isEmpty()){
+                model.vaticanRoute.vaticanReport.put(username, new HashSet<>());
+
+            }
+
+            model.vaticanRoute.getVaticanReports(username).add(event.getIndex());
+
+        }
     }
 
     @Override
@@ -45,7 +59,6 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(MarketResourceTaken event) {
-        System.err.println("removed resource");
         for(Marble m:model.resourceMarketBuffer ){
             if(m.getColor() == event.getColor()){
                 model.resourceMarketBuffer.remove(m);
@@ -93,14 +106,11 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(AvailableLeaderCard event) {
-        System.err.println(model.myUsername);
-        System.err.println(event.getLeaderCard().size());
         model.getPlayer(model.myUsername).updateLeaderCards(event.getLeaderCard());
     }
 
     @Override
     public void handle(PlayersSetup event) {
-        System.err.println("playerSetup");
         model.players.add( new Player(event.getUsername()));
     }
 
