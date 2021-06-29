@@ -24,9 +24,9 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
         CLI_Controller.setReadHandler(
                 (line)->{
 
-                    while (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
+                    if (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
                         System.out.println("Insert a Valid Number please: ");
-                        line = CLI_Controller.scanner.nextLine();
+                        return;
                     }
                     char[] numArray = line.toCharArray();
                     System.arraycopy(numArray, 0, charArray, FirstCellPosition, numArray.length);

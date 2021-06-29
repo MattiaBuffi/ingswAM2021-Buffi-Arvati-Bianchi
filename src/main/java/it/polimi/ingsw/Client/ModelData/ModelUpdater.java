@@ -44,6 +44,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(MarketResourceTaken event) {
+        System.err.println("removed resource");
         for(Marble m:model.resourceMarketBuffer ){
             if(m.getColor() == event.getColor()){
                 model.resourceMarketBuffer.remove(m);
