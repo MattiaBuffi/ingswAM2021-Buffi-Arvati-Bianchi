@@ -12,7 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderCardsTab implements Layout, GameTab{
     @FXML
@@ -23,6 +26,8 @@ public class LeaderCardsTab implements Layout, GameTab{
     private ImageView[] ivArray;
     private Rectangle[] rectArray;
     private List<String> leaderCardsIds;
+    private Map<String, ImageView> cardsMap;
+    private Map<ImageView, Rectangle> ivMap;
     private int selection = -1;
     private ViewBackEnd backEnd;
 
@@ -34,12 +39,28 @@ public class LeaderCardsTab implements Layout, GameTab{
 
         ivArray = new ImageView[]{leaderCard1, leaderCard2};
         rectArray = new Rectangle[]{rectangle1, rectangle2};
+        cardsMap = new HashMap<>();
     }
 
     @Override
     public void update() {
-        List<LeaderCard> cards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
+        List<String> cards = new ArrayList<>();
+        Map<String, LeaderCard> lcMap = new HashMap<>();
+        for(LeaderCard lc: backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard()){
+            cards.add(lc.getId());
+            lcMap.put(lc.getId(), lc);
+        }
 
+        for(String s: leaderCardsIds){
+            if(cards.contains(s)){
+                if(lcMap.get(s).isActive()){
+                    ivMap.get(cardsMap.get(s)).setVisible(false);
+                }
+            } else {
+                ivMap.get(cardsMap.get(s)).setVisible(false);
+                cardsMap.get(s).setVisible(false);
+            }
+        }
     }
 
 
@@ -57,26 +78,9 @@ public class LeaderCardsTab implements Layout, GameTab{
     }
 
     public void discardLeaderCard() {
-        System.out.println(selection);
-        switch (selection){
-            case 0:
-                leaderCard1.setVisible(false);
-                rectangle1.setVisible(false);
-                leaderCard1.setDisable(true);
-                break;
-            case 1:
-                leaderCard2.setVisible(false);
-                rectangle2.setVisible(false);
-                leaderCard2.setDisable(true);
-                break;
-        }
         DiscardLeaderCard message = new DiscardLeaderCard(leaderCardsIds.get(selection));
         backEnd.notify(message);
     }
-
-
-
-
 
     public void cardOneSelected() {
         selection = 0;
@@ -99,6 +103,10 @@ public class LeaderCardsTab implements Layout, GameTab{
         leaderCardsIds = id;
         leaderCard1.setImage(getImage(leaderCardsIds.get(0)));
         leaderCard2.setImage(getImage(leaderCardsIds.get(1)));
+        for(int i=0; i<leaderCardsIds.size(); i++){
+            cardsMap.put(leaderCardsIds.get(i), ivArray[i]);
+            ivMap.put(ivArray[i], rectArray[i]);
+        }
     }
 
 
