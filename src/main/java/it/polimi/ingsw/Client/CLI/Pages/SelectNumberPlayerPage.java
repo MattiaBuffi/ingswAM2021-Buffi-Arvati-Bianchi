@@ -15,22 +15,23 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
+        char[] charArray = CLI_Controller.readSchematics(6);
+        System.out.println(charArray);
+        System.out.println("Insert Number of Player (1-4): ");
 
 
-        CLI_Controller.read(
-                (input)->{
-                    char[] charArray = CLI_Controller.readSchematics(6);
-                    System.out.println(charArray);
-                    System.out.println("Insert Number of Player (1-4): ");
-                    String playerNumber = input.nextLine();
-                    while (Integer.parseInt(playerNumber) > 4 || Integer.parseInt(playerNumber) < 1) {
+
+        CLI_Controller.setReadHandler(
+                (line)->{
+
+                    while (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
                         System.out.println("Insert a Valid Number please: ");
-                        playerNumber = input.nextLine();
+                        line = CLI_Controller.scanner.nextLine();
                     }
-                    char[] numArray = playerNumber.toCharArray();
+                    char[] numArray = line.toCharArray();
                     System.arraycopy(numArray, 0, charArray, FirstCellPosition, numArray.length);
                     System.out.println(charArray);
-                    GameSize messageGameSize = new GameSize(Integer.parseInt(playerNumber));
+                    GameSize messageGameSize = new GameSize(Integer.parseInt(line));
                     this.backEnd.notify(messageGameSize);
 
                     CLI_Controller.waitPage.WaitPageView(this.backEnd);

@@ -20,15 +20,17 @@ public class UsernamePage extends ModelEventHandler.Default {
         this.backEnd.setEventHandler(this);
         CLI_Controller.cls();
 
-        CLI_Controller.read(
-            (input)->{
-                char[] charArray = CLI_Controller.readSchematics(8);
-                System.out.println(charArray);
+        char[] charArray = CLI_Controller.readSchematics(8);
+        System.out.println(charArray);
 
-                System.out.println("Insert Username (max 12 characters, only alpha-numeric): ");
-                String newName = input.nextLine();
-                this.backEnd.notify(new Login(newName));
-                System.arraycopy(newName.toCharArray(), 0, charArray, FirstCellPosition, newName.toCharArray().length);
+        System.out.println("Insert Username (max 12 characters, only alpha-numeric): ");
+
+
+
+        CLI_Controller.setReadHandler(
+            (line)->{
+                this.backEnd.notify(new Login(line));
+                System.arraycopy(line.toCharArray(), 0, charArray, FirstCellPosition, line.toCharArray().length);
             }
         );
 

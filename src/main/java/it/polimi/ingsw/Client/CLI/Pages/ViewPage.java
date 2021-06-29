@@ -74,12 +74,12 @@ public class ViewPage extends ModelEventHandler.Default {
 
         print();
 
-        CLI_Controller.read(
-                (input)->{
-                    String command = input.nextLine().toUpperCase();
-                    if (command.equals("EXIT")) {
+        CLI_Controller.setReadHandler(
+                (line)->{
+                    line = line.toUpperCase();
+                    if (line.equals("EXIT")) {
                         System.out.println("redirecting to Home..");
-                    }else if (command.equals("ENDTURN")){
+                    }else if (line.equals("ENDTURN")){
                         EndTurn message = new EndTurn();
                         this.backEnd.notify(message);
                         CLI_Controller.homePage.HomePageView(backEnd);

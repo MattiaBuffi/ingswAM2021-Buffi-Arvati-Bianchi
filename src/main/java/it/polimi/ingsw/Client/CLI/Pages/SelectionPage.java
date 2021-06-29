@@ -21,44 +21,56 @@ public class SelectionPage extends ModelEventHandler.Default{
     ViewBackEnd backEnd;
     char[] selection;
 
-    public void SelectionPageView(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
-        this.backEnd.setEventHandler(this);
+
+    private void print(List<LeaderCard> leaderCardSelection){
+
         CLI_Controller.cls();
 
+        this.selection = CLI_Controller.readSchematics(11);
 
-        CLI_Controller.read(
-                (input)->{
-                    this.selection = CLI_Controller.readSchematics(11);
-                    List<LeaderCard> leaderCardSelection = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
-                    for (int i = 0; i < leaderCardSelection.size(); i++) {
-                        CLI_Controller.LeaderCardInfoExtractor(this.selection, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos, LeaderSelectionEffectPos);
-                    }
-                    if(leaderCardSelection.size()==3){
-                        for (int i = 0; i <10 ; i++) {
-                            for (int j = 0; j < 20; j++) {
-                                this.selection[1557+j+i*133] = ' ';
-                            }
-                        }
-                    }
-                    System.out.println(this.selection);
-                    System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                    String discardedCard = input.nextLine();
-
-                    while(discardedCard.equals("")){
-                        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                        discardedCard = input.nextLine();
-                    }
-
-                    while(Integer.parseInt(discardedCard)<1 || Integer.parseInt(discardedCard)> leaderCardSelection.size()){
-                        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                        discardedCard = input.nextLine();
-                    }
-
-                    DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(discardedCard)-1).getId());
-                    this.backEnd.notify(messageDiscard);
+        for (int i = 0; i < leaderCardSelection.size(); i++) {
+            CLI_Controller.LeaderCardInfoExtractor(this.selection, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos, LeaderSelectionEffectPos);
+        }
+        if(leaderCardSelection.size()==3){
+            for (int i = 0; i <10 ; i++) {
+                for (int j = 0; j < 20; j++) {
+                    this.selection[1557+j+i*133] = ' ';
                 }
+            }
+        }
+        System.out.println(this.selection);
+        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
+
+    }
+
+    public void SelectionPageView(ViewBackEnd backEnd) {
+
+
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+
+        List<LeaderCard> leaderCardSelection = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
+
+        print(leaderCardSelection);
+
+
+        CLI_Controller.setReadHandler(
+                (line)->{
+
+                    while(line.isEmpty() && (Integer.parseInt(line)<1 || Integer.parseInt(line)> leaderCardSelection.size() )){
+                        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
+                        line = CLI_Controller.scanner.nextLine();
+                    }
+
+                    DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line)-1).getId());
+                    this.backEnd.notify(messageDiscard);
+
+                }
+
         );
+
+
     }
 
     @Override

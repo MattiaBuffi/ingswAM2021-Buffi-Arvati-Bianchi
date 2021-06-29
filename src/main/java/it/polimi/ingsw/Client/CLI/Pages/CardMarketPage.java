@@ -60,6 +60,20 @@ public class CardMarketPage extends ModelEventHandler.Default {
         CLI_Controller.UpdateChest(this.backEnd, cardMarket);
     }
 
+
+    private void buy(String line){
+        if(line.length()>1) {
+            String[] buyCardArray = line.split("-");
+            BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
+            this.backEnd.notify(messageBuyDev);
+        }
+        update();
+
+
+    }
+
+
+
     public void CardMarketPageView(ViewBackEnd backEnd){
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
@@ -70,21 +84,16 @@ public class CardMarketPage extends ModelEventHandler.Default {
         System.out.println("Insert Command (Buy,EndTurn,Exit): ");
 
 
-        CLI_Controller.read(
-                (input)->{
-                    String command = input.nextLine().toUpperCase();
-                    switch (command){
+        CLI_Controller.setReadHandler(
+                (line)->{
+                    line = line.toUpperCase();
+                    switch (line){
                         case "BUY":
-                            System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
-                            String buyCard = input.nextLine();
-                            if(buyCard.length()>1) {
-                                String[] buyCardArray = buyCard.split("-");
-                                BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
-                                this.backEnd.notify(messageBuyDev);
-                            }
-                            update();
 
+                            System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
+                            CLI_Controller.setReadHandler(this::buy);
                             break;
+
                         case "EXIT":
                             System.out.println("redirecting to Home..");
                             CLI_Controller.homePage.HomePageView(this.backEnd);
@@ -97,8 +106,11 @@ public class CardMarketPage extends ModelEventHandler.Default {
                             System.out.println("Wrong Command, please insert a real command");
                             CLI_Controller.cardMarketPage.CardMarketPageView(this.backEnd);
                     }
+
                 }
         );
+
+
 
 
     }
