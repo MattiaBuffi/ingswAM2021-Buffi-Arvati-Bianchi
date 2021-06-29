@@ -81,7 +81,7 @@ public class PopUpManager {
         ResourceAvailablePopup controller = loader.getController();
         controller.initData(marble, mainController, discardVisibility);
 
-        //stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
         //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }

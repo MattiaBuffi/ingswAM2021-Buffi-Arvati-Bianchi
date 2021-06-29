@@ -70,18 +70,9 @@ public class StorageTab implements Layout, GameTab {
 
     public void manageResourceBuffer() {
 
-        if(backEnd.getModel().current != null){
-            if(!backEnd.getModel().current.getUsername().equals(backEnd.getMyUsername())){
-                return;
-            }
-        }
-
-        System.out.println("BUFFER: " + backEnd.getModel().resourceMarketBuffer.size());
-
         List<Marble> marbles = backEnd.getModel().resourceMarketBuffer;
-        System.out.println("marbles: " + marbles);
 
-        if(marbles.size() != 0) {
+        if(marbles.size() > 0) {
             if(!discarded.contains(marbles.get(0))) {
                 try {
                     PopUpManager.showDepositResourcePopUp(marbles.get(0), this, true);
@@ -96,9 +87,11 @@ public class StorageTab implements Layout, GameTab {
                 }
             }
         }
-
     }
 
+    public void cleanBuffer(){
+        discarded.clear();
+    }
 
     public void updateShelves() throws NullPointerException {
         List<Shelf> shelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();

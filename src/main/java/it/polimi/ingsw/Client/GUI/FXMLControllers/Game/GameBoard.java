@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
+import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -76,10 +77,13 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ModelUpdate event) {
-
         backEnd.getModel().updateModel(event);
 
-        updateTabs();
+        for(Message<ModelEventHandler> message: event.getMessages()){
+            message.accept(this);
+        }
+
+        updateTabs(event);
     }
 
     @Override
@@ -90,6 +94,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        storageTab_Controller.manageResourceBuffer();
 
     }
 
@@ -115,36 +121,35 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     }
 
     @Override
-    public void handle(GameSizeRequest event) {
-
+    public void handle(ActivePlayer event) {
+        try {
+            PopUpManager.showNewTurnPopUp(event.getUsername(), backEnd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        storageTab_Controller.cleanBuffer();
     }
 
     @Override
-    public void handle(UsernameSelected event) {
-
+    public void handle(LeaderCardActivation event) {
+        leaderCardsTab_Controller.update();
+        checkLeaderCardActivation();
     }
 
-    @Override
-    public void handle(WaitingPlayersUpdate event) {
+    private void updateTabs(ModelUpdate event){
 
-    }
-
-    private void updateTabs(){
+        if(event.getPlayerUsername() != null && event.getPlayerUsername().equals(backEnd.getMyUsername())){
+            storageTab_Controller.update();
+        }
 
         cardsMarketTab_Controller.update();
-        leaderCardsTab_Controller.update();
-        //checkLeaderCardActivation();
         resourceMarket_Controller.update();
-
-        storageTab_Controller.update();
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
-
     }
 
     private void leaderPowerSelector(String s){
-        //String tmp = s.charAt(3) + s.charAt(4);
-        int id = Integer.parseInt(s);
+        int id = Integer.parseInt(s.substring(3));
         if(id < 5) {
             cardsMarketTab_Controller.showLeaderPower(s);
         } else if(id < 9){

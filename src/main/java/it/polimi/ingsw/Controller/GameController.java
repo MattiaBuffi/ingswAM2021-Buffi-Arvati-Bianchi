@@ -70,9 +70,6 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
         game.endTurn(username);
     }
 
-
-
-
     @Override
     public void handle(Login event) {
 
