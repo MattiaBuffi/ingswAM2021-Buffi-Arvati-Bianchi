@@ -267,6 +267,7 @@ public class Game implements TurnHandler, GameHandler {
     }
 
     public void endTurn(String username){
+
         Player player = getPlayerByUsername(username);
 
         if(player == null){
@@ -278,6 +279,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
         broadcaster.sendMessages(username);
+
     }
 
     @Override

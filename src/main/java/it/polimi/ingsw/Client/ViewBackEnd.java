@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.ActivePlayer;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
@@ -89,6 +90,26 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     public void update(Message<ModelEventHandler> event) {
         eventDispatcher.accept(event);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

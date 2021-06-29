@@ -65,6 +65,7 @@ public class ResourceMarketTab implements Layout, GameTab{
     public void takeResources(){
         if(selection != -1){
             TakeResources message = new TakeResources(selection);
+            hideRectangle(selection);
             backEnd.notify(message);
             hideRectangle(selection);
         }

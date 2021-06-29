@@ -51,6 +51,9 @@ public class PlayerBoard {
         resources[3] = player.getChest().getSize(Marble.Color.GREY);
 
         for(Shelf s: player.getShelves()){
+            if(s.color == null){
+                continue;
+            }
             switch (s.color){
                 case YELLOW:
                     resources[0] += s.size;

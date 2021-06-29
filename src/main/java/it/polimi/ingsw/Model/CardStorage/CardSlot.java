@@ -43,7 +43,9 @@ public class CardSlot {
 
 
     public void setCard(DevelopmentCard card){
-        inactiveCard.add(activeCard);
+        if(activeCard!= null){
+            inactiveCard.add(activeCard);
+        }
         activeCard = card;
         broadcaster.notifyAllPlayers(new DevelopmentCardBuyUpdate(position, card.getId(), card.getVictoryPoint(), card.getRequire(), card.getProduce()));
     }

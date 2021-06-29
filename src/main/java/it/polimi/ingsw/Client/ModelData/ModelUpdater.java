@@ -44,18 +44,18 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(MarketResourceTaken event) {
-        for(Marble m: model.resourceMarketBuffer){
+        for(Marble m:model.resourceMarketBuffer ){
             if(m.getColor() == event.getColor()){
                 model.resourceMarketBuffer.remove(m);
                 return;
             }
         }
-
     }
 
     @Override
     public void handle(MarketCardUpdate event) {
-        model.cardMarket.setCard(event.getX(), event.getY(), new DevelopmentCardData(event.getId(),
+        model.cardMarket.setCard(event.getX(), event.getY(),
+                new DevelopmentCardData(event.getId(),
                 event.getVictoryPoints(),
                 event.getPrice(),
                 event.getProduce(),
@@ -85,6 +85,8 @@ public class ModelUpdater implements ModelEventHandler {
     @Override
     public void handle(ActivePlayer event) {
         model.current = model.getPlayer(event.getUsername());
+        model.resourceMarketBuffer.clear();
+        model.productionBuffer.clear();
     }
 
     @Override
@@ -126,7 +128,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(ChestUpdate event) {
-        getPlayer().addToChest(event.getResources());
+        getPlayer().setChest(event.getResources());
     }
 
     @Override

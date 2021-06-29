@@ -99,7 +99,7 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
     }
 
     private Image getDevCardImage(String cardID){
-        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/DC_" + cardID + ".png"));
+        return new Image(App.class.getResourceAsStream("images/cards/developmentCards/" + cardID + ".png"));
     }
 
     public void produce() {
@@ -157,4 +157,5 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
             backEnd.notify(m);
         }
     }
+
 }

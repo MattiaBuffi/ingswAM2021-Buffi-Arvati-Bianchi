@@ -12,23 +12,26 @@ import it.polimi.ingsw.Model.Marble.Marble;
  */
 public class BasicProduction implements Message<ClientEventHandler> {
 
+    private Marble.Color in1;
+    private Marble.Color in2;
+    private Marble.Color out;
 
-    private Marble.Color[] production;
-
-    public BasicProduction(Marble.Color in1, Marble.Color in2, Marble.Color out){
-        production = new Marble.Color[]{in1, in2, out};
+    public BasicProduction(Marble.Color in1, Marble.Color in2, Marble.Color out) {
+        this.in1 = in1;
+        this.in2 = in2;
+        this.out = out;
     }
 
     public Marble.Color getFirstInput(){
-        return production[0];
+        return in1;
     }
 
     public Marble.Color getSecondInput(){
-        return production[0];
+        return in2;
     }
 
     public Marble.Color getOutput(){
-        return production[0];
+        return out;
     }
 
     @Override
