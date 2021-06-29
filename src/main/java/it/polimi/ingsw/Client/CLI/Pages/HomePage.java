@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import java.util.List;
@@ -40,14 +41,13 @@ public class HomePage extends ModelEventHandler.Default {
         Scanner input = new Scanner(System.in);
         CLI_Controller.cls();
         //Printing Name of Current Player
-        /*String currentName;
+        String currentName;
         if(this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
             currentName = "It's your Turn";
         }else{
             currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn";
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
-        */
         CLI_Controller.UpdateShelf(this.backEnd, homePage);
         CLI_Controller.UpdateChest(this.backEnd, homePage);
 
@@ -140,9 +140,11 @@ public class HomePage extends ModelEventHandler.Default {
                 case "ENDTURN":
                     EndTurn message = new EndTurn();
                     this.backEnd.notify(message);
+                    break;
                 default:
                     System.out.println("Wrong Command");
                     CLI_Controller.homePage.HomePageView(backEnd);
+                    break;
             }
         }
     }
@@ -160,11 +162,6 @@ public class HomePage extends ModelEventHandler.Default {
         HomePageView(this.backEnd);
     }
 
-    @Override
-    public void handle(ActivePlayer event) {
-        backEnd.getModel().updateModel(event);
-        HomePageView(this.backEnd);
-    }
 
     @Override
     public void handle(ChestUpdate event) {
@@ -213,5 +210,15 @@ public class HomePage extends ModelEventHandler.Default {
             e.printStackTrace();
         }
         CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ModelUpdate event){
+        this.backEnd.getModel().updateModel(event);
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            if(e instanceof ActivePlayer){
+                CLI_Controller.homePage.HomePageView(this.backEnd);
+            }
+        }
     }
 }

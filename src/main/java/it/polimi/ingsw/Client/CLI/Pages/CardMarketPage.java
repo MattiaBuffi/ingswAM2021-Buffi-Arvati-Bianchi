@@ -6,6 +6,7 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.BuyDevelopmentCard;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
@@ -35,35 +36,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
         CLI_Controller.cls();
 
         Scanner input = new Scanner(System.in);
-
-        for(int i=0;i<3;i++){
-            for(int j=0;j<4;j++){
-                updateCard(i,j);
-            }
-        }
-
-        if(CLI_Controller.leaderActive[1]>0){
-            CLI_Controller.showLeaderShelf(cardMarket);
-        }
-
-        if(CLI_Controller.leaderActive[0]>0){
-            List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
-            int i = 0;
-            for (LeaderCard leaderCard : card) {
-                if(leaderCard.getType() == ActivationStrategy.Type.DISCOUNT){
-                    Marble.Color colorEffect = leaderCard.getColor();
-                    String colorEffected = "Discount -1" + CLI_Controller.getColorString(colorEffect);
-                    System.arraycopy(colorEffected.toCharArray(), 0, cardMarket, leaderDiscount[i], colorEffected.toCharArray().length);
-                    i++;
-                }
-
-            }
-        }
-
-
-        CLI_Controller.UpdateShelf(this.backEnd, cardMarket);
-        CLI_Controller.UpdateChest(this.backEnd, cardMarket);
-
+        update();
         System.out.println(cardMarket);
         System.out.println("Insert Command (Buy,EndTurn,Exit): ");
         String command = input.nextLine().toUpperCase();
@@ -71,9 +44,12 @@ public class CardMarketPage extends ModelEventHandler.Default {
             case "BUY":
                 System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
                 String buyCard = input.nextLine();
-                String[] buyCardArray = buyCard.split("-");
-                BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0])-1, Integer.parseInt(buyCardArray[1])-1, Integer.parseInt(buyCardArray[2])-1);
-                this.backEnd.notify(messageBuyDev);
+                if(buyCard.length()>1) {
+                    String[] buyCardArray = buyCard.split("-");
+                    BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
+                    this.backEnd.notify(messageBuyDev);
+                }
+                update();
 
                 break;
             case "EXIT":
@@ -141,6 +117,49 @@ public class CardMarketPage extends ModelEventHandler.Default {
     public void handle(ErrorUpdate event) {
         CLI_Controller.showError(event);
         CardMarketPageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ModelUpdate event){
+        this.backEnd.getModel().updateModel(event);
+        update();
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            if(e instanceof ActivePlayer){
+                CLI_Controller.cls();
+                System.out.println("your turn is over, redirecting to home");
+                CLI_Controller.homePage.HomePageView(this.backEnd);
+            }
+        }
+    }
+
+    public void update(){
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                updateCard(i,j);
+            }
+        }
+
+        if(CLI_Controller.leaderActive[1]>0){
+            CLI_Controller.showLeaderShelf(cardMarket);
+        }
+
+        if(CLI_Controller.leaderActive[0]>0){
+            List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
+            int i = 0;
+            for (LeaderCard leaderCard : card) {
+                if(leaderCard.getType() == ActivationStrategy.Type.DISCOUNT){
+                    Marble.Color colorEffect = leaderCard.getColor();
+                    String colorEffected = "Discount -1" + CLI_Controller.getColorString(colorEffect);
+                    System.arraycopy(colorEffected.toCharArray(), 0, cardMarket, leaderDiscount[i], colorEffected.toCharArray().length);
+                    i++;
+                }
+
+            }
+        }
+
+
+        CLI_Controller.UpdateShelf(this.backEnd, cardMarket);
+        CLI_Controller.UpdateChest(this.backEnd, cardMarket);
     }
 
 

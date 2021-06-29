@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
@@ -151,6 +152,18 @@ public class ProductionPage extends ModelEventHandler.Default{
     public void handle(ErrorUpdate event) {
         CLI_Controller.showError(event);
         ProductionPageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ModelUpdate event){
+        this.backEnd.getModel().updateModel(event);
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            if(e instanceof ActivePlayer){
+                CLI_Controller.cls();
+                System.out.println("your turn is over, redirecting to home");
+                CLI_Controller.homePage.HomePageView(this.backEnd);
+            }
+        }
     }
 
 }

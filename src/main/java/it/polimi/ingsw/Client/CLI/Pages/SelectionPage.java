@@ -41,6 +41,17 @@ public class SelectionPage extends ModelEventHandler.Default{
         System.out.println(this.selection);
         System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
         String discardedCard = input.nextLine();
+
+        while(discardedCard.equals("")){
+            System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
+            discardedCard = input.nextLine();
+        }
+
+        while(Integer.parseInt(discardedCard)<1 || Integer.parseInt(discardedCard)> leaderCardSelection.size()){
+            System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
+            discardedCard = input.nextLine();
+        }
+
         DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(discardedCard)-1).getId());
         this.backEnd.notify(messageDiscard);
     }
