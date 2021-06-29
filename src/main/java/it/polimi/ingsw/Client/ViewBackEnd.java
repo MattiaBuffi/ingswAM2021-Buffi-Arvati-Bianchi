@@ -71,7 +71,8 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     @Override
     public void update(Message<ModelEventHandler> event) {
-        eventHandlerBiConsumer.accept(event, eventHandler);
+        //eventHandlerBiConsumer.accept(event, eventHandler);
+        Platform.runLater(() -> event.accept(eventHandler));
     }
 
 

@@ -65,19 +65,21 @@ public class LeaderCardSelection{
 
     public void discardLeaderCards() {
         List<String> id = new ArrayList<>();
-        for(int i=0; i<selection.length; i++){
-            if(!selection[i]){
-                DiscardLeaderCard message = new DiscardLeaderCard(leaderCards.get(i).getId());
-                mainController.getBackend().notify(message);
-            } else {
-                id.add(leaderCards.get(i).getId());
+        if(indexSelected.size() == 2) {
+            for (int i = 0; i < selection.length; i++) {
+                if (!selection[i]) {
+                    DiscardLeaderCard message = new DiscardLeaderCard(leaderCards.get(i).getId());
+                    mainController.getBackend().notify(message);
+                } else {
+                    id.add(leaderCards.get(i).getId());
+                }
             }
+
+            mainController.showLeaderCard(id);
+
+            Stage stage = (Stage) leaderCard1.getScene().getWindow();
+            stage.close();
         }
-
-        mainController.showLeaderCard(id);
-
-        Stage stage = (Stage) leaderCard1.getScene().getWindow();
-        stage.close();
     }
 
     public void initData(List<LeaderCard> leaderCards, LeaderCardsTab mainController) {

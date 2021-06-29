@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class VaticanRoutePane implements Layout,GameTab  {
     @FXML
-    public ImageView cross1, cross2, cross3, cross4;
+    public ImageView cross1, cross2, cross3, cross4, crossReference;
     @FXML
     public ImageView popeToken1, popeToken2, popeToken3;
 
@@ -69,6 +69,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
                 usernames.add(backEnd.getModel().players.get(i).getUsername());
             }
         }
+        crossReference.setImage(imageViewMap.get(backEnd.getMyUsername()).getImage());
         firstUpdate = false;
     }
 

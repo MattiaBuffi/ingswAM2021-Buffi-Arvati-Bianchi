@@ -40,6 +40,7 @@ public class LeaderCardsTab implements Layout, GameTab{
         ivArray = new ImageView[]{leaderCard1, leaderCard2};
         rectArray = new Rectangle[]{rectangle1, rectangle2};
         cardsMap = new HashMap<>();
+        ivMap = new HashMap<>();
     }
 
     @Override
@@ -65,14 +66,6 @@ public class LeaderCardsTab implements Layout, GameTab{
 
 
     public void activateLeaderCard() {
-        switch (selection){
-            case 0:
-                rectangle1.setVisible(false);
-                break;
-            case 1:
-                rectangle2.setVisible(false);
-                break;
-        }
         ActivateLeaderCard message = new ActivateLeaderCard(leaderCardsIds.get(selection));
         backEnd.notify(message);
     }
@@ -108,7 +101,6 @@ public class LeaderCardsTab implements Layout, GameTab{
             ivMap.put(ivArray[i], rectArray[i]);
         }
     }
-
 
     public ViewBackEnd getBackend() {
         return backEnd;

@@ -11,6 +11,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
+import javax.lang.model.element.ElementVisitor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +94,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         }
 
         storageTab_Controller.manageResourceBuffer();
-
     }
 
     @Override
@@ -140,6 +140,11 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void handle(VaticanReport event) {
+        vaticanRoute_Controller.activatePopeFavor(event.getIndex());
     }
 
     private void updateTabs(ModelUpdate event){
