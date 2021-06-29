@@ -26,11 +26,10 @@ public class ViewPage extends ModelEventHandler.Default {
     ViewBackEnd backEnd;
     int totalDevCard;
 
-    public void ViewPageView(ViewBackEnd backEnd){
-        this.backEnd = backEnd;
-        this.backEnd.setEventHandler(this);
+
+    public void print(){
         CLI_Controller.cls();
-        Scanner input = new Scanner(System.in);
+
         char[] bigView = CLI_Controller.readSchematics(10);
 
         List<Player> users = this.backEnd.getModel().players;
@@ -66,17 +65,32 @@ public class ViewPage extends ModelEventHandler.Default {
 
         System.out.println(bigView);
         System.out.println("Insert Command (Exit,EndTurn): ");
-        String command = input.nextLine().toUpperCase();
-        if (command.equals("EXIT")) {
-            System.out.println("redirecting to Home..");
-        }else if (command.equals("ENDTURN")){
-                EndTurn message = new EndTurn();
-                this.backEnd.notify(message);
-                CLI_Controller.homePage.HomePageView(backEnd);
-        } else {
-            System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
-        }
-        CLI_Controller.homePage.HomePageView(backEnd);
+    }
+
+
+    public void ViewPageView(ViewBackEnd backEnd){
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+        print();
+
+        CLI_Controller.read(
+                (input)->{
+                    String command = input.nextLine().toUpperCase();
+                    if (command.equals("EXIT")) {
+                        System.out.println("redirecting to Home..");
+                    }else if (command.equals("ENDTURN")){
+                        EndTurn message = new EndTurn();
+                        this.backEnd.notify(message);
+                        CLI_Controller.homePage.HomePageView(backEnd);
+                    } else {
+                        System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
+                    }
+                    CLI_Controller.homePage.HomePageView(backEnd);
+                }
+        );
+
+
     }
 
     @Override

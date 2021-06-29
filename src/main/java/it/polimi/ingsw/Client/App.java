@@ -9,6 +9,7 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,8 +35,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        app = new ClientApp(()-> App.setScene("home_page"));
-        backEnd = ViewBackEnd.getGUiBackend(app);
+        app = new ClientApp( ()-> App.setScene("home_page") );
+        backEnd = new ViewBackEnd(app, (M, H)->Platform.runLater( ()->M.accept(H) ));
 
         app.setBackEnd(backEnd);
 

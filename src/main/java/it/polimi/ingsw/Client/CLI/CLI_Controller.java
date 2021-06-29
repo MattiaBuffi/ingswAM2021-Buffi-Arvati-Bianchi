@@ -15,6 +15,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 
 public class CLI_Controller {
@@ -52,8 +56,9 @@ public class CLI_Controller {
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
 
     public CLI_Controller(){
+
         app = new ClientApp(this::CLIView);
-        backEnd = ViewBackEnd.getCLIBackend(app);
+        backEnd = new ViewBackEnd(app, (M,H)->M.accept(H));
         app.setBackEnd(backEnd);
 
         char[] home = readSchematics(2);
@@ -78,6 +83,27 @@ public class CLI_Controller {
     public void CLIView() {
         start.StartPageView(backEnd);
     }
+
+
+
+    private static Executor executor= Executors.newCachedThreadPool();
+    private static Scanner input = new Scanner(System.in);
+
+
+    public static void readLine(Consumer<String> lineHandler){
+        executor.execute(()->{
+            String command = input.nextLine().toUpperCase();
+            lineHandler.accept(command);
+        });
+    }
+
+    public static void read(Consumer<Scanner> lineHandler){
+        executor.execute(()->{
+            lineHandler.accept(new Scanner(System.in));
+        });
+    }
+
+
 
     public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
             List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getShelves();

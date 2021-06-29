@@ -34,11 +34,8 @@ public class HomePage extends ModelEventHandler.Default {
         this.homePage = homePage;
     }
 
-    public void HomePageView (ViewBackEnd backEnd){
-        this.backEnd = backEnd;
-        this.backEnd.setEventHandler(this);
 
-        Scanner input = new Scanner(System.in);
+    public void print(){
         CLI_Controller.cls();
         //Printing Name of Current Player
         String currentName;
@@ -85,70 +82,188 @@ public class HomePage extends ModelEventHandler.Default {
         System.out.println(homePage);
 
         System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
-        String command = input.nextLine().toUpperCase();
-        if(command.equals("ACTIVATE")){
 
-            System.out.println("Which Leader card do you want to Activate (1/2): ");
-            String activateLeader = input.nextLine();
 
-            if (activateLeader.equals("1")){
-                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
-                this.backEnd.notify(messageActivate);
 
-            }else if (activateLeader.equals("2")){
-                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
-                this.backEnd.notify(messageActivate);
+    }
+    /*
+    public void activate(String input){
+        System.out.println("Which Leader card do you want to Activate (1/2): ");
+        String activateLeader = input;
 
-            }
-        }else if (command.equals("DISCARD")){
+        if (activateLeader.equals("1")){
+            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+            this.backEnd.notify(messageActivate);
 
-            System.out.println("Which Leader card do you want to Discard (1/2): ");
-            String discardLeader = input.nextLine();
-            if (discardLeader.equals("1")){
-                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
-                this.backEnd.notify(messageDiscard);
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 20; j++) {
-                        homePage[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
-                    }
-                }
-            }else if (discardLeader.equals("2")){
-                DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
-                this.backEnd.notify(messageDiscard);
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 20; j++) {
-                        homePage[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
-                    }
+        }else if (activateLeader.equals("2")){
+            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+            this.backEnd.notify(messageActivate);
+
+        }
+    }
+
+    public void discard(String input){
+        System.out.println("Which Leader card do you want to Discard (1/2): ");
+        String discardLeader = input;
+        if (discardLeader.equals("1")){
+            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+            this.backEnd.notify(messageDiscard);
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 20; j++) {
+                    homePage[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
                 }
             }
-        }else {
-            switch (command) {
-                case "PRODUCE":
-                    CLI_Controller.productionPage.ProductionPageView(backEnd);
-                    break;
-                case "CARDMARKET":
-                    CLI_Controller.cardMarketPage.CardMarketPageView(backEnd);
-                    break;
-                case "RSSMARKET":
-                    CLI_Controller.rssMarketPage.RssMarketPageView(backEnd);
-                    break;
-                case "VIEW":
-                    CLI_Controller.viewPage.ViewPageView(backEnd);
-                    break;
-                case "QUIT":
-                    CLI_Controller.quitPage.QuitPageView(backEnd);
-                    break;
-                case "ENDTURN":
-                    EndTurn message = new EndTurn();
-                    this.backEnd.notify(message);
-                    break;
-                default:
-                    System.out.println("Wrong Command");
-                    CLI_Controller.homePage.HomePageView(backEnd);
-                    break;
+        }else if (discardLeader.equals("2")){
+            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+            this.backEnd.notify(messageDiscard);
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 20; j++) {
+                    homePage[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
+                }
             }
         }
     }
+
+
+
+
+    public void HomePageView (ViewBackEnd backEnd){
+
+
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+
+        print();
+
+        CLI_Controller.readLine(
+                (command)->{
+                    if(command.equals("ACTIVATE")){
+                        CLI_Controller.readLine(this::activate);
+                    }else if (command.equals("DISCARD")){
+                        CLI_Controller.readLine(this::discard);
+                    }else {
+                        switch (command) {
+                            case "PRODUCE":
+                                CLI_Controller.productionPage.ProductionPageView(backEnd);
+                                break;
+                            case "CARDMARKET":
+                                CLI_Controller.cardMarketPage.CardMarketPageView(backEnd);
+                                break;
+                            case "RSSMARKET":
+                                CLI_Controller.rssMarketPage.RssMarketPageView(backEnd);
+                                break;
+                            case "VIEW":
+                                CLI_Controller.viewPage.ViewPageView(backEnd);
+                                break;
+                            case "QUIT":
+                                CLI_Controller.quitPage.QuitPageView(backEnd);
+                                break;
+                            case "ENDTURN":
+                                EndTurn message = new EndTurn();
+                                this.backEnd.notify(message);
+                                break;
+                            default:
+                                System.out.println("Wrong Command");
+                                CLI_Controller.homePage.HomePageView(backEnd);
+                                break;
+                        }
+                    }
+                }
+        );
+
+    }
+*/
+    private class readAction{
+
+        Runnable runnable;
+
+    }
+
+    public void HomePageView (ViewBackEnd backEnd){
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+        print();
+
+        readAction action = new readAction();
+
+        CLI_Controller.read(
+                (input)->{
+                    String command = input.nextLine().toUpperCase();
+                    if(command.equals("ACTIVATE")){
+
+                        System.out.println("Which Leader card do you want to Activate (1/2): ");
+                        String activateLeader = input.nextLine();
+
+                        if (activateLeader.equals("1")){
+                            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+                            this.backEnd.notify(messageActivate);
+
+                        }else if (activateLeader.equals("2")){
+                            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+                            this.backEnd.notify(messageActivate);
+
+                        }
+                    }else if (command.equals("DISCARD")){
+
+                        System.out.println("Which Leader card do you want to Discard (1/2): ");
+                        String discardLeader = input.nextLine();
+                        if (discardLeader.equals("1")){
+                            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+                            this.backEnd.notify(messageDiscard);
+                            for (int i = 0; i < 10; i++) {
+                                for (int j = 0; j < 20; j++) {
+                                    homePage[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
+                                }
+                            }
+                        }else if (discardLeader.equals("2")){
+                            DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+                            this.backEnd.notify(messageDiscard);
+                            for (int i = 0; i < 10; i++) {
+                                for (int j = 0; j < 20; j++) {
+                                    homePage[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
+                                }
+                            }
+                        }
+                    }else {
+                        switch (command) {
+                            case "PRODUCE":
+                                CLI_Controller.productionPage.ProductionPageView(backEnd);
+                                break;
+                            case "CARDMARKET":
+                                CLI_Controller.cardMarketPage.CardMarketPageView(backEnd);
+                                break;
+                            case "RSSMARKET":
+                                CLI_Controller.rssMarketPage.RssMarketPageView(backEnd);
+                                break;
+                            case "VIEW":
+                                CLI_Controller.viewPage.ViewPageView(backEnd);
+                                break;
+                            case "QUIT":
+                                CLI_Controller.quitPage.QuitPageView(backEnd);
+                                break;
+                            case "ENDTURN":
+                                EndTurn message = new EndTurn();
+                                this.backEnd.notify(message);
+                                break;
+                            default:
+                                System.out.println("Wrong Command");
+                                CLI_Controller.homePage.HomePageView(backEnd);
+                                break;
+                        }
+                    }
+                }
+
+        );
+
+
+
+    }
+
+
+
+
 
 
 

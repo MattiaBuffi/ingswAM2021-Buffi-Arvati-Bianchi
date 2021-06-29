@@ -35,29 +35,41 @@ public class LoadingPage extends ModelEventHandler.Default{
     @Override
     public void handle(ResourceSetup event){
             CLI_Controller.cls();
-            Scanner input = new Scanner(System.in);
+
             System.out.println("You can get " + event.getAvailableResources() +
                     " initial Resources for free, please insert the color of the resource that you want to take " +
                     "[(P/G/B/Y) if more than 1 rss please insert the two colors divided by a -]");
-            String freeRssTaken = input.next().toUpperCase();
-            if (freeRssTaken.length() > 1) {
-                String[] rss = freeRssTaken.split("-");
-                for (String s : rss) {
-                    System.out.println("Where do you want to put your " + s + " rss? 1 to 3 to identify the shelf");
-                    String selectedShelf = input.next();
-                    Marble.Color color = colorSelector(s.toUpperCase());
-                    DepositResource deposit = new DepositResource(color, Integer.parseInt(selectedShelf) - 1);
-                    this.backEnd.notify(deposit);
-                }
-            } else {
-                System.out.println("Where do you want to put your " + freeRssTaken + " rss? 1 to 3 to identify the shelf");
-                String selectedShelf = input.next();
-                Marble.Color color = colorSelector(freeRssTaken.toUpperCase());
-                DepositResource deposit = new DepositResource(color, Integer.parseInt(selectedShelf) - 1);
-                this.backEnd.notify(deposit);
-                System.out.println(this.loading);
-            }
+
+            CLI_Controller.read(
+                    (input)->{
+                        String freeRssTaken = input.next().toUpperCase();
+                        if (freeRssTaken.length() > 1) {
+                            String[] rss = freeRssTaken.split("-");
+                            for (String s : rss) {
+                                System.out.println("Where do you want to put your " + s + " rss? 1 to 3 to identify the shelf");
+                                String selectedShelf = input.next();
+                                Marble.Color color = colorSelector(s.toUpperCase());
+                                DepositResource deposit = new DepositResource(color, Integer.parseInt(selectedShelf) - 1);
+                                this.backEnd.notify(deposit);
+                            }
+                        } else {
+                            System.out.println("Where do you want to put your " + freeRssTaken + " rss? 1 to 3 to identify the shelf");
+                            String selectedShelf = input.next();
+                            Marble.Color color = colorSelector(freeRssTaken.toUpperCase());
+                            DepositResource deposit = new DepositResource(color, Integer.parseInt(selectedShelf) - 1);
+                            this.backEnd.notify(deposit);
+                            System.out.println(this.loading);
+                        }
+                    }
+            );
+
+
     }
+
+
+
+
+
 
     @Override
     public void handle(ActivePlayer event){

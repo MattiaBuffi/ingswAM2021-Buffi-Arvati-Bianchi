@@ -51,8 +51,6 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
             return false;
         }
 
-
-
         this.controller.addObserver(backEnd);
         backEnd.addObserver(controller);
         return true;

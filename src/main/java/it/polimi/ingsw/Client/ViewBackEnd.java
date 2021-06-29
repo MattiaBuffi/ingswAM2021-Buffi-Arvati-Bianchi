@@ -9,6 +9,7 @@ import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
 import javafx.application.Platform;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ViewBackEnd extends Observable<Message<ClientEventHandler>> implements Observer<Message<ModelEventHandler>> {
@@ -21,35 +22,17 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     private ModelEventHandler eventHandler;
 
-    private Consumer<Message<ModelEventHandler>> eventDispatcher;
+    private BiConsumer<Message<ModelEventHandler>, ModelEventHandler> eventHandlerBiConsumer;
 
 
     private void cliEventDispatcher(Message<ModelEventHandler> event){
         event.accept(eventHandler);
     }
 
-    private void guiEventDispatcher(Message<ModelEventHandler> event){
-        Platform.runLater( ()->event.accept(eventHandler) );
-    }
 
-    public static ViewBackEnd getCLIBackend(ClientApp app){
-        ViewBackEnd backEnd = new ViewBackEnd(app);
-        backEnd.setEventDispatcher(backEnd::cliEventDispatcher);
-        return backEnd;
-    }
-
-    public static ViewBackEnd getGUiBackend(ClientApp app){
-        ViewBackEnd backEnd = new ViewBackEnd(app);
-        backEnd.setEventDispatcher(backEnd::guiEventDispatcher);
-        return backEnd;
-    }
-
-    public void setEventDispatcher(Consumer<Message<ModelEventHandler>> eventDispatcher) {
-        this.eventDispatcher = eventDispatcher;
-    }
-
-    private ViewBackEnd(ClientApp app){
+    public ViewBackEnd(ClientApp app, BiConsumer<Message<ModelEventHandler>, ModelEventHandler> eventHandlerBiConsumer){
         this.app = app;
+        this.eventHandlerBiConsumer = eventHandlerBiConsumer;
     }
 
 
@@ -88,7 +71,7 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
 
     @Override
     public void update(Message<ModelEventHandler> event) {
-        eventDispatcher.accept(event);
+        eventHandlerBiConsumer.accept(event, eventHandler);
     }
 
 

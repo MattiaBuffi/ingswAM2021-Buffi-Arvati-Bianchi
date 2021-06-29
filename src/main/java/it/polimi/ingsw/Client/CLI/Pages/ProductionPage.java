@@ -28,11 +28,9 @@ public class ProductionPage extends ModelEventHandler.Default{
         this.production = production;
     }
 
-    public void ProductionPageView(ViewBackEnd backEnd) {
-        this.backEnd = backEnd;
-        this.backEnd.setEventHandler(this);
+    private void print(){
         CLI_Controller.cls();
-        Scanner input = new Scanner(System.in);
+
         char[] customCard;
         customCard = CLI_Controller.readSchematics(12);
         int row = 0;
@@ -94,33 +92,48 @@ public class ProductionPage extends ModelEventHandler.Default{
 
         System.out.println(production);
         System.out.println("Insert Command (Produce,Exit, EndTurn): ");
-        String command = input.nextLine().toUpperCase();
-        switch (command){
-            case "PRODUCE":
-                System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production, insert the numbers divided by '-') : ");
-                String productionString = input.nextLine();
-                if(productionString.length()>1) {
-                    String[] productionArray = productionString.split("-");
-                    for(String x: productionArray){
-                        CLI_Controller.Production(x, this.backEnd);
+    }
+
+
+    public void ProductionPageView(ViewBackEnd backEnd) {
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+
+        print();
+
+        CLI_Controller.read(
+                (input)->{
+                    String command = input.nextLine().toUpperCase();
+                    switch (command){
+                        case "PRODUCE":
+                            System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production, insert the numbers divided by '-') : ");
+                            String productionString = input.nextLine();
+                            if(productionString.length()>1) {
+                                String[] productionArray = productionString.split("-");
+                                for(String x: productionArray){
+                                    CLI_Controller.Production(x, this.backEnd);
+                                }
+                            }else{
+                                CLI_Controller.Production(productionString, backEnd);
+                            }
+                            CLI_Controller.homePage.HomePageView(this.backEnd);
+                            break;
+                        case "EXIT":
+                            System.out.println("redirecting to Home..");
+                            CLI_Controller.homePage.HomePageView(this.backEnd);
+                            break;
+                        case "ENDTURN":
+                            EndTurn message = new EndTurn();
+                            this.backEnd.notify(message);
+                            CLI_Controller.homePage.HomePageView(backEnd);
+                        default:
+                            System.out.println("Wrong Command, please insert a real command");
+                            break;
                     }
-                }else{
-                    CLI_Controller.Production(productionString, backEnd);
                 }
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-                break;
-            case "EXIT":
-                System.out.println("redirecting to Home..");
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-                break;
-            case "ENDTURN":
-                EndTurn message = new EndTurn();
-                this.backEnd.notify(message);
-                CLI_Controller.homePage.HomePageView(backEnd);
-            default:
-                System.out.println("Wrong Command, please insert a real command");
-                break;
-        }
+        );
+
+
     }
 
     @Override
