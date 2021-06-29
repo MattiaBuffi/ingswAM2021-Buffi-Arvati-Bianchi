@@ -408,7 +408,7 @@ public class CLI_Controller {
                 List<Marble> playerChestMarble = playerChest.getAllMarble();
                 String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
                 for (int i = 0; i < playerChestRss.length; i++) {
-                    System.arraycopy(playerChestRss[i].toCharArray(), 0, page, RssPosition[i + 6], playerChestRss[i].toCharArray().length);
+                    System.arraycopy((playerChestRss[i]+ " ").toCharArray(), 0, page, RssPosition[i + 6], (playerChestRss[i]+ " ").toCharArray().length);
                 }
             }
     }
@@ -441,9 +441,9 @@ public class CLI_Controller {
         char[] shelf;
         shelf = readSchematics(13);
         for (int i = 0; i < leaderActive[1]; i++){
-            for (int j = 0; j < 15; j++){
-                for (int k = 0; k < 4; k++){
-                    page[LeaderShelfPosition[i]+j+133*k] = shelf[j+15*k];
+            for (int j = 0; j < 4; j++){
+                for (int k = 0; k < 15; k++){
+                    page[LeaderShelfPosition[i]+k+133*j] = shelf[k+16*j];
                 }
             }
         }

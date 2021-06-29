@@ -146,6 +146,8 @@ public class RssMarketPage extends ModelEventHandler.Default {
                                         }
                                     }
                             );*/
+                        }else{
+                            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
                         }
                         /*
                         else if (discarded.size() != this.backEnd.getModel().resourceMarketBuffer.size()) {
@@ -281,6 +283,13 @@ public class RssMarketPage extends ModelEventHandler.Default {
     @Override
     public void handle(ModelUpdate event){
         this.backEnd.getModel().updateModel(event);
+
+        if(this.discarded.size() == this.backEnd.getModel().resourceMarketBuffer.size()){
+            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
+        }else{
+            rssHandler();
+        }
+
         for (Message<ModelEventHandler> message: event.getMessages()) {
             if (message instanceof ActivePlayer) {
                 this.discarded.clear();
@@ -288,11 +297,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             }
         }
 
-        if(this.discarded.size() == this.backEnd.getModel().resourceMarketBuffer.size()){
-            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
-        }else{
-            rssHandler();
-        }
+
 
     }
 

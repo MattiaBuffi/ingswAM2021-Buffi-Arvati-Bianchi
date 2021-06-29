@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class ProductionPage extends ModelEventHandler.Default{
 
-    private static final int[] singleCardPosition = {21, 59, 97, 166};
+    private static final int[] singleCardPosition = {22, 62, 102, 174};
     private static final int[] ProductionPosition = {2451,2475,2499,1786,1810,1834,1121,1145,1169};
     private static final int[] leaderDevelopmentPosition = {842,1640};
     private static final int singleLeaderDevPosition = 13;
@@ -54,14 +54,15 @@ public class ProductionPage extends ModelEventHandler.Default{
                 String vp = Integer.toString(devCard.victoryPoints);
                 System.arraycopy(vp.toCharArray(), 0, customCard, singleCardPosition[3], vp.toCharArray().length);
 
+
                 for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 20; j++) {
-                        production[ProductionPosition[column+row*3]+j+i*133] = customCard[i*20+j];
+                    for (int j = 0; j < 21; j++) {
+                        production[ProductionPosition[column+row*3]+j+i*133] = customCard[i*21+j];
                     }
                 }
-                column++;
+                row++;
             }
-            row++;
+            column++;
         }
 
         CLI_Controller.UpdateShelf(this.backEnd, production);
