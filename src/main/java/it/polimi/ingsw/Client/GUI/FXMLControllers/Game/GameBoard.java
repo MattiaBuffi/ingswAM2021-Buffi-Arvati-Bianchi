@@ -152,13 +152,10 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
         productionTab_Controller.update();
-
-        System.out.println("==> Model UPDATE");
     }
 
     private void leaderPowerSelector(String s){
         int id = Integer.parseInt(s.substring(3));
-        System.out.println("SELECTOR: " + id);
         if(id < 5) {
             cardsMarketTab_Controller.showLeaderPower(String.valueOf(id));
         } else if(id < 9){
