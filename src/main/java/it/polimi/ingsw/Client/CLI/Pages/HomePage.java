@@ -154,16 +154,17 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
-
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ModelUpdate event){
         this.backEnd.getModel().updateModel(event);
+
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+
     }
 
     @Override

@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
+import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
 
 import java.util.List;
 
@@ -20,6 +21,17 @@ public class StateNewTurn extends PlayerState {
     private StateNewTurn(Name stateName){
         super(stateName);
     }
+
+
+    public boolean move(PlayerStorage storage, int originId, int destinationId){
+        return storage.move(originId, destinationId);
+    }
+
+    @Override
+    protected boolean moveResources(Player context, int originId, int destinationId) {
+        return move(context.getResourceStorage(), originId, destinationId);
+    }
+
 
 
     @Override
@@ -100,8 +112,8 @@ public class StateNewTurn extends PlayerState {
 
     @Override
     protected boolean endTurn(Player context){
-        //...
-        return true;
+        context.notifyUser(new ErrorUpdate( "illegal action"));
+        return false;
     }
 
 

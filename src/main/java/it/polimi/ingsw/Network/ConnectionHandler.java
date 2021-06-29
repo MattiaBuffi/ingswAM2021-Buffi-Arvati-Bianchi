@@ -106,7 +106,7 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
 
         while(running){
             try {
-                this.socket.setSoTimeout(socketTimeout);
+                //this.socket.setSoTimeout(socketTimeout);
                 @SuppressWarnings("unchecked")
                 IN event = (IN) in.readObject();
                 handleReadMessage(event);
