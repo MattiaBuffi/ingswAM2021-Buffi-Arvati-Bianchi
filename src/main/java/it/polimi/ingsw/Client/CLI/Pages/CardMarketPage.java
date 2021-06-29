@@ -43,6 +43,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
         switch (command){
             case "BUY":
                 System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
+                System.out.println("Coordinates start from 1-1-1 [pick top-left card and put it in the first production column]");
                 String buyCard = input.nextLine();
                 if(buyCard.length()>1) {
                     String[] buyCardArray = buyCard.split("-");

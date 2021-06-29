@@ -361,7 +361,7 @@ public class CLI_Controller {
     }
 
     public static void leaderPowerSelector(String s){
-        int id = Integer.parseInt(s);
+        int id = Integer.parseInt(s.split("_")[1]);
         if(id < 5) {
             leaderActive[0] += 1;
         } else if(id < 9){

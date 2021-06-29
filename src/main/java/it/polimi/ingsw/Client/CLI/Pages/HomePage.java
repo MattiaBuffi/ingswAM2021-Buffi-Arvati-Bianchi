@@ -34,7 +34,7 @@ public class HomePage extends ModelEventHandler.Default {
         this.homePage = homePage;
     }
 
-    public void HomePageView(ViewBackEnd backEnd){
+    public void HomePageView (ViewBackEnd backEnd){
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
 
@@ -158,9 +158,23 @@ public class HomePage extends ModelEventHandler.Default {
     }
 
     @Override
+    public void handle(ModelUpdate event){
+        this.backEnd.getModel().updateModel(event);
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            e.accept(this);
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
     public void handle(ErrorUpdate event) {
         CLI_Controller.showError(event);
-        HomePageView(this.backEnd);
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
 
@@ -185,6 +199,7 @@ public class HomePage extends ModelEventHandler.Default {
         }
 
         CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
@@ -213,13 +228,7 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
-    @Override
-    public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
-        for (Message<ModelEventHandler> e: event.getMessages()){
-            if(e instanceof ActivePlayer){
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-            }
-        }
-    }
+
+
+
 }
