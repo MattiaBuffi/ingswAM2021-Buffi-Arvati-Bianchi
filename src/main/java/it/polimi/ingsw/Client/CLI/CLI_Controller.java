@@ -247,8 +247,6 @@ public class CLI_Controller {
     }
 
 
-
-
     public static String getColorStringFromMarble(List<Marble> marbleList){
         int[] colorMarble = {0,0,0,0,0};
         for (Marble marble: marbleList) {

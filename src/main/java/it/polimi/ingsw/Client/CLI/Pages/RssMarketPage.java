@@ -42,7 +42,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         String command = input.nextLine().toUpperCase();
         switch (command){
             case "BUY":
-                System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 7 = first row from the top]) : ");
+                System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 5 = first row from the top]) : ");
                 String buyRss = input.nextLine();
                 TakeResources messageBuyRss = new TakeResources(Integer.parseInt(buyRss)-1);
                 this.backEnd.notify(messageBuyRss);
