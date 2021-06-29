@@ -54,6 +54,21 @@ public class PopUpManager {
         stage.show();
     }
 
+    public static void showActionTokenPopUp(String message) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/action_token.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        ActionTokenPopUp controller = loader.getController();
+        controller.initData(message);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
     public static void showLeaderCardsPopUp(List<LeaderCard> leaderCards, LeaderCardsTab mainController) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/leader_card_selection.fxml"));
         Parent parent = loader.load();

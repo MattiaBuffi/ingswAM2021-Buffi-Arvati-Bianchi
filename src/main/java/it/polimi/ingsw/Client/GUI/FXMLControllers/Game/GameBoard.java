@@ -133,6 +133,15 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         checkLeaderCardActivation();
     }
 
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        try {
+            PopUpManager.showActionTokenPopUp(event.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void updateTabs(ModelUpdate event){
 
         if(event.getPlayerUsername() != null && event.getPlayerUsername().equals(backEnd.getMyUsername())){
