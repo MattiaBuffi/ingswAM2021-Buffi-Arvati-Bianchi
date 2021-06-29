@@ -128,7 +128,8 @@ public class CardMarket implements CardRemover{
             return false;
         }
 
-        notifyNewCard(cards.remove(0));
+        cards.remove(0);
+        notifyNewCard(cards.get(0));
 
         return true;
     }

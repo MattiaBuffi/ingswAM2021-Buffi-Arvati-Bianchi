@@ -30,6 +30,12 @@ public class Player {
         shelves.add(new Shelf(2,3,0, null));
     }
 
+    public void initProduction(List<List<DevelopmentCardData>> productions){
+        productions.add(new ArrayList<>());
+        productions.add(new ArrayList<>());
+        productions.add(new ArrayList<>());
+    }
+
     public Player(String username){
 
         this.username = username;
@@ -40,12 +46,17 @@ public class Player {
         this.chest = new ResourceList();
 
         initShelves(this.shelves);
+        initProduction(this.productions);
 
     }
 
 
     public void addToChest(ResourceList list){
         chest.addAll(list);
+    }
+
+    public void setChest(ResourceList list){
+        this.chest = list;
     }
 
     public void updateShelf(int position, int maxSize, int size, Marble.Color color){

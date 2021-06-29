@@ -176,31 +176,31 @@ public class CardsMarketTab implements Layout, GameTab{
     }
 
     public void greenCardLvl2selected() {
-        selectCard(4, rectangle10, 1, 0);
+        selectCard(4, rectangle10, 0, 1);
     }
 
     public void greenCardLvl1selected() {
-        selectCard(8, rectangle20, 2, 0);
+        selectCard(8, rectangle20, 0, 2);
     }
 
     public void blueCardLvl3selected() {
-        selectCard(1, rectangle01, 0, 1);
+        selectCard(1, rectangle01, 1, 0);
     }
 
     public void blueCardLvl2selected() {
-        selectCard(5, rectangle11, 0, 2);
+        selectCard(5, rectangle11, 1, 1);
     }
 
     public void blueCardLvl1selected() {
-        selectCard(9, rectangle21, 2, 1);
+        selectCard(9, rectangle21, 1, 2);
     }
 
     public void yellowCardLvl3selected() {
-        selectCard(2, rectangle02, 0, 2);
+        selectCard(2, rectangle02, 2, 0);
     }
 
     public void yellowCardLvl2selected() {
-        selectCard(6, rectangle12, 1, 2);
+        selectCard(6, rectangle12, 2, 1);
     }
 
     public void yellowCardLvl1selected() {
@@ -208,16 +208,18 @@ public class CardsMarketTab implements Layout, GameTab{
     }
 
     public void purpleCardLvl3selected() {
-        selectCard(3, rectangle03, 0, 3);
+        selectCard(3, rectangle03, 3, 0);
     }
 
     public void purpleCardLvl2selected() {
-        selectCard(7, rectangle13, 1, 3);
+        selectCard(7, rectangle13, 3, 1);
     }
 
     public void purpleCardLvl1selected() {
-        selectCard(11, rectangle23, 2, 3);
+        selectCard(11, rectangle23, 3, 2);
     }
+
+
 
     private void setCoordinate(int x, int y){
         cardSelectedX = x;

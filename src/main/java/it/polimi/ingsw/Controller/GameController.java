@@ -30,7 +30,7 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     @Override
     public void handle(BuyDevelopmentCard event) {
-        game.buyCard(username, event.getX(), event.getX(), event.getProductionColumn());
+        game.buyCard(username, event.getX(), event.getY(), event.getProductionColumn());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GameController implements Observer<Message<ClientEventHandler>>, Cl
 
     @Override
     public void handle(EndTurn event) {
-
+        game.endTurn(username);
     }
 
 

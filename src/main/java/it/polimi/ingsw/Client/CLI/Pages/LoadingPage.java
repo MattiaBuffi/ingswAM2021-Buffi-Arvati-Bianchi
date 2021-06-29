@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Message.Message;

@@ -9,24 +9,21 @@ public class CardMarket {
 
     private boolean changed;
 
-    private List<List<DevelopmentCardData>> cards;
+    private DevelopmentCardData[][] cards;
 
     public CardMarket(){
-        cards = new ArrayList<>();
-        cards.add(new ArrayList<>());
-        cards.add(new ArrayList<>());
-        cards.add(new ArrayList<>());
-        cards.add(new ArrayList<>());
+        cards = new DevelopmentCardData[4][3];
     }
 
 
     public DevelopmentCardData getCard(int x, int y){
-        return cards.get(x).get(y);
+        return cards[x][y];
     }
 
 
     public void setCard(int x, int y, DevelopmentCardData card){
-        cards.get(x).add(y, card);
+        System.err.println("coordinates"+x+"--"+y);
+        cards[x][y] = card;
     }
 
 

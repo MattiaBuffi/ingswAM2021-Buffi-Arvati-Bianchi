@@ -69,6 +69,13 @@ public class StorageTab implements Layout, GameTab {
 
 
     public void manageResourceBuffer() {
+
+        if(backEnd.getModel().current != null){
+            if(!backEnd.getModel().current.getUsername().equals(backEnd.getMyUsername())){
+                return;
+            }
+        }
+
         System.out.println("BUFFER: " + backEnd.getModel().resourceMarketBuffer.size());
 
         List<Marble> marbles = backEnd.getModel().resourceMarketBuffer;
