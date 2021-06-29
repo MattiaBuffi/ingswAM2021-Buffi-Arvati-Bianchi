@@ -402,6 +402,8 @@ public class CLI_Controller {
         return colorString.toString();
     }
 
+
+
     public static void UpdateChest(ViewBackEnd backEnd, char[] page ){
             ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
             if(playerChest != null) {

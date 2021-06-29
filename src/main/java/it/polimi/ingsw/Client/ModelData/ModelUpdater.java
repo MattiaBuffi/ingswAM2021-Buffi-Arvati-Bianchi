@@ -154,9 +154,9 @@ public class ModelUpdater implements ModelEventHandler {
     @Override
     public void handle(LeaderCardActivation event) {
 
-        if(getPlayer().getUsername() == model.myUsername){
+        if(getPlayer().getUsername().equals(model.myUsername) ){
             for (LeaderCard card : getPlayer().getLeaderCard()){
-                if(card.getId() == event.getLeaderCard().getId()){
+                if(card.getId().equals(event.getLeaderCard().getId())){
                     card.setActive(true);
                 }
             }

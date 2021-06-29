@@ -94,8 +94,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(AvailableLeaderCard event) {
-
-
         if(setupGame) {
             try {
                 PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);
@@ -103,6 +101,9 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
                 e.printStackTrace();
             }
             setupGame = false;
+        } else {
+            leaderCardsTab_Controller.update();
+            checkLeaderCardActivation();
         }
     }
 
@@ -151,25 +152,30 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
         productionTab_Controller.update();
+
+        System.out.println("==> Model UPDATE");
     }
 
     private void leaderPowerSelector(String s){
         int id = Integer.parseInt(s.substring(3));
+        System.out.println("SELECTOR: " + id);
         if(id < 5) {
-            cardsMarketTab_Controller.showLeaderPower(s);
+            cardsMarketTab_Controller.showLeaderPower(String.valueOf(id));
         } else if(id < 9){
-            storageTab_Controller.showLeaderPower(s);
+            storageTab_Controller.showLeaderPower(String.valueOf(id));
         } else if(id <13){
-            resourceMarket_Controller.showLeaderPower(s);
+            resourceMarket_Controller.showLeaderPower(String.valueOf(id));
         } else {
-            productionTab_Controller.showLeaderPower(s);
+            productionTab_Controller.showLeaderPower(String.valueOf(id));
         }
     }
 
     private void checkLeaderCardActivation(){
         List<LeaderCard> leaderCards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
+        System.out.println("CardActivated: " + leaderActivated);
 
         for(LeaderCard card: leaderCards){
+            System.out.println("ID: " + card.getId() + " - isActive: " + card.isActive());
             if(card.isActive() && !leaderActivated.contains(card.getId())){
                 leaderPowerSelector(card.getId());
                 leaderActivated.add(card.getId());

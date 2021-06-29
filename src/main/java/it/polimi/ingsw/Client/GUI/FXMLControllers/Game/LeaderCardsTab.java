@@ -71,11 +71,13 @@ public class LeaderCardsTab implements Layout, GameTab{
     public void activateLeaderCard() {
         ActivateLeaderCard message = new ActivateLeaderCard(leaderCardsIds.get(selection));
         backEnd.notify(message);
+        System.err.println("ACTIVATION MESSAGE: " + message.getCardId());
     }
 
     public void discardLeaderCard() {
         DiscardLeaderCard message = new DiscardLeaderCard(leaderCardsIds.get(selection));
         backEnd.notify(message);
+        System.err.println("DISCARD MESSAGE: " + message.getCardId());
     }
 
     public void cardOneSelected() {

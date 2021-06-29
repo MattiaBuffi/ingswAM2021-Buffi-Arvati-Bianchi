@@ -180,6 +180,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
+        System.err.println("");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
@@ -195,11 +196,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActivePlayer event){
+        System.err.println("ActivePlayer");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
+        System.err.println("ErrorUpdate");
+
         CLI_Controller.showError(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
@@ -207,12 +211,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
+        System.err.println("ChestUpdate");
 
         CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
+        System.err.println("ShelfUpdate");
 
         CLI_Controller.UpdateShelf(backEnd, homePage);
     }
@@ -233,11 +239,14 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
+        System.err.println("");
         CLI_Controller.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
+
+        System.err.println("vatican route");
 
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);
