@@ -89,7 +89,7 @@ public class StorageTab implements Layout, GameTab {
         }
     }
 
-    public void cleanBuffer(){
+    public void cleanDiscarded(){
         discarded.clear();
     }
 

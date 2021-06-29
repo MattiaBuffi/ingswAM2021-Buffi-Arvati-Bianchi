@@ -50,6 +50,7 @@ public class StateBuyCard extends PlayerState {
             return true;
         }
 
+        StateNewTurn.setState(context);
         return false;
 
     }

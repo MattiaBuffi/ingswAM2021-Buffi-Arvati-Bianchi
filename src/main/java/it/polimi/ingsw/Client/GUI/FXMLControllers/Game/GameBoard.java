@@ -5,7 +5,6 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -71,9 +70,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
 
     @Override
-    public void invalidMessage() {
-
-    }
+    public void invalidMessage() {}
 
     @Override
     public void handle(ModelUpdate event) {
@@ -127,7 +124,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        storageTab_Controller.cleanBuffer();
+        storageTab_Controller.cleanDiscarded();
     }
 
     @Override
@@ -146,6 +143,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         resourceMarket_Controller.update();
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
+        productionTab_Controller.update();
     }
 
     private void leaderPowerSelector(String s){
