@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.ModelData;
 
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -92,11 +93,14 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(AvailableLeaderCard event) {
+        System.err.println(model.myUsername);
+        System.err.println(event.getLeaderCard().size());
         model.getPlayer(model.myUsername).updateLeaderCards(event.getLeaderCard());
     }
 
     @Override
     public void handle(PlayersSetup event) {
+        System.err.println("playerSetup");
         model.players.add( new Player(event.getUsername()));
     }
 

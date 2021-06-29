@@ -183,8 +183,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
                         CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
                     }
 
-
-
                 }
         );
 
@@ -252,24 +250,24 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateChest(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateShelf(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ResourceMarketUpdate event) {
-        this.backEnd.getModel().updateModel(event);
+
     }
 
     @Override
     public void handle(ResourceMarketExtra event) {
-        this.backEnd.getModel().updateModel(event);
+
     }
 
     @Override
@@ -280,7 +278,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
+
         for (Message<ModelEventHandler> message: event.getMessages()) {
             if (message instanceof ActivePlayer) {
                 this.discarded.clear();

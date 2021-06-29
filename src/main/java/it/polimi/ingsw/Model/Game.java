@@ -69,18 +69,21 @@ public class Game implements TurnHandler, GameHandler {
 
 
         if(users.size() ==1){
-            VaticanToken blackCrossToken = new VaticanToken(vaticanRoute, "cpu");
+            VaticanToken blackCrossToken = vaticanRoute.addPlayer("cpu");
             this.actionDeck = new ActionDeck(cardMarket, blackCrossToken,this, broadcaster);
             this.strategy = new SinglePlayerStrategy();
         } else {
             this.strategy = new MultiPlayerStrategy();
         }
 
+
         broadcaster.sendMessages(null);
+
 
         for (Player p: players){
             p.notifyUser(new AvailableLeaderCard(p.getLeaderCards()));
         }
+
 
     }
 
@@ -285,6 +288,15 @@ public class Game implements TurnHandler, GameHandler {
 
     }
 
+
+    public void disconnect(String username){
+
+
+
+    }
+
+
+
     @Override
     public void endTurn() {
         strategy.endTurn();
@@ -315,6 +327,8 @@ public class Game implements TurnHandler, GameHandler {
 
 
 
+
+
     private interface gameStrategy{
 
         void endTurn();
@@ -331,6 +345,7 @@ public class Game implements TurnHandler, GameHandler {
         public void endTurn() {
             actionDeck.playToken();
             broadcaster.notifyAllPlayers(new ActivePlayer(players.get(0).getUser().getUsername()));
+            players.get(currentPlayer).setActive();
         }
 
         @Override

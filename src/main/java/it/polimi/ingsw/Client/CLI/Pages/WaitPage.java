@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
-import it.polimi.ingsw.Client.ModelData.ViewModel;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -45,13 +45,17 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event) {
+
+        System.err.println("model update");
         this.backEnd.setModel(new ViewModel(UsernamePage.getName()));
-        this.backEnd.getModel().updateModel(event);
+
     }
 
     @Override
     public void handle(AvailableLeaderCard event) {
-        this.backEnd.getModel().updateModel(event);
+
+        System.err.println("available");
+
 
         CLI_Controller.selectionPage.SelectionPageView(this.backEnd);
     }

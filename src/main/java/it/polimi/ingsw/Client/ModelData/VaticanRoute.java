@@ -12,7 +12,10 @@ public class VaticanRoute {
     }
 
     public int getPlayerFaithPoint(String username){
-        return tokenPosition.get(username);
+        if(tokenPosition.containsKey(username)){
+            return tokenPosition.get(username);
+        }
+        return 0;
     }
 
 

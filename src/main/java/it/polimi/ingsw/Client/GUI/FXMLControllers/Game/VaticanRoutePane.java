@@ -60,7 +60,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
             crossInitialPositions.put("cpu", INITIAL_POSITION[1]);
 
             usernames.add(backEnd.getMyUsername());
-            usernames.add(backEnd.getMyUsername());
+            usernames.add("cpu");
         } else {
             for (int i = 0; i < backEnd.getModel().players.size(); i++) {
                 crossArray[i].setVisible(true);

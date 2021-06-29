@@ -86,7 +86,7 @@ public class LoadingPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ActivePlayer event){
-        this.backEnd.getModel().updateModel(event);
+
     }
 
     public static Marble.Color colorSelector(String s){
@@ -112,10 +112,9 @@ public class LoadingPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
+
         for (Message<ModelEventHandler> e: event.getMessages()){
             if(e instanceof ActivePlayer){
-                this.backEnd.getModel().updateModel(e);
                 CLI_Controller.homePage.HomePageView(this.backEnd);
             }
         }

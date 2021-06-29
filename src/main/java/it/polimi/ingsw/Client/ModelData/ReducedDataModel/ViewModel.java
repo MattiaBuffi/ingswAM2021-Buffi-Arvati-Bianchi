@@ -1,6 +1,7 @@
-package it.polimi.ingsw.Client.ModelData;
+package it.polimi.ingsw.Client.ModelData.ReducedDataModel;
 
 
+import it.polimi.ingsw.Client.ModelData.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;

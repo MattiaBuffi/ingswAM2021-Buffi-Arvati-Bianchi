@@ -3,7 +3,7 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.Game;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.PopUpManager;
 import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Client.ModelData.ViewModel;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.ViewModel;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
@@ -11,7 +11,6 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 
-import javax.lang.model.element.ElementVisitor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +74,6 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ModelUpdate event) {
-        backEnd.getModel().updateModel(event);
 
         for(Message<ModelEventHandler> message: event.getMessages()){
             message.accept(this);
@@ -98,6 +96,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(AvailableLeaderCard event) {
+
+
         if(setupGame) {
             try {
                 PopUpManager.showLeaderCardsPopUp(event.getLeaderCard(), leaderCardsTab_Controller);

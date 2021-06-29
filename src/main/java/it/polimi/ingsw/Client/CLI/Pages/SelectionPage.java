@@ -84,7 +84,7 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(AvailableLeaderCard event){
-        this.backEnd.getModel().updateModel(event);
+
         if(event.getLeaderCard().size() == 2){
             //CLI_Controller.homePage.SelectInitialRss(this.backEnd);
             CLI_Controller.loading.LoadingPageView(this.backEnd);
@@ -95,7 +95,7 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ActivePlayer event){
-        this.backEnd.getModel().updateModel(event);
+
         System.out.println("SOS");
         //CLI_Controller.homePage.HomePageView(this.backEnd);
     }
