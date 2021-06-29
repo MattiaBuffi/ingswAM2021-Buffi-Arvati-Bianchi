@@ -32,8 +32,6 @@ public class WaitingPage extends ModelEventHandler.Default implements Layout{
     @Override
     public void handle(ModelUpdate event) {
         App.setScene("game_board");
-        //backEnd.update(event);
-        backEnd.getModel().updateModel(event);
     }
 
     @Override

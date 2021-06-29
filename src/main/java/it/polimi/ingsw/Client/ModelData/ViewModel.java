@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.ModelData;
 
 
+import it.polimi.ingsw.Client.ModelData.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
@@ -28,8 +29,8 @@ public class ViewModel {
 
     private ModelUpdater updater;
 
-    public ViewModel(String myUsername){
-        this.myUsername = myUsername;
+    public ViewModel(){
+
         this.players = new ArrayList<>();
         this.resourceMarketBuffer = new ArrayList<>();
         this.productionBuffer = new ResourceList();

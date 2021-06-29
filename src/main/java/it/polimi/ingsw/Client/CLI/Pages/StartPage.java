@@ -11,30 +11,46 @@ public class StartPage extends ModelEventHandler.Default{
     private static final int FirstCellPosition = 2671;
     private static final int SecondCellPosition = 2704;
     private ViewBackEnd backEnd;
+    private char[] charArray;
+
+    private String ip;
+    private String port;
+
+    public void askIp(String line){
+        this.ip = line;
+        System.arraycopy(ip.toCharArray(), 0, charArray, FirstCellPosition, ip.toCharArray().length);
+        System.out.println(charArray);
+        System.out.println("Insert Port Number: ");
+        CLI_Controller.setReadHandler(this::askPort);
+    }
+
+    public void askPort(String line){
+
+        this.port = line;
+        System.arraycopy(port.toCharArray(), 0, charArray, SecondCellPosition, port.toCharArray().length);
+        System.out.println(charArray);
+
+        if(this.backEnd.connectToServer(this.ip, Integer.parseInt(this.port))){
+            CLI_Controller.username.UsernamePageView(this.backEnd);
+        } else {
+            CLI_Controller.start.StartPageView(this.backEnd);
+        }
+
+    }
 
 
     public void StartPageView(ViewBackEnd backEnd){
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
+        this.charArray = CLI_Controller.readSchematics(0);
+        this.ip = "0.0.0.0";
+        this.port = "0000";
+
         CLI_Controller.cls();
 
-
-        char[] charArray = CLI_Controller.readSchematics(0);
         System.out.println(charArray);
         System.out.println("Insert Server IP: ");
-        String server = CLI_Controller.scanner.nextLine();
-        System.arraycopy(server.toCharArray(), 0, charArray, FirstCellPosition, server.toCharArray().length);
-        System.out.println(charArray);
-        System.out.println("Insert Port Number: ");
-        String port = CLI_Controller.scanner.nextLine();
-        System.arraycopy(port.toCharArray(), 0, charArray, SecondCellPosition, port.toCharArray().length);
-        System.out.println(charArray);
-
-        if(this.backEnd.connectToServer(server, Integer.parseInt(port))){
-            CLI_Controller.username.UsernamePageView(this.backEnd);
-        } else {
-            CLI_Controller.start.StartPageView(this.backEnd);
-        }
+        CLI_Controller.setReadHandler(this::askIp);
 
 
     }

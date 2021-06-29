@@ -57,12 +57,10 @@ public class SelectionPage extends ModelEventHandler.Default{
 
         CLI_Controller.setReadHandler(
                 (line)->{
-
-                    while(line.isEmpty() && (Integer.parseInt(line)<1 || Integer.parseInt(line)> leaderCardSelection.size() )){
+                    if(line.isEmpty() && (Integer.parseInt(line)<1 || Integer.parseInt(line)> leaderCardSelection.size() )){
                         System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                        line = CLI_Controller.scanner.nextLine();
+                        return;
                     }
-
                     DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line)-1).getId());
                     this.backEnd.notify(messageDiscard);
 
@@ -86,7 +84,7 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(AvailableLeaderCard event){
-        this.backEnd.getModel().updateModel(event);
+
         if(event.getLeaderCard().size() == 2){
             //CLI_Controller.homePage.SelectInitialRss(this.backEnd);
             CLI_Controller.loading.LoadingPageView(this.backEnd);
@@ -97,7 +95,7 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ActivePlayer event){
-        this.backEnd.getModel().updateModel(event);
+
         System.out.println("SOS");
         //CLI_Controller.homePage.HomePageView(this.backEnd);
     }

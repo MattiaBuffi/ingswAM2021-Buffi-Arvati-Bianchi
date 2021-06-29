@@ -185,7 +185,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
+
 
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
@@ -207,13 +207,13 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateShelf(backEnd, homePage);
     }
 

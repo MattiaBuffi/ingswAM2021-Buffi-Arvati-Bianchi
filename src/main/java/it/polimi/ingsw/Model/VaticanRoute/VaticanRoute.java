@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.GameHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class VaticanRoute {
 
@@ -81,7 +82,7 @@ public class VaticanRoute {
             return false;
         }
 
-        vaticanReport( tokens, lowerLimit, victoryPoints);
+        applyVaticanReport( tokens, lowerLimit, victoryPoints);
         return true;
     }
 
@@ -106,13 +107,19 @@ public class VaticanRoute {
     }
 
 
-    public void vaticanReport(List<VaticanToken> tokens, int lowerLimit, int popesFavorVictoryPoints){
+
+    public void applyVaticanReport(List<VaticanToken> tokens, int lowerLimit, int popesFavorVictoryPoints){
+
+        List<String> userList = new ArrayList<>();
+
         for(VaticanToken t: tokens){
             if(t.getPosition() >= lowerLimit){
                 t.setVictoryPoint( t.getVictoryPoints()+popesFavorVictoryPoints );
-                broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached));
+                userList.add(t.getOwner());
             }
         }
+
+        broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
 
 

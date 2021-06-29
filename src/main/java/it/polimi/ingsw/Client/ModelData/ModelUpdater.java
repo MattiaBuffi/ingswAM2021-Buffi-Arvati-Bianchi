@@ -8,6 +8,9 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ModelUpdater implements ModelEventHandler {
 
     private ViewModel model;
@@ -29,7 +32,19 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(VaticanReport event) {
+        for (String username: event.getPlayers()){
 
+            System.out.println("VATICAN REPORT OF "+username+"  "+event.getIndex());
+
+            Set<Integer> set = model.vaticanRoute.getVaticanReports(username);
+            if(set.isEmpty()){
+                model.vaticanRoute.vaticanReport.put(username, new HashSet<>());
+
+            }
+
+            model.vaticanRoute.getVaticanReports(username).add(event.getIndex());
+
+        }
     }
 
     @Override

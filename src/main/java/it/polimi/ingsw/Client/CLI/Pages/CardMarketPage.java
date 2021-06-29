@@ -150,25 +150,22 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        backEnd.getModel().updateModel(event);
         CLI_Controller.UpdateChest(backEnd, cardMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        backEnd.getModel().updateModel(event);
         CLI_Controller.UpdateShelf(backEnd, cardMarket);
     }
 
     @Override
     public void handle(MarketCardUpdate event) {
-        backEnd.getModel().updateModel(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(DevelopmentCardBuyUpdate event) {
-        backEnd.getModel().updateModel(event);
+
     }
 
     @Override
@@ -179,7 +176,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
+
         update();
         for (Message<ModelEventHandler> e: event.getMessages()){
             if(e instanceof ActivePlayer){

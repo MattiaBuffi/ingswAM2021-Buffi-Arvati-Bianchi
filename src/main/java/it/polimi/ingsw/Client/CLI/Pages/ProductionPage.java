@@ -152,20 +152,20 @@ public class ProductionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ProductionBufferUpdate event) {
-        backEnd.getModel().updateModel(event);
+
     }
 
 
     @Override
     public void handle(ChestUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateChest(backEnd, production);
         CLI_Controller.productionPage.ProductionPageView(backEnd);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        backEnd.getModel().updateModel(event);
+
         CLI_Controller.UpdateShelf(backEnd, production);
         CLI_Controller.productionPage.ProductionPageView(backEnd);
     }
@@ -178,7 +178,7 @@ public class ProductionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ModelUpdate event){
-        this.backEnd.getModel().updateModel(event);
+
         for (Message<ModelEventHandler> e: event.getMessages()){
             if(e instanceof ActivePlayer){
                 CLI_Controller.cls();

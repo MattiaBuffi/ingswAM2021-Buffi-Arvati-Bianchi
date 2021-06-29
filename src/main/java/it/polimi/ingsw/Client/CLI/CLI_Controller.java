@@ -105,7 +105,7 @@ public class CLI_Controller {
     }
 
 
-    public static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
     private static Consumer<String> lineHandler = CLI_Controller::defaultHandler;
     private static Consumer<String> newHandler = CLI_Controller::defaultHandler;
