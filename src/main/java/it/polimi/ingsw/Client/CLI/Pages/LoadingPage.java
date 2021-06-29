@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Client.CLI.Pages;
-
 import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ViewBackEnd;
@@ -27,8 +26,6 @@ public class LoadingPage extends ModelEventHandler.Default{
         CLI_Controller.cls();
         this.loading = CLI_Controller.readSchematics(1);
         System.out.println(this.loading);
-        if(this.backEnd.getModel().players.size() == 1)
-            CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     @Override
@@ -93,6 +90,7 @@ public class LoadingPage extends ModelEventHandler.Default{
         this.backEnd.getModel().updateModel(event);
         for (Message<ModelEventHandler> e: event.getMessages()){
             if(e instanceof ActivePlayer){
+                this.backEnd.getModel().updateModel(e);
                 CLI_Controller.homePage.HomePageView(this.backEnd);
             }
         }

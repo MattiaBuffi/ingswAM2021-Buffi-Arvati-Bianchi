@@ -14,6 +14,12 @@ public class QuitPage extends ModelEventHandler.Default {
         CLI_Controller.cls();
         char[] charArray = CLI_Controller.readSchematics(7);
         System.out.println(charArray);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 
     @Override

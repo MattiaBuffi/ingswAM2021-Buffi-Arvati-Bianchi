@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class CLI_Controller {
 
     private static ViewBackEnd backEnd;
-    private ClientApp app;
+    private final ClientApp app;
 
 
     public static StartPage start;
@@ -87,22 +87,34 @@ public class CLI_Controller {
                 switch (playerShelf.get(i).color) {
                     case YELLOW:
                         for (int j = 0; j < size; j++) {
-                            scheme[RssPosition[i + j]] = 'Y';
+                            if(playerShelf.get(i).maxSize == 3)
+                                scheme[RssPosition[i + j+1]] = 'Y';
+                            else
+                                scheme[RssPosition[i + j]] = 'Y';
                         }
                         break;
                     case BLUE:
                         for (int j = 0; j < size; j++) {
-                            scheme[RssPosition[i + j]] = 'B';
+                            if(playerShelf.get(i).maxSize == 3)
+                                scheme[RssPosition[i + j+1]] = 'B';
+                            else
+                                scheme[RssPosition[i + j]] = 'B';
                         }
                         break;
                     case PURPLE:
                         for (int j = 0; j < size; j++) {
-                            scheme[RssPosition[i + j]] = 'P';
+                            if(playerShelf.get(i).maxSize == 3)
+                                scheme[RssPosition[i + j+1]] = 'P';
+                            else
+                                scheme[RssPosition[i + j]] = 'P';
                         }
                         break;
                     case GREY:
                         for (int j = 0; j < size; j++) {
-                            scheme[RssPosition[i + j]] = 'G';
+                            if(playerShelf.get(i).maxSize == 3)
+                                scheme[RssPosition[i + j+1]] = 'G';
+                            else
+                                scheme[RssPosition[i + j]] = 'G';
                         }
                         break;
                     default:
@@ -217,6 +229,21 @@ public class CLI_Controller {
             theString.append("\n").append(scanner.nextLine());
         }
         return theString.toString().toCharArray();
+    }
+
+    public static String getColorStringAvailableRss(Marble marble){
+            switch (marble.getColor()){
+                case YELLOW:
+                    return "Y";
+                case BLUE:
+                    return "B";
+                case PURPLE:
+                    return "P";
+                case GREY:
+                    return "G";
+                default:
+                    return " ";
+            }
     }
 
 
