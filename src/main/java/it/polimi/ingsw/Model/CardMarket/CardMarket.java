@@ -129,6 +129,9 @@ public class CardMarket implements CardRemover{
         }
 
         cards.remove(0);
+        if(cards.size() == 0){
+            return true;
+        }
         notifyNewCard(cards.get(0));
 
         return true;

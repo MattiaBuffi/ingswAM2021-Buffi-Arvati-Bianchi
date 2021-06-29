@@ -3,13 +3,14 @@ package it.polimi.ingsw;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 
 public class IpTest {
 
 
     public static void main( String[] args ){
-
+/*
         Scanner scanner = new Scanner(System.in);
         String input;
 
@@ -37,7 +38,7 @@ public class IpTest {
             e.printStackTrace();
         }
 
-        System.out.print("digit anything to close");
+        System.out.print("digit anything to close");*/
 
 
 
