@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class ProductionPage extends ModelEventHandler.Default{
 
-    private static final int[] singleCardPosition = {22, 62, 102, 174};
+    private static final int[] singleCardPosition = {64, 106, 182};
     private static final int[] ProductionPosition = {2451,2475,2499,1786,1810,1834,1121,1145,1169};
     private static final int[] leaderDevelopmentPosition = {842,1640};
     private static final int singleLeaderDevPosition = 13;
@@ -39,24 +39,23 @@ public class ProductionPage extends ModelEventHandler.Default{
         List<List<DevelopmentCardData>> playerProductions = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getProductions();
         for (List<DevelopmentCardData> productionColumn : playerProductions) {
             for (DevelopmentCardData devCard : productionColumn) {
-                List<Marble> costList = devCard.price.getAllMarble();
-                String costString = CLI_Controller.getColorStringFromMarble(costList);
-                System.arraycopy(costString.toCharArray(), 0, customCard, singleCardPosition[0], costString.toCharArray().length);
+
+
 
                 List<Marble> requireList = devCard.require.getAllMarble();
                 String requireString = CLI_Controller.getColorStringFromMarble(requireList);
-                System.arraycopy(requireString.toCharArray(), 0, customCard, singleCardPosition[1], requireString.toCharArray().length);
+                System.arraycopy(("Req: " + requireString).toCharArray(), 0, customCard, singleCardPosition[0], ("Req: " + requireString).toCharArray().length);
 
                 List<Marble> produceList = devCard.produce.getAllMarble();
                 String produceString = CLI_Controller.getColorStringFromMarble(produceList);
-                System.arraycopy(produceString.toCharArray(), 0, customCard, singleCardPosition[2], produceString.toCharArray().length);
+                System.arraycopy(("Prod: " + produceString).toCharArray(), 0, customCard, singleCardPosition[1], ("Prod: " + produceString).toCharArray().length);
 
                 String vp = Integer.toString(devCard.victoryPoints);
-                System.arraycopy(vp.toCharArray(), 0, customCard, singleCardPosition[3], vp.toCharArray().length);
+                System.arraycopy(vp.toCharArray(), 0, customCard, singleCardPosition[2], vp.toCharArray().length);
 
 
                 for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 21; j++) {
+                    for (int j = 0; j < 20; j++) {
                         production[ProductionPosition[column+row*3]+j+i*133] = customCard[i*21+j];
                     }
                 }
@@ -179,14 +178,31 @@ public class ProductionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ModelUpdate event){
-
         for (Message<ModelEventHandler> e: event.getMessages()){
-            if(e instanceof ActivePlayer){
-                CLI_Controller.cls();
-                System.out.println("your turn is over, redirecting to home");
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-            }
+            e.accept(this);
         }
     }
+
+    @Override
+    public void handle(ActivePlayer event){
+        CLI_Controller.cls();
+        System.out.println("your turn is over, redirecting to home");
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+
 
 }

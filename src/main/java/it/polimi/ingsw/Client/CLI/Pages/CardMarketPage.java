@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class CardMarketPage extends ModelEventHandler.Default {
 
     private static final int[] CardMarketCostPosition = {307,330,353,376,1637,1660,1683,1706,2967,2990,3013,3036};
-    private static final int[] CardMarketOutputPosition = {573,596,619,642,1903,1926,1949,1972,3233,3256,3279,3302};
-    private static final int[] CardMarketInputPosition = {839,862,885,908,2169,2192,2215,2238,3499,3522,3545,3568};
+    private static final int[] CardMarketInputPosition = {573,596,619,642,1903,1926,1949,1972,3233,3256,3279,3302};
+    private static final int[] CardMarketOutputPosition = {839,862,885,908,2169,2192,2215,2238,3499,3522,3545,3568};
     private static final int[] CardMarketVPPosition = {1251,1274,1297,1320,2581,2604,2627,2650,3911,3934,3957,3980};
     private static final int[] leaderDiscount = {135,147};
 
@@ -179,12 +179,28 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
         update();
         for (Message<ModelEventHandler> e: event.getMessages()){
-            if(e instanceof ActivePlayer){
-                CLI_Controller.cls();
-                System.out.println("your turn is over, redirecting to home");
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-            }
+            e.accept(this);
         }
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        CLI_Controller.cls();
+        System.out.println("your turn is over, redirecting to home");
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
 

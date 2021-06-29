@@ -4,7 +4,11 @@ import it.polimi.ingsw.Client.CLI.CLI_Controller;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
+import it.polimi.ingsw.Message.Model.ActivePlayer;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
@@ -102,6 +106,31 @@ public class ViewPage extends ModelEventHandler.Default {
     public void handle(ErrorUpdate event) {
         CLI_Controller.showError(event);
         ViewPageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ModelUpdate event){
+        for (Message<ModelEventHandler> e: event.getMessages()){
+            e.accept(this);
+        }
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
+
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
 }

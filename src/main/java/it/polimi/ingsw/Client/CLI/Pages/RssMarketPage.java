@@ -289,16 +289,28 @@ public class RssMarketPage extends ModelEventHandler.Default {
         }else{
             rssHandler();
         }
-
         for (Message<ModelEventHandler> message: event.getMessages()) {
-            if (message instanceof ActivePlayer) {
-                this.discarded.clear();
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-            }
+            message.accept(this);
         }
+    }
 
+    @Override
+    public void handle(ActivePlayer event){
+        this.discarded.clear();
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
 
-
+    @Override
+    public void handle(ActionTokenPlayed event) {
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
     public void updatePage(){
