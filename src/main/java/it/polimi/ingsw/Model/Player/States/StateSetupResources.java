@@ -20,8 +20,11 @@ public class StateSetupResources extends PlayerState {
             return false;
         }
 
-        endSetup(context);
+        if(!completeSetup(context)){
+            context.notifyUser(new ResourceSetup(availableResources(context.getPosition())));
+        }
 
+        endSetup(context);
         return true;
 
     }
@@ -47,6 +50,7 @@ public class StateSetupResources extends PlayerState {
         context.setReady(true);
         StateWait.setState(context);
         context.getGameHandler().startGame();
+        context.getResourceStorage().CHEAT_RESOURCES();
     }
 
     public static boolean completeSetup(Player context){

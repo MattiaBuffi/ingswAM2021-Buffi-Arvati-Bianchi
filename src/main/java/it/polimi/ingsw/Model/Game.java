@@ -79,6 +79,8 @@ public class Game implements TurnHandler, GameHandler {
 
         for (Player p: players){
             p.notifyUser(new AvailableLeaderCard(p.getLeaderCards()));
+            p.notifyAllPlayers(new ChestUpdate(p.getResourceStorage().getResources()));
+
         }
 
 

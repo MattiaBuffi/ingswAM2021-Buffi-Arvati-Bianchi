@@ -26,17 +26,17 @@ public class PlayerStorage implements ResourceStorage{
         chest = new ResourceList();
         this.broadcaster = broadcaster;
 
-        CHEAT_RESOURCES();
+        //CHEAT_RESOURCES();
 
     }
 
 
-    private void CHEAT_RESOURCES(){
+    public void CHEAT_RESOURCES(){
         chest.add(Marble.Color.YELLOW, 99);
         chest.add(Marble.Color.BLUE, 99);
         chest.add(Marble.Color.GREY, 99);
         chest.add(Marble.Color.PURPLE, 99);
-        broadcaster.notifyAllPlayers(new ChestUpdate(chest));
+        //broadcaster.notifyAllPlayers(new ChestUpdate(chest));
     }
 
 
