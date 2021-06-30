@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Model.Marble;
 
-
 import java.io.Serializable;
 import java.util.*;
+
 /**
- * un lista di biglie
+ * Represent a list of marble
  */
 public class ResourceList implements Serializable {
 
@@ -17,15 +17,19 @@ public class ResourceList implements Serializable {
     }
 
     /**
-     *  ritorna il numero di biglie che contiene
+     * Return the number of marble contained in the list
+     * @return number of marble
      */
     public int getSize(){
         return size;
     }
 
 
+
     /**
-     *  ritorna il numero di biglie di un certo colore che contiene
+     * Returns the number of marble of the selected color
+     * @param color Color of which you want to know the number of marble
+     * @return number of marble of the specified color
      */
     public int getSize(Marble.Color color){
         Integer size = marbles.get(color);
@@ -36,17 +40,17 @@ public class ResourceList implements Serializable {
         }
     }
 
-
     /**
-     *  ritorna che colori sono conservati nella lista
+     * Return the colors contained in the list
+     * @return Set of color contained in the list
      */
     public Set<Marble.Color> getColorSet(){
         return marbles.keySet();
     }
 
-
     /**
-     *  aggiunge una biglia alla lista
+     * Add a marble to the list
+     * @param marble marble to add to the list
      */
     public void add(Marble marble){
         add(marble.getColor(), 1);
@@ -54,7 +58,8 @@ public class ResourceList implements Serializable {
 
 
     /**
-     *  aggiunge una biglia del colore specificato alla lista
+     * Add a marble to the list
+     * @param color color of the marble to add to the list
      */
     public void add(Marble.Color color){
         add(color, 1);
@@ -62,16 +67,18 @@ public class ResourceList implements Serializable {
 
 
     /**
-     *  aggiunge num biglie del colore specificto alla lista
+     * Add a number of marbles of the color specified equal to the num in input
+     * @param color color of the marble to add to the list
+     * @param num number of marble to add
      */
     public void add(Marble.Color color, int num){
         marbles.put(color, getSize(color)+num);
         size+= num;
     }
 
-
     /**
-     *  aggiunge tutte le biglie contenute nella list a parametro all'interno di this list
+     * Add all the marbles of the ResourceList as parameter to the marbles of this
+     * @param list ResourceList of the marble to add to this
      */
     public void addAll(ResourceList list){
         addAll(list.getAllMarble());
@@ -80,14 +87,21 @@ public class ResourceList implements Serializable {
     /**
      *  aggiunge tutte le biglie contenute nella list a parametro all'interno di this list
      */
+    /**
+     * Add all the marbles of the list as parameter to the marbles of this
+     * @param marbles list of the marbles to add to this
+     */
     public void addAll(List<Marble> marbles){
         for (Marble m: marbles){
             this.add(m);
         }
     }
 
+
     /**
-     *  rimuove una biglia del colore specificato dalla lista
+     * Remove a marble of the specified color and return that marble
+     * @param color color of the marble to remove
+     * @return the marble removed from the list
      */
     public Marble pop(Marble.Color color){
         if(getSize(color)>0){
@@ -101,7 +115,8 @@ public class ResourceList implements Serializable {
 
 
     /**
-     *  ritorna una lista di tutte le biglie contenute all'interno di this list
+     * Return a list of all the marbles of this list
+     * @return all the marble of the list
      */
     public List<Marble> getAllMarble(){
         List<Marble> marbles = new ArrayList();
@@ -113,8 +128,11 @@ public class ResourceList implements Serializable {
         return marbles;
     }
 
+
     /**
-     *  ritorna una lista di marble color, uno per ogni marble conservata in this.list
+     * Return the list of colors in the list passed as parameter (one for each marble).
+     * @param marbles list of marbles from which extract the list of color
+     * @return list of colors in the list
      */
     public static List<Marble.Color> getAllColor(List<Marble> marbles){
         List<Marble.Color> colors = new ArrayList();
@@ -126,7 +144,9 @@ public class ResourceList implements Serializable {
 
 
     /**
-     *  ritorna una nuova lista di marble , che contiene sia le biglie di this che del parametro list
+     * Return a list that is the sum of this and list
+     * @param list list to add to this
+     * @return the result of the sum of the two lists
      */
     public ResourceList sum(ResourceList list){
         ResourceList newList= new ResourceList();
@@ -138,8 +158,11 @@ public class ResourceList implements Serializable {
         return newList;
     }
 
+
     /**
-     *  ritorna una nuova lista di marble , che contiene le biglie piu una biglia del colore specificato
+     * Return a list that is the sum of this and the marble passed as parameter
+     * @param color color of the marble to add to the list
+     * @return the updated list of marbles
      */
     public ResourceList sum(Marble.Color color){
         ResourceList newList= new ResourceList().sum(this);
@@ -151,7 +174,9 @@ public class ResourceList implements Serializable {
 
 
     /**
-     *  ritorna una nuova lista che contiene le biglie contenute di this meno le biglie nel parametro list, non ammette valori minori di 0
+     * Return a new list which is the result of the subtraction between this and the list
+     * @param list ResourceList to subtract to this
+     * @return result of subtraction between the two lists
      */
     public ResourceList subtract(ResourceList list){
 
@@ -167,8 +192,11 @@ public class ResourceList implements Serializable {
         return newList;
     }
 
+
     /**
-     *  ritorna una nuova lista che contiene le biglie contenute di this meno le biglie la biglia del color specificato, non ammette valori minori di 0
+     * Return a new list which is equal to this minus a marble of the color specified as parameter
+     * @param color color of the marble to remove
+     * @return this with a marble of the specified color less
      */
     public ResourceList subtract(Marble.Color color){
 
@@ -195,8 +223,11 @@ public class ResourceList implements Serializable {
         return newList;
     }
 
+
     /**
-     *  ritorna una true se this contiene tutte le biglie di list
+     * Return a boolean to indicate if this contains list
+     * @param list list for which to check if it is contained in this
+     * @return true if the list is contained, false if not
      */
     public boolean contains(ResourceList list){
         for(Marble.Color color: list.getColorSet()){
@@ -208,7 +239,7 @@ public class ResourceList implements Serializable {
     }
 
     /**
-     *  svuota la lista
+     *  Empty the list
      */
     public void clear(){
         this.size = 0;

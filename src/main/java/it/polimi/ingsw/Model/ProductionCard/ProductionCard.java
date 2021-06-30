@@ -6,6 +6,9 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 import java.util.List;
 
+/**
+ * Represent a card which can produce resources. Extended by DevelopmentCard and LeaderProduction
+ */
 public class ProductionCard {
 
     private String id;
@@ -32,7 +35,9 @@ public class ProductionCard {
     }
 
     /**
-     *  preleva le risorse di Require dallo storage e deposita quelle prodotte
+     * Take resources from storage and return the result of the production
+     * @param storage where to take resource for production
+     * @return result of the production
      */
     public List<Marble> make(ResourceStorage storage){
         if(!storage.withdrawal(require)){

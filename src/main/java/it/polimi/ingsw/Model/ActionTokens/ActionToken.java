@@ -5,12 +5,12 @@ import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
 
 
 /**
- * rappresenta una generica azione sul gioca
+ * Represent an action token for single player games.
  */
 public interface ActionToken {
 
     /**
-     * esegue dei comandi sul gioco
+     * Execute actions on the game
      */
     void activate();
 

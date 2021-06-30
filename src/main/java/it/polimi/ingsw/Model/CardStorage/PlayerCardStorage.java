@@ -12,8 +12,9 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *  implementazione di default di Card Storage
+ * Default implementation of development card storage
  */
 public class PlayerCardStorage implements CardStorage, ProductionVisitor {
 
@@ -33,7 +34,10 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
     }
 
     /**
-     *  ritorna uno slot in base alla posizione specificata
+     * Return the CardSlot in the specified position. The position allowed are from 0 to 2.
+     * @param position Position of the cardSlot to return
+     * @return The CardSlot in the specified position
+     * @throws IllegalArgumentException If the position specified if greater than 2
      */
     private CardSlot getSlotByPosition(int position) throws IllegalArgumentException{
 
@@ -45,6 +49,13 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
     }
 
 
+    /**
+     * Buy a development card
+     * @param card Card to buy
+     * @param position CardSlot where to store the card in the storage
+     * @param storage Where to store the card bought
+     * @return True if the purchase was successful
+     */
     @Override
     public boolean buyCard(PurchasableCard card, int position, ResourceStorage storage) {
 
@@ -123,6 +134,9 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
         return null;
     }
 
+    /**
+     * TODO: PARTIAL DOCUMENTATION -> ASK FOR SELECTOR AND VISITOR
+     */
 
 
 }

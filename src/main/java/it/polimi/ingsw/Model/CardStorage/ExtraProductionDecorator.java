@@ -11,7 +11,8 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 import java.util.List;
 
 /**
- *  decoratore di CardStorage, permette a creazione di una Leader Production card
+ *  Decorator of CardStorage. It permits the creation of a leader production card when a leader card with the power to produce
+ *  is activated.
  */
 public class ExtraProductionDecorator implements CardStorage, ProductionVisitor {
 
@@ -64,5 +65,8 @@ public class ExtraProductionDecorator implements CardStorage, ProductionVisitor 
 
     }
 
+    /**
+     * TODO: PARTIAL DOCUMENTATION
+     */
 
 }

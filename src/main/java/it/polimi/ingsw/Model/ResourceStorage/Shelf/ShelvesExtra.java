@@ -104,7 +104,7 @@ public class ShelvesExtra implements Shelves {
      *  riempe uno scaffale origin prelevando biglie da uno scaffale dest
      */
     private boolean fill(Shelf origin, Shelf dest){
-        if(origin.getColor() != dest.getColor()){ // need to check if null
+        if(origin.getColor() != dest.getColor() && dest.getColor() != null){ // need to check if null
             broadcaster.notifyUser(new ErrorUpdate("illegal move"));
             return false;
         }

@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 
 /**
- *  carta sviluppo
+ *  Represent a development card
  */
 public class DevelopmentCard extends ProductionCard{
 
@@ -18,7 +18,7 @@ public class DevelopmentCard extends ProductionCard{
 
 
     /**
-     *  descrive il livello e il colore di una carta sviluppo
+     * Describe level and color on the development card
      */
     public static class Info {
 

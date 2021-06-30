@@ -3,6 +3,9 @@ package it.polimi.ingsw.Model.Marble;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represent a white marble that can be converted into other colors thanks to a leader card activation.
+ */
 public class SelectableMarble extends Marble {
 
     private List<Color> selectableColors;

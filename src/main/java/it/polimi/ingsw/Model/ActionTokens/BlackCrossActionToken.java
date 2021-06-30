@@ -7,7 +7,7 @@ import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
 
 
 /**
- * rappresenta l'avanzamento della pedina della cpu nel percorso del vaticano
+ * Represent an action token that move the position of the black cross (cpu token) on the Vatican route
  */
 public class BlackCrossActionToken implements ActionToken{
 
@@ -23,6 +23,11 @@ public class BlackCrossActionToken implements ActionToken{
         this.broadcaster = broadcaster;
     }
 
+    /**
+     * Advances the black cross on the vatican route based on the level of the token. If the token is level 1 the method
+     * also shuffle the action tokens list.
+     * @see ActionTokenPlayed The method also generate an ActionTokenPlayed message and notify it to all the player
+     */
     @Override
     public void activate() {
         this.token.advance(level);

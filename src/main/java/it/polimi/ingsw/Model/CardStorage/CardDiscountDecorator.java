@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- *  decoratore che applica uno sconto quando si cerca di comprare una carta
+ *  Decorator to apply a discount during the purchase of a card
  */
 public class CardDiscountDecorator implements CardStorage {
 

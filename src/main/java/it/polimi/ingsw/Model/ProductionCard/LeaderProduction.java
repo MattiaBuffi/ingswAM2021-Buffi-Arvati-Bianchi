@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 
 /**
- *  abilita leader, permette la creazione di una ProdutionCard con una risosa a scelta
+ *  Represent the production leader ability. Permit to create a production card when the leader card is activated
  */
 public class LeaderProduction {
 
@@ -29,7 +29,7 @@ public class LeaderProduction {
 
 
     /**
-     *  genera una Production card con un output uguale alla risorsa scelta
+     *  Generate a production card with the output equal to the one choose by the user
      */
     public ProductionCard getCard(Marble.Color color){
         if(color == Marble.Color.RED

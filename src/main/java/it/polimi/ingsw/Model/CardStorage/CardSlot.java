@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  pila di Development card, la carta in cima puo essere usata per produrre
+ *  Stack of development cards. The card on top could be used to produce.
  */
 public class CardSlot {
 
@@ -31,14 +31,16 @@ public class CardSlot {
     }
 
     /**
-     *  ritorna la carta in cima alla pila
+     * Return the card on top of the stack
+     * @return The card on top
      */
     public DevelopmentCard getActiveCard(){
         return activeCard;
     }
 
     /**
-     *  ritorna tutte le carte conservate all'interno della pila
+     * Return all the card in the stack
+     * @return A list of all development cards in the stack
      */
     public List<DevelopmentCard> getCards(){
         List<DevelopmentCard> list = new ArrayList<>();
@@ -50,7 +52,8 @@ public class CardSlot {
     }
 
     /**
-     *  aggiunge una carta in cima alla pila
+     * Add a card on the top of the stack
+     * @param card Card to add to the stack
      */
     public void setCard(DevelopmentCard card){
         if(activeCard!= null){
@@ -60,9 +63,9 @@ public class CardSlot {
         broadcaster.notifyAllPlayers(new DevelopmentCardBuyUpdate(position, card.getId(), card.getVictoryPoint(), card.getRequire(), card.getProduce(), card.getColor()));
     }
 
-
     /**
-     *  ritorna il livello della carta in cima alla pila
+     * Return the level of the card on top of the stack
+     * @return The level of the card
      */
     public int getLevel(){
         if(activeCard == null){

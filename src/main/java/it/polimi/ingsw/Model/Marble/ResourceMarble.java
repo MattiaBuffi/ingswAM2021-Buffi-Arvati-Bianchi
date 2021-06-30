@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model.Marble;
 
+/**
+ * Represent a marble that is not white or red
+ */
 public class ResourceMarble extends Marble  {
 
     private final Color color;

@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 
 /**
- *  rappresenta una carta acquistabile
+ * Represent a card which is purchasable
  */
 public class PurchasableCard {
 
@@ -43,9 +43,8 @@ public class PurchasableCard {
         return cost;
     }
 
-
     /**
-     *  rimuove questa carta dal mercato
+     * Remove the card from the card market
      */
     public void buy(){
         remover.removeCard(getColor(), getLevel());

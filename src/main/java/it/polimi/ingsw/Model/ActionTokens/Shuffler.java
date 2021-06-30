@@ -2,13 +2,12 @@ package it.polimi.ingsw.Model.ActionTokens;
 
 
 /**
- * la classe che implementa questa interfaccio necessita di avere delgi elementi al suo interno mischiati da un chiamante
+ * Interface for classes who has elements which needs to be shuffled.
  */
 public interface Shuffler {
 
-
     /**
-     * mischi gli elementi della classa implementante
+     * Shuffle the element of the class
      */
     void shuffle();
 

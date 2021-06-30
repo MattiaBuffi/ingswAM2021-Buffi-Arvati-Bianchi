@@ -28,11 +28,13 @@ public class ConnectionPage extends ModelEventHandler.Default implements Layout 
 
 
     public void connect(){
-        if(backEnd.connectToServer(tfIpAddress.getText(), Integer.parseInt(tfPortNumber.getText()))){
-            App.setScene("username_page");
-        } else {
-            tfIpAddress.clear();
-            tfPortNumber.clear();
+        if(!tfIpAddress.getText().equals("") && !tfPortNumber.getText().equals("")) {
+            if (backEnd.connectToServer(tfIpAddress.getText(), Integer.parseInt(tfPortNumber.getText()))) {
+                App.setScene("username_page");
+            } else {
+                tfIpAddress.clear();
+                tfPortNumber.clear();
+            }
         }
     }
 

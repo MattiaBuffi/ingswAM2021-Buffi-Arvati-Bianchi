@@ -64,22 +64,32 @@ public class LeaderCardSelection{
 
 
     public void discardLeaderCards() {
-        List<String> id = new ArrayList<>();
-        if(indexSelected.size() == 2) {
-            for (int i = 0; i < selection.length; i++) {
-                if (!selection[i]) {
-                    DiscardLeaderCard message = new DiscardLeaderCard(leaderCards.get(i).getId());
-                    mainController.getBackend().notify(message);
-                } else {
-                    id.add(leaderCards.get(i).getId());
+        if(rightSelection()) {
+            List<String> id = new ArrayList<>();
+            if (indexSelected.size() == 2) {
+                for (int i = 0; i < selection.length; i++) {
+                    if (!selection[i]) {
+                        DiscardLeaderCard message = new DiscardLeaderCard(leaderCards.get(i).getId());
+                        mainController.getBackend().notify(message);
+                    } else {
+                        id.add(leaderCards.get(i).getId());
+                    }
                 }
+
+                mainController.showLeaderCard(id);
+
+                Stage stage = (Stage) leaderCard1.getScene().getWindow();
+                stage.close();
             }
-
-            mainController.showLeaderCard(id);
-
-            Stage stage = (Stage) leaderCard1.getScene().getWindow();
-            stage.close();
         }
+    }
+
+    private boolean rightSelection(){
+        int count = 0;
+        for(boolean b: selection){
+            if(b) count++;
+        }
+        return count == 2;
     }
 
     public void initData(List<LeaderCard> leaderCards, LeaderCardsTab mainController) {

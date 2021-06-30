@@ -17,7 +17,6 @@ public class ActionDeck implements Shuffler {
     private int currentToken;
     private EventBroadcaster broadcaster;
 
-
     public ActionDeck(CardRemover remover, FaithHandler faithToken, GameHandler gameHandler, EventBroadcaster broadcaster) {
 
         this.broadcaster = broadcaster;
@@ -33,11 +32,10 @@ public class ActionDeck implements Shuffler {
 
 
         shuffle();
-
     }
 
-
-    /** Gioca un action token casuale
+    /**
+     *  Activate the token on currentToken position of the list
      */
     public void playToken(){
         currentToken += 1;
@@ -45,7 +43,9 @@ public class ActionDeck implements Shuffler {
     }
 
 
-
+    /**
+     * Shuffle the list of token
+     */
     @Override
     public void shuffle() {
         Collections.shuffle(actionTokens);

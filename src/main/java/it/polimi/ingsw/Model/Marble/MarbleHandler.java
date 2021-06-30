@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Model.Marble;
 
 
-
+/**
+ * Interface for handling marbles by visitor pattern
+ */
 public interface MarbleHandler {
 
     void handle(RedMarble marble);

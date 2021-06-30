@@ -13,7 +13,7 @@ import java.util.List;
 
 
 /**
- * rappresenta il mercato delle carte
+ * Represent the card market
  */
 public class CardMarket implements CardRemover{
 
@@ -59,7 +59,7 @@ public class CardMarket implements CardRemover{
 
 
     /**
-     *usato per inizializzare il mercato delle carte
+     * Initialize the card market
      */
     public void initMatrix(List<List<List<PurchasableCard>>> matrix, int columns, int rows){
 
@@ -74,9 +74,9 @@ public class CardMarket implements CardRemover{
         }
     }
 
-
     /**
-     *ritorna l'indice della colonna del mercato delle carte corrispondente ad un certo colore
+     * Return the column index of the specified color
+     * @param color Color of the desired column
      */
     private int getColorIndex(DevelopmentCard.Color color){
         switch (color){
@@ -93,10 +93,11 @@ public class CardMarket implements CardRemover{
         }
     }
 
-
-
     /**
-     *inserisce una carta nella matrice del mercato nella posizione specificata
+     * Insert the card passed as parameter in the cell specified by color and leve parameters
+     * @param card Card to insert
+     * @param color Color of the column where to insert the card
+     * @param level Level of the card to identify the cell where to insert
      */
     private void store(PurchasableCard card, int color, int level){
         cardMatrix.get(color).get(level).add(card);
@@ -105,31 +106,39 @@ public class CardMarket implements CardRemover{
 
 
     /**
-     *  ritorna la pila di carte conservata nella posizione specificata
+     * Return the list of cards in the cell of the market specified by the input parameters
+     * @param column Coordinate X of the market grid
+     * @param row Coordinate Y of the marked grid
+     * @return List of the cards in the specified cells of the market
      */
     public List<PurchasableCard> getLevelList(List<List<List<PurchasableCard>>> cardMatrix, int column, int row){
         return cardMatrix.get(column).get(row);
     }
 
-
-
     /**
-     *ritorna la prima carta conservata nella pila nella posizione specificata
+     * Return first card in the list of cards in the cell of the market specified by the input parameters
+     * @param x_color Coordinate X of the market grid
+     * @param y_level Coordinate Y of the market grid
+     * @return Card in the specified position
      */
     public PurchasableCard getCard(int x_color, int y_level){
         return cardMatrix.get(x_color).get(y_level).get(0);
     }
 
-
     /**
-     *ritorna la prima carta conservata nella pila nella posizione specificata
+     * Return first card in the list of cards in the cell of the market specified by the input parameters
+     * @param color Color of the market column
+     * @param level Level of the card to return
+     * @return Card in the specified position
      */
     public PurchasableCard getCard(DevelopmentCard.Color color, int level){
         return cardMatrix.get(getColorIndex(color)).get(level-1).get(0);
     }
 
     /**
-     *ritorna la prima carta con l'id specificato se questa è in ad una pila di carte, ritona null altrimenti
+     * Return the card from the market with the id specified as parameter
+     * @param id Id of the card to return
+     * @return Card with specified id if exists, otherwise, if the card doesn't exist return null
      */
     public PurchasableCard getCard(String id){
 
@@ -146,9 +155,12 @@ public class CardMarket implements CardRemover{
 
     }
 
-
-
-
+    /**
+     * Remove the first card from the list of cards in the market with the specified color and level
+     * @param color Color of the card to remove
+     * @param level  Level of the card to remove
+     * @return True if was possible to remove the card or False if the list of cards of the specified position is empty
+     */
     @Override
     public boolean removeCard(DevelopmentCard.Color color, int level) {
         //List<PurchasableCard> cards = cardMatrix.get(getColorIndex(color)).get(level-1);
@@ -168,8 +180,11 @@ public class CardMarket implements CardRemover{
     }
 
 
-
-
+    /**
+     * Remove a card from the market of the specified color
+     * @param color Color of the card to remove
+     * @return True if was possible to remove the card
+     */
     @Override
     public boolean removeCard(DevelopmentCard.Color color) {
         for (int i = 1; i < 4; i++) {
@@ -182,7 +197,7 @@ public class CardMarket implements CardRemover{
 
 
     /**
-     *notifica a tutti i giocatori che una carta in una certa posizione è cambiata
+     * Notify all the players that a card in a certain position of the market is changed
      */
     private void notifyNewCard(PurchasableCard purchasableCard){
         DevelopmentCard card = purchasableCard.getCard();

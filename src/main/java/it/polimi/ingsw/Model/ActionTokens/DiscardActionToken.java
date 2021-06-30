@@ -10,7 +10,7 @@ import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
 
 /**
- * rappresenta un azione che scarta dal mercato delle carte di un certo colore
+ * Represent an action token that remove cards of a certain color from the card market
  */
 public class DiscardActionToken implements ActionToken{
 
@@ -26,6 +26,11 @@ public class DiscardActionToken implements ActionToken{
         this.broadcaster = broadcaster;
     }
 
+    /**
+     * Remove a card of the color specified as field. Following the rule of the game, if the remover return false the method
+     * started the end of the game.
+     * @see ActionTokenPlayed The method also generate an ActionTokenPlayed message and notify it to all the player
+     */
     @Override
     public void activate() {
         if(!remover.removeCard(color)){
