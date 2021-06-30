@@ -6,6 +6,10 @@ import it.polimi.ingsw.Model.CardStorage.CardSlot;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
+
+/**
+ *  rappresenta una carta acquistabile
+ */
 public class PurchasableCard {
 
     private CardRemover remover;
@@ -39,6 +43,10 @@ public class PurchasableCard {
         return cost;
     }
 
+
+    /**
+     *  rimuove questa carta dal mercato
+     */
     public void buy(){
         remover.removeCard(getColor(), getLevel());
     }

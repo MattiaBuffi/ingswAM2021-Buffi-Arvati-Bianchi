@@ -18,6 +18,7 @@ public class VaticanRoute {
     protected static final int VICTORY_POINTS_STEP = 3;
     protected static final int[] ROUTE_VICTORY_POINTS = {1, 2, 4, 6, 9, 12, 16, 20};
 
+
     public int popeSpaceReached;
 
     private ArrayList<VaticanToken> tokenList;

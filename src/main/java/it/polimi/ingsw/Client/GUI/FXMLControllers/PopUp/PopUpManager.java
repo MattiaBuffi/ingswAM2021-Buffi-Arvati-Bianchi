@@ -35,7 +35,7 @@ public class PopUpManager {
         ErrorPopup controller = loader.getController();
         controller.setMessage(errorMessage);
 
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -50,7 +50,7 @@ public class PopUpManager {
         NewTurnPopUp controller = loader.getController();
         controller.initData(username, backEnd);
 
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -65,7 +65,7 @@ public class PopUpManager {
         ActionTokenPopUp controller = loader.getController();
         controller.initData(message);
 
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -81,7 +81,7 @@ public class PopUpManager {
         controller.initData(leaderCards, mainController);
 
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -129,7 +129,7 @@ public class PopUpManager {
         controller.initData(mainController, resourceNumber);
 
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

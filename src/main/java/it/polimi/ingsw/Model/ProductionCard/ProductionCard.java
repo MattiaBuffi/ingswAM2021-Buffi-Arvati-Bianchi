@@ -31,7 +31,9 @@ public class ProductionCard {
         return id;
     }
 
-
+    /**
+     *  preleva le risorse di Require dallo storage e deposita quelle prodotte
+     */
     public List<Marble> make(ResourceStorage storage){
         if(!storage.withdrawal(require)){
             return null;

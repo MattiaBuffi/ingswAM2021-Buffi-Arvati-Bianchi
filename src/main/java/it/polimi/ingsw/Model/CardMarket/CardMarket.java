@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ * rappresenta il mercato delle carte
+ */
 public class CardMarket implements CardRemover{
 
 
@@ -53,6 +57,10 @@ public class CardMarket implements CardRemover{
 
     }
 
+
+    /**
+     *usato per inizializzare il mercato delle carte
+     */
     public void initMatrix(List<List<List<PurchasableCard>>> matrix, int columns, int rows){
 
         for (int j = 0; j < columns; j++) {
@@ -66,6 +74,10 @@ public class CardMarket implements CardRemover{
         }
     }
 
+
+    /**
+     *ritorna l'indice della colonna del mercato delle carte corrispondente ad un certo colore
+     */
     private int getColorIndex(DevelopmentCard.Color color){
         switch (color){
             case GREEN:
@@ -81,28 +93,44 @@ public class CardMarket implements CardRemover{
         }
     }
 
+
+
+    /**
+     *inserisce una carta nella matrice del mercato nella posizione specificata
+     */
     private void store(PurchasableCard card, int color, int level){
         cardMatrix.get(color).get(level).add(card);
     }
 
 
 
-
+    /**
+     *  ritorna la pila di carte conservata nella posizione specificata
+     */
     public List<PurchasableCard> getLevelList(List<List<List<PurchasableCard>>> cardMatrix, int column, int row){
         return cardMatrix.get(column).get(row);
     }
 
 
 
-
+    /**
+     *ritorna la prima carta conservata nella pila nella posizione specificata
+     */
     public PurchasableCard getCard(int x_color, int y_level){
         return cardMatrix.get(x_color).get(y_level).get(0);
     }
 
+
+    /**
+     *ritorna la prima carta conservata nella pila nella posizione specificata
+     */
     public PurchasableCard getCard(DevelopmentCard.Color color, int level){
         return cardMatrix.get(getColorIndex(color)).get(level-1).get(0);
     }
 
+    /**
+     *ritorna la prima carta con l'id specificato se questa è in ad una pila di carte, ritona null altrimenti
+     */
     public PurchasableCard getCard(String id){
 
         for (int j = 0; j < COLOR_SIZE; j++) {
@@ -117,6 +145,8 @@ public class CardMarket implements CardRemover{
         return null;
 
     }
+
+
 
 
     @Override
@@ -137,6 +167,9 @@ public class CardMarket implements CardRemover{
         return true;
     }
 
+
+
+
     @Override
     public boolean removeCard(DevelopmentCard.Color color) {
         for (int i = 1; i < 4; i++) {
@@ -148,6 +181,9 @@ public class CardMarket implements CardRemover{
     }
 
 
+    /**
+     *notifica a tutti i giocatori che una carta in una certa posizione è cambiata
+     */
     private void notifyNewCard(PurchasableCard purchasableCard){
         DevelopmentCard card = purchasableCard.getCard();
         broadcaster.notifyAllPlayers(new MarketCardUpdate(

@@ -76,7 +76,7 @@ class ResourceMarketTest {
     public void insertRowTest(int pos){
         ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         Marble oldBonusMarble = market.getBonusMarble();
-        Marble newBonusMarble = market.getMarblesGrid()[market.ROW_SIZE -1][pos];
+        Marble newBonusMarble = market.getMarblesGrid()[0][pos];
 
         market.insertExtra(pos+4);
 
@@ -89,7 +89,7 @@ class ResourceMarketTest {
     public void insertColumnTest(int pos){
         ResourceMarket market = new ResourceMarket(new TestBroadcaster());
         Marble oldBonusMarble = market.getBonusMarble();
-        Marble newBonusMarble = market.getMarblesGrid()[pos][market.COLUMN_SIZE -1];
+        Marble newBonusMarble = market.getMarblesGrid()[pos][0];
 
         market.insertExtra(pos);
 
