@@ -10,7 +10,6 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import java.util.List;
-import java.util.Scanner;
 
 public class HomePage extends ModelEventHandler.Default {
 
@@ -29,6 +28,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     ViewBackEnd backEnd;
     char[] homePage;
+    int discardedLeader=0;
 
     public HomePage(char[] homePage) {
         this.homePage = homePage;
@@ -89,35 +89,32 @@ public class HomePage extends ModelEventHandler.Default {
 
     public void activate(String line){
 
-        if (line.equals("1")){
+        if (line.equals("1") /*&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0*/){
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageActivate);
-
-        }else if (line.equals("2")){
+        }else /*if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1)*/{
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageActivate);
-
-        }
+        }/*else {
+            CLI_Controller.cls();
+            System.out.println("Leader Card Error");
+            CLI_Controller.homePage.HomePageView(this.backEnd);
+        }*/
     }
 
     public void discard(String line){
 
-        if (line.equals("1")){
+        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageDiscard);
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 20; j++) {
-                    homePage[LeaderCardHomePosDiscard[0]+j+i*133]= ' ';
-                }
-            }
-        }else if (line.equals("2")){
+
+        }else if (line.equals("2")&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageDiscard);
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 20; j++) {
-                    homePage[LeaderCardHomePosDiscard[1]+j+i*133]= ' ';
-                }
-            }
+        }else {
+            CLI_Controller.cls();
+            System.out.println("Leader Card Error");
+            CLI_Controller.homePage.HomePageView(this.backEnd);
         }
     }
 
@@ -186,8 +183,6 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event){
-
-
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
@@ -225,7 +220,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(LeaderCardActivation event) {
-        System.out.println(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size());
+
         if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
             CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
@@ -266,6 +261,20 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
+    @Override
+    public void handle(AvailableLeaderCard event){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 20; j++) {
+                homePage[LeaderCardHomePosDiscard[1-discardedLeader]+j+i*133]= ' ';
+            }
+        }
+        System.arraycopy("      ".toCharArray(), 0, homePage, LeaderCardHomePosActive[1-discardedLeader], "      ".length());
+        if(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive()){
+            System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1-discardedLeader], active.length());
+        }
+        discardedLeader++;
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+    }
 
 
 

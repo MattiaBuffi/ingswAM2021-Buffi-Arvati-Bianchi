@@ -157,7 +157,8 @@ public class CardMarket implements CardRemover{
                 card.getVictoryPoint(),
                 purchasableCard.getCost(),
                 card.getRequire(),
-                card.getProduce()
+                card.getProduce(),
+                card.getColor()
         ));
     }
 

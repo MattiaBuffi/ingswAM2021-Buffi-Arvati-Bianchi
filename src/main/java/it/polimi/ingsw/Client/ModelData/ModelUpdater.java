@@ -74,7 +74,8 @@ public class ModelUpdater implements ModelEventHandler {
                 event.getVictoryPoints(),
                 event.getPrice(),
                 event.getProduce(),
-                event.getRequire())
+                event.getRequire(),
+                event.getColor())
         );
     }
 
@@ -136,8 +137,10 @@ public class ModelUpdater implements ModelEventHandler {
         getPlayer().buyCard(event.getPosition(),new DevelopmentCardData(event.getId(),
                 event.getVictoryPoints(),
                 new ResourceList(),
+                event.getRequire(),
                 event.getProduce(),
-                event.getRequire())
+                event.getColor()
+                )
         );
     }
 

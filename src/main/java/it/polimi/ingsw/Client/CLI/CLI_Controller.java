@@ -9,11 +9,13 @@ import it.polimi.ingsw.Message.ClientMessages.*;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
+import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -54,6 +56,8 @@ public class CLI_Controller {
                     "ProductionView.txt","CardMarketView.txt","ResourceMarketView.txt",
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
+
+    private static char[] shelfColors = new char[2];
 
     public CLI_Controller(){
 
@@ -149,50 +153,60 @@ public class CLI_Controller {
 
 
     public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
-            List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getShelves();
+            List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
             for (int i = 0; i < playerShelf.size(); i++) {
                 int size = playerShelf.get(i).size;
                 if(playerShelf.get(i).color!= null){
-                switch (playerShelf.get(i).color) {
-                    case YELLOW:
-                        for (int j = 0; j < size; j++) {
-                            if(playerShelf.get(i).maxSize == 3)
-                                scheme[RssPosition[i + j+1]] = 'Y';
-                            else
-                                scheme[RssPosition[i + j]] = 'Y';
-                        }
-                        break;
-                    case BLUE:
-                        for (int j = 0; j < size; j++) {
-                            if(playerShelf.get(i).maxSize == 3)
-                                scheme[RssPosition[i + j+1]] = 'B';
-                            else
-                                scheme[RssPosition[i + j]] = 'B';
-                        }
-                        break;
-                    case PURPLE:
-                        for (int j = 0; j < size; j++) {
-                            if(playerShelf.get(i).maxSize == 3)
-                                scheme[RssPosition[i + j+1]] = 'P';
-                            else
-                                scheme[RssPosition[i + j]] = 'P';
-                        }
-                        break;
-                    case GREY:
-                        for (int j = 0; j < size; j++) {
-                            if(playerShelf.get(i).maxSize == 3)
-                                scheme[RssPosition[i + j+1]] = 'G';
-                            else
-                                scheme[RssPosition[i + j]] = 'G';
-                        }
-                        break;
-                    default:
-                        for (int j = 0; j < size; j++) {
+                    switch (playerShelf.get(i).color) {
+                        case YELLOW:
+                            for (int j = 0; j < size; j++) {
+                                if(playerShelf.get(i).maxSize == 3)
+                                    scheme[RssPosition[i + j+1]] = 'Y';
+                                else
+                                    scheme[RssPosition[i + j]] = 'Y';
+                            }
+                            break;
+                        case BLUE:
+                            for (int j = 0; j < size; j++) {
+                                if(playerShelf.get(i).maxSize == 3)
+                                    scheme[RssPosition[i + j+1]] = 'B';
+                                else
+                                    scheme[RssPosition[i + j]] = 'B';
+                            }
+                            break;
+                        case PURPLE:
+                            for (int j = 0; j < size; j++) {
+                                if(playerShelf.get(i).maxSize == 3)
+                                    scheme[RssPosition[i + j+1]] = 'P';
+                                else
+                                    scheme[RssPosition[i + j]] = 'P';
+                            }
+                            break;
+                        case GREY:
+                            for (int j = 0; j < size; j++) {
+                                if(playerShelf.get(i).maxSize == 3)
+                                    scheme[RssPosition[i + j+1]] = 'G';
+                                else
+                                    scheme[RssPosition[i + j]] = 'G';
+                            }
+                            break;
+                        default:
+                            for (int j = 0; j < size; j++) {
+                                if(playerShelf.get(i).maxSize == 3)
+                                    scheme[RssPosition[i + j+1]] = ' ';
+                                else
+                                    scheme[RssPosition[i + j]] = ' ';
+                            }
+                            break;
+                    }
+                }else if (size==0){
+                    for (int j = 0; j<playerShelf.get(i).maxSize; j++) {
+                        if(playerShelf.get(i).maxSize == 3)
+                            scheme[RssPosition[i + j+1]] = ' ';
+                        else
                             scheme[RssPosition[i + j]] = ' ';
-                        }
-                        break;
+                    }
                 }
-            }
             }
     }
 
@@ -240,37 +254,6 @@ public class CLI_Controller {
     }
 
 
-    public static void Production(String productionString, ViewBackEnd backEnd) {
-        if(productionString.equals("0")){
-            System.out.println("Please insert data for basic production (in1-in2-out): ");
-            Scanner input = new Scanner(System.in);
-            String basicProd = input.nextLine();
-            String[] basicProdArray = basicProd.split("-");
-            Marble.Color[] prodColor = new Marble.Color[3];
-            for (int i = 0; i < basicProdArray.length; i++) {
-                switch (basicProdArray[i]) {
-                    case "Y":
-                        prodColor[i] = Marble.Color.YELLOW;
-                        break;
-                    case "G":
-                        prodColor[i] = Marble.Color.GREY;
-                        break;
-                    case "P":
-                        prodColor[i] = Marble.Color.PURPLE;
-                        break;
-                    case "B":
-                        prodColor[i] = Marble.Color.BLUE;
-                        break;
-                }
-            }
-
-            BasicProduction message = new BasicProduction(prodColor[0], prodColor[1],prodColor[2]);
-            backEnd.notify(message);
-        }else{
-            CardProduction message = new CardProduction(Integer.parseInt(productionString)-1);
-            backEnd.notify(message);
-        }
-    }
 
 
     public static void cls()
@@ -281,6 +264,21 @@ public class CLI_Controller {
             else
                 Runtime.getRuntime().exec("clear");
         } catch (InterruptedException | IOException ignored) {}
+    }
+
+    public static String getDevColor(DevelopmentCard.Color color){
+        switch (color) {
+            case BLUE:
+                return "BLUE";
+            case YELLOW:
+                return "YELLOW";
+            case PURPLE:
+                return "PURPLE";
+            case GREEN:
+                return "GREEN";
+            default:
+                return "";
+        }
     }
 
 
@@ -323,6 +321,22 @@ public class CLI_Controller {
             colorExtractor(colorMarble, color);
         }
         return stringBuilder(colorMarble);
+    }
+
+    public static Marble.Color fromStringToColor(String s){
+        char c = s.toUpperCase().charAt(0);
+        switch (c){
+            case 'Y':
+                return Marble.Color.YELLOW;
+            case 'B':
+                return Marble.Color.BLUE;
+            case 'P':
+                return Marble.Color.PURPLE;
+            case 'G':
+                return Marble.Color.GREY;
+            default:
+                return null;
+        }
     }
 
     public static String getColorString(Marble.Color color){
@@ -442,12 +456,23 @@ public class CLI_Controller {
     public static void showLeaderShelf(char[] page){
         char[] shelf;
         shelf = readSchematics(13);
+        List<LeaderCard> leaders = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
+        int pos = 0;
+        for (LeaderCard leader: leaders) {
+            if(leader.isActive() && String.valueOf(leader.getType()).equals("EXTRA_SHELF")){
+                shelfColors[pos]= CLI_Controller.getColorString(leader.getColor()).charAt(0);
+                pos++;
+            }
+        }
+
+
         for (int i = 0; i < leaderActive[1]; i++){
             for (int j = 0; j < 4; j++){
                 for (int k = 0; k < 15; k++){
                     page[LeaderShelfPosition[i]+k+133*j] = shelf[k+16*j];
                 }
             }
+            page[LeaderShelfPosition[i]+ 7] = shelfColors[i];
         }
     }
 

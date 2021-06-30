@@ -61,6 +61,11 @@ public class ViewPage extends ModelEventHandler.Default {
             bigView[BigFaithCellPosition[this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(user.getUsername()) + i * 25]] = ((i+1) + " ").toCharArray()[0];
         }
 
+        if(users.size()==1){
+            bigView[BigFaithCellPosition[this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint("cpu") + 25]] = 'L';
+        }
+
+
         for (int j = 0; j < CLI_Controller.popeFavourActive.length; j++){
             if(CLI_Controller.popeFavourActive[j] == 1){
                 bigView[BigFaithPopeFavourPosition[j]] = 'X';

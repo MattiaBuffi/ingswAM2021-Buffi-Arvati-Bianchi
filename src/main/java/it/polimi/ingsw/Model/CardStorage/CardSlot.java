@@ -47,7 +47,7 @@ public class CardSlot {
             inactiveCard.add(activeCard);
         }
         activeCard = card;
-        broadcaster.notifyAllPlayers(new DevelopmentCardBuyUpdate(position, card.getId(), card.getVictoryPoint(), card.getRequire(), card.getProduce()));
+        broadcaster.notifyAllPlayers(new DevelopmentCardBuyUpdate(position, card.getId(), card.getVictoryPoint(), card.getRequire(), card.getProduce(), card.getColor()));
     }
 
     public int getLevel(){

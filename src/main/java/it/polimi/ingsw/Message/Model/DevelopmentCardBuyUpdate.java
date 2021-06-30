@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
+import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
 import java.util.List;
 
@@ -12,17 +13,19 @@ public class DevelopmentCardBuyUpdate implements Message<ModelEventHandler> {
 
     private final int position;
 
+    private final DevelopmentCard.Color color;
     private final String id;
     private final int victoryPoints;
     private final ResourceList require;
     private final ResourceList produce;
 
-    public DevelopmentCardBuyUpdate(int position, String id, int victoryPoints, ResourceList require, ResourceList produce) {
+    public DevelopmentCardBuyUpdate(int position, String id, int victoryPoints, ResourceList require, ResourceList produce, DevelopmentCard.Color color) {
         this.position = position;
         this.id = id;
         this.victoryPoints = victoryPoints;
         this.require = require;
         this.produce = produce;
+        this.color = color;
     }
 
 
@@ -46,6 +49,7 @@ public class DevelopmentCardBuyUpdate implements Message<ModelEventHandler> {
         return produce;
     }
 
+    public DevelopmentCard.Color getColor(){return color;}
     @Override
     public void accept(ModelEventHandler handler) {
         handler.handle(this);
