@@ -324,19 +324,22 @@ public class CLI_Controller {
     }
 
     public static Marble.Color fromStringToColor(String s){
-        char c = s.toUpperCase().charAt(0);
-        switch (c){
-            case 'Y':
-                return Marble.Color.YELLOW;
-            case 'B':
-                return Marble.Color.BLUE;
-            case 'P':
-                return Marble.Color.PURPLE;
-            case 'G':
-                return Marble.Color.GREY;
-            default:
-                return null;
+        if(s!=null) {
+            char c = s.toUpperCase().charAt(0);
+            switch (c) {
+                case 'Y':
+                    return Marble.Color.YELLOW;
+                case 'B':
+                    return Marble.Color.BLUE;
+                case 'P':
+                    return Marble.Color.PURPLE;
+                case 'G':
+                    return Marble.Color.GREY;
+                default:
+                    return null;
+            }
         }
+        return null;
     }
 
     public static String getColorString(Marble.Color color){

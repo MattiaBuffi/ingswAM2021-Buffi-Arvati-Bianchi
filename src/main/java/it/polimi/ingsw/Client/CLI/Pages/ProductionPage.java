@@ -98,20 +98,7 @@ public class ProductionPage extends ModelEventHandler.Default{
 
 
     private void produce(String line){
-
-        if(line.length()>1) {
-            String[] productionArray = line.split("-");
-            for(String x: productionArray){
-                Production(x, this.backEnd);
-                return;
-            }
-        }else{
             Production(line, backEnd);
-            return;
-        }
-        CLI_Controller.homePage.HomePageView(this.backEnd);
-
-
     }
 
     private void basic(String line){
@@ -167,7 +154,7 @@ public class ProductionPage extends ModelEventHandler.Default{
                     line = line.toUpperCase();
                     switch (line){
                         case "PRODUCE":
-                            System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production, insert the numbers divided by '-') : ");
+                            System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production [ insert one by one]: ");
                             CLI_Controller.setReadHandler(this::produce);
                             break;
                         case "EXIT":

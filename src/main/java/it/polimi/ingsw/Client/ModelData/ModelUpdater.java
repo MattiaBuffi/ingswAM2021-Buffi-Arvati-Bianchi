@@ -73,8 +73,8 @@ public class ModelUpdater implements ModelEventHandler {
                 new DevelopmentCardData(event.getId(),
                 event.getVictoryPoints(),
                 event.getPrice(),
-                event.getProduce(),
                 event.getRequire(),
+                event.getProduce(),
                 event.getColor())
         );
     }
