@@ -87,6 +87,7 @@ public class ScoreboardTab implements Layout, GameTab {
         }
         Comparator<PlayerScore> comparator = Comparator.comparingInt(PlayerScore::getPoints);
         players.sort(comparator);
+        Collections.reverse(players);
     }
 
     private void updateView() {

@@ -7,6 +7,18 @@
 
 <AnchorPane prefHeight="270.0" prefWidth="1920.0" styleClass="bg_vatican_route" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.VaticanRoutePane">
    <children>
+      <ImageView fx:id="popeToken1" fitHeight="100.0" fitWidth="100.0" layoutX="490.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/token/popeFavorOFF_1.png" />
+         </image></ImageView>
+      <ImageView fx:id="popeToken2" fitHeight="100.0" fitWidth="100.0" layoutX="961.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/token/popeFavorOFF_2.png" />
+         </image></ImageView>
+      <ImageView fx:id="popeToken3" fitHeight="100.0" fitWidth="100.0" layoutX="1526.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/token/popeFavorOFF_3.png" />
+         </image></ImageView>
       <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/redCross.png" />
@@ -22,18 +34,6 @@
       <ImageView fx:id="cross4" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/purpleCross.png" />
-         </image></ImageView>
-      <ImageView fx:id="popeToken1" fitHeight="100.0" fitWidth="100.0" layoutX="490.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/token/popeFavorOFF_1.png" />
-         </image></ImageView>
-      <ImageView fx:id="popeToken2" fitHeight="100.0" fitWidth="100.0" layoutX="961.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/token/popeFavorOFF_2.png" />
-         </image></ImageView>
-      <ImageView fx:id="popeToken3" fitHeight="100.0" fitWidth="100.0" layoutX="1526.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/token/popeFavorOFF_3.png" />
          </image></ImageView>
       <Button alignment="CENTER" layoutX="1710.0" layoutY="152.0" mnemonicParsing="false" onAction="#endTurn" prefHeight="74.0" prefWidth="160.0" styleClass="end_turn_button" stylesheets="@../styles/buttons.css" text="END TURN" textAlignment="CENTER" textFill="#c6965b">
          <font>

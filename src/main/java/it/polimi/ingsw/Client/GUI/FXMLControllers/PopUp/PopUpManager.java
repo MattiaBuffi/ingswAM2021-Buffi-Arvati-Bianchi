@@ -113,7 +113,7 @@ public class PopUpManager {
         controller.initData(mainController, selection);
 
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -145,16 +145,24 @@ public class PopUpManager {
         controller.initData(username, backend);
 
         scene.setFill(Color.TRANSPARENT);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public static void showEndGamePopUp(String username) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/end_game.fxml"));
+        Parent parent = loader.load();
+
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+
+        EndGamePopUp controller = loader.getController();
+        controller.initData(username);
+
+        scene.setFill(Color.TRANSPARENT);
+        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
 }
-
-/*
-AnchorPane shadowPane = loader.load();
-
-Scene scene = new Scene(shadowPane);
-
-scene.setFill(Color.TRANSPARENT);
-*/
