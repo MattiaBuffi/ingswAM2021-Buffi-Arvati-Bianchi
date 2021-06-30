@@ -169,10 +169,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     private void checkLeaderCardActivation(){
         List<LeaderCard> leaderCards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
-        System.out.println("CardActivated: " + leaderActivated);
 
         for(LeaderCard card: leaderCards){
-            System.out.println("ID: " + card.getId() + " - isActive: " + card.isActive());
             if(card.isActive() && !leaderActivated.contains(card.getId())){
                 leaderPowerSelector(card.getId());
                 leaderActivated.add(card.getId());

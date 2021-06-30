@@ -10,6 +10,9 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class ViewModel {
 
     public String myUsername;
@@ -46,9 +49,11 @@ public class ViewModel {
         message.accept(updater);
     }
 
-
-
-
+    /**
+     *
+     * @param username the username of the player
+     * @return
+     */
     public Player getPlayer(String username){
         Player playerToReturn = null;
         for(Player p: players){

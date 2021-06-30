@@ -25,9 +25,6 @@ public class PlayerStorage implements ResourceStorage{
         shelves = new ShelvesBase(broadcaster);
         chest = new ResourceList();
         this.broadcaster = broadcaster;
-
-        //CHEAT_RESOURCES();
-
     }
 
 
@@ -36,7 +33,7 @@ public class PlayerStorage implements ResourceStorage{
         chest.add(Marble.Color.BLUE, 99);
         chest.add(Marble.Color.GREY, 99);
         chest.add(Marble.Color.PURPLE, 99);
-        //broadcaster.notifyAllPlayers(new ChestUpdate(chest));
+        deposit(new ResourceList());
     }
 
 
