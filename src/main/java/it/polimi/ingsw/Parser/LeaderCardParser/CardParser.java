@@ -3,7 +3,6 @@ package it.polimi.ingsw.Parser.LeaderCardParser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
-import it.polimi.ingsw.Parser.ProductionCard.DevelopmentCardBuilder;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,16 +16,22 @@ import java.util.List;
 public class CardParser {
 
     private static final String path = "src/main/resources/cards/LeaderCard.json";
-    private static final List<LeaderCard> LEADER_CARDS = parseLeaderDeckBuilder();
+    private static final List<LeaderCardBuilder> LEADER_CARD_BUILDERS = parseLeaderDeckBuilder();
 
-    public static List<LeaderCard> getLeaderCards(){
-        return new ArrayList<>(LEADER_CARDS);
+    public static List<LeaderCard> getLeaderCard(){
+
+        List<LeaderCard> leaderCards =new ArrayList<>();
+
+        for (LeaderCardBuilder cardBuilder: LEADER_CARD_BUILDERS){
+            leaderCards.add(cardBuilder.getCard());
+        }
+        return leaderCards;
     }
 
-    private static List<LeaderCard> parseLeaderDeckBuilder() {
+    private static List<LeaderCardBuilder> parseLeaderDeckBuilder() {
         Gson parser = new Gson();
         BufferedReader reader = null;
-        List<LeaderCard> cards = new ArrayList<>();
+        List<LeaderCardBuilder> cards = new ArrayList<>();
 
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -38,9 +43,6 @@ public class CardParser {
                 //error
             }
 
-            for (LeaderCardBuilder cardBuilder: parsedCard){
-                cards.add(cardBuilder.getCard());
-            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -21,7 +21,8 @@ public class StateSetupResources extends PlayerState {
         }
 
         if(!completeSetup(context)){
-            context.notifyUser(new ResourceSetup(availableResources(context.getPosition())));
+            context.notifyUser(new ResourceSetup(availableResources(context.getPosition())-context.getResourceStorage().getResources().getSize()));
+            return true;
         }
 
         endSetup(context);

@@ -51,7 +51,7 @@ public class Game implements TurnHandler, GameHandler {
 
 
 
-        List<LeaderCard> leaderCards = CardParser.getLeaderCards();
+        List<LeaderCard> leaderCards = CardParser.getLeaderCard();
         Collections.shuffle(leaderCards);
         Collections.shuffle(users);
 
@@ -74,7 +74,7 @@ public class Game implements TurnHandler, GameHandler {
         }
 
 
-        broadcaster.sendMessages(null);
+        broadcaster.sendMessages(null, "Setup");
 
 
         for (Player p: players){
@@ -120,7 +120,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "bought Development Card");
 
     }
 
@@ -145,7 +145,7 @@ public class Game implements TurnHandler, GameHandler {
         }
 
         resourceMarket.insertExtra(position);
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "bought marbles from market");
 
     }
 
@@ -163,7 +163,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "marble stored");
 
     }
 
@@ -180,7 +180,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "resources moved");
 
     }
 
@@ -198,7 +198,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "production");
 
     }
 
@@ -215,7 +215,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "production");
     }
 
 
@@ -232,7 +232,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "production");
 
     }
 
@@ -250,7 +250,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "Leader card activated");
 
     }
 
@@ -268,7 +268,7 @@ public class Game implements TurnHandler, GameHandler {
             return;
         }
 
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "discarded Leader Card");
     }
 
     public void endTurn(String username){
@@ -283,7 +283,7 @@ public class Game implements TurnHandler, GameHandler {
             broadcaster.emptyMessages();
             return;
         }
-        broadcaster.sendMessages(username);
+        broadcaster.sendMessages(username, "turn ended");
 
     }
 
@@ -343,7 +343,6 @@ public class Game implements TurnHandler, GameHandler {
         @Override
         public void endTurn() {
             actionDeck.playToken();
-            broadcaster.notifyAllPlayers(new ActivePlayer(players.get(0).getUser().getUsername()));
             players.get(currentPlayer).setActive();
         }
 
@@ -386,9 +385,9 @@ public class Game implements TurnHandler, GameHandler {
         }
 
 
-        public void sendMessages(String username){
+        public void sendMessages(String username, String message){
             for (Player p: players){
-                p.notifyUser(new ModelUpdate(username, messages));
+                p.notifyUser(new ModelUpdate(username, message, messages));
             }
             messages.clear();
         }
