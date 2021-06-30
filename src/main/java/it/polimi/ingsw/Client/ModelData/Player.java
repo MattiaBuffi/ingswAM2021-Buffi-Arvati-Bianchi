@@ -60,13 +60,11 @@ public class Player {
     }
 
     public void updateShelf(int position, int maxSize, int size, Marble.Color color){
-
         if(position < shelves.size()){
             shelves.get(position).update(position, maxSize, size, color);
         } else {
             shelves.add(position, new Shelf(position, maxSize, size, color));
         }
-
     }
 
     public void buyCard(int position, DevelopmentCardData cardData){
