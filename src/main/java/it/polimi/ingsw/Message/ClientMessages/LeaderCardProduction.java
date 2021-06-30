@@ -4,6 +4,10 @@ import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Model.Marble.Marble;
 
+/**
+ * Message for leader card production. The fields are the id of the leader card which has the power to produce and the
+ * color of the resource the player want to receive.
+ */
 public class LeaderCardProduction implements Message<ClientEventHandler> {
 
     private String cardId;

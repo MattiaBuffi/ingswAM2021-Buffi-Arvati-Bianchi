@@ -3,6 +3,9 @@ package it.polimi.ingsw.Message.ClientMessages;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 
+/**
+ * Message for the username of the player. Sent during the setup of the game
+ */
 public class Login implements Message<ClientEventHandler> {
 
     private String username;
