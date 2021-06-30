@@ -162,6 +162,9 @@ public class StorageTab implements Layout, GameTab {
         if(!leaderStorage1.isVisible()){
             leaderStorage1.setVisible(true);
             leaderStorage1.setImage(getLeaderPowerImage(id));
+        } else if (!leaderStorage2.isVisible()){
+            leaderStorage2.setVisible(true);
+            leaderStorage2.setImage(getLeaderPowerImage(id));
         }
     }
 

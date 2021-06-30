@@ -43,6 +43,7 @@ public class CardParser {
                 //error
             }
 
+            cards = parsedCard;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

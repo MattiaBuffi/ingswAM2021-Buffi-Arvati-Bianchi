@@ -33,9 +33,9 @@
             <ChoiceBox fx:id="shelfSelector" layoutX="107.0" layoutY="25.0" prefHeight="25.0" prefWidth="96.0">
                <items>
                   <FXCollections fx:factory="observableArrayList">
-                     <Integer fx:value="1" />
-                     <Integer fx:value="2" />
-                     <Integer fx:value="3" />
+                     <String fx:value="1" />
+                     <String fx:value="2" />
+                     <String fx:value="3" />
                   </FXCollections>
                </items>
             </ChoiceBox>

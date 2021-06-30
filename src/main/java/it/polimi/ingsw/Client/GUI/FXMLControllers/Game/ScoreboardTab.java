@@ -85,7 +85,7 @@ public class ScoreboardTab implements Layout, GameTab {
         for(PlayerScore p: players){
             p.setPoints(backEnd.getModel().getPlayer(p.getUsername()).getVictoryPoints());
         }
-        Comparator<PlayerScore> comparator = Comparator.comparing(PlayerScore::getPoints);
+        Comparator<PlayerScore> comparator = Comparator.comparingInt(PlayerScore::getPoints);
         players.sort(comparator);
     }
 

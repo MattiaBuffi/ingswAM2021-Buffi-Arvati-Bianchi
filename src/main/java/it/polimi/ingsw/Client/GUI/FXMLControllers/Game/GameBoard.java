@@ -16,8 +16,7 @@ import java.util.List;
 
 /**
  * Controller of the game_board.fxml. The class has a reference to all the tab and pane contained in it and works as message handler
- * for the message coming from Model. Every ModelUpdate will be forwarded to the backend where a ModelUpdater will update the light model.
- * After every ModelUpdate the tabs of the game board will be updated to show the new data.
+ * for the message coming from ViewBackEnd. After every ModelUpdate the tabs of the game board will be updated to show the new data.
  */
 public class GameBoard extends ModelEventHandler.Default implements Layout {
 
