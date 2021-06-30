@@ -27,7 +27,7 @@ public class ExtraShelf  implements ActivationStrategy {
     @Override
     public boolean activate(Player player, LeaderCard card) {
         player.getResourceStorage().setShelves(new ShelvesExtra(player.getResourceStorage().getShelves(), player, color));
-        return false;
+        return true;
     }
 
 }
