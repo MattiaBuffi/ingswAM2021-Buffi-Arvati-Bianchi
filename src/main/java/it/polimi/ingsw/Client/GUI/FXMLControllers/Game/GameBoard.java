@@ -16,8 +16,7 @@ import java.util.List;
 
 /**
  * Controller of the game_board.fxml. The class has a reference to all the tab and pane contained in it and works as message handler
- * for the message coming from Model. Every ModelUpdate will be forwarded to the backend where a ModelUpdater will update the light model.
- * After every ModelUpdate the tabs of the game board will be updated to show the new data.
+ * for the message coming from ViewBackEnd. After every ModelUpdate the tabs of the game board will be updated to show the new data.
  */
 public class GameBoard extends ModelEventHandler.Default implements Layout {
 
@@ -152,13 +151,10 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         vaticanRoute_Controller.update();
         scoreboardTab_Controller.update();
         productionTab_Controller.update();
-
-        System.out.println("==> Model UPDATE");
     }
 
     private void leaderPowerSelector(String s){
         int id = Integer.parseInt(s.substring(3));
-        System.out.println("SELECTOR: " + id);
         if(id < 5) {
             cardsMarketTab_Controller.showLeaderPower(String.valueOf(id));
         } else if(id < 9){
@@ -172,10 +168,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     private void checkLeaderCardActivation(){
         List<LeaderCard> leaderCards = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
-        System.out.println("CardActivated: " + leaderActivated);
 
         for(LeaderCard card: leaderCards){
-            System.out.println("ID: " + card.getId() + " - isActive: " + card.isActive());
             if(card.isActive() && !leaderActivated.contains(card.getId())){
                 leaderPowerSelector(card.getId());
                 leaderActivated.add(card.getId());

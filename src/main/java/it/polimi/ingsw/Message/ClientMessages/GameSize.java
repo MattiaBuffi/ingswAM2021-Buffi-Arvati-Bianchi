@@ -4,7 +4,8 @@ import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
 
 /**
- * The message is sent by the player who create a game and indicate the number of the players of the game just created.
+ * Message sent by the player who create a game and indicate the number of the players of the game just created. Sent
+ * during the setup of the game
  */
 public class GameSize implements Message<ClientEventHandler> {
 

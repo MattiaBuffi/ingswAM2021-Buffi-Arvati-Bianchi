@@ -36,6 +36,7 @@ public class PlayerStorage implements ResourceStorage{
         chest.add(Marble.Color.BLUE, 99);
         chest.add(Marble.Color.GREY, 99);
         chest.add(Marble.Color.PURPLE, 99);
+        deposit(new ResourceList());
         //broadcaster.notifyAllPlayers(new ChestUpdate(chest));
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
+import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Model.Marble.*;
 import javafx.collections.FXCollections;
@@ -21,7 +22,7 @@ public class ResourceAvailablePopup extends ResourceViewer {
     @FXML
     Pane shelfSelectionPane, marbleSelectionPane;
     @FXML
-    ChoiceBox<Integer> shelfSelector;
+    ChoiceBox<String> shelfSelector;
     @FXML
     ChoiceBox<String> colorSelector;
     @FXML
@@ -37,12 +38,12 @@ public class ResourceAvailablePopup extends ResourceViewer {
     public void depositResource() {
         if(shelfSelector.getSelectionModel().getSelectedItem() != null){
             if(!whiteMarble){
-                DepositResource message = new DepositResource(marble.getColor(), shelfSelector.getSelectionModel().getSelectedItem() - 1);
+                DepositResource message = new DepositResource(marble.getColor(), shelfSelector.getSelectionModel().getSelectedIndex());
                 mainController.getBackEnd().notify(message);
             } else {
                 if(colorSelector.getSelectionModel().getSelectedItem() != null) {
                     DepositResource message = new DepositResource(getColor(colorSelector.getSelectionModel().getSelectedItem()),
-                            shelfSelector.getSelectionModel().getSelectedItem() - 1);
+                            shelfSelector.getSelectionModel().getSelectedIndex());
                     mainController.getBackEnd().notify(message);
                 }
             }
@@ -63,6 +64,19 @@ public class ResourceAvailablePopup extends ResourceViewer {
         marble.accept(handler);
         this.marble = marble;
         this.mainController = mainController;
+
+        List<String> choiceBoxList = new ArrayList<>();
+        List<Shelf> shelves = mainController.getBackEnd().getModel().getPlayer(mainController.getBackEnd().getMyUsername()).getShelves();
+
+        for(int i=0; i<shelves.size(); i++){
+            if(i<3){
+                choiceBoxList.add(String.valueOf(i + 1));
+            } else {
+                choiceBoxList.add("Leader " + (i - 2));
+            }
+        }
+
+        shelfSelector.setItems(FXCollections.observableList(choiceBoxList));
 
         discardButton.setVisible(discardVisibility);
     }

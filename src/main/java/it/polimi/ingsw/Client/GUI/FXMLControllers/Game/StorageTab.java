@@ -72,19 +72,14 @@ public class StorageTab implements Layout, GameTab {
 
         List<Marble> marbles = backEnd.getModel().resourceMarketBuffer;
 
-        if(marbles.size() > 0) {
-            if(!discarded.contains(marbles.get(0))) {
-                try {
-                    PopUpManager.showDepositResourcePopUp(marbles.get(0), this, true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if(discarded.size() != marbles.size()){
-                try {
-                    PopUpManager.showDepositResourcePopUp(marbles.get(discarded.size()), this, true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        System.out.println("BUFFER SIZE: " + marbles.size());
+
+        if(marbles.size() > 0 && marbles.size() > discarded.size()) {
+            System.out.println("-- Marble: " + marbles.get(discarded.size()).getColor());
+            try {
+                PopUpManager.showDepositResourcePopUp(marbles.get(discarded.size()), this, true);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -167,6 +162,9 @@ public class StorageTab implements Layout, GameTab {
         if(!leaderStorage1.isVisible()){
             leaderStorage1.setVisible(true);
             leaderStorage1.setImage(getLeaderPowerImage(id));
+        } else if (!leaderStorage2.isVisible()){
+            leaderStorage2.setVisible(true);
+            leaderStorage2.setImage(getLeaderPowerImage(id));
         }
     }
 

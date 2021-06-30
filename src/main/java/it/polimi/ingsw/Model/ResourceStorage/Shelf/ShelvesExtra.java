@@ -48,6 +48,7 @@ public class ShelvesExtra implements Shelves {
     public ResourceList getResources() {
         ResourceList content = new ResourceList();
         content.add(shelf.getColor(), shelf.getSize());
+        content.addAll(shelves.getResources());
         return content;
     }
 

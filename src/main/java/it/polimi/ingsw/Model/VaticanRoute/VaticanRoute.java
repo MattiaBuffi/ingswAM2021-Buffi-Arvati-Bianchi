@@ -78,7 +78,7 @@ public class VaticanRoute {
 
 
     public boolean vaticanReport(List<VaticanToken> tokens, int newPosition, int triggerPosition, int lowerLimit, int victoryPoints){
-        if(newPosition < triggerPosition){
+        if(newPosition <= triggerPosition){
             return false;
         }
 
