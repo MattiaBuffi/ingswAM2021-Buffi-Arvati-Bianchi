@@ -167,6 +167,13 @@ public class ModelUpdater implements ModelEventHandler {
     }
 
 
+    @Override
+    public void handle(VictoryPointsUpdate event) {
+        model.getPlayer(event.getUsername()).setVictoryPoints(event.getVictoryPoints());
+
+    }
+
+
 
 
 
@@ -177,6 +184,8 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(ResourceSetup event) {
         //doNothing
     }
+
+
 
     @Override
     public void handle(ActionTokenPlayed event) {

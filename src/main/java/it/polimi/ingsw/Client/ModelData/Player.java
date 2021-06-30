@@ -95,6 +95,9 @@ public class Player {
         return victoryPoints;
     }
 
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
 
     public List<Shelf> getShelves() {
         return shelves;

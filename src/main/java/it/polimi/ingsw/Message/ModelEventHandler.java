@@ -5,6 +5,8 @@ import it.polimi.ingsw.Message.Model.*;
 public interface ModelEventHandler {
 
 
+
+
     abstract class Default implements ModelEventHandler{
 
         public abstract void invalidMessage();
@@ -119,6 +121,11 @@ public interface ModelEventHandler {
         public void handle(ResourceSetup event) {
             invalidMessage();
         }
+
+        @Override
+        public void handle(VictoryPointsUpdate event){
+            invalidMessage();
+        }
     }
 
     void handle(VaticanReport event);
@@ -164,6 +171,8 @@ public interface ModelEventHandler {
     void handle(PlayersSetup event);
 
     void handle(ResourceSetup event);
+
+    void handle(VictoryPointsUpdate event);
 
 
 }

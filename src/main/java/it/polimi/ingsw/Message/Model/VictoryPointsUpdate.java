@@ -23,7 +23,7 @@ public class VictoryPointsUpdate implements Message<ModelEventHandler> {
 
     @Override
     public void accept(ModelEventHandler handler) {
-
+        handler.handle(this);
     }
 
 
