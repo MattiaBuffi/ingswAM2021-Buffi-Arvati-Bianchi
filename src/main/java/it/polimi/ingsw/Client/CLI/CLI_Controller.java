@@ -6,7 +6,10 @@ import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.*;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
+import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
@@ -376,6 +379,18 @@ public class CLI_Controller {
         return stringBuilder(colorMarble);
     }
 
+    public static void showSingleMessage(ActionTokenPlayed event, ViewBackEnd backend){
+        CLI_Controller.cls();
+        System.out.println("New Action Token played by Lorenzo");
+        System.out.println(event.getMessage());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CLI_Controller.homePage.HomePageView(backend);
+    }
+
 
     public static void colorExtractor(int[] colorMarble, Marble.Color color) {
         switch (color) {
@@ -437,7 +452,7 @@ public class CLI_Controller {
         System.out.println(event.getErrorMessage());
         System.out.println("Here is a free time travel, enjoy it");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

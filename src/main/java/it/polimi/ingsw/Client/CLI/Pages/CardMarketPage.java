@@ -176,7 +176,6 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ModelUpdate event){
-
         update();
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
@@ -192,15 +191,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.cls();
-        System.out.println("New Action Token played by Lorenzo");
-        System.out.println(event.getMessage());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        CLI_Controller.showSingleMessage(event, this.backEnd);
     }
 
 

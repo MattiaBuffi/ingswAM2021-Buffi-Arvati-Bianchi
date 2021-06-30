@@ -51,7 +51,7 @@ public class HomePage extends ModelEventHandler.Default {
 
 
         int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
-        if ( position != lastPosition && lastPosition!= 0){
+        if ( position != lastPosition){
             System.arraycopy(Integer.toString(lastPosition).toCharArray(), 0, homePage, FaithCellPosition[lastPosition], Integer.toString(lastPosition).toCharArray().length);
             if(position>=10){
                 homePage[FaithCellPosition[position]]= 'X';
@@ -197,8 +197,6 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ErrorUpdate event) {
-        System.err.println("ErrorUpdate");
-
         CLI_Controller.showError(event);
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
@@ -206,15 +204,11 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        System.err.println("ChestUpdate");
-
         CLI_Controller.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        System.err.println("ShelfUpdate");
-
         CLI_Controller.UpdateShelf(backEnd, homePage);
     }
 
@@ -250,15 +244,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.cls();
-        System.out.println("New Action Token played by Lorenzo");
-        System.out.println(event.getMessage());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        CLI_Controller.showSingleMessage(event, this.backEnd);
     }
 
     @Override
