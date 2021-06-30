@@ -28,7 +28,7 @@ public class Discount implements ActivationStrategy{
     @Override
     public boolean activate(Player player, LeaderCard card) {
         player.setCardStorage(new CardDiscountDecorator(player.getCardStorage(), color));
-        return false;
+        return true;
     }
 
 }
