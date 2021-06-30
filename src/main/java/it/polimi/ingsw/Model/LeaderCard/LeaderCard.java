@@ -18,6 +18,7 @@ public class LeaderCard {
         this.victoryPoints = victoryPoints;
         this.requirementsStrategy = requirementsStrategy;
         this.activationStrategy = activationStrategy;
+        this.active = false;
     }
 
 

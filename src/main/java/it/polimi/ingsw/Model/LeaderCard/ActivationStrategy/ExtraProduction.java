@@ -27,6 +27,6 @@ public class ExtraProduction implements ActivationStrategy {
     @Override
     public boolean activate(Player player, LeaderCard card) {
         player.setCardStorage(new ExtraProductionDecorator(player.getCardStorage(), new LeaderProduction(card.getId(), color)));
-        return false;
+        return true;
     }
 }

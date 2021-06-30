@@ -36,6 +36,7 @@ public class MoveResourcePopup extends ResourceViewer{
         List<Shelf> shelves = mainController.getBackEnd().getModel().getPlayer(mainController.getBackEnd().getMyUsername()).getShelves();
         Shelf shelf = shelves.get(shelfSelected);
 
+
         for(int i=0; i<shelves.size(); i++){
             if(i<3){
                 choiceBoxList.add(String.valueOf(i + 1));
