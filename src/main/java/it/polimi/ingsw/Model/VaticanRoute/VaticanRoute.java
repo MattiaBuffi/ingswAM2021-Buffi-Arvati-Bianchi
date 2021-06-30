@@ -18,6 +18,7 @@ public class VaticanRoute {
     protected static final int VICTORY_POINTS_STEP = 3;
     protected static final int[] ROUTE_VICTORY_POINTS = {1, 2, 4, 6, 9, 12, 16, 20};
 
+
     public int popeSpaceReached;
 
     private ArrayList<VaticanToken> tokenList;
@@ -78,7 +79,7 @@ public class VaticanRoute {
 
 
     public boolean vaticanReport(List<VaticanToken> tokens, int newPosition, int triggerPosition, int lowerLimit, int victoryPoints){
-        if(newPosition <= triggerPosition){
+        if(newPosition < triggerPosition){
             return false;
         }
 

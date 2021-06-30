@@ -126,6 +126,13 @@ public interface ModelEventHandler {
         public void handle(VictoryPointsUpdate event){
             invalidMessage();
         }
+
+        @Override
+        public  void handle(EndGame event){
+            invalidMessage();
+        }
+
+
     }
 
     void handle(VaticanReport event);
@@ -174,5 +181,6 @@ public interface ModelEventHandler {
 
     void handle(VictoryPointsUpdate event);
 
+    void handle(EndGame event);
 
 }

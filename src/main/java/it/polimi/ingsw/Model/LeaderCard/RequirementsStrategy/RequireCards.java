@@ -6,6 +6,9 @@ import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  controlla dei requisiti di carte su un Player
+ */
 public class RequireCards implements RequirementStrategy {
 
     private List<DevelopmentCard.Info> requiredCards;

@@ -5,6 +5,9 @@ import it.polimi.ingsw.Model.Marble.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * decoratore di ResourceMArketHandler. Intercetta le WhiteMarble e le converte in SelectableMarble
+ */
 public class WhiteMarbleConversion implements ResourceMarketHandler{
 
     private final ResourceMarketHandler baseHandler;

@@ -12,7 +12,9 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *  implementazione di default di Card Storage
+ */
 public class PlayerCardStorage implements CardStorage, ProductionVisitor {
 
     private EventBroadcaster broadcaster;
@@ -30,6 +32,9 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
 
     }
 
+    /**
+     *  ritorna uno slot in base alla posizione specificata
+     */
     private CardSlot getSlotByPosition(int position) throws IllegalArgumentException{
 
         if(position > 2){

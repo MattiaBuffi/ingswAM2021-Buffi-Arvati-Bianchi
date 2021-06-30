@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ *  mercato delle biglie
+ */
 public class ResourceMarket {
 
     public static final int MARKET_SIZE = 13;

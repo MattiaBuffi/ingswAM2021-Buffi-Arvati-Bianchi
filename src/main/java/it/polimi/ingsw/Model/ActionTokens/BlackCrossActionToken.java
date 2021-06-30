@@ -6,6 +6,9 @@ import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
 
 
+/**
+ * rappresenta l'avanzamento della pedina della cpu nel percorso del vaticano
+ */
 public class BlackCrossActionToken implements ActionToken{
 
     private FaithHandler token;

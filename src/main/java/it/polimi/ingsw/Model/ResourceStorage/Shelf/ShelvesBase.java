@@ -9,7 +9,9 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *  rappresenta una lista di scaffali base
+ */
 public class ShelvesBase implements Shelves{
 
     private EventBroadcaster broadcaster;
@@ -26,7 +28,9 @@ public class ShelvesBase implements Shelves{
 
     }
 
-
+    /**
+     *  prova a sscambiare due scaffali ridimensionandoli adeguatamente
+     */
     private void swap(int originPosition, int destPosition){
 
         ShelfBasic origin = getShelf(originPosition);
@@ -68,6 +72,10 @@ public class ShelvesBase implements Shelves{
     }
 
 
+
+    /**
+     *  aggiunge una biglia allo scaffale selezionato
+     */
     @Override
     public boolean store(Marble.Color color, int position){
         ShelfBasic shelf = getShelf(position);
@@ -90,6 +98,10 @@ public class ShelvesBase implements Shelves{
         return shelf.add(color);
     }
 
+
+    /**
+     *  rimuove risorse dagli scaffali
+     */
     @Override
     public boolean withdraw(ResourceList list){
 
@@ -109,6 +121,11 @@ public class ShelvesBase implements Shelves{
         return true;
     }
 
+
+
+    /**
+     *  muove risorse tra due scaffali
+     */
     @Override
     public boolean move(int originPosition, int destPosition){
 

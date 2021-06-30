@@ -176,12 +176,13 @@ public class ModelUpdater implements ModelEventHandler {
 
     }
 
+    @Override
+    public void handle(EndGame event) {
+
+    }
 
 
-
-
-
-    //*******************currently these method does nothing*************************************************
+//*******************currently these method does nothing*************************************************
 
     @Override
     public void handle(ResourceSetup event) {

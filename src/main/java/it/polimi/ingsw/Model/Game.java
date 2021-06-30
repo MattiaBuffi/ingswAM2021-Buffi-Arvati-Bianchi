@@ -40,6 +40,8 @@ public class Game implements TurnHandler, GameHandler {
 
     private Broadcaster broadcaster;
 
+    private boolean lastTurn;
+
 
     public<U extends User> Game(List<U> users){
 
@@ -290,9 +292,10 @@ public class Game implements TurnHandler, GameHandler {
 
     public void disconnect(String username){
 
-
+        endGame();
 
     }
+
 
 
 
@@ -348,6 +351,11 @@ public class Game implements TurnHandler, GameHandler {
 
         @Override
         public void endGame() {
+            for (VaticanToken token: vaticanRoute.getTokenList()){
+                if(token.getPosition() == vaticanRoute.LAST_POSITION){
+                    //p.notifyUser(new EndGame());
+                }
+            }
 
         }
 
@@ -356,19 +364,35 @@ public class Game implements TurnHandler, GameHandler {
 
     private class MultiPlayerStrategy implements  gameStrategy{
 
-        @Override
-        public void endTurn() {
+
+        private void setNextPlayer(){
             currentPlayer = (currentPlayer+1)%players.size();
             players.get(currentPlayer).setActive();
+        }
+
+        @Override
+        public void endTurn() {
+
+            setNextPlayer();
+
+            if(lastTurn){
+                if(currentPlayer == 0){
+                    for (Player p: players){
+                        p.notifyUser(new EndGame());
+                    }
+                }
+            }
+
+
             for (Player p: players){
                 broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
             }
-            
+
         }
 
         @Override
         public void endGame() {
-
+            lastTurn = true;
         }
 
     }

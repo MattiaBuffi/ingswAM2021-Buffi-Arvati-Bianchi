@@ -37,10 +37,14 @@ public class ActionDeck implements Shuffler {
     }
 
 
+    /** Gioca un action token casuale
+     */
     public void playToken(){
         currentToken += 1;
         actionTokens.get(currentToken).activate();
     }
+
+
 
     @Override
     public void shuffle() {

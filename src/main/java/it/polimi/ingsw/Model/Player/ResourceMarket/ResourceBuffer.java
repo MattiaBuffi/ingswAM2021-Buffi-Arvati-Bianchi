@@ -14,6 +14,10 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 
+
+/**
+ *  buffer delle risorse che un player compra al mercato
+ */
 public class ResourceBuffer implements ResourceMarketHandler{
 
 
@@ -31,11 +35,16 @@ public class ResourceBuffer implements ResourceMarketHandler{
         this.selectableMarbles = new ArrayList<>();
     }
 
-
+    /**
+     *  comparatore tra due Resource marble. ritorna true se il colore delle due biglie è uguale
+     */
     public Boolean normalMarbleComparator(ResourceMarble marble, Marble.Color color){
         return marble.getColor() == color;
     }
 
+    /**
+     *  comparatore tra una Selectable marble e un Marble color. ritorna true se la selectable marble contiene il colore
+     */
     public Boolean selectableMarbleComparator(SelectableMarble marble, Marble.Color color){
         for(Marble.Color m: marble.getSelectableColors()){
             if(m == color){
@@ -45,7 +54,9 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return false;
     }
 
-
+    /**
+     *  rimuove una marble da una lista di marble a seconda di un comparatore
+     */
     private<M extends Marble> boolean remove(List<M> marbleList, Marble.Color color, BiFunction<M, Marble.Color, Boolean> comparator){
         for(M m: marbleList){
             if(comparator.apply(m,color)){
@@ -56,12 +67,18 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return false;
     }
 
+
+    /**
+     *  ritorna la dimensione del buffer
+     */
     @Override
     public int size() {
         return availableMarbles.size()+selectableMarbles.size();
     }
 
-
+    /**
+     *  ritorna il set dei colori contenuti nel buffer
+     */
     @Override
     public Set<Marble.Color> getColors() {
         Set<Marble.Color> colors = new HashSet<>();
@@ -75,6 +92,10 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return colors;
     }
 
+
+    /**
+     *  rimuove una biglia del colore specificato dal buffer e la ritorna al chiamante
+     */
     @Override
     public boolean take(Marble.Color color){
         if(remove(availableMarbles, color, this::normalMarbleComparator)){
@@ -89,7 +110,9 @@ public class ResourceBuffer implements ResourceMarketHandler{
         return false;
     }
 
-
+    /**
+     *  svuota il buffer
+     */
     @Override
     public void empty(){
         faithHandler.give(availableMarbles.size()+selectableMarbles.size() );
@@ -97,7 +120,9 @@ public class ResourceBuffer implements ResourceMarketHandler{
         selectableMarbles.clear();
     }
 
-
+    /**
+     *  deposita una lista di marble all'interno del buffer
+     */
     @Override
     public void handleMarbles(List<Marble> marbles) {
         for (Marble m: marbles){
@@ -107,23 +132,37 @@ public class ResourceBuffer implements ResourceMarketHandler{
 
 
 
-
+    /**
+     *  gestisce il deposito delle RedMarble nel buffer
+     */
     @Override
     public void handle(RedMarble marble) {
         this.faithHandler.advance(1);
     }
 
+
+    /**
+     *  gestisce il deposito delle WhiteMarble nel buffer
+     */
     @Override
     public void handle(WhiteMarble marble) {
        return;
     }
 
+
+    /**
+     *  gestisce il deposito delle ResourceMarble nel buffer
+     */
     @Override
     public void handle(ResourceMarble marble) {
         availableMarbles.add(marble);
         broadcaster.notifyAllPlayers(new MarketResourceAvailable(marble));
     }
 
+
+    /**
+     *  gestisce il deposito delle SelectableMarble nel buffer
+     */
     @Override
     public void handle(SelectableMarble marble) {
         selectableMarbles.add(marble);

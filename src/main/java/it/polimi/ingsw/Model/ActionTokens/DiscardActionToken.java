@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
 
+/**
+ * rappresenta un azione che scarta dal mercato delle carte di un certo colore
+ */
 public class DiscardActionToken implements ActionToken{
 
     private DevelopmentCard.Color color;
