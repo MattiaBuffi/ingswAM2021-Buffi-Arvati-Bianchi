@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
@@ -13,9 +13,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class RssMarketPage extends ModelEventHandler.Default {
 
@@ -43,7 +41,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             selectedMarble = 0;
             this.backEnd.notify(messageBuyRss);
         }catch (NumberFormatException e){
-            CLI_Controller.showUpdateMessage("Wrong Input");
+            Cli.showUpdateMessage("Wrong Input");
             RssMarketPageView(this.backEnd);
         }
     }
@@ -58,7 +56,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         origin =  line;
         System.out.println("Where do you want to move this rss? ");
         System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-        CLI_Controller.setReadHandler(this::store2);
+        Cli.setReadHandler(this::store2);
     }
 
     public void store2(String line){
@@ -67,7 +65,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
             MoveResources moveMessage = new MoveResources(Integer.parseInt(origin) - 1, Integer.parseInt(dest) - 1);
             this.backEnd.notify(moveMessage);
         }catch (NumberFormatException e){
-            CLI_Controller.showUpdateMessage("Wrong Input");
+            Cli.showUpdateMessage("Wrong Input");
             RssMarketPageView(this.backEnd);
         }
     }
@@ -76,7 +74,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
         selectedColor = line;
         System.out.println("Where do you want to store this rss? ");
         System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-        CLI_Controller.setReadHandler(this::storeWhiteMarble);
+        Cli.setReadHandler(this::storeWhiteMarble);
     }
 
     public void storeWhiteMarble(String line){
@@ -85,20 +83,20 @@ public class RssMarketPage extends ModelEventHandler.Default {
             selectedMarble += 1;
             if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
                 backEnd.notify(new EndTurn());
-                backEnd.setEventHandler(CLI_Controller.homePage);
+                backEnd.setEventHandler(Cli.homePage);
             }
         }else {
             try {
-                DepositResource deposit = new DepositResource(CLI_Controller.fromStringToColor(selectedColor), Integer.parseInt(whitePosition) - 1);
+                DepositResource deposit = new DepositResource(Cli.fromStringToColor(selectedColor), Integer.parseInt(whitePosition) - 1);
                 this.backEnd.notify(deposit);
             }catch (NumberFormatException e){
-                CLI_Controller.showUpdateMessage("Wrong Input");
+                Cli.showUpdateMessage("Wrong Input");
                 RssMarketPageView(this.backEnd);
                 return;
             }
             if (selectedMarble+1 == this.backEnd.getModel().resourceMarketBuffer.size()) {
                 backEnd.notify(new EndTurn());
-                backEnd.setEventHandler(CLI_Controller.homePage);
+                backEnd.setEventHandler(Cli.homePage);
             }
         }
     }
@@ -110,24 +108,24 @@ public class RssMarketPage extends ModelEventHandler.Default {
         origin = null;
         dest = null;
 
-        CLI_Controller.cls();
+        Cli.cls();
         updatePage();
         System.out.println("Insert Command (Buy,MoveRss,EndTurn,Exit): ");
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
                     line = line.toUpperCase();
                     switch (line){
                         case "BUY":
                             System.out.println("Which rss row/column do you want to buy? (value between 1 and 7 [1 = first column on the left, 5 = first row from the top]) : ");
-                            CLI_Controller.setReadHandler(this::buy);
+                            Cli.setReadHandler(this::buy);
                             break;
                         case "MOVERSS":
-                            CLI_Controller.setReadHandler(this::store1);
+                            Cli.setReadHandler(this::store1);
                             break;
                         case "EXIT":
                             System.out.println("redirecting to Home..");
-                            CLI_Controller.homePage.HomePageView(backEnd);
+                            Cli.homePage.HomePageView(backEnd);
                             break;
                         case "ENDTURN":
                             EndTurn message = new EndTurn();
@@ -135,7 +133,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                             break;
                         default:
                             System.out.println("Wrong Command, please insert a real command");
-                            CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
+                            Cli.rssMarketPage.RssMarketPageView(this.backEnd);
                             break;
                     }
                 }
@@ -143,7 +141,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
     }
 
     private String getMarble(int position){
-        return CLI_Controller.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(position));
+        return Cli.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(position));
     }
 
     public void rssHandler(){
@@ -151,19 +149,19 @@ public class RssMarketPage extends ModelEventHandler.Default {
         if(this.backEnd.getModel().resourceMarketBuffer.get(selectedMarble).getColor() == Marble.Color.WHITE){
             SelectableMarble marble = (SelectableMarble)this.backEnd.getModel().resourceMarketBuffer.get(selectedMarble);
             if(marble.getSelectableColors().size() == 1) {
-                System.out.println("You take a W Marble, which color do you want to take? " + CLI_Controller.getColorString(marble.getSelectableColors().get(0)));
+                System.out.println("You take a W Marble, which color do you want to take? " + Cli.getColorString(marble.getSelectableColors().get(0)));
             }else {
                 System.out.println("You take a W Marble, which color do you want to take? "
-                        + CLI_Controller.getColorString(marble.getSelectableColors().get(0)) + " or "
-                        + CLI_Controller.getColorString(marble.getSelectableColors().get(1)));
+                        + Cli.getColorString(marble.getSelectableColors().get(0)) + " or "
+                        + Cli.getColorString(marble.getSelectableColors().get(1)));
             }
-            CLI_Controller.setReadHandler(this::selectColorWhiteMarble);
+            Cli.setReadHandler(this::selectColorWhiteMarble);
             return;
         } else {
                 System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
         }
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
                     if(this.backEnd.getModel().resourceMarketBuffer.size()>0) {
                         if (line.isEmpty()) {
@@ -176,7 +174,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                                     return;
                                 }
                             }catch (NumberFormatException e){
-                                CLI_Controller.showUpdateMessage("Wrong Input");
+                                Cli.showUpdateMessage("Wrong Input");
                                 RssMarketPageView(this.backEnd);
                                 return;
                             }
@@ -186,7 +184,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
                                 if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
                                     backEnd.notify(new EndTurn());
-                                    backEnd.setEventHandler(CLI_Controller.homePage);
+                                    backEnd.setEventHandler(Cli.homePage);
                                     return;
                                 }
                                 System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
@@ -195,17 +193,17 @@ public class RssMarketPage extends ModelEventHandler.Default {
                                     DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(line) - 1);
                                     this.backEnd.notify(deposit);
                                 }catch (NumberFormatException e){
-                                    CLI_Controller.showUpdateMessage("Wrong Input");
+                                    Cli.showUpdateMessage("Wrong Input");
                                     RssMarketPageView(this.backEnd);
                                     return;
                                 }
                                 if (selectedMarble + 1 == this.backEnd.getModel().resourceMarketBuffer.size()) {
                                     backEnd.notify(new EndTurn());
-                                    backEnd.setEventHandler(CLI_Controller.homePage);
+                                    backEnd.setEventHandler(Cli.homePage);
                                 }
                             }
                     }else{
-                        CLI_Controller.rssMarketPage.RssMarketPageView(this.backEnd);
+                        Cli.rssMarketPage.RssMarketPageView(this.backEnd);
                     }
 
                 }
@@ -219,24 +217,24 @@ public class RssMarketPage extends ModelEventHandler.Default {
     @Override
     public void handle(ChestUpdate event) {
 
-        CLI_Controller.UpdateChest(backEnd, rssMarket);
+        Cli.UpdateChest(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
 
-        CLI_Controller.UpdateShelf(backEnd, rssMarket);
+        Cli.UpdateShelf(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         RssMarketPageView(this.backEnd);
     }
 
     @Override
     public void handle(ActivePlayer event) {
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
@@ -254,7 +252,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.showSingleMessage(event, this.backEnd);
+        Cli.showSingleMessage(event, this.backEnd);
     }
 
     public void updatePage(){
@@ -309,20 +307,20 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
 
 
-        if(CLI_Controller.leaderActive[1]>0){
-            CLI_Controller.showLeaderShelf(rssMarket);
+        if(Cli.leaderActive[1]>0){
+            Cli.showLeaderShelf(rssMarket);
         }
 
-        CLI_Controller.UpdateShelf(this.backEnd, rssMarket);
-        CLI_Controller.UpdateChest(this.backEnd, rssMarket);
+        Cli.UpdateShelf(this.backEnd, rssMarket);
+        Cli.UpdateChest(this.backEnd, rssMarket);
 
-        if(CLI_Controller.leaderActive[2]>0){
+        if(Cli.leaderActive[2]>0){
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
             int i = 0;
             for (LeaderCard leaderCard : card) {
                 if(leaderCard.getType() == ActivationStrategy.Type.MARBLE_CONVERSION && leaderCard.isActive()){
                     Marble.Color colorEffect = leaderCard.getColor();
-                    String colorEffected = "W -> " + CLI_Controller.getColorString(colorEffect);
+                    String colorEffected = "W -> " + Cli.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, rssMarket, leaderWhiteBall[i], colorEffected.toCharArray().length);
                     i++;
                 }
@@ -333,7 +331,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        CLI_Controller.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor(event.getIndex());
     }
 
 }

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.GameSize;
 import it.polimi.ingsw.Message.ModelEventHandler;
-import java.util.Scanner;
 
 public class SelectNumberPlayerPage extends ModelEventHandler.Default {
 
@@ -14,14 +13,14 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
     public void SelectNumberPlayerPageView(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
-        char[] charArray = CLI_Controller.readSchematics(6);
+        Cli.cls();
+        char[] charArray = Cli.readSchematics(6);
         System.out.println(charArray);
         System.out.println("Insert Number of Player (1-4): ");
 
 
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
                     try{
                         if (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
@@ -29,7 +28,7 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
                             return;
                         }
                     }catch (NumberFormatException e){
-                        CLI_Controller.showUpdateMessage("Wrong Input");
+                        Cli.showUpdateMessage("Wrong Input");
                         SelectNumberPlayerPageView(this.backEnd);
                         return;
                     }
@@ -39,9 +38,9 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
                     try{
                         GameSize messageGameSize = new GameSize(Integer.parseInt(line));
                         this.backEnd.notify(messageGameSize);
-                        CLI_Controller.waitPage.WaitPageView(this.backEnd);
+                        Cli.waitPage.WaitPageView(this.backEnd);
                     }catch (NumberFormatException e){
-                        CLI_Controller.showUpdateMessage("Wrong Input");
+                        Cli.showUpdateMessage("Wrong Input");
                         SelectNumberPlayerPageView(this.backEnd);
                     }
                 }

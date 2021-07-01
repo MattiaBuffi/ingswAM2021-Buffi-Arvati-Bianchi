@@ -73,7 +73,6 @@ public class VaticanRoute {
      * Add the token as parameter to the to the token list
      * @param token token to add to the vatican route
      * @return
-     * TODO: Non capisco il primo if
      */
     public boolean addPlayer(VaticanToken token){
         if(token.getPosition() >= POPE_SPACES[popeSpaceReached]){
@@ -157,6 +156,8 @@ public class VaticanRoute {
 
         broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
+
+
 
     /**
      * TODO: METHOD TO USE?

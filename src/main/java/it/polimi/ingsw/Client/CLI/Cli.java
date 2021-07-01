@@ -5,12 +5,8 @@ import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.ClientMessages.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.VaticanReport;
-import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
@@ -19,15 +15,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 
-public class CLI_Controller {
+public class Cli {
 
     private static ViewBackEnd backEnd;
     private final ClientApp app;
@@ -68,7 +62,7 @@ public class CLI_Controller {
 
     private static char[] shelfColors = new char[2];
 
-    public CLI_Controller(){
+    public Cli(){
 
         app = new ClientApp(this::CLIView);
         backEnd = ViewBackEnd.getCLIBackend(app);
@@ -97,7 +91,7 @@ public class CLI_Controller {
 
 
     public static void main(String[] args) {
-        CLI_Controller controller = new CLI_Controller();
+        Cli controller = new Cli();
         controller.CLIView();
 
         new Thread(()->readLine()).run();
@@ -121,8 +115,8 @@ public class CLI_Controller {
 
     private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
-    private static Consumer<String> lineHandler = CLI_Controller::defaultHandler;
-    private static Consumer<String> newHandler = CLI_Controller::defaultHandler;
+    private static Consumer<String> lineHandler = Cli::defaultHandler;
+    private static Consumer<String> newHandler = Cli::defaultHandler;
 
     private static void readLine(){
 
@@ -413,7 +407,7 @@ public class CLI_Controller {
     }
 
     public static void showSingleMessage(ActionTokenPlayed event, ViewBackEnd backend){
-        CLI_Controller.cls();
+        Cli.cls();
         System.out.println("New Action Token played by Lorenzo");
         System.out.println(event.getMessage());
         try {
@@ -421,7 +415,7 @@ public class CLI_Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        CLI_Controller.homePage.HomePageView(backend);
+        Cli.homePage.HomePageView(backend);
     }
 
 
@@ -473,7 +467,7 @@ public class CLI_Controller {
             ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
             if(playerChest != null) {
                 List<Marble> playerChestMarble = playerChest.getAllMarble();
-                String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
+                String[] playerChestRss = Cli.getColorStringFromMarble(playerChestMarble).split(" ");
                 for (int i = 0; i < playerChestRss.length; i++) {
                     System.arraycopy((playerChestRss[i]+ " ").toCharArray(), 0, page, ChestRssPosition [i], (playerChestRss[i]+ " ").toCharArray().length);
                 }
@@ -511,7 +505,7 @@ public class CLI_Controller {
         int pos = 0;
         for (LeaderCard leader: leaders) {
             if(leader.isActive() && String.valueOf(leader.getType()).equals("EXTRA_SHELF")){
-                shelfColors[pos]= CLI_Controller.getColorString(leader.getColor()).charAt(0);
+                shelfColors[pos]= Cli.getColorString(leader.getColor()).charAt(0);
                 pos++;
             }
         }

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
-import java.util.Scanner;
 
 public class StartPage extends ModelEventHandler.Default{
 
@@ -21,7 +20,7 @@ public class StartPage extends ModelEventHandler.Default{
         System.arraycopy(ip.toCharArray(), 0, charArray, FirstCellPosition, ip.toCharArray().length);
         System.out.println(charArray);
         System.out.println("Insert Port Number: ");
-        CLI_Controller.setReadHandler(this::askPort);
+        Cli.setReadHandler(this::askPort);
     }
 
     public void askPort(String line){
@@ -32,12 +31,12 @@ public class StartPage extends ModelEventHandler.Default{
 
         try {
             if (this.backEnd.connectToServer(this.ip, Integer.parseInt(this.port))) {
-                CLI_Controller.username.UsernamePageView(this.backEnd);
+                Cli.username.UsernamePageView(this.backEnd);
             } else {
-                CLI_Controller.start.StartPageView(this.backEnd);
+                Cli.start.StartPageView(this.backEnd);
             }
         }catch (NumberFormatException e){
-            CLI_Controller.showUpdateMessage("Wrong Input");
+            Cli.showUpdateMessage("Wrong Input");
             StartPageView(this.backEnd);
         }
     }
@@ -46,15 +45,15 @@ public class StartPage extends ModelEventHandler.Default{
     public void StartPageView(ViewBackEnd backEnd){
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        this.charArray = CLI_Controller.readSchematics(0);
+        this.charArray = Cli.readSchematics(0);
         this.ip = "0.0.0.0";
         this.port = "0000";
 
-        CLI_Controller.cls();
+        Cli.cls();
 
         System.out.println(charArray);
         System.out.println("Insert Server IP: ");
-        CLI_Controller.setReadHandler(this::askIp);
+        Cli.setReadHandler(this::askIp);
 
 
     }
@@ -66,7 +65,7 @@ public class StartPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         StartPageView(this.backEnd);
     }
 

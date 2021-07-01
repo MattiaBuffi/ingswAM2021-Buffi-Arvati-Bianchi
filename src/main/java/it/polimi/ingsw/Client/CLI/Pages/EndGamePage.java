@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ModelEventHandler;
 
@@ -12,8 +12,8 @@ public class EndGamePage extends ModelEventHandler.Default {
     public void EndGameView(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
-        char[] charArray = CLI_Controller.readSchematics(15);
+        Cli.cls();
+        char[] charArray = Cli.readSchematics(15);
         String winnerName = "";
         System.arraycopy(winnerName.toCharArray(),0, charArray, namePosition, winnerName.toCharArray().length);
         System.out.println(charArray);
@@ -22,7 +22,7 @@ public class EndGamePage extends ModelEventHandler.Default {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        CLI_Controller.quitPage.QuitPageView(this.backEnd);
+        Cli.quitPage.QuitPageView(this.backEnd);
     }
 
     @Override

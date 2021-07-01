@@ -405,6 +405,7 @@ public class Game implements TurnHandler, GameHandler {
         @Override
         public void endGame() {
             lastTurn = true;
+            endTurn();
         }
 
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
@@ -37,25 +37,25 @@ public class CardMarketPage extends ModelEventHandler.Default {
             }
         }
 
-        if (CLI_Controller.leaderActive[1] > 0) {
-            CLI_Controller.showLeaderShelf(cardMarket);
+        if (Cli.leaderActive[1] > 0) {
+            Cli.showLeaderShelf(cardMarket);
         }
 
-        if (CLI_Controller.leaderActive[0] > 0) {
+        if (Cli.leaderActive[0] > 0) {
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
             int i = 0;
             for (LeaderCard leaderCard : card) {
                 if (leaderCard.getType() == ActivationStrategy.Type.DISCOUNT) {
                     Marble.Color colorEffect = leaderCard.getColor();
-                    String colorEffected = "Discount -1" + CLI_Controller.getColorString(colorEffect);
+                    String colorEffected = "Discount -1" + Cli.getColorString(colorEffect);
                     System.arraycopy(colorEffected.toCharArray(), 0, cardMarket, leaderDiscount[i], colorEffected.toCharArray().length);
                     i++;
                 }
             }
         }
 
-        CLI_Controller.UpdateShelf(this.backEnd, cardMarket);
-        CLI_Controller.UpdateChest(this.backEnd, cardMarket);
+        Cli.UpdateShelf(this.backEnd, cardMarket);
+        Cli.UpdateChest(this.backEnd, cardMarket);
     }
 
 
@@ -66,7 +66,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
                 BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
                 this.backEnd.notify(messageBuyDev);
             }catch (NumberFormatException e) {
-                CLI_Controller.showUpdateMessage("Wrong Input");
+                Cli.showUpdateMessage("Wrong Input");
                 CardMarketPageView(this.backEnd);
                 return;
             }
@@ -79,35 +79,35 @@ public class CardMarketPage extends ModelEventHandler.Default {
     public void CardMarketPageView(ViewBackEnd backEnd) {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
+        Cli.cls();
         update();
         System.out.println(cardMarket);
 
         System.out.println("Insert Command (Buy,EndTurn,Exit): ");
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line) -> {
                     line = line.toUpperCase();
                     switch (line) {
                         case "BUY":
                             System.out.println("Which card do you want to buy? (x-y-z where x and y are the coordinates of the card and z is the column where do you want to put your new card) : ");
                             System.out.println("Coordinates start from 1, for example if you want to take the green lv 1 card and put it in the first column use 1-1-1");
-                            CLI_Controller.setReadHandler(this::buy);
+                            Cli.setReadHandler(this::buy);
                             break;
 
                         case "EXIT":
                             System.out.println("redirecting to Home..");
-                            CLI_Controller.homePage.HomePageView(this.backEnd);
+                            Cli.homePage.HomePageView(this.backEnd);
                             break;
 
                         case "ENDTURN":
                             EndTurn message = new EndTurn();
                             this.backEnd.notify(message);
-                            CLI_Controller.homePage.HomePageView(backEnd);
+                            Cli.homePage.HomePageView(backEnd);
 
                         default:
                             System.out.println("Wrong Command, please insert a real command");
-                            CLI_Controller.cardMarketPage.CardMarketPageView(this.backEnd);
+                            Cli.cardMarketPage.CardMarketPageView(this.backEnd);
                     }
                 }
         );
@@ -118,15 +118,15 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
         if(!cardMatrix[i][j].id.equals("null")) {
             List<Marble> costList = cardMatrix[i][j].price.getAllMarble();
-            String costString = CLI_Controller.getColorStringFromMarble(costList);
+            String costString = Cli.getColorStringFromMarble(costList);
             System.arraycopy(("COST: " + costString).toCharArray(), 0, cardMarket, CardMarketCostPosition[i * 4 + j], ("COST: " + costString).toCharArray().length);
 
             List<Marble> requireList = cardMatrix[i][j].require.getAllMarble();
-            String requireString = CLI_Controller.getColorStringFromMarble(requireList);
+            String requireString = Cli.getColorStringFromMarble(requireList);
             System.arraycopy(("IN: " + requireString).toCharArray(), 0, cardMarket, CardMarketInputPosition[i * 4 + j], ("IN: " + requireString).toCharArray().length);
 
             List<Marble> produceList = cardMatrix[i][j].produce.getAllMarble();
-            String produceString = CLI_Controller.getColorStringFromMarble(produceList);
+            String produceString = Cli.getColorStringFromMarble(produceList);
             System.arraycopy(("OUT: " + produceString).toCharArray(), 0, cardMarket, CardMarketOutputPosition[i * 4 + j], ("OUT: " + produceString).toCharArray().length);
 
             String vp = Integer.toString(cardMatrix[i][j].victoryPoints);
@@ -150,22 +150,22 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-        CLI_Controller.UpdateChest(backEnd, cardMarket);
+        Cli.UpdateChest(backEnd, cardMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        CLI_Controller.UpdateShelf(backEnd, cardMarket);
+        Cli.UpdateShelf(backEnd, cardMarket);
     }
 
     @Override
     public void handle(MarketCardUpdate event) {
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         CardMarketPageView(this.backEnd);
     }
 
@@ -181,18 +181,18 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActivePlayer event) {
-        CLI_Controller.cls();
+        Cli.cls();
         System.out.println("your turn is over, redirecting to home");
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.showSingleMessage(event, this.backEnd);
+        Cli.showSingleMessage(event, this.backEnd);
     }
 
     @Override
     public void handle(VaticanReport event) {
-        CLI_Controller.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor(event.getIndex());
     }
 }
