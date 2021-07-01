@@ -20,14 +20,14 @@ public class MasterOfRenaissance {
             for (String arg : argsList) {
                 switch (arg) {
                     case "-cli":
-                        Cli.main( (String[]) argsList.toArray() );
+                        Cli.main( argsList.toArray(new String[0]) );
                         return;
                     case "-gui":
-                        App.main( (String[]) argsList.toArray());
+                        App.main( argsList.toArray(new String[0]));
                         return;
                     case "-server":
                         argsList.remove("-server");
-                        ServerApp.main((String[]) argsList.toArray());
+                        ServerApp.main(argsList.toArray(new String[0]));
                         return;
                 }
             }
