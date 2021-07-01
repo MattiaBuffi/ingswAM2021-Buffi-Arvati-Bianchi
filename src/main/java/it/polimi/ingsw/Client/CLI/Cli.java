@@ -102,15 +102,17 @@ public class Cli {
     public void askMode(String line){
         Cli.cls();
         switch (line.toUpperCase()) {
-            case "ONLINE" -> Cli.start.StartPageView(backEnd);
-            case "LOCAL" -> {
+            case "ONLINE" :
+                Cli.start.StartPageView(backEnd);
+                break;
+            case "LOCAL":
                 Cli.selectionPage.setup(backEnd);
                 backEnd.localGame();
-            }
-            default -> {
+                break;
+            default:
                 System.out.println("Error, closing application");
                 System.exit(0);
-            }
+
         }
     }
 

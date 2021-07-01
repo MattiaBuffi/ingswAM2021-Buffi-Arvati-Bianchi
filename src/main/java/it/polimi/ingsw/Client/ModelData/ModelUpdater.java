@@ -196,7 +196,6 @@ public class ModelUpdater implements ModelEventHandler {
     @Override
     public void handle(EndGame event) {
         model.winner = event.getUsername();
-
     }
 
 
@@ -206,8 +205,6 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(ResourceSetup event) {
         //doNothing
     }
-
-
 
     @Override
     public void handle(ActionTokenPlayed event) {
@@ -234,6 +231,7 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(WaitingPlayersUpdate event) {
         //do nothing
     }
+
 
 
 

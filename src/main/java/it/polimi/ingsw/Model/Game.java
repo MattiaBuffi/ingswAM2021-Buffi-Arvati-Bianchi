@@ -314,7 +314,7 @@ public class Game implements TurnHandler, GameHandler {
                 break;
         }
 
-        broadcaster.sendMessages("game", "game ended: player disconnected");
+        broadcaster.sendMessages(username, "game ended: player disconnected");
         terminateGame();
 
     }
@@ -360,9 +360,16 @@ public class Game implements TurnHandler, GameHandler {
         Player winner = null;
 
         for (Player p: players){
+
+            if(winner == null){
+                winner = p;
+                continue;
+            }
+
             StateGameEnded.setState(p);
             int playerPoint = p.getVictoryPoints();
             if(playerPoint > maxPoint){
+                maxPoint = playerPoint;
                 winner = p;
             } else if(playerPoint == maxPoint){
                 int playerResourceSize = p.getResourceStorage().getResources().getSize();
@@ -370,9 +377,11 @@ public class Game implements TurnHandler, GameHandler {
 
 
                 if(playerResourceSize > winnerResourceSize){
+                    maxPoint = playerPoint;
                     winner = p;
                 } else if(playerResourceSize == winnerResourceSize){
                     if(players.indexOf(p)< players.indexOf(winner)){
+                        maxPoint = playerPoint;
                         winner = p;
                     }
                 }
