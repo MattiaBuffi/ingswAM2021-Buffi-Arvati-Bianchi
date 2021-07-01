@@ -71,10 +71,12 @@ public class HomePage extends ModelEventHandler.Default {
         for (int j = 0; j < Cli.vaticanReport.length; j++){
             if(Cli.vaticanReport[j] == 1 ){
                 if(Cli.vaticanReportActive[j]) {
-                    homePage[HomePopeFavourPosition[j]] = 'O';
-                    homePage[HomePopeFavourPosition[j]+1] = 'K';
-                }else{
-                    homePage[HomePopeFavourPosition[j]] = 'X';
+                    switch (j) {
+                        case 0 : homePage[HomePopeFavourPosition[j]] = '2';break;
+                        case 1 : homePage[HomePopeFavourPosition[j]] = '3';break;
+                        case 2 : homePage[HomePopeFavourPosition[j]] = '4';break;
+                        default: homePage[HomePopeFavourPosition[j]] = 'X';break;
+                    }
                 }
             }
         }
@@ -82,6 +84,9 @@ public class HomePage extends ModelEventHandler.Default {
         List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < leaderCard.size(); i++) {
             Cli.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
+            if(leaderCard.get(i).isActive()){
+                System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[i], active.length());
+            }
         }
 
         if(Cli.leaderActive[1]>0){
@@ -254,7 +259,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(AvailableLeaderCard event){
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 20; j++) {
                 homePage[LeaderCardHomePosDiscard[1-discardedLeader]+j+i*133]= ' ';
             }
@@ -269,7 +274,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(EndGame event){
-
+        Cli.endPage.EndGameView(this.backEnd, event);
     }
 
 

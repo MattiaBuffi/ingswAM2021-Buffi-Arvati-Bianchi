@@ -40,21 +40,7 @@ public class LoadingPage extends ModelEventHandler.Default{
         this.backEnd.notify(deposit);
 
     }
-/*
-    public void multipleInitial3(String line){
-        multipleColor = CLI_Controller.fromStringToColor(line);
-        System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
-        CLI_Controller.setReadHandler(this::multipleInitial4);
 
-    }
-
-    public void multipleInitial4(String position){
-        DepositResource deposit = new DepositResource(multipleColor, Integer.parseInt(position) - 1);
-        this.backEnd.notify(deposit);
-        CLI_Controller.cls();
-        System.out.println(this.loading);
-    }
-*/
     @Override
     public void handle(ResourceSetup event){
             Cli.cls();

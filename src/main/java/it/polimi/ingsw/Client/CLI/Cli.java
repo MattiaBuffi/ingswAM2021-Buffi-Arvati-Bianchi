@@ -41,8 +41,8 @@ public class Cli {
     public static ViewPage viewPage;
     public static QuitPage quitPage;
     public static EndGamePage endPage;
-
-
+    public static int cardSpaces;
+    public static String spacer = "                                                   ";
     private static final int[] ShelfRssPosition = {415,944,952,1471,1479,1488, 2001, 2009, 2018, 2026};
     private static final int[] ChestRssPosition = {3594, 3601, 3608, 3615};
     private static final int[] LeaderShelfPosition = {1864,1879};
@@ -59,7 +59,7 @@ public class Cli {
                     "ProductionView.txt","CardMarketView.txt","ResourceMarketView.txt",
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt",
-                    "leaderProductionScheme.txt", "EndGame.txt"};
+                    "leaderProductionScheme.txt", "EndGame.txt", "EndGameLose.txt"};
 
     private static char[] shelfColors = new char[2];
 
@@ -102,16 +102,15 @@ public class Cli {
     public void askMode(String line){
         Cli.cls();
         switch (line.toUpperCase()) {
-            case "ONLINE" :
-                Cli.start.StartPageView(backEnd);
-                break;
-            case "LOCAL":
-                Cli.username.UsernamePageView(backEnd);
-                break;
-            default :
+            case "ONLINE" -> Cli.start.StartPageView(backEnd);
+            case "LOCAL" -> {
+                Cli.selectionPage.setup(backEnd);
+                backEnd.localGame();
+            }
+            default -> {
                 System.out.println("Error, closing application");
                 System.exit(0);
-                break;
+            }
         }
     }
 
@@ -122,8 +121,6 @@ public class Cli {
         System.out.println("Do you want to play a Local Game or an Online Game?");
         System.out.println("Insert: Local / Online");
         Cli.setReadHandler(this::askMode);
-
-        start.StartPageView(backEnd);
     }
 
 
@@ -263,7 +260,12 @@ public class Cli {
 
     public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost, int[] homeLeaderEffect) {
         String leaderType = String.valueOf(leaderCard.get(i).getType());
-        System.arraycopy(leaderType.toCharArray(), 0, home, homeLeaderType[i], leaderType.toCharArray().length);
+        cardSpaces = 17-leaderType.length();
+        String leaderTypeCleaner = leaderType;
+        for (int spa = 0; spa < cardSpaces; spa++) {
+            leaderTypeCleaner = leaderTypeCleaner.concat(" ");
+        }
+        System.arraycopy(leaderTypeCleaner.toCharArray(), 0, home, homeLeaderType[i], leaderTypeCleaner.toCharArray().length);
 
         String leaderPV = leaderCard.get(i).getVictoryPoint() + "VP";
         System.arraycopy(leaderPV.toCharArray(), 0, home, homeLeaderPV[i], leaderPV.toCharArray().length);
@@ -271,14 +273,23 @@ public class Cli {
         List<Marble.Color> leaderCostMarbles = leaderCard.get(i).getResourceRequirement();
         if (leaderCostMarbles != null) {
             String leaderCost = getColorString(leaderCostMarbles);
+            cardSpaces = 17-leaderCost.length();
+            for (int spa = 0; spa < cardSpaces; spa++) {
+                leaderCost = leaderCost.concat(" ");
+            }
             System.arraycopy(leaderCost.toCharArray(), 0, home, homeLeaderCost[i], leaderCost.toCharArray().length);
         }else {
             List<String> leaderCostDevCard = leaderCard.get(i).getDevelopmentCardRequirement();
-            StringBuilder costString = new StringBuilder();
+            StringBuilder costStringBuild = new StringBuilder();
             for (String s : leaderCostDevCard) {
-                costString.append(s).append(" ");
+                costStringBuild.append(s).append(" ");
             }
-            System.arraycopy(costString.toString().toCharArray(), 0, home, homeLeaderCost[i], costString.toString().toCharArray().length);
+            String costString = costStringBuild.toString();
+            cardSpaces = 17-costString.length();
+            for (int spa = 0; spa < cardSpaces; spa++) {
+                costString = costString.concat(" ");
+            }
+            System.arraycopy(costString.toCharArray(), 0, home, homeLeaderCost[i], costString.toCharArray().length);
         }
 
         Marble.Color colorEffect = leaderCard.get(i).getColor();
@@ -299,6 +310,10 @@ public class Cli {
                 break;
             default:
                 effect = "";
+        }
+        cardSpaces = 16-effect.length();
+        for (int spa = 0; spa < cardSpaces; spa++) {
+            effect = effect.concat(" ");
         }
         System.arraycopy(effect.toCharArray(), 0, home, homeLeaderEffect[i], effect.toCharArray().length);
     }
@@ -424,10 +439,14 @@ public class Cli {
 
     public static void showSingleMessage(ActionTokenPlayed event, ViewBackEnd backend){
         Cli.cls();
-        System.out.println("New Action Token played by Lorenzo");
-        System.out.println(event.getMessage());
+        for (int i = 0; i < 5; i++) {
+            System.out.println();
+        }
+
+        System.out.println(spacer + "New Action Token played by Lorenzo");
+        System.out.println(spacer + event.getMessage());
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -492,8 +511,11 @@ public class Cli {
 
     public static void showError(ErrorUpdate event){
         cls();
-        System.out.println(event.getErrorMessage());
-        System.out.println("Here is a free time travel, enjoy it");
+        for (int i = 0; i < 5; i++) {
+            System.out.println();
+        }
+        System.out.println(spacer + event.getErrorMessage());
+        System.out.println(spacer + "Here is a free time travel, enjoy it");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -550,7 +572,10 @@ public class Cli {
 
     public static void showUpdateMessage(String message){
         cls();
-        System.out.println(message);
+        for (int i = 0; i < 5; i++) {
+            System.out.println();
+        }
+        System.out.println(spacer + message);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

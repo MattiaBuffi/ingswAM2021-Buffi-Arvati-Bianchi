@@ -102,12 +102,5 @@ public class SelectionPage extends ModelEventHandler.Default{
         }
     }
 
-    @Override
-    public void handle(ActivePlayer event){
-
-        System.out.println("SOS");
-        //CLI_Controller.homePage.HomePageView(this.backEnd);
-    }
-
 
 }

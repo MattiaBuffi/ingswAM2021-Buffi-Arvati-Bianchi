@@ -32,7 +32,7 @@ public class ProductionPage extends ModelEventHandler.Default{
         Cli.cls();
 
         char[] customCard;
-        customCard = Cli.readSchematics(12);
+
         int row;
         int column = 0;
 
@@ -48,7 +48,7 @@ public class ProductionPage extends ModelEventHandler.Default{
         for (List<DevelopmentCardData> productionColumn : playerProductions) {
             row = 0;
             for (DevelopmentCardData devCard : productionColumn) {
-
+                customCard = Cli.readSchematics(12);
                 color = devCard.color;
                 System.arraycopy((Cli.getDevColor(color)).toCharArray(), 0, customCard, singleCardPosition[3], (Cli.getDevColor(color)).toCharArray().length);
 
@@ -144,7 +144,7 @@ public class ProductionPage extends ModelEventHandler.Default{
     public void Production(String productionString, ViewBackEnd backEnd) {
         switch (productionString) {
             case "0":
-                System.out.println("Please insert data for basic production (in1-in2-out): ");
+                System.out.println("Please insert data for basic production (in1-in2-out)[use character p/g/y/b]: ");
                 Cli.setReadHandler(this::basic);
                 break;
             case "4":
@@ -198,6 +198,7 @@ public class ProductionPage extends ModelEventHandler.Default{
                             EndTurn message = new EndTurn();
                             this.backEnd.notify(message);
                             Cli.homePage.HomePageView(backEnd);
+                            break;
                         default:
                             System.out.println("Wrong Command, please insert a real command");
                             break;
@@ -259,5 +260,11 @@ public class ProductionPage extends ModelEventHandler.Default{
     public void handle(VaticanReport event) {
         Cli.activatePopeFavor(event.getIndex());
     }
+
+    @Override
+    public void handle(EndGame event){
+        Cli.endPage.EndGameView(this.backEnd, event);
+    }
+
 
 }

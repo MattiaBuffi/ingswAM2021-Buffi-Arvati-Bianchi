@@ -25,6 +25,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
     ViewBackEnd backEnd;
     char[] cardMarket;
+    int spaces;
     DevelopmentCardData[][] cardMatrix = new DevelopmentCardData[3][4];
 
     public CardMarketPage(char[] cardMarket) {
@@ -120,25 +121,37 @@ public class CardMarketPage extends ModelEventHandler.Default {
         if(!cardMatrix[i][j].id.equals("null")) {
             List<Marble> costList = cardMatrix[i][j].price.getAllMarble();
             String costString = Cli.getColorStringFromMarble(costList);
+            spaces = 11 - costString.length();
+            for (int k = 0; k < spaces; k++) {
+                costString = costString.concat(" ");
+            }
             System.arraycopy(("COST: " + costString).toCharArray(), 0, cardMarket, CardMarketCostPosition[i * 4 + j], ("COST: " + costString).toCharArray().length);
 
             List<Marble> requireList = cardMatrix[i][j].require.getAllMarble();
             String requireString = Cli.getColorStringFromMarble(requireList);
+            spaces = 13 - requireString.length();
+            for (int k = 0; k < spaces; k++) {
+                requireString = requireString.concat(" ");
+            }
             System.arraycopy(("IN: " + requireString).toCharArray(), 0, cardMarket, CardMarketInputPosition[i * 4 + j], ("IN: " + requireString).toCharArray().length);
 
             List<Marble> produceList = cardMatrix[i][j].produce.getAllMarble();
             String produceString = Cli.getColorStringFromMarble(produceList);
+            spaces = 12 - produceString.length();
+            for (int k = 0; k < spaces; k++) {
+                produceString = produceString.concat(" ");
+            }
             System.arraycopy(("OUT: " + produceString).toCharArray(), 0, cardMarket, CardMarketOutputPosition[i * 4 + j], ("OUT: " + produceString).toCharArray().length);
 
             String vp = Integer.toString(cardMatrix[i][j].victoryPoints);
             System.arraycopy((vp + "VP").toCharArray(), 0, cardMarket, CardMarketVPPosition[i * 4 + j], (vp + "VP").toCharArray().length);
 
         }else{
-            System.arraycopy(("COST:        ").toCharArray(), 0, cardMarket, CardMarketCostPosition[i * 4 + j], ("COST:        ").toCharArray().length);
+            System.arraycopy(("COST:            ").toCharArray(), 0, cardMarket, CardMarketCostPosition[i * 4 + j], ("COST:            ").toCharArray().length);
 
-            System.arraycopy(("IN:        ").toCharArray(), 0, cardMarket, CardMarketInputPosition[i * 4 + j], ("IN:        ").toCharArray().length);
+            System.arraycopy(("IN:              ").toCharArray(), 0, cardMarket, CardMarketInputPosition[i * 4 + j], ("IN:              ").toCharArray().length);
 
-            System.arraycopy(("OUT:        ").toCharArray(), 0, cardMarket, CardMarketOutputPosition[i * 4 + j], ("OUT:        ").toCharArray().length);
+            System.arraycopy(("OUT:              ").toCharArray(), 0, cardMarket, CardMarketOutputPosition[i * 4 + j], ("OUT:             ").toCharArray().length);
 
             System.arraycopy(("    ").toCharArray(), 0, cardMarket, CardMarketVPPosition[i * 4 + j], ("    ").toCharArray().length);
         }
@@ -195,5 +208,10 @@ public class CardMarketPage extends ModelEventHandler.Default {
     @Override
     public void handle(VaticanReport event) {
         Cli.activatePopeFavor(event.getIndex());
+    }
+
+    @Override
+    public void handle(EndGame event){
+        Cli.endPage.EndGameView(this.backEnd, event);
     }
 }

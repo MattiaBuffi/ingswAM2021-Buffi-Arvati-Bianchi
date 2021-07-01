@@ -52,14 +52,14 @@ public class RssMarketPage extends ModelEventHandler.Default {
     private String selectedColor;
     private String whitePosition;
 
-    public void store1(String line){
+    public void move1(String line){
         origin =  line;
         System.out.println("Where do you want to move this rss? ");
         System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-        Cli.setReadHandler(this::store2);
+        Cli.setReadHandler(this::move2);
     }
 
-    public void store2(String line){
+    public void move2(String line){
         dest =  line;
         try {
             MoveResources moveMessage = new MoveResources(Integer.parseInt(origin) - 1, Integer.parseInt(dest) - 1);
@@ -121,7 +121,9 @@ public class RssMarketPage extends ModelEventHandler.Default {
                             Cli.setReadHandler(this::buy);
                             break;
                         case "MOVERSS":
-                            Cli.setReadHandler(this::store1);
+                            System.out.println("Which rss do you want to move?");
+                            System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
+                            Cli.setReadHandler(this::move1);
                             break;
                         case "EXIT":
                             System.out.println("redirecting to Home..");
@@ -197,7 +199,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                                     RssMarketPageView(this.backEnd);
                                     return;
                                 }
-                                if (selectedMarble + 1 == this.backEnd.getModel().resourceMarketBuffer.size()) {
+                                if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
                                     backEnd.notify(new EndTurn());
                                     backEnd.setEventHandler(Cli.homePage);
                                 }
@@ -216,20 +218,25 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ChestUpdate event) {
-
         Cli.UpdateChest(backEnd, rssMarket);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-
         Cli.UpdateShelf(backEnd, rssMarket);
+        RssMarketPageView(backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
         Cli.showError(event);
-        RssMarketPageView(this.backEnd);
+        rssHandler();
+
+    }
+
+    @Override
+    public void handle(EndGame event){
+        Cli.endPage.EndGameView(this.backEnd, event);
     }
 
     @Override
@@ -245,9 +252,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
         if(this.backEnd.getModel().resourceMarketBuffer.size() > 0 && this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())){
             rssHandler();
         }
-        /*
-        CLI_Controller.showUpdateMessage(event.getMessage());
-        RssMarketPageView(this.backEnd);*/
     }
 
     @Override

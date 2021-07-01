@@ -65,10 +65,12 @@ public class ViewPage extends ModelEventHandler.Default {
         for (int j = 0; j < Cli.vaticanReport.length; j++){
             if(Cli.vaticanReport[j] == 1 ){
                 if(Cli.vaticanReportActive[j]) {
-                    bigView[BigFaithPopeFavourPosition[j]] = 'O';
-                    bigView[BigFaithPopeFavourPosition[j]+1] = 'K';
-                }else{
-                    bigView[BigFaithPopeFavourPosition[j]] = 'X';
+                    switch (j) {
+                        case 0 : bigView[BigFaithPopeFavourPosition[j]] = '2';break;
+                        case 1 : bigView[BigFaithPopeFavourPosition[j]] = '3';break;
+                        case 2 : bigView[BigFaithPopeFavourPosition[j]] = '4';break;
+                        default: bigView[BigFaithPopeFavourPosition[j]] = 'X'; break;
+                    }
                 }
             }
         }
@@ -109,6 +111,11 @@ public class ViewPage extends ModelEventHandler.Default {
     }
 
     @Override
+    public void handle(EndGame event){
+        Cli.endPage.EndGameView(this.backEnd, event);
+    }
+
+    @Override
     public void handle(ErrorUpdate event) {
         Cli.showError(event);
         ViewPageView(this.backEnd);
@@ -119,9 +126,7 @@ public class ViewPage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        /*
-        CLI_Controller.showUpdateMessage(event.getMessage());
-        ViewPageView(this.backEnd);*/
+
     }
 
     @Override
