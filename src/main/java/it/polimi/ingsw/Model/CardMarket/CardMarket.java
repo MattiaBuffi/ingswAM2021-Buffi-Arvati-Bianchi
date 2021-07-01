@@ -190,6 +190,10 @@ public class CardMarket implements CardRemover{
             return false;
         }
 
+        if(cards.get(0) == NullCard.get()){
+            return false;
+        }
+
         cards.remove(0);
 
         if(cards.size() == 0){
