@@ -1,19 +1,15 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
-import it.polimi.ingsw.Message.Model.ActivePlayer;
-import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ViewPage extends ModelEventHandler.Default {
 
@@ -32,9 +28,9 @@ public class ViewPage extends ModelEventHandler.Default {
 
 
     public void print(){
-        CLI_Controller.cls();
+        Cli.cls();
 
-        char[] bigView = CLI_Controller.readSchematics(10);
+        char[] bigView = Cli.readSchematics(10);
 
         List<Player> users = this.backEnd.getModel().players;
         for (int i = 0; i < users.size(); i++) {
@@ -51,7 +47,7 @@ public class ViewPage extends ModelEventHandler.Default {
             List<Marble> playerChestMarble = playerChest.getAllMarble();
             char[] playerChestRss;
             if(playerChestMarble.size()>0)
-                playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).toCharArray();
+                playerChestRss = Cli.getColorStringFromMarble(playerChestMarble).toCharArray();
             else
                 playerChestRss = "0B 0Y 0P 0G".toCharArray();
             System.arraycopy(playerChestRss, 0, bigView, BigFaithPlayerRssPos[i], playerChestRss.length);
@@ -66,9 +62,14 @@ public class ViewPage extends ModelEventHandler.Default {
         }
 
 
-        for (int j = 0; j < CLI_Controller.popeFavourActive.length; j++){
-            if(CLI_Controller.popeFavourActive[j] == 1){
-                bigView[BigFaithPopeFavourPosition[j]] = 'X';
+        for (int j = 0; j < Cli.vaticanReport.length; j++){
+            if(Cli.vaticanReport[j] == 1 ){
+                if(Cli.vaticanReportActive[j]) {
+                    bigView[BigFaithPopeFavourPosition[j]] = 'O';
+                    bigView[BigFaithPopeFavourPosition[j]+1] = 'K';
+                }else{
+                    bigView[BigFaithPopeFavourPosition[j]] = 'X';
+                }
             }
         }
 
@@ -83,7 +84,7 @@ public class ViewPage extends ModelEventHandler.Default {
 
         print();
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
                     line = line.toUpperCase();
                     if (line.equals("EXIT")) {
@@ -91,11 +92,11 @@ public class ViewPage extends ModelEventHandler.Default {
                     }else if (line.equals("ENDTURN")){
                         EndTurn message = new EndTurn();
                         this.backEnd.notify(message);
-                        CLI_Controller.homePage.HomePageView(backEnd);
+                        Cli.homePage.HomePageView(backEnd);
                     } else {
                         System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
                     }
-                    CLI_Controller.homePage.HomePageView(backEnd);
+                    Cli.homePage.HomePageView(backEnd);
                 }
         );
 
@@ -109,7 +110,7 @@ public class ViewPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         ViewPageView(this.backEnd);
     }
 
@@ -118,16 +119,23 @@ public class ViewPage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
+        /*
+        CLI_Controller.showUpdateMessage(event.getMessage());
+        ViewPageView(this.backEnd);*/
     }
 
     @Override
     public void handle(ActivePlayer event){
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.showSingleMessage(event, this.backEnd);
+        Cli.showSingleMessage(event, this.backEnd);
     }
 
+    @Override
+    public void handle(VaticanReport event) {
+        Cli.activatePopeFavor(event.getIndex());
+    }
 }

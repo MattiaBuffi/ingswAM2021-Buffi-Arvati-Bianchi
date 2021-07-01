@@ -1,5 +1,5 @@
 package it.polimi.ingsw.Client.CLI.Pages;
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DepositResource;
 import it.polimi.ingsw.Message.Message;
@@ -14,13 +14,14 @@ public class LoadingPage extends ModelEventHandler.Default{
 
     ViewBackEnd backEnd;
     char[] loading;
+    Marble.Color multipleColor;
 
     public void LoadingPageView(ViewBackEnd backEnd){
 
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
-        this.loading = CLI_Controller.readSchematics(1);
+        Cli.cls();
+        this.loading = Cli.readSchematics(1);
         System.out.println(this.loading);
     }
 
@@ -28,92 +29,83 @@ public class LoadingPage extends ModelEventHandler.Default{
     public void invalidMessage() {
     }
 
+    public void multipleInitial1(String line){
+        multipleColor = Cli.fromStringToColor(line);
+        System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+        Cli.setReadHandler(this::multipleInitial2);
+    }
 
+    public void multipleInitial2(String position){
+        DepositResource deposit = new DepositResource(multipleColor, Integer.parseInt(position) - 1);
+        this.backEnd.notify(deposit);
 
+    }
+/*
+    public void multipleInitial3(String line){
+        multipleColor = CLI_Controller.fromStringToColor(line);
+        System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+        CLI_Controller.setReadHandler(this::multipleInitial4);
+
+    }
+
+    public void multipleInitial4(String position){
+        DepositResource deposit = new DepositResource(multipleColor, Integer.parseInt(position) - 1);
+        this.backEnd.notify(deposit);
+        CLI_Controller.cls();
+        System.out.println(this.loading);
+    }
+*/
     @Override
     public void handle(ResourceSetup event){
-            CLI_Controller.cls();
+            Cli.cls();
 
             System.out.println("You can get " + event.getAvailableResources() +
                     " initial Resources for free, please insert the color of the resource that you want to take " +
-                    "[(P/G/B/Y) if more than 1 rss please insert the two colors divided by a -]");
+                    "use one of this letter please  P/G/B/Y ");
+        if(event.getAvailableResources()>1){
+            Cli.setReadHandler(this::multipleInitial1);
+            return;
+        }
 
-            CLI_Controller.setReadHandler(
+
+            Cli.setReadHandler(
                     (line)->{
-                        line.toUpperCase();
-                        if (line.length() > 1) {
-                            String[] rss = line.split("-");
 
-                            CLI_Controller.setReadHandler(
-                                (position)->{
-                                    for (String s : rss) {
-                                        System.out.println("Where do you want to put your " + s + " rss? 1 to 3 to identify the shelf");
-                                        Marble.Color color = colorSelector(s.toUpperCase());
-                                        DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
-                                        this.backEnd.notify(deposit);
-                                    }
+                                System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+
+                                Cli.setReadHandler(
+                                        (position)->{
+                                            try {
+                                                Marble.Color color = Cli.fromStringToColor(line);
+                                                DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
+                                                this.backEnd.notify(deposit);
+                                                System.out.println(this.loading);
+                                            }catch (NumberFormatException ex) {
+                                                Cli.showUpdateMessage("Wrong Input");
+                                            }
+
                                 }
                             );
-
-
-                        } else {
-                            System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
-
-                            CLI_Controller.setReadHandler(
-                                    (position)->{
-                                        Marble.Color color = colorSelector(line.toUpperCase());
-                                        DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
-                                        this.backEnd.notify(deposit);
-                                        System.out.println(this.loading);
-                                    }
-                            );
-
-                        }
                     }
             );
-
-
-    }
-
-
-
-
-
-
-    @Override
-    public void handle(ActivePlayer event){
-
-    }
-
-    public static Marble.Color colorSelector(String s){
-        switch (s){
-            case "P":
-                return Marble.Color.PURPLE;
-            case "G":
-                return Marble.Color.GREY;
-            case "B":
-                return Marble.Color.BLUE;
-            case "Y":
-                return Marble.Color.YELLOW;
-            default:
-                return null;
-        }
     }
 
     @Override
     public void handle(ErrorUpdate event){
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         LoadingPageView(this.backEnd);
     }
 
     @Override
     public void handle(ModelUpdate event){
-
         for (Message<ModelEventHandler> e: event.getMessages()){
-            if(e instanceof ActivePlayer){
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-                backEnd.update(event);
-            }
+            e.accept(this);
         }
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        Cli.homePage.HomePageView(this.backEnd);
+        backEnd.update(event);
     }
 }

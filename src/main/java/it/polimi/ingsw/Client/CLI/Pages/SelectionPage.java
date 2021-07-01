@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.DiscardLeaderCard;
@@ -9,7 +9,6 @@ import it.polimi.ingsw.Message.Model.AvailableLeaderCard;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import java.util.List;
-import java.util.Scanner;
 
 public class SelectionPage extends ModelEventHandler.Default{
 
@@ -24,12 +23,12 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     private void print(List<LeaderCard> leaderCardSelection){
 
-        CLI_Controller.cls();
+        Cli.cls();
 
-        this.selection = CLI_Controller.readSchematics(11);
+        this.selection = Cli.readSchematics(11);
 
         for (int i = 0; i < leaderCardSelection.size(); i++) {
-            CLI_Controller.LeaderCardInfoExtractor(this.selection, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos, LeaderSelectionEffectPos);
+            Cli.LeaderCardInfoExtractor(this.selection, leaderCardSelection, i, LeaderSelectionTypePos, LeaderSelectionPVPos, LeaderSelectionCostPos, LeaderSelectionEffectPos);
         }
         if(leaderCardSelection.size()==3){
             for (int i = 0; i <10 ; i++) {
@@ -55,15 +54,19 @@ public class SelectionPage extends ModelEventHandler.Default{
         print(leaderCardSelection);
 
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
-                    if(line.isEmpty() && (Integer.parseInt(line)<1 || Integer.parseInt(line)> leaderCardSelection.size() )){
-                        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                        return;
+                    try {
+                        if (line.isEmpty() && (Integer.parseInt(line) < 1 || Integer.parseInt(line) > leaderCardSelection.size())) {
+                            System.out.println("Which Leader Cards do you want to discard 1 to " + leaderCardSelection.size() + " : ");
+                            return;
+                        }
+                        DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line) - 1).getId());
+                        this.backEnd.notify(messageDiscard);
+                    }catch (NumberFormatException e){
+                        Cli.showUpdateMessage("Wrong Input");
+                        SelectionPageView(this.backEnd);
                     }
-                    DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line)-1).getId());
-                    this.backEnd.notify(messageDiscard);
-
                 }
 
         );
@@ -78,7 +81,7 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         SelectionPageView(this.backEnd);
     }
 
@@ -86,7 +89,7 @@ public class SelectionPage extends ModelEventHandler.Default{
     public void handle(AvailableLeaderCard event){
 
         if(event.getLeaderCard().size() == 2){
-            CLI_Controller.loading.LoadingPageView(this.backEnd);
+            Cli.loading.LoadingPageView(this.backEnd);
         }else{
             SelectionPageView(this.backEnd);
         }

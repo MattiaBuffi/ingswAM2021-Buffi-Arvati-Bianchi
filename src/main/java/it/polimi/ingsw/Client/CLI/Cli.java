@@ -5,11 +5,8 @@ import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.Shelf;
 import it.polimi.ingsw.Client.ViewBackEnd;
-import it.polimi.ingsw.Message.ClientMessages.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
 import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
@@ -18,15 +15,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 
-public class CLI_Controller {
+public class Cli {
 
     private static ViewBackEnd backEnd;
     private final ClientApp app;
@@ -44,25 +39,30 @@ public class CLI_Controller {
     public static RssMarketPage rssMarketPage;
     public static ViewPage viewPage;
     public static QuitPage quitPage;
+    public static EndGamePage endPage;
 
 
-    private static final int[] RssPosition = {415,944,952,1471,1479,1488, 3594, 3601, 3608, 3615};
+    private static final int[] ShelfRssPosition = {415,944,952,1471,1479,1488, 2001, 2009, 2018, 2026};
+    private static final int[] ChestRssPosition = {3594, 3601, 3608, 3615};
     private static final int[] LeaderShelfPosition = {1864,1879};
 
 
     public static int[] leaderActive = {0,0,0,0};
-    public static int[] popeFavourActive = {0,0,0};
+    public static int[] vaticanReport = {0,0,0};
+    public static boolean[] vaticanReportActive = {false,false,false};
+
 
     private static final String rssPath = "src/main/resources/CLI/";
     private static final String[] currentFile =
             {"StartMenuView.txt","LoadingView.txt","NoActionView.txt",
                     "ProductionView.txt","CardMarketView.txt","ResourceMarketView.txt",
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
-                    "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt", "leaderProductionScheme.txt"};
+                    "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt",
+                    "leaderProductionScheme.txt", "EndGame.txt"};
 
     private static char[] shelfColors = new char[2];
 
-    public CLI_Controller(){
+    public Cli(){
 
         app = new ClientApp(this::CLIView);
         backEnd = ViewBackEnd.getCLIBackend(app);
@@ -85,12 +85,13 @@ public class CLI_Controller {
         rssMarketPage = new RssMarketPage(rssMarket);
         viewPage = new ViewPage();
         quitPage = new QuitPage();
+        endPage = new EndGamePage();
     }
 
 
 
     public static void main(String[] args) {
-        CLI_Controller controller = new CLI_Controller();
+        Cli controller = new Cli();
         controller.CLIView();
 
         new Thread(()->readLine()).run();
@@ -114,8 +115,8 @@ public class CLI_Controller {
 
     private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
-    private static Consumer<String> lineHandler = CLI_Controller::defaultHandler;
-    private static Consumer<String> newHandler = CLI_Controller::defaultHandler;
+    private static Consumer<String> lineHandler = Cli::defaultHandler;
+    private static Consumer<String> newHandler = Cli::defaultHandler;
 
     private static void readLine(){
 
@@ -163,51 +164,80 @@ public class CLI_Controller {
                     switch (playerShelf.get(i).color) {
                         case YELLOW:
                             for (int j = 0; j < size; j++) {
-                                if(playerShelf.get(i).maxSize == 3)
-                                    scheme[RssPosition[i + j+1]] = 'Y';
-                                else
-                                    scheme[RssPosition[i + j]] = 'Y';
+                                if (i == 2) {
+                                    scheme[ShelfRssPosition[i + j + 1]] = 'Y';
+                                }else if (i == 3) {
+                                    scheme[ShelfRssPosition[i + j + 3]] = 'Y';
+                                }else if (i == 4) {
+                                    scheme[ShelfRssPosition[i + j + 5]] = 'Y';
+                                }else {
+                                    scheme[ShelfRssPosition[i + j]] = 'Y';
+                                }
                             }
                             break;
                         case BLUE:
                             for (int j = 0; j < size; j++) {
-                                if(playerShelf.get(i).maxSize == 3)
-                                    scheme[RssPosition[i + j+1]] = 'B';
-                                else
-                                    scheme[RssPosition[i + j]] = 'B';
+                                if (i == 2) {
+                                    scheme[ShelfRssPosition[i + j + 1]] = 'B';
+                                }else if (i == 3) {
+                                    scheme[ShelfRssPosition[i + j + 3]] = 'B';
+                                }else if (i == 4) {
+                                    scheme[ShelfRssPosition[i + j + 5]] = 'B';
+                                }else {
+                                    scheme[ShelfRssPosition[i + j]] = 'B';
+                                }
                             }
                             break;
                         case PURPLE:
                             for (int j = 0; j < size; j++) {
-                                if(playerShelf.get(i).maxSize == 3)
-                                    scheme[RssPosition[i + j+1]] = 'P';
-                                else
-                                    scheme[RssPosition[i + j]] = 'P';
+                                if (i == 2) {
+                                    scheme[ShelfRssPosition[i + j + 1]] = 'P';
+                                }else if (i == 3) {
+                                    scheme[ShelfRssPosition[i + j + 3]] = 'P';
+                                }else if (i == 4) {
+                                    scheme[ShelfRssPosition[i + j + 5]] = 'P';
+                                }else {
+                                    scheme[ShelfRssPosition[i + j]] = 'P';
+                                }
                             }
                             break;
                         case GREY:
                             for (int j = 0; j < size; j++) {
-                                if(playerShelf.get(i).maxSize == 3)
-                                    scheme[RssPosition[i + j+1]] = 'G';
-                                else
-                                    scheme[RssPosition[i + j]] = 'G';
+                                if (i == 2) {
+                                    scheme[ShelfRssPosition[i + j + 1]] = 'G';
+                                } else if (i == 3){
+                                    scheme[ShelfRssPosition[i + j + 3]] = 'G';
+                                }else if (i == 4){
+                                    scheme[ShelfRssPosition[i + j + 5]] = 'G';
+                                }else {
+                                    scheme[ShelfRssPosition[i + j]] = 'G';
+                                }
                             }
                             break;
                         default:
                             for (int j = 0; j < size; j++) {
-                                if(playerShelf.get(i).maxSize == 3)
-                                    scheme[RssPosition[i + j+1]] = ' ';
-                                else
-                                    scheme[RssPosition[i + j]] = ' ';
+                                if(i==2) {
+                                    scheme[ShelfRssPosition[i + j + 1]] = ' ';
+                                }else if(i==3) {
+                                    scheme[ShelfRssPosition[i + j + 3]] = ' ';
+                                }else if(i==4) {
+                                    scheme[ShelfRssPosition[i + j + 5]] = ' ';
+                                }else {
+                                    scheme[ShelfRssPosition[i + j]] = ' ';
+                                }
                             }
                             break;
                     }
                 }else if (size==0){
                     for (int j = 0; j<playerShelf.get(i).maxSize; j++) {
-                        if(playerShelf.get(i).maxSize == 3)
-                            scheme[RssPosition[i + j+1]] = ' ';
+                        if(i==2)
+                            scheme[ShelfRssPosition[i + j+1]] = ' ';
+                        else if(i==3)
+                            scheme[ShelfRssPosition[i + j+3]] = ' ';
+                        else if(i==4)
+                            scheme[ShelfRssPosition[i + j+5]] = ' ';
                         else
-                            scheme[RssPosition[i + j]] = ' ';
+                            scheme[ShelfRssPosition[i + j]] = ' ';
                     }
                 }
             }
@@ -327,7 +357,6 @@ public class CLI_Controller {
     }
 
     public static Marble.Color fromStringToColor(String s){
-        if(s!=null) {
             char c = s.toUpperCase().charAt(0);
             switch (c) {
                 case 'Y':
@@ -341,8 +370,6 @@ public class CLI_Controller {
                 default:
                     return null;
             }
-        }
-        return null;
     }
 
     public static String getColorString(Marble.Color color){
@@ -380,15 +407,15 @@ public class CLI_Controller {
     }
 
     public static void showSingleMessage(ActionTokenPlayed event, ViewBackEnd backend){
-        CLI_Controller.cls();
+        Cli.cls();
         System.out.println("New Action Token played by Lorenzo");
         System.out.println(event.getMessage());
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        CLI_Controller.homePage.HomePageView(backend);
+        Cli.homePage.HomePageView(backend);
     }
 
 
@@ -440,9 +467,9 @@ public class CLI_Controller {
             ResourceList playerChest = backEnd.getModel().getPlayer(backEnd.getModel().myUsername).getChest();
             if(playerChest != null) {
                 List<Marble> playerChestMarble = playerChest.getAllMarble();
-                String[] playerChestRss = CLI_Controller.getColorStringFromMarble(playerChestMarble).split(" ");
+                String[] playerChestRss = Cli.getColorStringFromMarble(playerChestMarble).split(" ");
                 for (int i = 0; i < playerChestRss.length; i++) {
-                    System.arraycopy((playerChestRss[i]+ " ").toCharArray(), 0, page, RssPosition[i + 6], (playerChestRss[i]+ " ").toCharArray().length);
+                    System.arraycopy((playerChestRss[i]+ " ").toCharArray(), 0, page, ChestRssPosition [i], (playerChestRss[i]+ " ").toCharArray().length);
                 }
             }
     }
@@ -452,7 +479,7 @@ public class CLI_Controller {
         System.out.println(event.getErrorMessage());
         System.out.println("Here is a free time travel, enjoy it");
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -478,7 +505,7 @@ public class CLI_Controller {
         int pos = 0;
         for (LeaderCard leader: leaders) {
             if(leader.isActive() && String.valueOf(leader.getType()).equals("EXTRA_SHELF")){
-                shelfColors[pos]= CLI_Controller.getColorString(leader.getColor()).charAt(0);
+                shelfColors[pos]= Cli.getColorString(leader.getColor()).charAt(0);
                 pos++;
             }
         }
@@ -495,6 +522,23 @@ public class CLI_Controller {
     }
 
     public static void activatePopeFavor(int index) {
-        popeFavourActive[index] = 1;
+        vaticanReport[index-1] = 1;
+        for (Integer i: backEnd.getModel().vaticanRoute.getVaticanReports(backEnd.getMyUsername())) {
+            if (i == (index - 1)) {
+                vaticanReportActive[index-1] = true;
+                break;
+            }
+        }
+
+    }
+
+    public static void showUpdateMessage(String message){
+        cls();
+        System.out.println(message);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
  }

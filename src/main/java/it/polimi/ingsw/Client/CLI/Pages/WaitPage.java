@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
@@ -13,8 +13,8 @@ public class WaitPage extends ModelEventHandler.Default {
     public void WaitPageView(ViewBackEnd backEnd)  {
         this.backEnd = backEnd;
         this.backEnd.setEventHandler(this);
-        CLI_Controller.cls();
-        waitPage = CLI_Controller.readSchematics(9);
+        Cli.cls();
+        waitPage = Cli.readSchematics(9);
         System.out.println(waitPage);
     }
 
@@ -25,20 +25,20 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(GameSizeRequest event) {
-        CLI_Controller.selectNumber.SelectNumberPlayerPageView(this.backEnd);
+        Cli.selectNumber.SelectNumberPlayerPageView(this.backEnd);
     }
 
     @Override
     public void handle(WaitingPlayersUpdate event){
         String playerWaiting =  "player currently joined: " + event.getLobbyCurrentSize();
-        CLI_Controller.cls();
+        Cli.cls();
         System.arraycopy(playerWaiting.toCharArray(),0, waitPage, 3910, playerWaiting.toCharArray().length);
         System.out.println(waitPage);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
+        Cli.showError(event);
         WaitPageView(this.backEnd);
     }
 
@@ -51,11 +51,7 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(AvailableLeaderCard event) {
-
-        System.err.println("available");
-
-
-        CLI_Controller.selectionPage.SelectionPageView(this.backEnd);
+        Cli.selectionPage.SelectionPageView(this.backEnd);
     }
 
 

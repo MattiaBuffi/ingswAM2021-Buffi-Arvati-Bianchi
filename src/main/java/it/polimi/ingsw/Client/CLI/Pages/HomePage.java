@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.CLI.Pages;
 
-import it.polimi.ingsw.Client.CLI.CLI_Controller;
+import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.ActivateLeaderCard;
@@ -36,19 +36,24 @@ public class HomePage extends ModelEventHandler.Default {
 
 
     public void print(){
-        CLI_Controller.cls();
+        Cli.cls();
         //Printing Name of Current Player
         String currentName;
+        int spaces;
         if (this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())) {
-            currentName = "It's your Turn     ";
+            currentName = "It's your Turn";
+            spaces = 31-currentName.length();
+            for (int i = 0; i < spaces; i++) {
+                currentName = currentName.concat(" ");
+            }
         } else {
-            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn     ";
+            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn";
+            spaces = 31-currentName.length();
+            for (int i = 0; i < spaces; i++) {
+                currentName = currentName.concat(" ");
+            }
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
-
-        CLI_Controller.UpdateShelf(this.backEnd, homePage);
-        CLI_Controller.UpdateChest(this.backEnd, homePage);
-
 
         int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
         if ( position != lastPosition){
@@ -63,58 +68,62 @@ public class HomePage extends ModelEventHandler.Default {
             homePage[FaithCellPosition[position]]= 'X';
         }
 
-        for (int i = 0; i < CLI_Controller.popeFavourActive.length; i++){
-            if(CLI_Controller.popeFavourActive[i] == 1){
-                homePage[HomePopeFavourPosition[i]] = 'O';
-                homePage[HomePopeFavourPosition[i]+1] = 'K';
+        for (int j = 0; j < Cli.vaticanReport.length; j++){
+            if(Cli.vaticanReport[j] == 1 ){
+                if(Cli.vaticanReportActive[j]) {
+                    homePage[HomePopeFavourPosition[j]] = 'O';
+                    homePage[HomePopeFavourPosition[j]+1] = 'K';
+                }else{
+                    homePage[HomePopeFavourPosition[j]] = 'X';
+                }
             }
         }
 
         List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < leaderCard.size(); i++) {
-            CLI_Controller.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
+            Cli.LeaderCardInfoExtractor(homePage, leaderCard, i, HomeLeaderType, HomeLeaderPV, HomeLeaderCost, HomeLeaderEffect);
         }
 
-        if(CLI_Controller.leaderActive[1]>0){
-            CLI_Controller.showLeaderShelf(homePage);
+        if(Cli.leaderActive[1]>0){
+            Cli.showLeaderShelf(homePage);
         }
+
+        Cli.UpdateShelf(this.backEnd, homePage);
+        Cli.UpdateChest(this.backEnd, homePage);
 
         System.out.println(homePage);
-
         System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
-
-
 
     }
 
     public void activate(String line){
 
-        if (line.equals("1") /*&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0*/){
+        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageActivate);
-        }else /*if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1)*/{
+        }else if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageActivate);
-        }/*else {
-            CLI_Controller.cls();
+        }else {
+            Cli.cls();
             System.out.println("Leader Card Error");
-            CLI_Controller.homePage.HomePageView(this.backEnd);
-        }*/
+            Cli.homePage.HomePageView(this.backEnd);
+        }
     }
 
     public void discard(String line){
 
-        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
+        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0 && !this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive() ){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageDiscard);
 
-        }else if (line.equals("2")&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
+        }else if (line.equals("2")&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1 && !this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).isActive()){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageDiscard);
         }else {
-            CLI_Controller.cls();
+            Cli.cls();
             System.out.println("Leader Card Error");
-            CLI_Controller.homePage.HomePageView(this.backEnd);
+            Cli.homePage.HomePageView(this.backEnd);
         }
     }
 
@@ -126,31 +135,31 @@ public class HomePage extends ModelEventHandler.Default {
 
         print();
 
-        CLI_Controller.setReadHandler(
+        Cli.setReadHandler(
                 (line)->{
                         line = line.toUpperCase();
                         if(line.equals("ACTIVATE")){
                             System.out.println("Which Leader card do you want to Activate (1/2): ");
-                            CLI_Controller.setReadHandler(this::activate);
+                            Cli.setReadHandler(this::activate);
                         }else if (line.equals("DISCARD")){
                             System.out.println("Which Leader card do you want to Discard (1/2): ");
-                            CLI_Controller.setReadHandler(this::discard);
+                            Cli.setReadHandler(this::discard);
                         }else {
                             switch (line) {
                                 case "PRODUCE":
-                                    CLI_Controller.productionPage.ProductionPageView(backEnd);
+                                    Cli.productionPage.ProductionPageView(backEnd);
                                     break;
                                 case "CARDMARKET":
-                                    CLI_Controller.cardMarketPage.CardMarketPageView(backEnd);
+                                    Cli.cardMarketPage.CardMarketPageView(backEnd);
                                     break;
                                 case "RSSMARKET":
-                                    CLI_Controller.rssMarketPage.RssMarketPageView(backEnd);
+                                    Cli.rssMarketPage.RssMarketPageView(backEnd);
                                     break;
                                 case "VIEW":
-                                    CLI_Controller.viewPage.ViewPageView(backEnd);
+                                    Cli.viewPage.ViewPageView(backEnd);
                                     break;
                                 case "QUIT":
-                                    CLI_Controller.quitPage.QuitPageView(backEnd);
+                                    Cli.quitPage.QuitPageView(backEnd);
                                     break;
                                 case "ENDTURN":
                                     EndTurn message = new EndTurn();
@@ -177,8 +186,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
-        System.err.println("");
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
@@ -186,30 +194,31 @@ public class HomePage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-
+        /*
+        CLI_Controller.showUpdateMessage(event.getMessage());
+        HomePageView(this.backEnd);*/
     }
 
     @Override
     public void handle(ActivePlayer event){
-        System.err.println("ActivePlayer");
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ErrorUpdate event) {
-        CLI_Controller.showError(event);
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.showError(event);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
 
     @Override
     public void handle(ChestUpdate event) {
-        CLI_Controller.UpdateChest(backEnd, homePage);
+        Cli.UpdateChest(backEnd, homePage);
     }
 
     @Override
     public void handle(ShelfUpdate event) {
-        CLI_Controller.UpdateShelf(backEnd, homePage);
+        Cli.UpdateShelf(backEnd, homePage);
     }
 
     @Override
@@ -217,26 +226,22 @@ public class HomePage extends ModelEventHandler.Default {
 
         if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[0], active.length());
-            CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
+            Cli.leaderPowerSelector(event.getLeaderCard().getId());
         }else if (event.getLeaderCard().getId().equals(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId())){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1], active.length());
-            CLI_Controller.leaderPowerSelector(event.getLeaderCard().getId());
+            Cli.leaderPowerSelector(event.getLeaderCard().getId());
         }
 
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(VaticanReport event) {
-        System.err.println("");
-        CLI_Controller.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
-
-        System.err.println("vatican route");
-
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);
         }
@@ -244,7 +249,7 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(ActionTokenPlayed event) {
-        CLI_Controller.showSingleMessage(event, this.backEnd);
+        Cli.showSingleMessage(event, this.backEnd);
     }
 
     @Override
@@ -259,9 +264,13 @@ public class HomePage extends ModelEventHandler.Default {
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1-discardedLeader], active.length());
         }
         discardedLeader++;
-        CLI_Controller.homePage.HomePageView(this.backEnd);
+        Cli.homePage.HomePageView(this.backEnd);
     }
 
+    @Override
+    public void handle(EndGame event){
+
+    }
 
 
 }
