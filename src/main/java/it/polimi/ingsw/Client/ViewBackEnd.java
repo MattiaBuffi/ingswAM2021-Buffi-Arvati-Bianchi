@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.ModelData.ViewModel;
 import it.polimi.ingsw.Message.ClientEventHandler;
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.Model.ModelUpdate;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Utils.Observable;
 import it.polimi.ingsw.Utils.Observer;
@@ -56,7 +57,8 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     }
 
     public void localGame(){
-        //app.localController();
+        model = new ViewModel();
+        app.localController();
     }
 
     public void disconnectController(){
@@ -78,6 +80,8 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     public void setUsername(String username) {
         model.myUsername = username;
     }
+
+
 
     @Override
     public void update(Message<ModelEventHandler> event) {

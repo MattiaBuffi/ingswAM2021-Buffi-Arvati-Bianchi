@@ -26,13 +26,14 @@ public class StateProduction extends PlayerState {
     @Override
     protected boolean production(Player context, ProductionSelector selector) {
 
-        context.getProductionHandler().setupProductionHandler(context.getCardStorage(), context.getResourceStorage(), context.getVaticanToken());
-
         if(production(context.getProductionHandler(), selector)){
             return true;
         }
 
-        StateNewTurn.setState(context);
+        if(context.getProductionHandler().size() == 0 ){
+            StateNewTurn.setState(context);
+        }
+
         return false;
 
     }

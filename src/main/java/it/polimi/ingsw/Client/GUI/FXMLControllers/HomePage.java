@@ -20,7 +20,8 @@ public class HomePage implements Layout {
     }
 
     public void setupOfflineGame(){
-        //...
+        App.setScene("game_board");
+        backEnd.localGame();
     }
 
 }

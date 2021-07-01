@@ -39,6 +39,9 @@ public class LoginHandler {
     }
 
     public boolean addUsername(Client client, String username){
+
+        username = username.toLowerCase();
+
         if(!validUsername( client::update, username)){
             return false;
         }

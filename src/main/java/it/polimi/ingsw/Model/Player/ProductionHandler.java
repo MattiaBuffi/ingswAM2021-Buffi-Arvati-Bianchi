@@ -41,6 +41,12 @@ public class ProductionHandler {
         this.broadcaster = broadcaster;
     }
 
+
+    public int size(){
+        return produced.getSize();
+    }
+
+
     /**
      *  reinizilaizza il buffer e lo rende disponibile ad accettare risorse
      */
