@@ -17,6 +17,7 @@ public class StartPage extends ModelEventHandler.Default{
 
     public void askIp(String line){
         this.ip = line;
+        Cli.cls();
         System.arraycopy(ip.toCharArray(), 0, charArray, FirstCellPosition, ip.toCharArray().length);
         System.out.println(charArray);
         System.out.println("Insert Port Number: ");
@@ -50,7 +51,6 @@ public class StartPage extends ModelEventHandler.Default{
         this.port = "0000";
 
         Cli.cls();
-
         System.out.println(charArray);
         System.out.println("Insert Server IP: ");
         Cli.setReadHandler(this::askIp);

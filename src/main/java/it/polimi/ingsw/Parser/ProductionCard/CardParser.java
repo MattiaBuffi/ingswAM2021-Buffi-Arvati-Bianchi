@@ -6,18 +6,16 @@ import it.polimi.ingsw.Model.CardMarket.CardMarket;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CardParser {
 
-    private static final String path = "src/main/resources/cards/DevelopmentCard.json";
+    private static final String path = "/cards/DevelopmentCard.json";
     private static final List<DevelopmentCardBuilder> DEVELOPMENT_CARD_BUILDERS = parseDevelopmentDeckBuilder();
 
 
@@ -36,20 +34,15 @@ public class CardParser {
     private static List<DevelopmentCardBuilder> parseDevelopmentDeckBuilder() {
         Gson parser = new Gson();
         BufferedReader reader = null;
-        List<DevelopmentCardBuilder> cards = new ArrayList<>();
+        List<DevelopmentCardBuilder> cards;
 
         try {
-            reader = new BufferedReader(new FileReader(path));
+            reader = new BufferedReader(new InputStreamReader(it.polimi.ingsw.Parser.ProductionCard.CardParser.class.getResourceAsStream(path), StandardCharsets.UTF_8));
 
             Type collectionType = new TypeToken<List<DevelopmentCardBuilder>>(){}.getType();
             List<DevelopmentCardBuilder> parsedCard = parser.fromJson(reader, collectionType);
 
-            if (parsedCard == null) {
-                //error
-            }
             cards = parsedCard;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } finally {
             if (reader != null) {
                 try {
