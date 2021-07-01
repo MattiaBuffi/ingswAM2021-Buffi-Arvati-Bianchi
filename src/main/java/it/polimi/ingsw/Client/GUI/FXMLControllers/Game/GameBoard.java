@@ -49,7 +49,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("GameBoard");
+
         this.backEnd = backEnd;
         backEnd.setEventHandler(this);
 
@@ -71,6 +71,8 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ModelUpdate event) {
+
+
 
         for(Message<ModelEventHandler> message: event.getMessages()){
             message.accept(this);
@@ -117,6 +119,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ActivePlayer event) {
+
         try {
             PopUpManager.showNewTurnPopUp(event.getUsername(), backEnd);
         } catch (IOException e) {
@@ -133,6 +136,9 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
 
     @Override
     public void handle(ActionTokenPlayed event) {
+
+
+
         try {
             PopUpManager.showActionTokenPopUp(event.getMessage());
         } catch (IOException e) {

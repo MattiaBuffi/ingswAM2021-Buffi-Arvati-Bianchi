@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Network.ConnectionHandler;
+import it.polimi.ingsw.Utils.Observer;
 
 import java.io.IOException;
 
@@ -57,8 +59,8 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
     }
 
     public void localController(){
-        //this.controller = new LocalController();
-        this.controller.addObserver(backEnd);
+        backEnd.setUsername("player1");
+        this.controller = new LocalController("player1", backEnd);
         backEnd.addObserver(controller);
     }
 

@@ -136,11 +136,15 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(ModelUpdate event) {
 
         //set the player who is doing the action
+
+
         setPlayer(model.getPlayer(event.getPlayerUsername()));
 
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
+
+
     }
 
 
@@ -207,6 +211,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(ActionTokenPlayed event) {
+
         //do nothing
     }
 

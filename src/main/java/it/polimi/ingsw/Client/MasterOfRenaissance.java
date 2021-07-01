@@ -13,28 +13,28 @@ public class MasterOfRenaissance {
 
         List<String> argsList = new ArrayList<>(List.of(args));
 
+
+
         if(argsList.size()==0){
             Cli.main(args);
-        } else if(argsList.size() > 0){
+        } else {
 
             for (String arg : argsList) {
                 switch (arg) {
                     case "-cli":
-                        Cli.main( (String[]) argsList.toArray() );
+                        Cli.main(  argsList.toArray(new String[argsList.size()])  );
                         return;
                     case "-gui":
-                        App.main( (String[]) argsList.toArray());
+                        App.main(  argsList.toArray(new String[argsList.size()]) );
                         return;
                     case "-server":
                         argsList.remove("-server");
-                        ServerApp.main((String[]) argsList.toArray());
+                        ServerApp.main(  argsList.toArray(new String[argsList.size()]) );
                         return;
                 }
             }
 
             System.out.println("need to start this application with one of these flags[\"-cli\",\"-gui\",\"-server\"]");
-
-
 
         }
 

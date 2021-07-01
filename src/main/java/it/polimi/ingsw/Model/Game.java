@@ -423,8 +423,9 @@ public class Game implements TurnHandler, GameHandler {
 
 
         public void sendMessages(String username, String message){
+
             for (Player p: players){
-                p.notifyUser(new ModelUpdate(username, message, messages));
+                p.notifyUser(new ModelUpdate(username, message, new ArrayList<>(messages)));
             }
             messages.clear();
         }
