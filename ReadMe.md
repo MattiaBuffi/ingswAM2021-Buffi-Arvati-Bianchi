@@ -1,8 +1,7 @@
 # Masters of Renaissance
 
-*****
 
-Final Test of "**Software Engineering**"
+Final Test of "**Software Engineering**".
 
 **Professor** Alessandro Margara
 
