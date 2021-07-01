@@ -14,6 +14,10 @@ public class Observable<T> {
         }
     }
 
+    public void removeAllObserver(){
+       observers.clear();
+    }
+
     public void removeObserver(Observer<T> observer){
         synchronized (observers) {
             observers.remove(observer);

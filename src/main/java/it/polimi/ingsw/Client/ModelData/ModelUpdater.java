@@ -195,8 +195,8 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(EndGame event) {
-        System.out.println("GAME ENDED");
-        System.exit(0);
+
+
     }
 
 

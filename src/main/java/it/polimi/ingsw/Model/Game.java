@@ -6,6 +6,7 @@ import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.ActionTokens.ActionDeck;
 import it.polimi.ingsw.Model.CardMarket.CardMarket;
+import it.polimi.ingsw.Model.CardMarket.NullCard;
 import it.polimi.ingsw.Model.CardMarket.PurchasableCard;
 import it.polimi.ingsw.Model.CardStorage.Selection.SelectBasic;
 import it.polimi.ingsw.Model.CardStorage.Selection.SelectDevelopmentCard;
@@ -13,6 +14,7 @@ import it.polimi.ingsw.Model.CardStorage.Selection.SelectLeader;
 import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
+import it.polimi.ingsw.Model.Player.States.StateGameEnded;
 import it.polimi.ingsw.Model.Player.User;
 import it.polimi.ingsw.Model.ResourceMarket.ResourceMarket;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
@@ -290,9 +292,30 @@ public class Game implements TurnHandler, GameHandler {
     }
 
 
+
+
+
+
     public void disconnect(String username){
 
-        endGame();
+        Player disconnectedPlayer = getPlayerByUsername(username);
+        disconnectedPlayer.getUser().removeAllObserver();
+        players.remove(disconnectedPlayer);
+
+        switch (players.size()){
+            case 0:
+                terminateGame();
+                return;
+            case 1:
+                broadcaster.notifyAllPlayers(new EndGame(players.get(0).getUser().getUsername()));
+                break;
+            default:
+                broadcaster.notifyAllPlayers(new EndGame(getWinner()));
+                break;
+        }
+
+        broadcaster.sendMessages("game", "game ended: player disconnected");
+        terminateGame();
 
     }
 
@@ -331,6 +354,46 @@ public class Game implements TurnHandler, GameHandler {
 
 
 
+    private String getWinner(){
+
+        int maxPoint = 0;
+        Player winner = null;
+
+        for (Player p: players){
+            StateGameEnded.setState(p);
+            int playerPoint = p.getVictoryPoints();
+            if(playerPoint > maxPoint){
+                winner = p;
+            } else if(playerPoint == maxPoint){
+                int playerResourceSize = p.getResourceStorage().getResources().getSize();
+                int winnerResourceSize = winner.getResourceStorage().getResources().getSize();
+
+
+                if(playerResourceSize > winnerResourceSize){
+                    winner = p;
+                } else if(playerResourceSize == winnerResourceSize){
+                    if(players.indexOf(p)< players.indexOf(winner)){
+                        winner = p;
+                    }
+                }
+            }
+        }
+
+
+        return winner.getUser().getUsername();
+    }
+
+
+
+    private void terminateGame(){
+
+        for (Player p: players){
+            p.getUser().removeAllObserver();
+        }
+
+    }
+
+
     private interface gameStrategy{
 
         void endTurn();
@@ -347,6 +410,7 @@ public class Game implements TurnHandler, GameHandler {
         public void endTurn() {
             actionDeck.playToken();
             players.get(currentPlayer).setActive();
+            broadcaster.notifyAllPlayers(new VictoryPointsUpdate(players.get(currentPlayer).getUser().getUsername(), players.get(currentPlayer).getVictoryPoints()));
         }
 
         @Override
@@ -354,18 +418,32 @@ public class Game implements TurnHandler, GameHandler {
 
             for (VaticanToken token: vaticanRoute.getTokenList()){
                 if(token.getPosition() == VaticanRoute.LAST_POSITION){
-                    players.get(currentPlayer).notifyUser(new EndGame());
+                    players.get(currentPlayer).notifyUser(new EndGame(token.getOwner()));
+                    broadcaster.sendMessages("game", "Game ended: Reached vatican route ending");
+                    terminateGame();
+
                     return;
                 }
             }
 
             if(players.get(currentPlayer).getCardStorage().getCards().size() == 7){
-                players.get(currentPlayer).notifyUser(new EndGame());
+                players.get(currentPlayer).notifyUser(new EndGame(players.get(currentPlayer).getUser().getUsername()));
+                broadcaster.sendMessages("game", "Game ended: 7th development card bought");
+                terminateGame();
+
                 return;
             }
 
-            players.get(currentPlayer).notifyUser(new EndGame());
+            for (int i = 0; i < 4; i++) {
+                if(cardMarket.getCard(i, 2) == NullCard.get()) {
+                    players.get(currentPlayer).notifyUser(new EndGame("cpu"));
+                    broadcaster.sendMessages("game", "Game ended: market has an empty column");
+                    terminateGame();
+                }
+            }
 
+
+            players.get(currentPlayer).notifyUser(new EndGame("cpu"));
 
 
 
@@ -382,22 +460,22 @@ public class Game implements TurnHandler, GameHandler {
             players.get(currentPlayer).setActive();
         }
 
+
         @Override
         public void endTurn() {
 
             setNextPlayer();
 
-            if(lastTurn){
-                if(currentPlayer == 0){
-                    for (Player p: players){
-                        p.notifyUser(new EndGame());
-                    }
-                }
-            }
-
-
             for (Player p: players){
                 broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
+            }
+
+            if(lastTurn){
+                if(currentPlayer == 0){
+                    broadcaster.notifyAllPlayers(new EndGame(getWinner()));
+                    broadcaster.sendMessages("game", "game is ended");
+                    terminateGame();
+                }
             }
 
         }

@@ -42,6 +42,13 @@ public class SelectionPage extends ModelEventHandler.Default{
 
     }
 
+
+    public void setup(ViewBackEnd backEnd){
+        this.backEnd = backEnd;
+        this.backEnd.setEventHandler(this);
+    }
+
+
     public void SelectionPageView(ViewBackEnd backEnd) {
 
 

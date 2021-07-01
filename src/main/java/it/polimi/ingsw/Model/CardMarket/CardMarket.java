@@ -218,6 +218,7 @@ public class CardMarket implements CardRemover{
     }
 
 
+
     /**
      * Notify all the players that a card in a certain position of the market is changed
      */

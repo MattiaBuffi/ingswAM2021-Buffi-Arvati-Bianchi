@@ -19,7 +19,11 @@ public class VaticanRoute {
     public static final int[] POPES_FAVOR_VICTORY_POINTS = {2, 3, 4};
     public static final int[] POPE_SPACES_LOWER_LIMITS = {5, 12, 19};
     protected static final int VICTORY_POINTS_STEP = 3;
-    protected static final int[] ROUTE_VICTORY_POINTS = {1, 2, 4, 6, 9, 12, 16, 20};
+
+
+    protected static final int[] ROUTE_VICTORY_POINTS = {0, 1, 2, 4, 6, 9, 12, 16, 20};
+    protected static final int[] ROUTE_VICTORY_POSITION = {0, 3, 6, 9, 12, 15, 18, 21, 24};
+    protected static final int[] ROUTE_VICTORY_POINTS_INCREMENT = {0, 1, 1, 2, 2, 3, 3, 4, 4};
 
 
     public int popeSpaceReached;
@@ -112,6 +116,32 @@ public class VaticanRoute {
         return true;
     }
 
+
+
+
+
+
+
+
+
+
+    private void getVictoryPoints(VaticanToken token, int position){
+
+
+
+        while (position >= ROUTE_VICTORY_POSITION[token.getLastPointPosition()+1]){
+
+            token.setLastPointPosition( token.getLastPointPosition()+1);
+            token.setVictoryPoint( token.getVictoryPoints()+ ROUTE_VICTORY_POINTS_INCREMENT[token.getLastPointPosition()]);
+            if(position == LAST_POSITION){
+                break;
+            }
+
+        }
+
+    }
+
+
     /**
      * Advance the position of the selected token by the number of points specified as parameter.
      * @param token token which to advance its position
@@ -127,10 +157,12 @@ public class VaticanRoute {
         }
 
         if(newPosition >= LAST_POSITION){
+            getVictoryPoints(token, LAST_POSITION);
             token.setPosition(LAST_POSITION);
             broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), LAST_POSITION));
             gameHandler.endGame();
         } else {
+            getVictoryPoints(token, newPosition);
             token.setPosition(newPosition);
             broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), newPosition));
         }
@@ -158,10 +190,12 @@ public class VaticanRoute {
         broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
 
+
+
     public void assignRouteVictoryPoints(){
         for(VaticanToken t: tokenList){
             int n = t.getPosition()/VICTORY_POINTS_STEP;
-            t.setPosition( t.getPosition() + ROUTE_VICTORY_POINTS[n-1] );
+            t.setVictoryPoint( t.getVictoryPoints() + ROUTE_VICTORY_POINTS[n-1] );
         }
     }
 

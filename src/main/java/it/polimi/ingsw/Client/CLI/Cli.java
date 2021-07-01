@@ -102,12 +102,16 @@ public class Cli {
     public void askMode(String line){
         Cli.cls();
         switch (line.toUpperCase()) {
-            case "ONLINE" -> Cli.start.StartPageView(backEnd);
-            case "LOCAL" -> Cli.username.UsernamePageView(backEnd);
-            default -> {
+            case "ONLINE" :
+                Cli.start.StartPageView(backEnd);
+                break;
+            case "LOCAL":
+                Cli.username.UsernamePageView(backEnd);
+                break;
+            default :
                 System.out.println("Error, closing application");
                 System.exit(0);
-            }
+                break;
         }
     }
 
@@ -313,13 +317,18 @@ public class Cli {
     }
 
     public static String getDevColor(DevelopmentCard.Color color){
-        return switch (color) {
-            case BLUE -> "BLUE";
-            case YELLOW -> "YELLOW";
-            case PURPLE -> "PURPLE";
-            case GREEN -> "GREEN";
-            default -> "";
-        };
+        switch (color) {
+            case BLUE:
+                return "BLUE";
+            case YELLOW:
+                return "YELLOW";
+            case PURPLE:
+                return "PURPLE";
+            case GREEN:
+                return "GREEN";
+            default:
+                return "";
+        }
     }
 
 
@@ -339,13 +348,18 @@ public class Cli {
     }
 
     public static String getColorStringAvailableRss(Marble marble){
-        return switch (marble.getColor()) {
-            case YELLOW -> "Y";
-            case BLUE -> "B";
-            case PURPLE -> "P";
-            case GREY -> "G";
-            default -> " ";
-        };
+        switch (marble.getColor()) {
+            case YELLOW:
+                return "Y";
+            case BLUE:
+                return "B";
+            case PURPLE:
+                return "P";
+            case GREY:
+                return "G";
+            default:
+                return " ";
+        }
     }
 
 

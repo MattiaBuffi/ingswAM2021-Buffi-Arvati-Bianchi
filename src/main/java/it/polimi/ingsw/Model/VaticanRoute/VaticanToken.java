@@ -8,6 +8,9 @@ public class VaticanToken implements FaithHandler{
     private String owner;
     private int position;
     private int victoryPoint;
+
+    private int lastPointPosition;
+
     private final VaticanRoute route;
 
 
@@ -21,6 +24,7 @@ public class VaticanToken implements FaithHandler{
     public VaticanToken(VaticanRoute route, int position, String owner){
         this.position = position;
         this.victoryPoint = 0;
+        this.lastPointPosition = 0;
         this.route = route;
         this.owner = owner;
     }
@@ -54,6 +58,16 @@ public class VaticanToken implements FaithHandler{
         }
 
     }
+
+
+    public int getLastPointPosition() {
+        return lastPointPosition;
+    }
+
+    public void setLastPointPosition(int lastPointPosition) {
+        this.lastPointPosition = lastPointPosition;
+    }
+
 
 
     public int getPosition(){

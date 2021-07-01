@@ -34,10 +34,12 @@ public class DiscardActionToken implements ActionToken{
     @Override
     public void activate() {
         if(!remover.removeCard(color)){
+            broadcaster.notifyAllPlayers(new ActionTokenPlayed("Lorenzo bought the last "+color+" card"));
             terminator.endGame();
             return;
         }
         if(!remover.removeCard(color)){
+            broadcaster.notifyAllPlayers(new ActionTokenPlayed("Lorenzo bought the last "+color+" card"));
             terminator.endGame();
             return;
         }
