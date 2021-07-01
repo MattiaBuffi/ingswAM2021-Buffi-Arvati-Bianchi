@@ -2,6 +2,7 @@ package it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp;
 
 import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;
+import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.ScoreboardTab;
 import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
 import it.polimi.ingsw.Client.ViewBackEnd;
@@ -149,7 +150,7 @@ public class PopUpManager {
         stage.show();
     }
 
-    public static void showEndGamePopUp(String username) throws IOException {
+    public static void showEndGamePopUp(ScoreboardTab mainController) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("layouts/end_game.fxml"));
         Parent parent = loader.load();
 
@@ -158,7 +159,7 @@ public class PopUpManager {
         stage.setScene(scene);
 
         EndGamePopUp controller = loader.getController();
-        controller.initData(username);
+        controller.initData(mainController);
 
         scene.setFill(Color.TRANSPARENT);
         //stage.initModality(Modality.APPLICATION_MODAL);

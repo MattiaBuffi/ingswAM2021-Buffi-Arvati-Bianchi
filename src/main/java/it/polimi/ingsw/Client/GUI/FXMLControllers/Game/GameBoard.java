@@ -149,7 +149,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
     @Override
     public void handle(EndGame event) {
         try {
-            PopUpManager.showEndGamePopUp("player who win");
+            PopUpManager.showEndGamePopUp(scoreboardTab_Controller);
         } catch (IOException e) {
             e.printStackTrace();
         }

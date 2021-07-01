@@ -135,7 +135,4 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
     }
 
 
-
-
-
 }
