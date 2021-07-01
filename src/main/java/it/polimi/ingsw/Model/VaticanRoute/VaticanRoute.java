@@ -72,7 +72,8 @@ public class VaticanRoute {
     /**
      * Add the token as parameter to the to the token list
      * @param token token to add to the vatican route
-     * @return
+     * @return true if the token is correctly added, false if the token has a position greater than the last vatican
+     * report reached
      */
     public boolean addPlayer(VaticanToken token){
         if(token.getPosition() >= POPE_SPACES[popeSpaceReached]){
@@ -157,11 +158,6 @@ public class VaticanRoute {
         broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
 
-
-
-    /**
-     * TODO: METHOD TO USE?
-     */
     public void assignRouteVictoryPoints(){
         for(VaticanToken t: tokenList){
             int n = t.getPosition()/VICTORY_POINTS_STEP;
