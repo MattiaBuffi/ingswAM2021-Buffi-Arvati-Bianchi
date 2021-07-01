@@ -21,14 +21,17 @@ public class ServerApp implements Server, SocketHandler {
     public static void main( String[] args ) {
         ServerApp app = null;
 
-
         if(args.length>0){
-            for(int i = 0; i < args.length; i++) {
-                if ("-port".equals(args[i])) {
-                    app = new ServerApp(Integer.getInteger(args[i + 1]));
-                    i += 1;
+
+                if (args[0].equals("-port")) {
+                    try{
+                        int port = Integer.parseInt(args[1]);
+                        app = new ServerApp(port);
+                    }catch (NumberFormatException e){
+                        System.err.println("Error while creating the server, insert a valid port, closing app...");
+                        System.exit(0);
+                    }
                 }
-            }
         } else {
             app = new ServerApp(1337);
         }
