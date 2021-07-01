@@ -51,10 +51,6 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(AvailableLeaderCard event) {
-
-        System.err.println("available");
-
-
         CLI_Controller.selectionPage.SelectionPageView(this.backEnd);
     }
 

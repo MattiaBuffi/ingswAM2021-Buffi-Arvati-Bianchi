@@ -14,6 +14,7 @@ public class LoadingPage extends ModelEventHandler.Default{
 
     ViewBackEnd backEnd;
     char[] loading;
+    Marble.Color multipleColor;
 
     public void LoadingPageView(ViewBackEnd backEnd){
 
@@ -28,76 +29,65 @@ public class LoadingPage extends ModelEventHandler.Default{
     public void invalidMessage() {
     }
 
+    public void multipleInitial1(String line){
+        multipleColor = CLI_Controller.fromStringToColor(line);
+        System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+        CLI_Controller.setReadHandler(this::multipleInitial2);
+    }
 
+    public void multipleInitial2(String position){
+        DepositResource deposit = new DepositResource(multipleColor, Integer.parseInt(position) - 1);
+        this.backEnd.notify(deposit);
 
+    }
+/*
+    public void multipleInitial3(String line){
+        multipleColor = CLI_Controller.fromStringToColor(line);
+        System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+        CLI_Controller.setReadHandler(this::multipleInitial4);
+
+    }
+
+    public void multipleInitial4(String position){
+        DepositResource deposit = new DepositResource(multipleColor, Integer.parseInt(position) - 1);
+        this.backEnd.notify(deposit);
+        CLI_Controller.cls();
+        System.out.println(this.loading);
+    }
+*/
     @Override
     public void handle(ResourceSetup event){
             CLI_Controller.cls();
 
             System.out.println("You can get " + event.getAvailableResources() +
                     " initial Resources for free, please insert the color of the resource that you want to take " +
-                    "[(P/G/B/Y) if more than 1 rss please insert the two colors divided by a -]");
+                    "use one of this letter please  P/G/B/Y ");
+        if(event.getAvailableResources()>1){
+            CLI_Controller.setReadHandler(this::multipleInitial1);
+            return;
+        }
+
 
             CLI_Controller.setReadHandler(
                     (line)->{
-                        line.toUpperCase();
-                        if (line.length() > 1) {
-                            String[] rss = line.split("-");
 
-                            CLI_Controller.setReadHandler(
-                                (position)->{
-                                    for (String s : rss) {
-                                        System.out.println("Where do you want to put your " + s + " rss? 1 to 3 to identify the shelf");
-                                        Marble.Color color = colorSelector(s.toUpperCase());
-                                        DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
-                                        this.backEnd.notify(deposit);
-                                    }
+                                System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
+
+                                CLI_Controller.setReadHandler(
+                                        (position)->{
+                                            try {
+                                                Marble.Color color = CLI_Controller.fromStringToColor(line);
+                                                DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
+                                                this.backEnd.notify(deposit);
+                                                System.out.println(this.loading);
+                                            }catch (NumberFormatException ex) {
+                                                CLI_Controller.showUpdateMessage("Wrong Input");
+                                            }
+
                                 }
                             );
-
-
-                        } else {
-                            System.out.println("Where do you want to put your " + line + " rss? 1 to 3 to identify the shelf");
-
-                            CLI_Controller.setReadHandler(
-                                    (position)->{
-                                        Marble.Color color = colorSelector(line.toUpperCase());
-                                        DepositResource deposit = new DepositResource(color, Integer.parseInt(position) - 1);
-                                        this.backEnd.notify(deposit);
-                                        System.out.println(this.loading);
-                                    }
-                            );
-
-                        }
                     }
             );
-
-
-    }
-
-
-
-
-
-
-    @Override
-    public void handle(ActivePlayer event){
-
-    }
-
-    public static Marble.Color colorSelector(String s){
-        switch (s){
-            case "P":
-                return Marble.Color.PURPLE;
-            case "G":
-                return Marble.Color.GREY;
-            case "B":
-                return Marble.Color.BLUE;
-            case "Y":
-                return Marble.Color.YELLOW;
-            default:
-                return null;
-        }
     }
 
     @Override
@@ -108,12 +98,14 @@ public class LoadingPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(ModelUpdate event){
-
         for (Message<ModelEventHandler> e: event.getMessages()){
-            if(e instanceof ActivePlayer){
-                CLI_Controller.homePage.HomePageView(this.backEnd);
-                backEnd.update(event);
-            }
+            e.accept(this);
         }
+    }
+
+    @Override
+    public void handle(ActivePlayer event){
+        CLI_Controller.homePage.HomePageView(this.backEnd);
+        backEnd.update(event);
     }
 }

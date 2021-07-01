@@ -5,10 +5,7 @@ import it.polimi.ingsw.Client.ModelData.Player;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.Model.ActionTokenPlayed;
-import it.polimi.ingsw.Message.Model.ActivePlayer;
-import it.polimi.ingsw.Message.Model.ErrorUpdate;
-import it.polimi.ingsw.Message.Model.ModelUpdate;
+import it.polimi.ingsw.Message.Model.*;
 import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
@@ -66,9 +63,14 @@ public class ViewPage extends ModelEventHandler.Default {
         }
 
 
-        for (int j = 0; j < CLI_Controller.popeFavourActive.length; j++){
-            if(CLI_Controller.popeFavourActive[j] == 1){
-                bigView[BigFaithPopeFavourPosition[j]] = 'X';
+        for (int j = 0; j < CLI_Controller.vaticanReport.length; j++){
+            if(CLI_Controller.vaticanReport[j] == 1 ){
+                if(CLI_Controller.vaticanReportActive[j]) {
+                    bigView[BigFaithPopeFavourPosition[j]] = 'O';
+                    bigView[BigFaithPopeFavourPosition[j]+1] = 'K';
+                }else{
+                    bigView[BigFaithPopeFavourPosition[j]] = 'X';
+                }
             }
         }
 
@@ -118,6 +120,9 @@ public class ViewPage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
+        /*
+        CLI_Controller.showUpdateMessage(event.getMessage());
+        ViewPageView(this.backEnd);*/
     }
 
     @Override
@@ -130,4 +135,8 @@ public class ViewPage extends ModelEventHandler.Default {
         CLI_Controller.showSingleMessage(event, this.backEnd);
     }
 
+    @Override
+    public void handle(VaticanReport event) {
+        CLI_Controller.activatePopeFavor(event.getIndex());
+    }
 }

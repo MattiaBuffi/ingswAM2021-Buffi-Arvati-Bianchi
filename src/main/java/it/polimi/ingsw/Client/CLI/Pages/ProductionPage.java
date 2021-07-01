@@ -66,12 +66,12 @@ public class ProductionPage extends ModelEventHandler.Default{
             column++;
         }
 
-        CLI_Controller.UpdateShelf(this.backEnd, production);
-        CLI_Controller.UpdateChest(this.backEnd, production);
-
         if(CLI_Controller.leaderActive[1]>0){
             CLI_Controller.showLeaderShelf(production);
         }
+
+        CLI_Controller.UpdateShelf(this.backEnd, production);
+        CLI_Controller.UpdateChest(this.backEnd, production);
 
         if(CLI_Controller.leaderActive[3]>0){
             List<LeaderCard> card = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
@@ -112,13 +112,25 @@ public class ProductionPage extends ModelEventHandler.Default{
     }
 
     private void leaderProd(String line){
-        LeaderCardProduction message = new LeaderCardProduction(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(0).getId(), CLI_Controller.fromStringToColor(line));
-        backEnd.notify(message);
+        System.err.println(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+        System.err.println(CLI_Controller.fromStringToColor(line));
+        if(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(0).isActive()) {
+            LeaderCardProduction message = new LeaderCardProduction(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(0).getId(), CLI_Controller.fromStringToColor(line));
+            backEnd.notify(message);
+        }else{
+            CLI_Controller.showUpdateMessage("Your leader is not active");
+            ProductionPageView(this.backEnd);
+        }
     }
 
     private void leaderProd2(String line){
-        LeaderCardProduction message = new LeaderCardProduction(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(1).getId(), CLI_Controller.fromStringToColor(line));
-        backEnd.notify(message);
+        if(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(1).isActive()) {
+            LeaderCardProduction message = new LeaderCardProduction(backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard().get(1).getId(), CLI_Controller.fromStringToColor(line));
+            backEnd.notify(message);
+        }else{
+            CLI_Controller.showUpdateMessage("Your leader is not active");
+            ProductionPageView(this.backEnd);
+        }
     }
 
     public void Production(String productionString, ViewBackEnd backEnd) {
@@ -128,16 +140,28 @@ public class ProductionPage extends ModelEventHandler.Default{
                 CLI_Controller.setReadHandler(this::basic);
                 break;
             case "4":
-                System.out.println("Which rss do you want: ");
-                CLI_Controller.setReadHandler(this::leaderProd);
+                if(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive() &&
+                        String.valueOf(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getType()).equals("EXTRA_PRODUCTION")){
+                    System.out.println("Which rss do you want[p/g/y/b]: ");
+                    CLI_Controller.setReadHandler(this::leaderProd);
+                }
                 break;
             case "5":
-                System.out.println("Which rss do you want: ");
-                CLI_Controller.setReadHandler(this::leaderProd2);
+                if(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).isActive() &&
+                        String.valueOf(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getType()).equals("EXTRA_PRODUCTION")){
+                    System.out.println("Which rss do you want[p/g/y/b]: ");
+                    CLI_Controller.setReadHandler(this::leaderProd2);
+                }
                 break;
             default:
-                CardProduction message = new CardProduction(Integer.parseInt(productionString) - 1);
-                backEnd.notify(message);
+                try{
+                    CardProduction message = new CardProduction(Integer.parseInt(productionString) - 1);
+                    backEnd.notify(message);
+                }catch (NumberFormatException e){
+                    CLI_Controller.showUpdateMessage("Wrong Input");
+                    ProductionPageView(this.backEnd);
+                    return;
+                }
                 break;
         }
     }
@@ -155,6 +179,7 @@ public class ProductionPage extends ModelEventHandler.Default{
                     switch (line){
                         case "PRODUCE":
                             System.out.println("Which production do you want to do? (0 = basic, 1 to 3 = production card, 4-5 = leader production [ insert one by one]: ");
+                            System.out.println("Pay attention to Leader Card Production, if your leader is the card on the left in the homepage insert 4, if it is the one on the right insert 5");
                             CLI_Controller.setReadHandler(this::produce);
                             break;
                         case "EXIT":
@@ -179,14 +204,6 @@ public class ProductionPage extends ModelEventHandler.Default{
     public void invalidMessage() {
 
     }
-
-
-
-    @Override
-    public void handle(ProductionBufferUpdate event) {
-
-    }
-
 
     @Override
     public void handle(ChestUpdate event) {
@@ -213,6 +230,9 @@ public class ProductionPage extends ModelEventHandler.Default{
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
+        /*
+        CLI_Controller.showUpdateMessage(event.getMessage());
+        ProductionPageView(this.backEnd);*/
     }
 
     @Override
@@ -227,6 +247,9 @@ public class ProductionPage extends ModelEventHandler.Default{
         CLI_Controller.showSingleMessage(event, this.backEnd);
     }
 
-
+    @Override
+    public void handle(VaticanReport event) {
+        CLI_Controller.activatePopeFavor(event.getIndex());
+    }
 
 }

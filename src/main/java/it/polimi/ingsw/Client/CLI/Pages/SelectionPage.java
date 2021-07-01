@@ -57,13 +57,17 @@ public class SelectionPage extends ModelEventHandler.Default{
 
         CLI_Controller.setReadHandler(
                 (line)->{
-                    if(line.isEmpty() && (Integer.parseInt(line)<1 || Integer.parseInt(line)> leaderCardSelection.size() )){
-                        System.out.println("Which Leader Cards do you want to discard 1 to "+ leaderCardSelection.size() + " : ");
-                        return;
+                    try {
+                        if (line.isEmpty() && (Integer.parseInt(line) < 1 || Integer.parseInt(line) > leaderCardSelection.size())) {
+                            System.out.println("Which Leader Cards do you want to discard 1 to " + leaderCardSelection.size() + " : ");
+                            return;
+                        }
+                        DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line) - 1).getId());
+                        this.backEnd.notify(messageDiscard);
+                    }catch (NumberFormatException e){
+                        CLI_Controller.showUpdateMessage("Wrong Input");
+                        SelectionPageView(this.backEnd);
                     }
-                    DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line)-1).getId());
-                    this.backEnd.notify(messageDiscard);
-
                 }
 
         );

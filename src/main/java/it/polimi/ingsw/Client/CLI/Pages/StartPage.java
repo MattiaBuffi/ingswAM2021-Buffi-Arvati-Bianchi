@@ -30,12 +30,16 @@ public class StartPage extends ModelEventHandler.Default{
         System.arraycopy(port.toCharArray(), 0, charArray, SecondCellPosition, port.toCharArray().length);
         System.out.println(charArray);
 
-        if(this.backEnd.connectToServer(this.ip, Integer.parseInt(this.port))){
-            CLI_Controller.username.UsernamePageView(this.backEnd);
-        } else {
-            CLI_Controller.start.StartPageView(this.backEnd);
+        try {
+            if (this.backEnd.connectToServer(this.ip, Integer.parseInt(this.port))) {
+                CLI_Controller.username.UsernamePageView(this.backEnd);
+            } else {
+                CLI_Controller.start.StartPageView(this.backEnd);
+            }
+        }catch (NumberFormatException e){
+            CLI_Controller.showUpdateMessage("Wrong Input");
+            StartPageView(this.backEnd);
         }
-
     }
 
 

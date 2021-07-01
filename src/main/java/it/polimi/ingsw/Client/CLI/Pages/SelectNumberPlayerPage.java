@@ -23,18 +23,27 @@ public class SelectNumberPlayerPage extends ModelEventHandler.Default {
 
         CLI_Controller.setReadHandler(
                 (line)->{
-
-                    if (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
-                        System.out.println("Insert a Valid Number please: ");
+                    try{
+                        if (Integer.parseInt(line) > 4 || Integer.parseInt(line) < 1) {
+                            System.out.println("Insert a Valid Number please: ");
+                            return;
+                        }
+                    }catch (NumberFormatException e){
+                        CLI_Controller.showUpdateMessage("Wrong Input");
+                        SelectNumberPlayerPageView(this.backEnd);
                         return;
                     }
                     char[] numArray = line.toCharArray();
                     System.arraycopy(numArray, 0, charArray, FirstCellPosition, numArray.length);
                     System.out.println(charArray);
-                    GameSize messageGameSize = new GameSize(Integer.parseInt(line));
-                    this.backEnd.notify(messageGameSize);
-
-                    CLI_Controller.waitPage.WaitPageView(this.backEnd);
+                    try{
+                        GameSize messageGameSize = new GameSize(Integer.parseInt(line));
+                        this.backEnd.notify(messageGameSize);
+                        CLI_Controller.waitPage.WaitPageView(this.backEnd);
+                    }catch (NumberFormatException e){
+                        CLI_Controller.showUpdateMessage("Wrong Input");
+                        SelectNumberPlayerPageView(this.backEnd);
+                    }
                 }
         );
     }

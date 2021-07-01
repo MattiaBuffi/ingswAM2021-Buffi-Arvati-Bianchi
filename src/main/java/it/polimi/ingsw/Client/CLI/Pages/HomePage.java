@@ -39,16 +39,21 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.cls();
         //Printing Name of Current Player
         String currentName;
+        int spaces;
         if (this.backEnd.getModel().current.getUsername().equals(this.backEnd.getMyUsername())) {
-            currentName = "It's your Turn     ";
+            currentName = "It's your Turn";
+            spaces = 31-currentName.length();
+            for (int i = 0; i < spaces; i++) {
+                currentName = currentName.concat(" ");
+            }
         } else {
-            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn     ";
+            currentName = "It's " + this.backEnd.getModel().current.getUsername() + "'s Turn";
+            spaces = 31-currentName.length();
+            for (int i = 0; i < spaces; i++) {
+                currentName = currentName.concat(" ");
+            }
         }
         System.arraycopy(currentName.toCharArray(), 0, homePage, TurnPosition, currentName.toCharArray().length);
-
-        CLI_Controller.UpdateShelf(this.backEnd, homePage);
-        CLI_Controller.UpdateChest(this.backEnd, homePage);
-
 
         int position = this.backEnd.getModel().vaticanRoute.getPlayerFaithPoint(this.backEnd.getMyUsername());
         if ( position != lastPosition){
@@ -63,10 +68,14 @@ public class HomePage extends ModelEventHandler.Default {
             homePage[FaithCellPosition[position]]= 'X';
         }
 
-        for (int i = 0; i < CLI_Controller.popeFavourActive.length; i++){
-            if(CLI_Controller.popeFavourActive[i] == 1){
-                homePage[HomePopeFavourPosition[i]] = 'O';
-                homePage[HomePopeFavourPosition[i]+1] = 'K';
+        for (int j = 0; j < CLI_Controller.vaticanReport.length; j++){
+            if(CLI_Controller.vaticanReport[j] == 1 ){
+                if(CLI_Controller.vaticanReportActive[j]) {
+                    homePage[HomePopeFavourPosition[j]] = 'O';
+                    homePage[HomePopeFavourPosition[j]+1] = 'K';
+                }else{
+                    homePage[HomePopeFavourPosition[j]] = 'X';
+                }
             }
         }
 
@@ -79,36 +88,36 @@ public class HomePage extends ModelEventHandler.Default {
             CLI_Controller.showLeaderShelf(homePage);
         }
 
+        CLI_Controller.UpdateShelf(this.backEnd, homePage);
+        CLI_Controller.UpdateChest(this.backEnd, homePage);
+
         System.out.println(homePage);
-
         System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
-
-
 
     }
 
     public void activate(String line){
 
-        if (line.equals("1") /*&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0*/){
+        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageActivate);
-        }else /*if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1)*/{
+        }else if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
             ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageActivate);
-        }/*else {
+        }else {
             CLI_Controller.cls();
             System.out.println("Leader Card Error");
             CLI_Controller.homePage.HomePageView(this.backEnd);
-        }*/
+        }
     }
 
     public void discard(String line){
 
-        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
+        if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0 && !this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive() ){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
             this.backEnd.notify(messageDiscard);
 
-        }else if (line.equals("2")&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
+        }else if (line.equals("2")&& this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1 && !this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).isActive()){
             DiscardLeaderCard messageDiscard = new DiscardLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
             this.backEnd.notify(messageDiscard);
         }else {
@@ -177,7 +186,6 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
-        System.err.println("");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
@@ -186,12 +194,13 @@ public class HomePage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-
+        /*
+        CLI_Controller.showUpdateMessage(event.getMessage());
+        HomePageView(this.backEnd);*/
     }
 
     @Override
     public void handle(ActivePlayer event){
-        System.err.println("ActivePlayer");
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
@@ -228,15 +237,11 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        System.err.println("");
         CLI_Controller.activatePopeFavor(event.getIndex());
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
-
-        System.err.println("vatican route");
-
         if(event.getUsername().equals(this.backEnd.getMyUsername())){
             HomePageView(this.backEnd);
         }
