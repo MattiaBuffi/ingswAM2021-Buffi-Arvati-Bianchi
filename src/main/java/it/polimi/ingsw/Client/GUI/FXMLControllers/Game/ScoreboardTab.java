@@ -119,6 +119,26 @@ public class ScoreboardTab implements Layout, GameTab {
         }
     }
 
+    public List<String> getUsernameScoreboard(){
+        List<String> tmp = new ArrayList<>();
+        for(PlayerScore p: players){
+            tmp.add(p.username);
+        }
+        return tmp;
+    }
+
+    public List<Integer> getPointsScoreboard(){
+        List<Integer> tmp = new ArrayList<>();
+        for(PlayerScore p: players){
+            tmp.add(p.points);
+        }
+        return tmp;
+    }
+
+    public ViewBackEnd getBackEnd() {
+        return backEnd;
+    }
+
     private class PlayerScore{
         private final String username;
         private Integer points;

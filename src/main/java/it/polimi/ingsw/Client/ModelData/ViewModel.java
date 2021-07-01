@@ -16,6 +16,7 @@ import java.util.List;
 public class ViewModel {
 
     public String myUsername;
+    public String winner;
 
     public List<Player> players;
     public Player current;
