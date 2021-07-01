@@ -2,8 +2,10 @@ package it.polimi.ingsw.Model.CardMarket;
 
 
 
+import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Message.Model.MarketCardUpdate;
 import it.polimi.ingsw.Model.EventBroadcaster;
+import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 import it.polimi.ingsw.Parser.ProductionCard.CardParser;
 
@@ -47,10 +49,10 @@ public class CardMarket implements CardRemover{
             store(pc, getColorIndex(pc.getColor()), pc.getLevel()-1);
         }
 
-        for (int j = 0; j < COLOR_SIZE; j++) {
+        for (int x = 0; x < COLOR_SIZE; x++) {
 
-            for (int i = 0; i < MAX_LEVEL; i++) {
-                notifyNewCard(cardMatrix.get(j).get(i).get(0));
+            for (int y = 0; y < MAX_LEVEL; y++) {
+                notifyNewCard(cardMatrix.get(x).get(y).get(0), x, y);
             }
 
         }
@@ -74,6 +76,7 @@ public class CardMarket implements CardRemover{
         }
     }
 
+
     /**
      * Return the column index of the specified color
      * @param color Color of the desired column
@@ -92,6 +95,8 @@ public class CardMarket implements CardRemover{
                 throw new IllegalArgumentException();
         }
     }
+
+
 
     /**
      * Insert the card passed as parameter in the cell specified by color and leve parameters
@@ -115,6 +120,8 @@ public class CardMarket implements CardRemover{
         return cardMatrix.get(column).get(row);
     }
 
+
+
     /**
      * Return first card in the list of cards in the cell of the market specified by the input parameters
      * @param x_color Coordinate X of the market grid
@@ -122,8 +129,16 @@ public class CardMarket implements CardRemover{
      * @return Card in the specified position
      */
     public PurchasableCard getCard(int x_color, int y_level){
+        if(cardMatrix.get(x_color).get(y_level).get(0) == NullCard.get()){
+            broadcaster.notifyUser(new ErrorUpdate("No card found"));
+            return null;
+        }
+
         return cardMatrix.get(x_color).get(y_level).get(0);
     }
+
+
+
 
     /**
      * Return first card in the list of cards in the cell of the market specified by the input parameters
@@ -134,6 +149,8 @@ public class CardMarket implements CardRemover{
     public PurchasableCard getCard(DevelopmentCard.Color color, int level){
         return cardMatrix.get(getColorIndex(color)).get(level-1).get(0);
     }
+
+
 
     /**
      * Return the card from the market with the id specified as parameter
@@ -164,17 +181,22 @@ public class CardMarket implements CardRemover{
     @Override
     public boolean removeCard(DevelopmentCard.Color color, int level) {
         //List<PurchasableCard> cards = cardMatrix.get(getColorIndex(color)).get(level-1);
-        List<PurchasableCard> cards = getLevelList(cardMatrix, getColorIndex(color),level-1);
+        int x = getColorIndex(color);
+        int y = level-1;
+
+        List<PurchasableCard> cards = getLevelList(cardMatrix, x, y);
 
         if(cards.size() == 0){
             return false;
         }
 
         cards.remove(0);
+
         if(cards.size() == 0){
-            return true;
+            cards.add(NullCard.get());
         }
-        notifyNewCard(cards.get(0));
+
+        notifyNewCard(cards.get(0), x, y);
 
         return true;
     }
@@ -199,11 +221,11 @@ public class CardMarket implements CardRemover{
     /**
      * Notify all the players that a card in a certain position of the market is changed
      */
-    private void notifyNewCard(PurchasableCard purchasableCard){
+    private void notifyNewCard(PurchasableCard purchasableCard, int x, int y){
         DevelopmentCard card = purchasableCard.getCard();
         broadcaster.notifyAllPlayers(new MarketCardUpdate(
-                getColorIndex(card.getColor()),
-                card.getLevel()-1,
+                x,
+                y,
                 card.getId(),
                 card.getVictoryPoint(),
                 purchasableCard.getCost(),
@@ -212,8 +234,6 @@ public class CardMarket implements CardRemover{
                 card.getColor()
         ));
     }
-
-
 
 
 }

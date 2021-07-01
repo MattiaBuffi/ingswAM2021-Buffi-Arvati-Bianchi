@@ -12,8 +12,8 @@ public class LocalController extends Controller {
     private GameController controller;
 
 
-    public LocalController(){
-        //this.controller = new GameController();
+    public LocalController(String username){
+        //this.controller = new GameController(username);
     }
 
 
