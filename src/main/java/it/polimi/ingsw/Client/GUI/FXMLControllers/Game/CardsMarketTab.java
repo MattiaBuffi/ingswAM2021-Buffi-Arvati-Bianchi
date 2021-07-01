@@ -56,7 +56,7 @@ public class CardsMarketTab implements Layout, GameTab{
     public void update() {
         for(int i=0;i<3;i++){
             for(int j=0;j<4;j++){
-                if(backEnd.getModel().cardMarket.getCard(j, i).id != null) {
+                if(!backEnd.getModel().cardMarket.getCard(j, i).id.equals("null")) {
                     cardsMatrix[i][j].setImage(getCardImage(backEnd.getModel().cardMarket.getCard(j, i).id));
                 } else {
                     cardsMatrix[i][j].setVisible(false);

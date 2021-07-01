@@ -140,6 +140,15 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         }
     }
 
+    @Override
+    public void handle(EndGame event) {
+        try {
+            PopUpManager.showEndGamePopUp("player who win");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void updateTabs(ModelUpdate event){
 
         if(event.getPlayerUsername() != null && event.getPlayerUsername().equals(backEnd.getMyUsername())){

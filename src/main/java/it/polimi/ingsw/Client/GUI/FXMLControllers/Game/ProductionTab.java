@@ -67,12 +67,12 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
 
     public void showLeaderPower(String id){
         if(!checkLeaderProduction1.isVisible()) {
-            leaderPowerMap.put(checkLeaderProduction1, id);
+            leaderPowerMap.put(checkLeaderProduction1, "LC_" + id);
             checkLeaderProduction1.setVisible(true);
             resLeader1.setVisible(true);
             ivProductionLeader1.setImage(getLeaderCardPower(id));
         } else {
-            leaderPowerMap.put(checkLeaderProduction2, id);
+            leaderPowerMap.put(checkLeaderProduction2, "LC_" + id);
             checkLeaderProduction2.setVisible(true);
             resLeader2.setVisible(true);
             ivProductionLeader2.setImage(getLeaderCardPower(id));
@@ -126,6 +126,12 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
                 }else if(cb == checkLeaderProduction1){
                     if(resLeader1.getSelectionModel().getSelectedItem() != null){
                         productionMessages.add(new LeaderCardProduction(leaderPowerMap.get(cb), getColor(resLeader1.getSelectionModel().getSelectedItem())));
+                    } else {
+                        try {
+                            PopUpManager.showErrorPopUp("Select which type of resource you want for the leader production");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 } else if(cb == checkLeaderProduction2){
                     if(resLeader2.getSelectionModel().getSelectedItem() != null){

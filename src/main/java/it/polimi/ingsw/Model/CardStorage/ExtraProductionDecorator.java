@@ -58,7 +58,7 @@ public class ExtraProductionDecorator implements CardStorage, ProductionVisitor 
     @Override
     public ProductionCard visit(SelectLeader selector) {
 
-        if(selector.getId().equals(production.getId()) ){
+        if(!selector.getId().equals(production.getId()) ){
             return cardStorage.getCard(selector);
         }
         return production.getCard(selector.getSelectedColor());

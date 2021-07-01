@@ -1,26 +1,13 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ErrorPopup;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.LeaderCardsTab;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.Game.StorageTab;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.LeaderCardSelection;
-import it.polimi.ingsw.Client.GUI.FXMLControllers.PopUp.ResourceAvailablePopup;
 import it.polimi.ingsw.Client.GUI.Layout;
-import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
-import it.polimi.ingsw.Model.Marble.Marble;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * JavaFX App
@@ -41,13 +28,9 @@ public class App extends Application {
         app.setBackEnd(backEnd);
 
         scene = new Scene(loadFXML("home_page"));
-        //scene = new Scene(loadFXML("game_board"));
-        //scene = new Scene(loadFXML("leader_card_selection"));
         stage.setScene(scene);
         stage.setResizable(true);
 
-        //setScene("game_board");
-        setScene("home_page");
         stage.show();
     }
 
