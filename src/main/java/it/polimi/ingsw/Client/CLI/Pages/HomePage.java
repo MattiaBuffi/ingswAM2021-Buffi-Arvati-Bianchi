@@ -267,6 +267,10 @@ public class HomePage extends ModelEventHandler.Default {
         CLI_Controller.homePage.HomePageView(this.backEnd);
     }
 
+    @Override
+    public void handle(EndGame event){
+
+    }
 
 
 }

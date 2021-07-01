@@ -37,22 +37,30 @@ public class ProductionPage extends ModelEventHandler.Default{
         int column = 0;
 
         List<List<DevelopmentCardData>> playerProductions = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getProductions();
+        DevelopmentCard.Color color;
+        List<Marble> requireList;
+        String requireString;
+        List<Marble> produceList;
+        String produceString;
+        String vp;
+
+
         for (List<DevelopmentCardData> productionColumn : playerProductions) {
             row = 0;
             for (DevelopmentCardData devCard : productionColumn) {
 
-                DevelopmentCard.Color color = devCard.color;
+                color = devCard.color;
                 System.arraycopy((CLI_Controller.getDevColor(color)).toCharArray(), 0, customCard, singleCardPosition[3], (CLI_Controller.getDevColor(color)).toCharArray().length);
 
-                List<Marble> requireList = devCard.require.getAllMarble();
-                String requireString = CLI_Controller.getColorStringFromMarble(requireList);
+                requireList = devCard.require.getAllMarble();
+                requireString = CLI_Controller.getColorStringFromMarble(requireList);
                 System.arraycopy(("Req: " + requireString).toCharArray(), 0, customCard, singleCardPosition[0], ("Req: " + requireString).toCharArray().length);
 
-                List<Marble> produceList = devCard.produce.getAllMarble();
-                String produceString = CLI_Controller.getColorStringFromMarble(produceList);
+                produceList = devCard.produce.getAllMarble();
+                produceString = CLI_Controller.getColorStringFromMarble(produceList);
                 System.arraycopy(("Prod: " + produceString).toCharArray(), 0, customCard, singleCardPosition[1], ("Prod: " + produceString).toCharArray().length);
 
-                String vp = Integer.toString(devCard.victoryPoints);
+                vp = Integer.toString(devCard.victoryPoints);
                 System.arraycopy(vp.toCharArray(), 0, customCard, singleCardPosition[2], vp.toCharArray().length);
 
 
