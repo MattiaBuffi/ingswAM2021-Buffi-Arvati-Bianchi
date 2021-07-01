@@ -12,6 +12,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.Marble.Marble;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class CardMarketPage extends ModelEventHandler.Default {
@@ -30,7 +31,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
         this.cardMarket = cardMarket;
     }
 
-    public void update() {
+    public void update(){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 updateCard(i, j);

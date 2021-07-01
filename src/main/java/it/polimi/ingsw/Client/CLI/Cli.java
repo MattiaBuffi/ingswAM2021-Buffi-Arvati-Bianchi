@@ -11,10 +11,11 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -52,7 +53,7 @@ public class Cli {
     public static boolean[] vaticanReportActive = {false,false,false};
 
 
-    private static final String rssPath = "src/main/resources/CLI/";
+    private static final String rssPath = "/CLI/";
     private static final String[] currentFile =
             {"StartMenuView.txt","LoadingView.txt","NoActionView.txt",
                     "ProductionView.txt","CardMarketView.txt","ResourceMarketView.txt",
@@ -96,14 +97,28 @@ public class Cli {
 
         new Thread(Cli::readLine).start();
 
+    }
 
+    public void askMode(String line){
+        Cli.cls();
+        switch (line.toUpperCase()) {
+            case "ONLINE" -> Cli.start.StartPageView(backEnd);
+            case "LOCAL" -> Cli.username.UsernamePageView(backEnd);
+            default -> {
+                System.out.println("Error, closing application");
+                System.exit(0);
+            }
+        }
     }
 
 
 
 
-
     public void CLIView() {
+        System.out.println("Do you want to play a Local Game or an Online Game?");
+        System.out.println("Insert: Local / Online");
+        Cli.setReadHandler(this::askMode);
+
         start.StartPageView(backEnd);
     }
 
@@ -113,7 +128,7 @@ public class Cli {
     }
 
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
     private static Consumer<String> lineHandler = Cli::defaultHandler;
     private static Consumer<String> newHandler = Cli::defaultHandler;
@@ -298,50 +313,39 @@ public class Cli {
     }
 
     public static String getDevColor(DevelopmentCard.Color color){
-        switch (color) {
-            case BLUE:
-                return "BLUE";
-            case YELLOW:
-                return "YELLOW";
-            case PURPLE:
-                return "PURPLE";
-            case GREEN:
-                return "GREEN";
-            default:
-                return "";
-        }
+        return switch (color) {
+            case BLUE -> "BLUE";
+            case YELLOW -> "YELLOW";
+            case PURPLE -> "PURPLE";
+            case GREEN -> "GREEN";
+            default -> "";
+        };
     }
 
 
     public static char[] readSchematics(int x) {
-        File file = new File(rssPath + currentFile[x]);
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        assert scanner != null;
-        StringBuilder theString = new StringBuilder(scanner.nextLine());
-        while (scanner.hasNextLine()) {
-            theString.append("\n").append(scanner.nextLine());
+       // File file = new File(rssPath + currentFile[x]);
+
+
+        BufferedReader file
+                = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Cli.class.getResourceAsStream(rssPath + currentFile[x])), StandardCharsets.UTF_8));
+        Scanner readRes = new Scanner(file);
+
+        StringBuilder theString = new StringBuilder(readRes.nextLine());
+        while (readRes.hasNextLine()) {
+            theString.append("\n").append(readRes.nextLine());
         }
         return theString.toString().toCharArray();
     }
 
     public static String getColorStringAvailableRss(Marble marble){
-            switch (marble.getColor()){
-                case YELLOW:
-                    return "Y";
-                case BLUE:
-                    return "B";
-                case PURPLE:
-                    return "P";
-                case GREY:
-                    return "G";
-                default:
-                    return " ";
-            }
+        return switch (marble.getColor()) {
+            case YELLOW -> "Y";
+            case BLUE -> "B";
+            case PURPLE -> "P";
+            case GREY -> "G";
+            default -> " ";
+        };
     }
 
 
