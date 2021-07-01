@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class PlayersSetup implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 7838710779065645006L;
     private String username;
     private int playPosition;
 

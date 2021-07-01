@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MarketCardUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -7811074909770582217L;
     private final int x;
     private final int y;
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ProductionBufferUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -4449109192754358409L;
     private String id;
     private List<Marble> produced;
 

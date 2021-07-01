@@ -13,6 +13,7 @@ import java.util.List;
 
 public class LeaderCardActivation implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 3586204604378570301L;
     private LeaderCard leaderCard;
 
 

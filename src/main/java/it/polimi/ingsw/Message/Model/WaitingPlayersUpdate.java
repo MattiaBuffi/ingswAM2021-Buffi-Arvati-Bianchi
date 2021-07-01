@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class WaitingPlayersUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 8123868180134820075L;
     private int lobbyCurrentSize;
 
     public WaitingPlayersUpdate(int lobbyCurrentSize){

@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class Login implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -6877611883108033489L;
     private String username;
 
     public Login(String username) {

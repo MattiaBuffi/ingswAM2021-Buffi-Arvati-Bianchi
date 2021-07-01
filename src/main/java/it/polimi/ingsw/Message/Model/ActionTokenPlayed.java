@@ -5,6 +5,8 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class ActionTokenPlayed implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 579933431066157039L;
+
     private String message;
 
     public ActionTokenPlayed(String message) {

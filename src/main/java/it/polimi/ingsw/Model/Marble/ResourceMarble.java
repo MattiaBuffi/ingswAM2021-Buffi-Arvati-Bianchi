@@ -5,6 +5,7 @@ package it.polimi.ingsw.Model.Marble;
  */
 public class ResourceMarble extends Marble  {
 
+    private static final long serialVersionUID = -1627778740212593900L;
     private final Color color;
 
     protected ResourceMarble(Color color){

@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
  */
 public class LeaderCardProduction implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -5573996342291865085L;
     private String cardId;
     private Marble.Color out;
 

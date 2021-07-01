@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class ActivateLeaderCard implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = 4714410600206871867L;
     private final String cardId;
 
     public ActivateLeaderCard(String cardId) {

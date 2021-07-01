@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.Marble.Marble;
 
 public class ShelfUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 9085481759203659931L;
+
     private final int position;
     private final int maxSize;
     private final int size;

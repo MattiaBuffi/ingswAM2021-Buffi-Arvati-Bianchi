@@ -21,13 +21,12 @@ public class ServerApp implements Server, SocketHandler {
     public static void main( String[] args ) {
         ServerApp app = null;
 
+
         if(args.length>0){
             for(int i = 0; i < args.length; i++) {
-                switch (args[i]){
-                    case "-port":
-                        app = new ServerApp(Integer.getInteger(args[i+1]));
-                        i+= 1;
-                        break;
+                if ("-port".equals(args[i])) {
+                    app = new ServerApp(Integer.getInteger(args[i + 1]));
+                    i += 1;
                 }
             }
         } else {
@@ -69,7 +68,7 @@ public class ServerApp implements Server, SocketHandler {
 
     public void start(){
         executor.execute(networkManager);
-        new Thread(()->serverInterface()).start();
+        new Thread(this::serverInterface).start();
     }
 
 

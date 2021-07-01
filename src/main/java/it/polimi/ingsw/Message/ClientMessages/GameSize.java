@@ -9,6 +9,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class GameSize implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -5612256373634416967L;
     private final int size;
 
     public GameSize(int size){

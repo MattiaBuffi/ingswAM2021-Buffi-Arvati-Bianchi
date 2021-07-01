@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class VictoryPointsUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -6061463065441052742L;
     private String username;
     private int victoryPoints;
 

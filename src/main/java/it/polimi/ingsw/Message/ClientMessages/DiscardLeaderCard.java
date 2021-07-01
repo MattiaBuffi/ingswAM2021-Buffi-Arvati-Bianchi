@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class DiscardLeaderCard implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -2105441189511289661L;
     private final String cardId;
 
     public DiscardLeaderCard(String cardId) {

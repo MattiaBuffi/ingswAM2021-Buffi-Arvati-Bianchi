@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public abstract class Marble implements Serializable {
 
+    private static final long serialVersionUID = -821734160554897214L;
+
     public enum Color {
         RED,
         WHITE,

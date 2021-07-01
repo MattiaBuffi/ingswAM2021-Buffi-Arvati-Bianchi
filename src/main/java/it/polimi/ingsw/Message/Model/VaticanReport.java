@@ -7,6 +7,7 @@ import java.util.List;
 
 public class VaticanReport implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -5196471937670146442L;
     private final int index;
     private final List<String> players;
 

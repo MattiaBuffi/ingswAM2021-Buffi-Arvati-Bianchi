@@ -9,6 +9,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class CardProduction implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = 6580692885778710810L;
     private int cardPosition;
 
     public CardProduction(int cardPosition) {

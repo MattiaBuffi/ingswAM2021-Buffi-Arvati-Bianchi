@@ -8,6 +8,8 @@ import it.polimi.ingsw.Message.Message;
  */
 public class EndTurn implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -5788925024950881076L;
+
     @Override
     public void accept(ClientEventHandler handler) {
         handler.handle(this);

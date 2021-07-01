@@ -10,6 +10,7 @@ import it.polimi.ingsw.Message.Message;
  */
 public class TakeResources implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = -4380312121906573285L;
     private final int selection;
 
     public TakeResources(int selection) {

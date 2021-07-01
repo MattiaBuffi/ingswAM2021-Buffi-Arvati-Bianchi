@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class SelectableMarble extends Marble {
 
+    private static final long serialVersionUID = 6983460815416674916L;
     private List<Color> selectableColors;
 
     public SelectableMarble(Color color){

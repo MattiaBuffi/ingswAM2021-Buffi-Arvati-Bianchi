@@ -13,6 +13,8 @@ import java.util.List;
 
 public class AvailableLeaderCard implements Message<ModelEventHandler> {
 
+
+    private static final long serialVersionUID = -4191156821229058997L;
     private List<LeaderCard> viewLeaderCard;
 
     public AvailableLeaderCard(List<it.polimi.ingsw.Model.LeaderCard.LeaderCard> cards){

@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class GameSizeRequest implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 16085820835101074L;
     private int lobbyCurrentSize;
 
     public GameSizeRequest(int lobbyCurrentSize){

@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
  */
 public class DepositResource implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = 1832465202776720495L;
     private final Marble.Color color;
     private int shelf;
 

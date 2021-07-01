@@ -11,6 +11,7 @@ import java.util.List;
 
 public class DevelopmentCardBuyUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -641990858933602750L;
     private final int position;
 
     private final DevelopmentCard.Color color;

@@ -8,6 +8,7 @@ import java.util.*;
  */
 public class ResourceList implements Serializable {
 
+    private static final long serialVersionUID = 2817649402926923847L;
     private Map<Marble.Color, Integer> marbles;
     private int size;
 
@@ -84,9 +85,7 @@ public class ResourceList implements Serializable {
         addAll(list.getAllMarble());
     }
 
-    /**
-     *  aggiunge tutte le biglie contenute nella list a parametro all'interno di this list
-     */
+
     /**
      * Add all the marbles of the list as parameter to the marbles of this
      * @param marbles list of the marbles to add to this

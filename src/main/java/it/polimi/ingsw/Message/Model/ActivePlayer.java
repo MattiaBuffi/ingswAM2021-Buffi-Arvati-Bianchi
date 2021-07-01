@@ -5,6 +5,8 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class ActivePlayer implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -1601615031445751828L;
+
     private String username;
 
     public ActivePlayer(String username) {

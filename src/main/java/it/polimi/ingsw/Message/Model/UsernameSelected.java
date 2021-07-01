@@ -5,6 +5,8 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class UsernameSelected implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -8678642791388859648L;
+
     private String username;
 
     public UsernameSelected(String username){

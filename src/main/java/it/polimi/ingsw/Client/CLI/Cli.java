@@ -94,7 +94,7 @@ public class Cli {
         Cli controller = new Cli();
         controller.CLIView();
 
-        new Thread(()->readLine()).run();
+        new Thread(Cli::readLine).start();
 
 
     }
@@ -149,9 +149,7 @@ public class Cli {
     private static Executor executor= Executors.newCachedThreadPool();
 
     public static void read(Consumer<Scanner> lineHandler){
-        executor.execute(()->{
-            lineHandler.accept(new Scanner(System.in));
-        });
+        executor.execute(()-> lineHandler.accept(new Scanner(System.in)));
     }
 
 

@@ -9,6 +9,7 @@ import java.util.List;
 public class ModelUpdate implements Message<ModelEventHandler> {
 
 
+    private static final long serialVersionUID = -5332943090767541181L;
     private String playerUsername;
     private String message;
     private List<Message<ModelEventHandler>> messages;

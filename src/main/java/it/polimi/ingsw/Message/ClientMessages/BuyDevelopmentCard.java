@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.Message;
  * and the column of the production tab where the user want to place the card.
  */
 public class BuyDevelopmentCard implements Message<ClientEventHandler> {
+    private static final long serialVersionUID = -7747860671006329650L;
     private final int x;
     private final int y;
     private final int productionColumn;

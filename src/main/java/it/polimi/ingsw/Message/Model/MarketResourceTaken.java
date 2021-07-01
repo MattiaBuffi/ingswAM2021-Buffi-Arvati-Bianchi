@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
 
 public class MarketResourceTaken implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 930195985542110866L;
     private Marble.Color marble;
 
     public MarketResourceTaken(Marble.Color marble){

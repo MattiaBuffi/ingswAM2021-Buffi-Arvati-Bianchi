@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ResourceMarketUpdate implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 4627970305484951199L;
+
     private final int position;
     private final List<Marble> marbles;
 

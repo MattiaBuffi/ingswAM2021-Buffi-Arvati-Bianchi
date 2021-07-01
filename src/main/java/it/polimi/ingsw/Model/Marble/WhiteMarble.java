@@ -5,6 +5,8 @@ package it.polimi.ingsw.Model.Marble;
  */
 public class WhiteMarble extends Marble {
 
+    private static final long serialVersionUID = 5442355404580851850L;
+
     protected WhiteMarble(){}
 
     @Override

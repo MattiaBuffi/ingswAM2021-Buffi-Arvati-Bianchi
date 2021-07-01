@@ -8,6 +8,7 @@ import java.util.List;
 
 public class LeaderCard implements Serializable {
 
+    private static final long serialVersionUID = 1166470735692348182L;
     private String id; //ok
     private ActivationStrategy.Type type;//ok
     private Marble.Color color; //ok

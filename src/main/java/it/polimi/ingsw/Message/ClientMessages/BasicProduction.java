@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
  */
 public class BasicProduction implements Message<ClientEventHandler> {
 
+    private static final long serialVersionUID = 5233473999590757917L;
     private Marble.Color in1;
     private Marble.Color in2;
     private Marble.Color out;

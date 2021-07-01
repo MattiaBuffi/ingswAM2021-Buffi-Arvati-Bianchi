@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class VaticanRoutePosition implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = 8700434486446518302L;
     private String username;
     private int position;
 

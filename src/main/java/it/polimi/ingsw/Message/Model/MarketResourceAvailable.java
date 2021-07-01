@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
 
 public class MarketResourceAvailable implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -6349519845112060117L;
     private Marble marble;
 
     public MarketResourceAvailable(Marble marble){

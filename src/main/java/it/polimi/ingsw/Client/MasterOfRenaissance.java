@@ -3,29 +3,31 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.CLI.Cli;
 import it.polimi.ingsw.Server.ServerApp;
 
-
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MasterOfRenaissance {
 
     public static void main(String[] args){
 
-        if(args.length==0){
-            Cli.main(args);
-        } else if(args.length> 0){
+        List<String> argsList = new ArrayList<>(List.of(args));
 
-            for (String arg : args) {
+        if(argsList.size()==0){
+            Cli.main(args);
+        } else if(argsList.size() > 0){
+
+            for (String arg : argsList) {
                 switch (arg) {
                     case "-cli":
-                        Cli.main(args);
+                        Cli.main( (String[]) argsList.toArray() );
                         return;
                     case "-gui":
-                        App.main(args);
+                        App.main( (String[]) argsList.toArray());
                         return;
                     case "-server":
-                        ServerApp.main(args);
+                        argsList.remove("-server");
+                        ServerApp.main((String[]) argsList.toArray());
                         return;
                 }
             }

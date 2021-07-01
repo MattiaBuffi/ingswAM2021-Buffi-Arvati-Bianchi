@@ -8,6 +8,7 @@ import it.polimi.ingsw.Message.Message;
  * Shelf index are from 0 to 2 for normal shelves and, eventually, 3 and 4 for additionally leader storage.
  */
 public class MoveResources implements Message<ClientEventHandler> {
+    private static final long serialVersionUID = -47762826034272881L;
     private int startPos;
     private int endPos;
 

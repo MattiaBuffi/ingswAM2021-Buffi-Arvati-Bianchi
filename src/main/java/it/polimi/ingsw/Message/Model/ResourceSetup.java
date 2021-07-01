@@ -5,6 +5,8 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 
 public class ResourceSetup implements Message<ModelEventHandler> {
 
+    private static final long serialVersionUID = -84982508215991941L;
+
     private int availableResources;
 
     public ResourceSetup(int availableResources) {
