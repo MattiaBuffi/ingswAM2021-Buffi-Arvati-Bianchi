@@ -57,7 +57,7 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
     }
 
     public void localController(){
-        this.controller = new LocalController();
+        //this.controller = new LocalController();
         this.controller.addObserver(backEnd);
         backEnd.addObserver(controller);
     }

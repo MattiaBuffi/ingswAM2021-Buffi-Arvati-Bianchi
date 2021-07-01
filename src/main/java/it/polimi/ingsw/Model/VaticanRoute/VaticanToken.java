@@ -39,9 +39,10 @@ public class VaticanToken implements FaithHandler{
         this.route.advance(this, amount);
     }
 
-    /**
-     * TODO: ???
-     * @param amount
+
+
+    /**give faith point to all the other VaticanToken over the same VaticanRoute
+     * @param amount number of point to give to other VaticanToken
      */
     @Override
     public void give(int amount) {

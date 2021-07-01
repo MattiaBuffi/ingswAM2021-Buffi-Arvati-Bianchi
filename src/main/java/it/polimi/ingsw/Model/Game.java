@@ -351,11 +351,23 @@ public class Game implements TurnHandler, GameHandler {
 
         @Override
         public void endGame() {
+
             for (VaticanToken token: vaticanRoute.getTokenList()){
-                if(token.getPosition() == vaticanRoute.LAST_POSITION){
-                    //p.notifyUser(new EndGame());
+                if(token.getPosition() == VaticanRoute.LAST_POSITION){
+                    players.get(currentPlayer).notifyUser(new EndGame());
+                    return;
                 }
             }
+
+            if(players.get(currentPlayer).getCardStorage().getCards().size() == 7){
+                players.get(currentPlayer).notifyUser(new EndGame());
+                return;
+            }
+
+            players.get(currentPlayer).notifyUser(new EndGame());
+
+
+
 
         }
 

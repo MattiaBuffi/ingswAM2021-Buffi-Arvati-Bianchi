@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.DevelopmentCardData;
 import it.polimi.ingsw.Message.ModelEventHandler;
+import it.polimi.ingsw.Model.Marble.SelectableMarble;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -65,6 +66,18 @@ public class ModelUpdater implements ModelEventHandler {
                 return;
             }
         }
+        for(Marble m:model.resourceMarketBuffer ){
+            if(m.getColor() == Marble.Color.WHITE){
+                for(Marble.Color color:  ((SelectableMarble) m).getSelectableColors()){
+                    if (color== event.getColor()){
+                        model.resourceMarketBuffer.remove(m);
+                        return;
+                    }
+                }
+            }
+        }
+
+
     }
 
     @Override
@@ -178,7 +191,8 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(EndGame event) {
-
+        System.out.println("GAME ENDED");
+        System.exit(0);
     }
 
 
