@@ -419,7 +419,7 @@ public class Game implements TurnHandler, GameHandler {
             for (VaticanToken token: vaticanRoute.getTokenList()){
                 if(token.getPosition() == VaticanRoute.LAST_POSITION){
                     players.get(currentPlayer).notifyUser(new EndGame(token.getOwner()));
-                    broadcaster.sendMessages("game", "Game ended: Reached vatican route ending");
+                    broadcaster.sendMessages(players.get(0).getUser().getUsername(), "Game ended: Reached vatican route ending");
                     terminateGame();
 
                     return;
@@ -428,7 +428,7 @@ public class Game implements TurnHandler, GameHandler {
 
             if(players.get(currentPlayer).getCardStorage().getCards().size() == 7){
                 players.get(currentPlayer).notifyUser(new EndGame(players.get(currentPlayer).getUser().getUsername()));
-                broadcaster.sendMessages("game", "Game ended: 7th development card bought");
+                broadcaster.sendMessages(players.get(0).getUser().getUsername(), "Game ended: 7th development card bought");
                 terminateGame();
 
                 return;
@@ -437,7 +437,7 @@ public class Game implements TurnHandler, GameHandler {
             for (int i = 0; i < 4; i++) {
                 if(cardMarket.getCard(i, 2) == NullCard.get()) {
                     players.get(currentPlayer).notifyUser(new EndGame("cpu"));
-                    broadcaster.sendMessages("game", "Game ended: market has an empty column");
+                    broadcaster.sendMessages(players.get(0).getUser().getUsername(), "Game ended: market has an empty column");
                     terminateGame();
                 }
             }
@@ -473,7 +473,7 @@ public class Game implements TurnHandler, GameHandler {
             if(lastTurn){
                 if(currentPlayer == 0){
                     broadcaster.notifyAllPlayers(new EndGame(getWinner()));
-                    broadcaster.sendMessages("game", "game is ended");
+                    broadcaster.sendMessages(players.get(0).getUser().getUsername(), "game is ended");
                     terminateGame();
                 }
             }

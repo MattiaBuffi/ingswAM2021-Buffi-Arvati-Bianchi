@@ -195,7 +195,7 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(EndGame event) {
-
+        model.winner = event.getUsername();
 
     }
 

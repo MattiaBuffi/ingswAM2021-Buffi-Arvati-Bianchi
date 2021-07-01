@@ -22,6 +22,7 @@ public class ActionDeck implements Shuffler {
         this.broadcaster = broadcaster;
 
         actionTokens = new ArrayList<>();
+
         actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.BLUE, gameHandler, broadcaster));
         actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.GREEN, gameHandler, broadcaster));
         actionTokens.add(new DiscardActionToken(remover, DevelopmentCard.Color.PURPLE, gameHandler, broadcaster));

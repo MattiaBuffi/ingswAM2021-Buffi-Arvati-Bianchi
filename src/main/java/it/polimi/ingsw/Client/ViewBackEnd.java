@@ -62,7 +62,7 @@ public class ViewBackEnd extends Observable<Message<ClientEventHandler>> impleme
     }
 
     public void disconnectController(){
-        //app.removeController();
+        app.removeController();
     }
 
     public void setEventHandler(ModelEventHandler handler){

@@ -213,9 +213,7 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
     @Override
     public void disconnect() {
         connectionHandler.stop();
-        if(game != null){
-            //disconnect from game
-        }
+
     }
 
     @Override
@@ -235,6 +233,14 @@ public class ClientHandler extends Client implements ClientEventHandler, Connect
             connection.stop();
             server.removeClient(this);
         }
+
+        if(game != null){
+            synchronized (game){
+                game.disconnect(username);
+            }
+        }
+
+
     }
 
 }

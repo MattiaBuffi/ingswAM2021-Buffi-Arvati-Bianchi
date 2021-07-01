@@ -153,6 +153,10 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        backEnd.disconnectController();
+
+
     }
 
     private void updateTabs(ModelUpdate event){
