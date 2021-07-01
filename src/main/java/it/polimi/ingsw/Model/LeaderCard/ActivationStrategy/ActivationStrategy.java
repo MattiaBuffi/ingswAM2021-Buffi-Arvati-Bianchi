@@ -5,6 +5,9 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 
 
+/**
+ *  applica le modifiche di una Leadercard
+ */
 public interface ActivationStrategy {
 
     enum Type{

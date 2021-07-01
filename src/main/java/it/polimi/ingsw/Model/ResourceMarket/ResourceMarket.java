@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ *  mercato delle biglie
+ */
 public class ResourceMarket {
 
     public static final int MARKET_SIZE = 13;
@@ -28,7 +32,8 @@ public class ResourceMarket {
     private final EventBroadcaster broadcaster;
 
     /**
-     * TODO: Write constructor JavaDoc
+     * Create the marble market using the constant array MARBLES_COLORS, shuffling the marble color list and then placing
+     * all the element in the list in the market matrix
      */
     public ResourceMarket(EventBroadcaster broadcaster){
 

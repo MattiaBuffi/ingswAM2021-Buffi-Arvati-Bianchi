@@ -11,7 +11,9 @@ import it.polimi.ingsw.Model.ResourceStorage.Shelf.Shelf;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.Shelves;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.ShelvesBase;
 
-
+/**
+ *  deposito di risorse
+ */
 public class PlayerStorage implements ResourceStorage{
 
     private EventBroadcaster broadcaster;
@@ -40,12 +42,16 @@ public class PlayerStorage implements ResourceStorage{
         //broadcaster.notifyAllPlayers(new ChestUpdate(chest));
     }
 
-
+    /**
+     *  ritorna gli scaffali che contiene
+     */
     public Shelves getShelves() {
         return shelves;
     }
 
-
+    /**
+     *  setta gli scaffali di this
+     */
     public void setShelves(Shelves shelves) {
 
         for (Shelf s: shelves.getShelves()){
@@ -56,18 +62,24 @@ public class PlayerStorage implements ResourceStorage{
 
     }
 
-
+    /**
+     * muove risorse tra due scaffali
+     */
     public boolean move(int originId, int destId) {
         return shelves.move(originId, destId);
     }
 
-
+    /**
+     *  aggiunge una risorsa ad uno scaffale
+     */
     public boolean store(Marble.Color color, int dest) {
         return shelves.store(color, dest);
     }
 
 
-
+    /**
+     * deposita risorse nella chest
+     */
     public boolean deposit(ResourceList resourceList) {
 
         if( resourceList == null){
@@ -79,7 +91,9 @@ public class PlayerStorage implements ResourceStorage{
         return true;
     }
 
-
+    /**
+     * preleva risorse da this. con priorita scaffali>chest
+     */
     public boolean withdrawal(ResourceList resourceList) {
         if(!getResources().contains(resourceList)){
             broadcaster.notifyUser(new ErrorUpdate( "not enough resources"));
@@ -95,7 +109,9 @@ public class PlayerStorage implements ResourceStorage{
         return true;
     }
 
-
+    /**
+     *  ritorna il totale delle risorse contenute negli scaffali e nella chest
+     */
     public ResourceList getResources() {
         return chest.sum(shelves.getResources());
     }

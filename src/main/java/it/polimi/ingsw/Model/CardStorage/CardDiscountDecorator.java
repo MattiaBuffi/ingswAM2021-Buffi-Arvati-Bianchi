@@ -10,6 +10,10 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 import java.util.List;
 
+
+/**
+ *  Decorator to apply a discount during the purchase of a card
+ */
 public class CardDiscountDecorator implements CardStorage {
 
     private final CardStorage cardStorage;

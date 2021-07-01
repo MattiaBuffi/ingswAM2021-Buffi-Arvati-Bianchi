@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model.Marble;
 
+/**
+ * Represent a white marble
+ */
 public class WhiteMarble extends Marble {
 
     protected WhiteMarble(){}

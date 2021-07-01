@@ -10,9 +10,9 @@
 <AnchorPane prefHeight="780.0" prefWidth="1440.0" styleClass="bg_production_board" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.GUI.FXMLControllers.Game.ProductionTab">
     <children>
         <ImageView fx:id="ivProductionLeader1" fitHeight="153.0" fitWidth="188.0" layoutX="16.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard1" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard2" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fx:id="ivLeftCard3" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard1" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard2" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="ivLeftCard3" fitHeight="390.0" fitWidth="260.0" layoutX="313.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivCenterCard1" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivCenterCard2" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fx:id="ivCenterCard3" fitHeight="390.0" fitWidth="260.0" layoutX="682.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" />

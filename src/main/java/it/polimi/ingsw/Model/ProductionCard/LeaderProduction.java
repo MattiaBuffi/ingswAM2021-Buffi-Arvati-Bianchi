@@ -3,6 +3,10 @@ package it.polimi.ingsw.Model.ProductionCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
+
+/**
+ *  Represent the production leader ability. Permit to create a production card when the leader card is activated
+ */
 public class LeaderProduction {
 
 
@@ -23,6 +27,10 @@ public class LeaderProduction {
         return id;
     }
 
+
+    /**
+     *  Generate a production card with the output equal to the one choose by the user
+     */
     public ProductionCard getCard(Marble.Color color){
         if(color == Marble.Color.RED
                 || color == Marble.Color.WHITE ){

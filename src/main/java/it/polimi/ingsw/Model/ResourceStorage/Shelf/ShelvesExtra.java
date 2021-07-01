@@ -8,6 +8,10 @@ import it.polimi.ingsw.Model.Marble.ResourceList;
 
 import java.util.List;
 
+
+/**
+ *  decoratore di una Shelves. aggiunge uno scaffale Leader
+ */
 public class ShelvesExtra implements Shelves {
 
     private EventBroadcaster broadcaster;
@@ -65,6 +69,10 @@ public class ShelvesExtra implements Shelves {
 
     }
 
+
+    /**
+     *  prova a prelevare risorse dagli scaffali decorati. se necessario preleva risorse dallo scaffale leader
+     */
     @Override
     public boolean withdraw(ResourceList list) {
         if(shelves.getResources().contains(list)){
@@ -91,8 +99,12 @@ public class ShelvesExtra implements Shelves {
         }
     }
 
+
+    /**
+     *  riempe uno scaffale origin prelevando biglie da uno scaffale dest
+     */
     private boolean fill(Shelf origin, Shelf dest){
-        if(origin.getColor() != dest.getColor()){ // need to check if null
+        if(origin.getColor() != dest.getColor() && dest.getColor() != null){ // need to check if null
             broadcaster.notifyUser(new ErrorUpdate("illegal move"));
             return false;
         }
@@ -106,6 +118,9 @@ public class ShelvesExtra implements Shelves {
         return true;
     }
 
+
+    /**muove risorse tra due scaffali
+     */
     @Override
     public boolean move(int originId, int destId) {
         if(shelf.getPosition() == originId ){               //the extra shelf is the origin

@@ -63,7 +63,7 @@ public class ServerApp implements Server, SocketHandler {
 
         connectedClients = new ArrayList<>();
         lobby = new Lobby();
-        loginHandler = new LoginHandler(12, Set.of("cpu", "CPU"));
+        loginHandler = new LoginHandler(12, Set.of("cpu", "CPU", "null", "NULL"));
     }
 
 

@@ -2,6 +2,11 @@ package it.polimi.ingsw.Model.ProductionCard;
 
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
+
+
+/**
+ *  Represent a development card
+ */
 public class DevelopmentCard extends ProductionCard{
 
     public enum Color {
@@ -11,6 +16,10 @@ public class DevelopmentCard extends ProductionCard{
         PURPLE;
     }
 
+
+    /**
+     * Describe level and color on the development card
+     */
     public static class Info {
 
         public final int level;
