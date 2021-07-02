@@ -131,14 +131,4 @@ class VaticanRouteTest {
         assertFalse(route.canStartVaticanReport(3, 10, 8));
 
     }
-
-
-
-
-
-
-
-
-
-
 }

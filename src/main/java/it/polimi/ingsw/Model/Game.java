@@ -46,6 +46,10 @@ public class Game implements GameHandler {
     private boolean lastTurn;
 
 
+    /**
+     * Create the Game
+     * @param users List of Players
+     */
     public<U extends User> Game(List<U> users){
 
         this.players = new ArrayList<>();
@@ -53,7 +57,6 @@ public class Game implements GameHandler {
         this.resourceMarket = new ResourceMarket(broadcaster);
         this.cardMarket = new CardMarket(broadcaster);
         this.vaticanRoute = new VaticanRoute(broadcaster,this);
-
 
 
         List<LeaderCard> leaderCards = CardParser.getLeaderCard();
@@ -91,7 +94,11 @@ public class Game implements GameHandler {
 
     }
 
-
+    /**
+     *
+     * @param username name of the player
+     * @return reference to the Player
+     */
     private Player getPlayerByUsername(String username){
         for (Player p: players){
             if(username.equals( p.getUser().getUsername())){
@@ -102,9 +109,13 @@ public class Game implements GameHandler {
     }
 
 
-
-
-
+    /**
+     * Send a message to All players when a player buys a card
+     * @param username name of the player
+     * @param x coordinate x of the card the player wants to buy in the Card Market
+     * @param y coordinate x of the card the player wants to buy in the Card Market
+     * @param cardPosition position where player wants to store the card in the Production Pane
+     */
     public void buyCard(String username, int x, int y, int cardPosition){
 
         Player player = getPlayerByUsername(username);
@@ -129,6 +140,11 @@ public class Game implements GameHandler {
 
     }
 
+    /**
+     * Send a message to All players when a player buys Resources
+     * @param username name of the Player
+     * @param position value of the Resources
+     */
     public void buyResources(String username, int position){
 
         Player player = getPlayerByUsername(username);
@@ -154,6 +170,12 @@ public class Game implements GameHandler {
 
     }
 
+    /**
+     * Send a message to All players when a player Deposit Resources
+     * @param username name of the Player
+     * @param color identifies the Marble that the player wants to deposit
+     * @param shelfPosition identifies where the player wants to deposit the Marble
+     */
     public void storeResource(String username, Marble.Color color, int shelfPosition){
 
         Player player = getPlayerByUsername(username);
@@ -172,6 +194,12 @@ public class Game implements GameHandler {
 
     }
 
+    /**
+     * Send a message to All players when a player Move Resources
+     * @param username name of the player
+     * @param firstShelf Identify the shelf from which the player wants to move resources
+     * @param secondShelf Identify the shelf where the player wants to move resources
+     */
     public void moveResources(String username, int firstShelf, int secondShelf){
 
         Player player = getPlayerByUsername(username);
@@ -189,7 +217,13 @@ public class Game implements GameHandler {
 
     }
 
-
+    /**
+     * Send a message to All players when a player use a Basic Production
+     * @param username name of the player
+     * @param input_1 identifies the Marble that the player wants to use
+     * @param input_2 identifies the Marble that the player wants to use
+     * @param output identifies the Marble that the player wants to receive
+     */
     public void basicProduction(String username, Marble.Color input_1,Marble.Color input_2,Marble.Color output){
 
         Player player = getPlayerByUsername(username);
@@ -207,6 +241,11 @@ public class Game implements GameHandler {
 
     }
 
+    /**
+     * Send a message to All players when a player use a Production Card
+     * @param username name of the player
+     * @param cardPosition position of the card in the Production Pane
+     */
     public void cardProduction(String username, int cardPosition){
 
         Player player = getPlayerByUsername(username);
@@ -224,6 +263,12 @@ public class Game implements GameHandler {
     }
 
 
+    /**
+     * Send a message to All players when a player use a Leader Production
+     * @param username name of the player
+     * @param cardId Id of the Leader Card
+     * @param outputColor Identifies the Marble that the player wants to receive
+     */
     public void leaderProduction(String username, String cardId, Marble.Color outputColor){
 
         Player player = getPlayerByUsername(username);
@@ -241,7 +286,11 @@ public class Game implements GameHandler {
 
     }
 
-
+    /**
+     * Send a message to All players when a player activate a Leader Card
+     * @param username name of the player
+     * @param cardId Id of the Leader Card
+     */
     public void activateLeaderCard(String username, String cardId){
 
         Player player = getPlayerByUsername(username);
@@ -259,7 +308,11 @@ public class Game implements GameHandler {
 
     }
 
-
+    /**
+     * Send a message to All players when a player discard a Leader Card
+     * @param username name of the player
+     * @param cardId Id of the Leader Card
+     */
     public void discardLeaderCard(String username, String cardId){
         //state.discardCard(username, cardId);
         Player player = getPlayerByUsername(username);
@@ -276,6 +329,10 @@ public class Game implements GameHandler {
         broadcaster.sendMessages(username, "discarded Leader Card");
     }
 
+    /**
+     * Send a message to All players when a player ends his turn
+     * @param username name of the player
+     */
     public void endTurn(String username){
 
         Player player = getPlayerByUsername(username);
@@ -293,10 +350,10 @@ public class Game implements GameHandler {
     }
 
 
-
-
-
-
+    /**
+     * Send a message to All players when a player disconnect from the game
+     * @param username name of the player
+     */
     public void disconnect(String username){
 
         Player disconnectedPlayer = getPlayerByUsername(username);
@@ -351,10 +408,9 @@ public class Game implements GameHandler {
     }
 
 
-
-
-
-
+    /**
+     * @return the Username of the Winner
+     */
     private String getWinner(){
 
         int maxPoint = 0;
@@ -394,7 +450,9 @@ public class Game implements GameHandler {
     }
 
 
-
+    /**
+     * Terminate the game
+     */
     private void terminateGame(){
 
         for (Player p: players){
@@ -413,7 +471,9 @@ public class Game implements GameHandler {
     }
 
 
-
+    /**
+     * Identifies Single Player Override methods
+     */
     private class SinglePlayerStrategy implements  gameStrategy{
 
         @Override
@@ -461,10 +521,14 @@ public class Game implements GameHandler {
 
     }
 
-
+    /**
+     * Identifies MultiPlayer Override methods
+     */
     private class MultiPlayerStrategy implements  gameStrategy{
 
-
+        /**
+         *  Set next Player as active
+         */
         private void setNextPlayer(){
             currentPlayer = (currentPlayer+1)%players.size();
             players.get(currentPlayer).setActive();
@@ -507,8 +571,9 @@ public class Game implements GameHandler {
     }
 
 
-
-
+    /**
+     * Identifies the Message Broadcaster
+     */
     private class Broadcaster implements EventBroadcaster{
 
         private List<Message<ModelEventHandler>> messages;
@@ -542,10 +607,5 @@ public class Game implements GameHandler {
         }
 
     }
-
-
-
-
-
 }
 

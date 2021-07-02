@@ -8,6 +8,10 @@ import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 import java.util.Collections;
 import java.util.List;
 
+
+/**
+ * Represent a NullCard, used in the Card Market when a pile of card is ended
+ */
 public class NullCard extends  PurchasableCard{
 
     private static NullCard instance;
@@ -18,6 +22,7 @@ public class NullCard extends  PurchasableCard{
         private NullDevelopmentCard(String id, ResourceList require, ResourceList produce, int level, Color color, int victoryPoint) {
             super(id, require, produce, level, color, victoryPoint);
         }
+
 
         @Override
         public List<Marble> make(ResourceStorage storage) {

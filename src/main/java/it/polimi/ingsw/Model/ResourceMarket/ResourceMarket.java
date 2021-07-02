@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- *  mercato delle biglie
+ *  Represent Resource Market
  */
 public class ResourceMarket {
 
@@ -25,7 +25,6 @@ public class ResourceMarket {
             Marble.Color.GREY, Marble.Color.GREY, Marble.Color.PURPLE, Marble.Color.PURPLE};
 
 
-    //inverting start
     private Marble[][] marblesGrid = new Marble[ROW_SIZE][COLUMN_SIZE];
     private Marble bonusMarble;
 

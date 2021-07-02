@@ -112,9 +112,22 @@ public class ProductionPage extends ModelEventHandler.Default{
     private void basic(String line){
         String[] basicProdArray = line.split("-");
         Marble.Color[] prodColor = new Marble.Color[3];
-        for (int i = 0; i < basicProdArray.length; i++) {
-            prodColor[i] = Cli.fromStringToColor(basicProdArray[i]);
+        if(basicProdArray.length==3){
+            for (int i = 0; i < basicProdArray.length; i++) {
+                prodColor[i] = Cli.fromStringToColor(basicProdArray[i]);
+                if(prodColor[i]==null){
+                    Cli.showUpdateMessage("Wrong Input");
+                    ProductionPageView(this.backEnd);
+                    return;
+                }
+            }
+        }else{
+            Cli.showUpdateMessage("Wrong Input");
+            ProductionPageView(this.backEnd);
+            return;
         }
+
+
         BasicProduction message = new BasicProduction(prodColor[0], prodColor[1], prodColor[2]);
         backEnd.notify(message);
     }
@@ -163,7 +176,7 @@ public class ProductionPage extends ModelEventHandler.Default{
                 break;
             default:
                 try{
-                    if(Integer.parseInt(productionString)>1 && Integer.parseInt(productionString)<4){
+                    if(Integer.parseInt(productionString)>=1 && Integer.parseInt(productionString)<4){
                         CardProduction message = new CardProduction(Integer.parseInt(productionString) - 1);
                         backEnd.notify(message);
                     }else{
@@ -249,7 +262,8 @@ public class ProductionPage extends ModelEventHandler.Default{
     @Override
     public void handle(ActivePlayer event){
         Cli.cls();
-        Cli.showUpdateMessage("your turn is over, redirecting to home");
+        if(this.backEnd.getModel().players.size()>1)
+            Cli.showUpdateMessage("your turn is over, redirecting to home");
         Cli.homePage.HomePageView(this.backEnd);
     }
 
@@ -260,7 +274,7 @@ public class ProductionPage extends ModelEventHandler.Default{
 
     @Override
     public void handle(VaticanReport event) {
-        Cli.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor();
     }
 
     @Override

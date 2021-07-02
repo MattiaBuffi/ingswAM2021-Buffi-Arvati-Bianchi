@@ -5,6 +5,12 @@ import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 
+
+/**
+ * Represent a Discount Leader Card
+ */
+
+
 public class Discount implements ActivationStrategy{
 
     private final Marble.Color color;

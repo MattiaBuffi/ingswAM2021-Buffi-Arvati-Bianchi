@@ -23,9 +23,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     ViewBackEnd backEnd;
     char[] rssMarket;
-    //List<Marble> discarded = new ArrayList<>();
-
-    boolean firstRssAvailable = true;
 
     private int selectedMarble;
 
@@ -363,7 +360,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        Cli.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor();
     }
 
 }

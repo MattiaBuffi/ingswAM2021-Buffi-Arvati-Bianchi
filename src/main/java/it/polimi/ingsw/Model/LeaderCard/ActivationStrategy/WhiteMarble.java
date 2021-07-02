@@ -5,6 +5,11 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.ResourceMarket.WhiteMarbleConversion;
 
+/**
+ * Represent a White Marble Leader Card
+ */
+
+
 public class WhiteMarble implements ActivationStrategy {
 
     private final Marble.Color color;
