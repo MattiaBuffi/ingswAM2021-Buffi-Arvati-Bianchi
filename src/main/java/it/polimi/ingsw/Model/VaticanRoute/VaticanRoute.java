@@ -8,6 +8,9 @@ import it.polimi.ingsw.Model.GameHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Represent the vatican route where player token could moves during the game
@@ -123,19 +126,28 @@ public class VaticanRoute {
     /**
      * Methods who increment a token victory points based on it's position
      * @param token is the token to modify
+     * @param lastAllowedPosition  is the maximum position allowed
+     * @param positionGetter given an input return a  position below lastAllowedPosition
+     * @param pointGetter given a input below lastAllowedPosition it returns a int
      */
-    public void getRouteVictoryPoints(VaticanToken token){
+    public void getRouteVictoryPoints( VaticanToken token, int lastAllowedPosition, Function<Integer, Integer> positionGetter, Function<Integer, Integer> pointGetter){
 
-        while (token.getPosition() >= ROUTE_VICTORY_POSITION[token.getLastPointPosition()+1]){
+        if (positionGetter.apply(token.getLastPointPosition()) == lastAllowedPosition){
+            return;
+        }
+
+        while (token.getPosition() >= positionGetter.apply(token.getLastPointPosition()+1)){
 
             token.setLastPointPosition( token.getLastPointPosition()+1);
-            token.setVictoryPoint( token.getVictoryPoints()+ ROUTE_VICTORY_POINTS_INCREMENT[token.getLastPointPosition()]);
-            if(token.getPosition() == LAST_POSITION){
+            token.setVictoryPoint( token.getVictoryPoints()+ pointGetter.apply(token.getLastPointPosition()) );
+
+            if(token.getPosition() == lastAllowedPosition){
                 break;
             }
         }
 
     }
+
 
 
     /**
@@ -169,7 +181,9 @@ public class VaticanRoute {
     protected void advance(VaticanToken token, int points){
 
         setTokenPosition(token, points);
-        getRouteVictoryPoints(token);
+
+        getRouteVictoryPoints(token, LAST_POSITION , (i)->ROUTE_VICTORY_POSITION[i], (j)->ROUTE_VICTORY_POINTS_INCREMENT[j] );
+
 
         if(canStartVaticanReport(popeSpaceReached, token.getPosition(), POPE_SPACES[popeSpaceReached])){
             applyVaticanReport(tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
