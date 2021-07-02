@@ -14,6 +14,10 @@ import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
 
 import java.util.List;
 
+
+/**
+ * State in which the player has just begun its turn
+ */
 public class StateNewTurn extends PlayerState {
 
     private static StateNewTurn instance;

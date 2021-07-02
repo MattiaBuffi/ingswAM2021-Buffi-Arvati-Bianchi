@@ -133,10 +133,4 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
         broadcaster.notifyUser(new ErrorUpdate("card not found"));
         return null;
     }
-
-    /**
-     * TODO: PARTIAL DOCUMENTATION -> ASK FOR SELECTOR AND VISITOR
-     */
-
-
 }

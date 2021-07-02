@@ -8,6 +8,9 @@ import it.polimi.ingsw.Model.Player.ProductionHandler;
 //import it.polimi.ingsw.Model.TurnHandler;
 
 
+/**
+ * State in which the player can produce resources
+ */
 public class StateProduction extends PlayerState {
 
 

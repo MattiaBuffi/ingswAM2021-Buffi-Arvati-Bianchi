@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 //import it.polimi.ingsw.Model.TurnHandler;
 
+/**
+ * State in which the player can store or discard the resources taken
+ */
 public class StateStoreResource extends PlayerState {
 
     private static StateStoreResource instance;
