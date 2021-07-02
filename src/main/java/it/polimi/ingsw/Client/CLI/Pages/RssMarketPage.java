@@ -49,8 +49,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     private String origin;
     private String dest;
-    private String selectedColor;
-    private String whitePosition;
+
 
     public void move1(String line){
         origin =  line;
@@ -70,36 +69,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
         }
     }
 
-    public void selectColorWhiteMarble(String line){
-        selectedColor = line;
-        System.out.println("Where do you want to store this rss? ");
-        System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
-        Cli.setReadHandler(this::storeWhiteMarble);
-    }
-
-    public void storeWhiteMarble(String line){
-        whitePosition = line;
-        if (whitePosition.equals("0")) {
-            selectedMarble += 1;
-            if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
-                backEnd.notify(new EndTurn());
-                backEnd.setEventHandler(Cli.homePage);
-            }
-        }else {
-            try {
-                DepositResource deposit = new DepositResource(Cli.fromStringToColor(selectedColor), Integer.parseInt(whitePosition) - 1);
-                this.backEnd.notify(deposit);
-            }catch (NumberFormatException e){
-                Cli.showUpdateMessage("Wrong Input");
-                RssMarketPageView(this.backEnd);
-                return;
-            }
-            if (selectedMarble+1 == this.backEnd.getModel().resourceMarketBuffer.size()) {
-                backEnd.notify(new EndTurn());
-                backEnd.setEventHandler(Cli.homePage);
-            }
-        }
-    }
 
     public void RssMarketPageView(ViewBackEnd backEnd){
 
@@ -146,6 +115,46 @@ public class RssMarketPage extends ModelEventHandler.Default {
         return Cli.getColorStringAvailableRss(this.backEnd.getModel().resourceMarketBuffer.get(position));
     }
 
+
+
+
+    private String selectedColor;
+
+
+    public void selectColorWhiteMarble(String line){
+        selectedColor = line;
+        System.out.println("Where do you want to store this rss? ");
+        System.out.println("(value between 1 and 3 [4/5 if you have a storage Leader Active] [1 = first shelf on the top]) : ");
+        Cli.setReadHandler(this::storeWhiteMarble);
+    }
+
+    public void storeWhiteMarble(String line){
+
+        if (line.equals("0")) {
+            selectedMarble += 1;
+            if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
+                backEnd.notify(new EndTurn());
+                backEnd.setEventHandler(Cli.homePage);
+            }
+        }else {
+            try {
+                DepositResource deposit = new DepositResource(Cli.fromStringToColor(selectedColor), Integer.parseInt(line) - 1);
+                this.backEnd.notify(deposit);
+            }catch (NumberFormatException e){
+                Cli.showUpdateMessage("Wrong Input");
+                updatePage();
+                rssHandler();
+                return;
+            }
+            if (selectedMarble+1 == this.backEnd.getModel().resourceMarketBuffer.size()) {
+                backEnd.notify(new EndTurn());
+                backEnd.setEventHandler(Cli.homePage);
+            }
+        }
+    }
+
+
+
     public void rssHandler(){
 
         if(this.backEnd.getModel().resourceMarketBuffer.get(selectedMarble).getColor() == Marble.Color.WHITE){
@@ -170,40 +179,42 @@ public class RssMarketPage extends ModelEventHandler.Default {
                             System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
                             return;
                         }
-                            try {
-                                if (Integer.parseInt(line) < 0 || Integer.parseInt(line) > 5) {
-                                    System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
-                                    return;
-                                }
-                            }catch (NumberFormatException e){
-                                Cli.showUpdateMessage("Wrong Input");
-                                RssMarketPageView(this.backEnd);
+                        try {
+                            if (Integer.parseInt(line) < 0 || Integer.parseInt(line) > backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves().size() ) {
+                                System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss");
                                 return;
                             }
+                        }catch (NumberFormatException e){
+                            Cli.showUpdateMessage("Wrong Input");
+                            updatePage();
+                            rssHandler();
+                            return;
+                        }
 
-                            if (line.equals("0")) {
-                                selectedMarble += 1;
+                        if (line.equals("0")) {
+                            selectedMarble += 1;
 
-                                if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
-                                    backEnd.notify(new EndTurn());
-                                    backEnd.setEventHandler(Cli.homePage);
-                                    return;
-                                }
-                                System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
-                            } else {
-                                try {
-                                    DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(line) - 1);
-                                    this.backEnd.notify(deposit);
-                                }catch (NumberFormatException e){
-                                    Cli.showUpdateMessage("Wrong Input");
-                                    RssMarketPageView(this.backEnd);
-                                    return;
-                                }
-                                if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
-                                    backEnd.notify(new EndTurn());
-                                    backEnd.setEventHandler(Cli.homePage);
-                                }
+                            if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
+                                backEnd.notify(new EndTurn());
+                                backEnd.setEventHandler(Cli.homePage);
+                                return;
                             }
+                            System.out.println("You take a " + getMarble(selectedMarble) + " rss, where do you want to put it? 1 to 3 [4/5 if you have a leader] - 0 if you want to discard this rss. ");
+                        } else {
+                            try {
+                                DepositResource deposit = new DepositResource(this.backEnd.getModel().resourceMarketBuffer.get(0).getColor(), Integer.parseInt(line) - 1);
+                                this.backEnd.notify(deposit);
+                            }catch (NumberFormatException e){
+                                Cli.showUpdateMessage("Wrong Input");
+                                updatePage();
+                                rssHandler();
+                                return;
+                            }
+                            if (selectedMarble == this.backEnd.getModel().resourceMarketBuffer.size()) {
+                                backEnd.notify(new EndTurn());
+                                backEnd.setEventHandler(Cli.homePage);
+                            }
+                        }
                     }else{
                         Cli.rssMarketPage.RssMarketPageView(this.backEnd);
                     }

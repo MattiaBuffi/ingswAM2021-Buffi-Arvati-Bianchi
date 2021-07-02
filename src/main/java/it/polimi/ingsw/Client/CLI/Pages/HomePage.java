@@ -264,11 +264,10 @@ public class HomePage extends ModelEventHandler.Default {
                 homePage[LeaderCardHomePosDiscard[1-discardedLeader]+j+i*133]= ' ';
             }
         }
-        System.arraycopy("      ".toCharArray(), 0, homePage, LeaderCardHomePosActive[1-discardedLeader], "      ".length());
+        discardedLeader++;
         if(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive()){
             System.arraycopy(active.toCharArray(), 0, homePage, LeaderCardHomePosActive[1-discardedLeader], active.length());
         }
-        discardedLeader++;
         Cli.homePage.HomePageView(this.backEnd);
     }
 

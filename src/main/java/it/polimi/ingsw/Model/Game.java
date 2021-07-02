@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Game implements TurnHandler, GameHandler {
+public class Game implements GameHandler {
 
 
     private gameStrategy strategy;
@@ -63,7 +63,7 @@ public class Game implements TurnHandler, GameHandler {
         for (int i = 0; i < users.size(); i++) {
 
             VaticanToken token = vaticanRoute.addPlayer(users.get(i).getUsername());
-            players.add(new Player(users.get(i), i,token, leaderCards.subList((4*i), 4+(4*i)), this, this, broadcaster));
+            players.add(new Player(users.get(i), i,token, leaderCards.subList((4*i), 4+(4*i)),this, broadcaster));
             broadcaster.notifyAllPlayers(new PlayersSetup(users.get(i).getUsername(), i));
 
         }

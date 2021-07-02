@@ -1,12 +1,13 @@
 package it.polimi.ingsw.Model.Player.States;
 
+import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceMarketHandler;
 import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
-import it.polimi.ingsw.Model.TurnHandler;
+//import it.polimi.ingsw.Model.TurnHandler;
 
 public class StateStoreResource extends PlayerState {
 
@@ -50,7 +51,7 @@ public class StateStoreResource extends PlayerState {
 
 
 
-    public void endTurn(ResourceMarketHandler marketHandler, PlayerState.Context context, TurnHandler turnHandler){
+    public void endTurn(ResourceMarketHandler marketHandler, PlayerState.Context context, GameHandler turnHandler){
         marketHandler.empty();
         context.setState(StateWait.get());
         turnHandler.endTurn();
@@ -58,7 +59,7 @@ public class StateStoreResource extends PlayerState {
 
     @Override
     protected boolean endTurn(Player context){
-        endTurn(context.getResourceMarketBuffer(), context, context.getTurnHandler());
+        endTurn(context.getResourceMarketBuffer(), context, context.getGameHandler());
         return true;
     }
 
