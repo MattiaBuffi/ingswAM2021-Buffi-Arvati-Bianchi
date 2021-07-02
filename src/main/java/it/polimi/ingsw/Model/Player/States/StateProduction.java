@@ -1,10 +1,11 @@
 package it.polimi.ingsw.Model.Player.States;
 
 import it.polimi.ingsw.Model.CardStorage.Selection.ProductionSelector;
+import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.Player.ProductionHandler;
-import it.polimi.ingsw.Model.TurnHandler;
+//import it.polimi.ingsw.Model.TurnHandler;
 
 
 public class StateProduction extends PlayerState {
@@ -40,7 +41,7 @@ public class StateProduction extends PlayerState {
 
 
 
-    public void endTurn(ProductionHandler handler, PlayerState.Context context, TurnHandler turnHandler){
+    public void endTurn(ProductionHandler handler, PlayerState.Context context, GameHandler turnHandler){
         handler.empty();
         context.setState(StateWait.get());
         turnHandler.endTurn();
@@ -49,7 +50,7 @@ public class StateProduction extends PlayerState {
 
     @Override
     protected boolean endTurn(Player context){
-        endTurn(context.getProductionHandler(),context, context.getTurnHandler());
+        endTurn(context.getProductionHandler(),context, context.getGameHandler());
         return true;
     }
 
