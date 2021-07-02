@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class EndGamePopUp {
         lvPoints.setItems(FXCollections.observableList(points));
     }
 
-    public void backToHome() {
-        //Coming back to home
+    public void close() {
+        Stage stage = (Stage) title.getScene().getWindow();
+        stage.close();
     }
 }
