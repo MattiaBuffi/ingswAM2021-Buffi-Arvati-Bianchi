@@ -15,7 +15,7 @@ import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceBuffer;
 import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceMarketHandler;
 import it.polimi.ingsw.Model.Player.States.StateSetupCard;
 import it.polimi.ingsw.Model.ResourceStorage.PlayerStorage;
-import it.polimi.ingsw.Model.TurnHandler;
+//import it.polimi.ingsw.Model.TurnHandler;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanToken;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Player implements EventBroadcaster, PlayerState.Context {
     private boolean ready;
 
     private final VaticanToken vaticanToken;
-    private final TurnHandler turnHandler;
+    //private final TurnHandler turnHandler;
     private final GameHandler gameHandler;
 
 
@@ -46,13 +46,13 @@ public class Player implements EventBroadcaster, PlayerState.Context {
 
 
 
-    public Player(User user, int position, VaticanToken token, List<LeaderCard> leaderCards, TurnHandler turnHandler, GameHandler gameHandler, EventBroadcaster broadcaster){
+    public Player(User user, int position, VaticanToken token, List<LeaderCard> leaderCards, GameHandler gameHandler, EventBroadcaster broadcaster){
 
         this.user = user;
         this.position = position;
         this.ready = false;
 
-        this.turnHandler = turnHandler;
+        //this.turnHandler = turnHandler;
         this.vaticanToken = token;
         this.gameHandler = gameHandler;
         this.globalBroadcaster = broadcaster;
@@ -156,11 +156,11 @@ public class Player implements EventBroadcaster, PlayerState.Context {
         return productionHandler;
     }
 
-
+/*
     public TurnHandler getTurnHandler() {
         return turnHandler;
     }
-
+*/
     public GameHandler getGameHandler() {
         return gameHandler;
     }

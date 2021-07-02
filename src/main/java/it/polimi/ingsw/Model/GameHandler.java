@@ -6,6 +6,8 @@ public interface GameHandler {
 
     void startGame();
 
+    void endTurn();
+
     void endGame();
 
 }

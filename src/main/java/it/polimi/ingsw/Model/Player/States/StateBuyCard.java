@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
-import it.polimi.ingsw.Model.TurnHandler;
+//import it.polimi.ingsw.Model.TurnHandler;
 
 
 public class StateBuyCard extends PlayerState {
@@ -31,13 +31,13 @@ public class StateBuyCard extends PlayerState {
     }
 
 
-    public void changeState(PlayerState.Context context, CardStorage cardStorage, TurnHandler turnHandler, GameHandler terminator){
+    public void changeState(PlayerState.Context context, CardStorage cardStorage, GameHandler handler){
         context.setState(StateWait.get());
 
         if(cardStorage.getCards().size() < 7){
-            turnHandler.endTurn();
+            handler.endTurn();
         } else {
-            terminator.endGame();
+            handler.endGame();
         }
     }
 
@@ -46,7 +46,7 @@ public class StateBuyCard extends PlayerState {
     protected boolean buyCard(Player context, PurchasableCard card, int destinationId) {
 
         if(buyCard(context.getCardStorage(), context.getResourceStorage(), card, destinationId)){
-            changeState(context, context.getCardStorage(), context.getTurnHandler(), context.getGameHandler());
+            changeState(context, context.getCardStorage(), context.getGameHandler());
             return true;
         }
 

@@ -21,6 +21,7 @@ public class EndGamePopUp {
     private final String[] TITLE_MESSAGE = {"GAME OVER!", "YOU WIN"};
 
     public void initData(ScoreboardTab mainController){
+
         if(mainController.getBackEnd().getModel().winner.equals(mainController.getBackEnd().getMyUsername())){
             title.setText(TITLE_MESSAGE[1]);
         } else {

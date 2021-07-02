@@ -43,7 +43,7 @@ public class Cli {
     public static EndGamePage endPage;
     public static int cardSpaces;
     public static String spacer = "                                                   ";
-    private static final int[] ShelfRssPosition = {415,944,952,1471,1479,1488, 2001, 2009, 2018, 2026};
+    private static final int[] ShelfRssPosition = {415,944,952,1471,1479,1488, 2001, 2009, 2016, 2023};
     private static final int[] ChestRssPosition = {3594, 3601, 3608, 3615};
     private static final int[] LeaderShelfPosition = {1864,1879};
 
@@ -61,7 +61,7 @@ public class Cli {
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt",
                     "leaderProductionScheme.txt", "EndGame.txt", "EndGameLose.txt"};
 
-    private static char[] shelfColors = new char[2];
+    //private static char[] shelfColors = new char[2];
 
     public Cli(){
 
@@ -172,8 +172,57 @@ public class Cli {
 
 
 
+    private static void updateShelf(char[] scheme,int shelf, int size, char color){
+        for (int j = 0; j < size; j++) {
+            if (shelf == 2) {
+                scheme[ShelfRssPosition[shelf + j + 1]] = color;
+            }else if (shelf == 3) {
+                scheme[ShelfRssPosition[shelf + j + 3]] = color;
+            }else if (shelf == 4) {
+                scheme[ShelfRssPosition[shelf + j + 4]] = color;
+            }else {
+                scheme[ShelfRssPosition[shelf + j]] = color;
+            }
+        }
+    }
+
+
+
     public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
+
+        List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
+
+        for (int i = 0; i < playerShelf.size(); i++) {
+            int size = playerShelf.get(i).size;
+            if(playerShelf.get(i).color!= null){
+                switch (playerShelf.get(i).color) {
+                    case YELLOW:
+                        updateShelf(scheme,i,size, 'Y');
+                        break;
+                    case BLUE:
+                        updateShelf(scheme,i,size, 'B');
+                        break;
+                    case PURPLE:
+                        updateShelf(scheme,i,size, 'P');
+                        break;
+                    case GREY:
+                        updateShelf(scheme,i,size, 'G');
+                        break;
+                    default:
+                        updateShelf(scheme, i, size, ' ');
+                        break;
+                }
+            }else if (size==0){
+                updateShelf(scheme, i, size, ' ');
+            }
+        }
+    }
+
+    /*
+    public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
+
             List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
+
             for (int i = 0; i < playerShelf.size(); i++) {
                 int size = playerShelf.get(i).size;
                 if(playerShelf.get(i).color!= null){
@@ -258,7 +307,7 @@ public class Cli {
                 }
             }
     }
-
+*/
 
     public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost, int[] homeLeaderEffect) {
         String leaderType = String.valueOf(leaderCard.get(i).getType());
@@ -543,14 +592,27 @@ public class Cli {
         shelf = readSchematics(13);
         List<LeaderCard> leaders = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
         int pos = 0;
+
+        /*
         for (LeaderCard leader: leaders) {
             if(leader.isActive() && String.valueOf(leader.getType()).equals("EXTRA_SHELF")){
                 shelfColors[pos]= Cli.getColorString(leader.getColor()).charAt(0);
                 pos++;
             }
+        }*/
+
+        List<Shelf> playerShelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
+
+        for (int i = 0; i < playerShelves.size()-3; i++){
+            for (int j = 0; j < 4; j++){
+                for (int k = 0; k < 15; k++){
+                    page[LeaderShelfPosition[i]+k+133*j] = shelf[k+16*j];
+                }
+            }
+            page[LeaderShelfPosition[i]+ 7] = Cli.getColorString(playerShelves.get(3+i).color).charAt(0);
         }
 
-
+        /*
         for (int i = 0; i < leaderActive[1]; i++){
             for (int j = 0; j < 4; j++){
                 for (int k = 0; k < 15; k++){
@@ -558,7 +620,9 @@ public class Cli {
                 }
             }
             page[LeaderShelfPosition[i]+ 7] = shelfColors[i];
-        }
+        }*/
+
+
     }
 
     public static void activatePopeFavor(int index) {
