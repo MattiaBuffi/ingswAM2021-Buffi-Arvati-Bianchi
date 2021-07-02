@@ -25,6 +25,7 @@ import it.polimi.ingsw.Parser.LeaderCardParser.CardParser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Game implements GameHandler {
 
@@ -353,48 +354,49 @@ public class Game implements GameHandler {
 
 
 
+    private int getPlayerFinalPoints(Player player){
+        StateGameEnded.setState(player);
+        int points = player.getVictoryPoints();
+        broadcaster.notifyAllPlayers(new VictoryPointsUpdate(player.getUser().getUsername(), points));
+        return points;
+    }
 
 
     private String getWinner(){
 
         int maxPoint = 0;
-        Player winner = null;
+        Player winner = players.get(0);
 
-        for (Player p: players){
+        for (int i = 0; i < players.size(); i++) {
 
-            if(winner == null){
-                winner = p;
-                continue;
-            }
+            int playerPoint = getPlayerFinalPoints(players.get(i));
 
-            StateGameEnded.setState(p);
-            int playerPoint = p.getVictoryPoints();
 
-            broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
-
-            if(playerPoint > maxPoint){
+            if( playerPoint > maxPoint){
                 maxPoint = playerPoint;
-                winner = p;
+                winner = players.get(i);
             } else if(playerPoint == maxPoint){
-                int playerResourceSize = p.getResourceStorage().getResources().getSize();
-                int winnerResourceSize = winner.getResourceStorage().getResources().getSize();
 
+                int playerResourceSize = players.get(i).getResourceStorage().getResources().getSize();
+                int winnerResourceSize = winner.getResourceStorage().getResources().getSize();
 
                 if(playerResourceSize > winnerResourceSize){
                     maxPoint = playerPoint;
-                    winner = p;
+                    winner = players.get(i);;
                 } else if(playerResourceSize == winnerResourceSize){
-                    if(players.indexOf(p)< players.indexOf(winner)){
+                    if( i < players.indexOf(winner)){
                         maxPoint = playerPoint;
-                        winner = p;
+                        winner = players.get(i);
                     }
                 }
             }
         }
 
-
         return winner.getUser().getUsername();
     }
+
+
+
 
 
 
@@ -482,7 +484,10 @@ public class Game implements GameHandler {
 
             if(lastTurn){
                 if(currentPlayer == 0){
-                    broadcaster.notifyAllPlayers(new EndGame(getWinner()));
+
+                    String winner = getWinner();
+
+                    broadcaster.notifyAllPlayers(new EndGame(winner));
                     broadcaster.sendMessages(players.get(0).getUser().getUsername(), "game is ended");
                     terminateGame();
                 }

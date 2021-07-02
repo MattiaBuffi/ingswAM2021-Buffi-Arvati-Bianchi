@@ -187,12 +187,18 @@ public class ModelUpdater implements ModelEventHandler {
 
     @Override
     public void handle(VictoryPointsUpdate event) {
+
+        System.out.println("victorypoints");
+        System.out.println(event.getUsername());
+        System.out.println(event.getVictoryPoints());
         model.getPlayer(event.getUsername()).setVictoryPoints(event.getVictoryPoints());
 
     }
 
     @Override
     public void handle(EndGame event) {
+
+        System.out.println("endgame");
         model.winner = event.getUsername();
     }
 
