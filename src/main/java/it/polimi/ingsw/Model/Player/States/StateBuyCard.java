@@ -8,7 +8,6 @@ import it.polimi.ingsw.Model.GameHandler;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
-//import it.polimi.ingsw.Model.TurnHandler;
 
 
 public class StateBuyCard extends PlayerState {

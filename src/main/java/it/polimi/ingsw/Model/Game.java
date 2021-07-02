@@ -476,17 +476,25 @@ public class Game implements GameHandler {
 
             setNextPlayer();
 
-            for (Player p: players){
-                broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
-            }
+
 
             if(lastTurn){
                 if(currentPlayer == 0){
                     broadcaster.notifyAllPlayers(new EndGame(getWinner()));
+
+                    for (Player p: players){
+                        broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
+                    }
+
                     broadcaster.sendMessages(players.get(0).getUser().getUsername(), "game is ended");
                     terminateGame();
                 }
+            } else {
+                for (Player p: players){
+                    broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
+                }
             }
+
 
         }
 

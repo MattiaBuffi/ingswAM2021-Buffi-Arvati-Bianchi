@@ -187,6 +187,7 @@ public class VaticanRoute {
 
         if(canStartVaticanReport(popeSpaceReached, token.getPosition(), POPE_SPACES[popeSpaceReached])){
             applyVaticanReport(tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
+            popeSpaceReached +=1;
         }
 
         broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), token.getPosition()));
