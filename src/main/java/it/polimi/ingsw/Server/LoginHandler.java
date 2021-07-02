@@ -8,6 +8,9 @@ import it.polimi.ingsw.Message.ModelEventHandler;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Manage the Login Procedure
+ */
 public class LoginHandler {
 
     private int maxLength;
@@ -38,6 +41,14 @@ public class LoginHandler {
 
     }
 
+    /**
+     * Add Player username to the usernameSet
+     * Set the Player username
+     * Send a UsernameSelected message to the player
+     * @param client Instance of client
+     * @param username username of the Player
+     * @return True if Procedure finish correctly
+     */
     public boolean addUsername(Client client, String username){
 
         username = username.toLowerCase();
@@ -53,7 +64,12 @@ public class LoginHandler {
 
     }
 
-
+    /**
+     * Check if the username selected by the player is Valid
+     * @param messageHandler message Handler
+     * @param username username of the player
+     * @return True if the username is Valid
+     */
     public boolean validUsername(Consumer<Message<ModelEventHandler>> messageHandler, String username){
 
         if(usernameSet.contains(username)){
