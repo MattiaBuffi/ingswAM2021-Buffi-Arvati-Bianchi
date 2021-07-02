@@ -47,6 +47,8 @@ public class ScoreboardTab implements Layout, GameTab {
         if(firstUpdate) setupView();
         updatePoints();
         updateView();
+
+        System.out.println("POINTS");
     }
 
     private void setupView(){
@@ -138,13 +140,18 @@ public class ScoreboardTab implements Layout, GameTab {
         return backEnd;
     }
 
-    private class PlayerScore{
+    public static class PlayerScore{
         private final String username;
         private Integer points;
 
         public PlayerScore(String username) {
             this.username = username;
             points = 0;
+        }
+
+        public PlayerScore(String username, Integer points) {
+            this.username = username;
+            this.points = points;
         }
 
         public String getUsername() {
