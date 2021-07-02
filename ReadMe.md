@@ -47,7 +47,7 @@ To Enjoy our Game.
 After cloning this repo, open a terminal and go to the folder where you downloaded the Repo.
 
 Use the command 
-> java -jar AM60-<version>-jar-with-dependencies.jar -arg
+> java -jar AM60-< version >-jar-with-dependencies.jar -arg
 
 ##### _You have to choose arg between:_
  - cli
