@@ -158,14 +158,11 @@ public class VaticanRoute {
      */
     public boolean canStartVaticanReport(int lastVaticanReport, int position, int triggerPosition){
 
-        if(lastVaticanReport <= 2 ){
-            if(position < triggerPosition){
-                return false;
-            }
-            return true;
+        if(position < triggerPosition){
+            return false;
         }
+        return true;
 
-        return false;
     }
 
 
@@ -184,42 +181,19 @@ public class VaticanRoute {
 
         getRouteVictoryPoints(token, LAST_POSITION , (i)->ROUTE_VICTORY_POSITION[i], (j)->ROUTE_VICTORY_POINTS_INCREMENT[j] );
 
-
-        if(canStartVaticanReport(popeSpaceReached, token.getPosition(), POPE_SPACES[popeSpaceReached])){
-            applyVaticanReport(tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
-            popeSpaceReached +=1;
+        if(popeSpaceReached <= 2 ){
+            if(canStartVaticanReport(popeSpaceReached, token.getPosition(), POPE_SPACES[popeSpaceReached])){
+                applyVaticanReport(tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
+                popeSpaceReached +=1;
+            }
         }
+
 
         broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), token.getPosition()));
 
     }
 
-    /*
-    protected void advance(VaticanToken token, int points){
 
-        int newPosition = token.getPosition() + points;
-
-
-        if(popeSpaceReached <= 2 ){
-            if(vaticanReport(tokenList, newPosition, POPE_SPACES[popeSpaceReached], POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached])){
-                popeSpaceReached +=1;
-            }
-        }
-
-        if(newPosition >= LAST_POSITION){
-            //getVictoryPoints(token, LAST_POSITION);
-            token.setPosition(LAST_POSITION);
-            broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), LAST_POSITION));
-            gameHandler.endGame();
-        } else {
-            //getVictoryPoints(token, newPosition);
-            token.setPosition(newPosition);
-            broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), newPosition));
-        }
-
-    }
-
-    */
 
 
     /**
