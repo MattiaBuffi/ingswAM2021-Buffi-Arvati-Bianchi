@@ -47,7 +47,7 @@ To Enjoy our Game.
 After cloning this repo, open a terminal and go to the folder where you downloaded the Repo.
 
 Use the command 
-> java -jar AM60-<version>-jar-with-dependencies.jar -arg
+> java -jar AM60-< version >-jar-with-dependencies.jar -arg
 
 ##### _You have to choose arg between:_
  - cli
@@ -63,7 +63,14 @@ For a Better Experience with the GUI, you need a 1920x1080 desktop without any t
 
 **In order to play multiplayer from different locations port forwarding is needed.**
 
-**CLI and GUI Tested on Windows and Linux Terminal, we can't test MacOs because none of Us have a Mac**
+**CLI and GUI Tested on Windows and Linux Terminal, we can't test MacOs because none of Us have a Mac.**
+ 
+ #### _Cheats_
+ 
+It is possible to start the game with 99 resources of each type inside the chest, but to do so it is necessary to get the source code.
+You must uncomment line 54 of the StateSetupResources class, present at the path src / main / java / it.polimi.ingsw / Model / Player / States.
+ 
+**After removing the comment you will need to create the jar again.**
 
 
 

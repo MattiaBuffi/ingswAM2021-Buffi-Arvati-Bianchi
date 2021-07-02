@@ -28,50 +28,81 @@ class VaticanRouteTest {
     }
 
 
-    @ParameterizedTest
-    @ValueSource(ints={0,1,2,3})
-    void testAdvance(int testNum){
-
-        int index = 0;
-        int position = 0;
-
-        if(testNum == 3){
-            index = 0;
-            position = 0;
-        } else {
-            index = testNum;
-            position = VaticanRoute.POPE_SPACES_LOWER_LIMITS[index];
-        }
+    /**
+     * this test try to increment a token position, the new position is inside the allowed limits
+     */
+    @Test
+    void changeTokenPositionOk(){
 
         testHandler terminator = new testHandler();
-        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator, index);
-        List<VaticanToken> tokens = new ArrayList<>();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
 
-        tokens.add(new VaticanToken(route, position,"one"));
-        tokens.add(new VaticanToken(route, position,"two"));
-        route.addPlayer(tokens.get(0));
-        route.addPlayer(tokens.get(1));
+        VaticanToken token = new VaticanToken(route, "test");
 
-        tokens.get(0).advance(5);
+        assertEquals(0, token.getPosition());
 
+        route.setTokenPosition(token, 10);
 
-        assertEquals(position+5, tokens.get(0).getPosition());
-        assertEquals(position, tokens.get(1).getPosition());
-
-        if(testNum == 3){
-            assertEquals(0, tokens.get(0).getVictoryPoints());
-            assertEquals(0, tokens.get(1).getVictoryPoints());
-        } else if(testNum == 2){
-            assertEquals(VaticanRoute.LAST_POSITION, tokens.get(0).getPosition());
-            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(0).getVictoryPoints());
-            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(1).getVictoryPoints());
-            assertTrue(terminator.ended);
-        } else {
-            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(0).getVictoryPoints());
-            assertEquals(VaticanRoute.POPES_FAVOR_VICTORY_POINTS[index], tokens.get(1).getVictoryPoints());
-        }
+        assertEquals(10, token.getPosition());
+        assertFalse(terminator.ended);
 
     }
+
+
+    /**
+     * this test try to increment a token position, the new position is inside the allowed limits
+     */
+    @Test
+    void changeTokenPositionToOverflow(){
+
+        testHandler terminator = new testHandler();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
+
+        VaticanToken token = new VaticanToken(route, "test");
+
+        assertEquals(0, token.getPosition());
+
+        route.setTokenPosition(token, 25);
+
+        assertEquals(24, token.getPosition());
+        assertTrue(terminator.ended);
+
+    }
+
+
+
+
+    @Test
+    void addRoutePositionVictoryPoints(){
+        testHandler terminator = new testHandler();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
+
+        VaticanToken token = new VaticanToken(route, "test");
+
+        token.setLastPointPosition(1);
+
+
+    }
+
+
+    @Test
+    void canStartVaticanReport(){
+        testHandler terminator = new testHandler();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
+
+        assertTrue(route.canStartVaticanReport(1, 10, 8));
+        assertFalse(route.canStartVaticanReport(1, 0, 8));
+        assertFalse(route.canStartVaticanReport(3, 10, 8));
+
+    }
+
+
+
+
+
+
+
+
 
 
 }

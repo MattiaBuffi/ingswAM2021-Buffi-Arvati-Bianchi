@@ -98,48 +98,65 @@ public class VaticanRoute {
         return popeSpaceReached;
     }
 
+
+
+
     /**
-     * Methods who check the activation of a vatican report
-     * @param tokens list of tokens of the route
-     * @param newPosition position to check
-     * @param triggerPosition position of the vatican report
-     * @param lowerLimit lower limit to activate the vatican report
-     * @param victoryPoints victory points assigned by the vatican report
-     * @return true if the report is activate, otherwise false
+     * Methods who change a token position
+     * @param token is the token to modify
+     * @param points is the amount to add to the token position
      */
-    public boolean vaticanReport(List<VaticanToken> tokens, int newPosition, int triggerPosition, int lowerLimit, int victoryPoints){
-        if(newPosition < triggerPosition){
-            return false;
+    public void setTokenPosition(VaticanToken token, int points){
+
+        int newPosition = token.getPosition() + points;
+
+        if(newPosition >= LAST_POSITION){
+            token.setPosition(LAST_POSITION);
+            gameHandler.endGame();
+        } else {
+            token.setPosition(newPosition);
         }
 
-        applyVaticanReport( tokens, lowerLimit, victoryPoints);
-        return true;
     }
 
 
+    /**
+     * Methods who increment a token victory points based on it's position
+     * @param token is the token to modify
+     */
+    public void getRouteVictoryPoints(VaticanToken token){
 
-
-
-
-
-
-
-
-    private void getVictoryPoints(VaticanToken token, int position){
-
-
-
-        while (position >= ROUTE_VICTORY_POSITION[token.getLastPointPosition()+1]){
+        while (token.getPosition() >= ROUTE_VICTORY_POSITION[token.getLastPointPosition()+1]){
 
             token.setLastPointPosition( token.getLastPointPosition()+1);
             token.setVictoryPoint( token.getVictoryPoints()+ ROUTE_VICTORY_POINTS_INCREMENT[token.getLastPointPosition()]);
-            if(position == LAST_POSITION){
+            if(token.getPosition() == LAST_POSITION){
                 break;
             }
-
         }
 
     }
+
+
+    /**
+     * Methods who check the activation of a vatican report
+     * @param position position to check
+     * @param triggerPosition position of the vatican report
+     * @return true if the report is can start, otherwise false
+     */
+    public boolean canStartVaticanReport(int lastVaticanReport, int position, int triggerPosition){
+
+        if(lastVaticanReport <= 2 ){
+            if(position < triggerPosition){
+                return false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 
     /**
@@ -148,6 +165,21 @@ public class VaticanRoute {
      * @param points points to add to the older position
      * @see VaticanRoutePosition the method generate a message with the information of the token's new position
      */
+
+    protected void advance(VaticanToken token, int points){
+
+        setTokenPosition(token, points);
+        getRouteVictoryPoints(token);
+
+        if(canStartVaticanReport(popeSpaceReached, token.getPosition(), POPE_SPACES[popeSpaceReached])){
+            applyVaticanReport(tokenList, POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached]);
+        }
+
+        broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), token.getPosition()));
+
+    }
+
+    /*
     protected void advance(VaticanToken token, int points){
 
         int newPosition = token.getPosition() + points;
@@ -160,17 +192,20 @@ public class VaticanRoute {
         }
 
         if(newPosition >= LAST_POSITION){
-            getVictoryPoints(token, LAST_POSITION);
+            //getVictoryPoints(token, LAST_POSITION);
             token.setPosition(LAST_POSITION);
             broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), LAST_POSITION));
             gameHandler.endGame();
         } else {
-            getVictoryPoints(token, newPosition);
+            //getVictoryPoints(token, newPosition);
             token.setPosition(newPosition);
             broadcaster.notifyAllPlayers(new VaticanRoutePosition(token.getOwner(), newPosition));
         }
 
     }
+
+    */
+
 
     /**
      * Apply the vatican report to the tokens of the list that have a position greater or equals than the lower limit
@@ -192,5 +227,7 @@ public class VaticanRoute {
 
         broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
+
+
 
 }
