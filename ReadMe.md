@@ -34,6 +34,9 @@ The final version of the Project includes:
 - [Giovanni Arvati](https://github.com/arva29)
 - [Emanuele Bianchi](https://github.com/EmanueleBianchi)
 - [Mattia Buffi](https://github.com/MattiaBuffi)
+## JavaDocs
+
+Here you can read the [JavaDocs](https://mattiabuffi.github.io/ingswAM2021-Buffi-Arvati-Bianchi/) of this Project.
 
 # Installation
 
