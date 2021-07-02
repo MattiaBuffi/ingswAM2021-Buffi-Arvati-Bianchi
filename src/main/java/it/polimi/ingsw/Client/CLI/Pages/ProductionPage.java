@@ -163,8 +163,14 @@ public class ProductionPage extends ModelEventHandler.Default{
                 break;
             default:
                 try{
-                    CardProduction message = new CardProduction(Integer.parseInt(productionString) - 1);
-                    backEnd.notify(message);
+                    if(Integer.parseInt(productionString)>1 && Integer.parseInt(productionString)<4){
+                        CardProduction message = new CardProduction(Integer.parseInt(productionString) - 1);
+                        backEnd.notify(message);
+                    }else{
+                        Cli.showUpdateMessage("Wrong Input");
+                        ProductionPageView(this.backEnd);
+                        return;
+                    }
                 }catch (NumberFormatException e){
                     Cli.showUpdateMessage("Wrong Input");
                     ProductionPageView(this.backEnd);
@@ -191,7 +197,7 @@ public class ProductionPage extends ModelEventHandler.Default{
                             Cli.setReadHandler(this::produce);
                             break;
                         case "EXIT":
-                            System.out.println("redirecting to Home..");
+                            Cli.showUpdateMessage("redirecting to Home..");
                             Cli.homePage.HomePageView(this.backEnd);
                             break;
                         case "ENDTURN":
@@ -200,13 +206,12 @@ public class ProductionPage extends ModelEventHandler.Default{
                             Cli.homePage.HomePageView(backEnd);
                             break;
                         default:
-                            System.out.println("Wrong Command, please insert a real command");
+                            Cli.showUpdateMessage("Wrong Command, please insert a real command");
+                            ProductionPageView(this.backEnd);
                             break;
                     }
                 }
         );
-
-
     }
 
     @Override
@@ -239,15 +244,12 @@ public class ProductionPage extends ModelEventHandler.Default{
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        /*
-        CLI_Controller.showUpdateMessage(event.getMessage());
-        ProductionPageView(this.backEnd);*/
     }
 
     @Override
     public void handle(ActivePlayer event){
         Cli.cls();
-        System.out.println("your turn is over, redirecting to home");
+        Cli.showUpdateMessage("your turn is over, redirecting to home");
         Cli.homePage.HomePageView(this.backEnd);
     }
 

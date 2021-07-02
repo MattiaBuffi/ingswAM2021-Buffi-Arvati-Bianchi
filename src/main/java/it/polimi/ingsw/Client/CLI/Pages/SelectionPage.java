@@ -60,12 +60,12 @@ public class SelectionPage extends ModelEventHandler.Default{
 
         print(leaderCardSelection);
 
-
         Cli.setReadHandler(
                 (line)->{
                     try {
-                        if (line.isEmpty() && (Integer.parseInt(line) < 1 || Integer.parseInt(line) > leaderCardSelection.size())) {
+                        if (Integer.parseInt(line) < 1 || Integer.parseInt(line) > leaderCardSelection.size()) {
                             System.out.println("Which Leader Cards do you want to discard 1 to " + leaderCardSelection.size() + " : ");
+                            SelectionPageView(this.backEnd);
                             return;
                         }
                         DiscardLeaderCard messageDiscard = new DiscardLeaderCard(backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(Integer.parseInt(line) - 1).getId());

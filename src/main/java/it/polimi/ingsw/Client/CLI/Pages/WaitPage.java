@@ -20,7 +20,6 @@ public class WaitPage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
-        System.out.println("invalid action");
     }
 
     @Override
