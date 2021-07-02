@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  rappresenta una lista di scaffali base
+ *  Represent a list of basic shelf
  */
 public class ShelvesBase implements Shelves{
 
@@ -29,7 +29,9 @@ public class ShelvesBase implements Shelves{
     }
 
     /**
-     *  prova a sscambiare due scaffali ridimensionandoli adeguatamente
+     * Swap the position of two Shelf properly resizing them.
+     * @param originPosition position of the first Shelf to swap
+     * @param destPosition position of the second Shelf to swap
      */
     private void swap(int originPosition, int destPosition){
 
@@ -73,9 +75,6 @@ public class ShelvesBase implements Shelves{
 
 
 
-    /**
-     *  aggiunge una biglia allo scaffale selezionato
-     */
     @Override
     public boolean store(Marble.Color color, int position){
         ShelfBasic shelf = getShelf(position);
@@ -99,9 +98,6 @@ public class ShelvesBase implements Shelves{
     }
 
 
-    /**
-     *  rimuove risorse dagli scaffali
-     */
     @Override
     public boolean withdraw(ResourceList list){
 
@@ -122,10 +118,6 @@ public class ShelvesBase implements Shelves{
     }
 
 
-
-    /**
-     *  muove risorse tra due scaffali
-     */
     @Override
     public boolean move(int originPosition, int destPosition){
 

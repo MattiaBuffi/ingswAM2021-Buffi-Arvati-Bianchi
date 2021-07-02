@@ -10,12 +10,15 @@ import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
 
 import java.util.*;
 
-
+/**
+ * Represent the action tokens deck for the single player game
+ */
 public class ActionDeck implements Shuffler {
 
     private List<ActionToken> actionTokens;
     private int currentToken;
     private EventBroadcaster broadcaster;
+
 
     public ActionDeck(CardRemover remover, FaithHandler faithToken, GameHandler gameHandler, EventBroadcaster broadcaster) {
 

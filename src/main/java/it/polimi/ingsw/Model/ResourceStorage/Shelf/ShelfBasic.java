@@ -5,7 +5,9 @@ import it.polimi.ingsw.Message.Model.ShelfUpdate;
 import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.Marble.Marble;
 
-
+/**
+ * Represent a basic shelf of the storage
+ */
 public class ShelfBasic extends Shelf {
 
     private EventBroadcaster broadcaster;

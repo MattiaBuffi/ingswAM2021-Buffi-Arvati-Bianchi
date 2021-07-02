@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- *  decoratore di una Shelves. aggiunge uno scaffale Leader
+ *  Decorator for Shelves. Add a leader shelf
  */
 public class ShelvesExtra implements Shelves {
 
@@ -70,9 +70,7 @@ public class ShelvesExtra implements Shelves {
     }
 
 
-    /**
-     *  prova a prelevare risorse dagli scaffali decorati. se necessario preleva risorse dallo scaffale leader
-     */
+
     @Override
     public boolean withdraw(ResourceList list) {
         if(shelves.getResources().contains(list)){
@@ -103,6 +101,12 @@ public class ShelvesExtra implements Shelves {
     /**
      *  riempe uno scaffale origin prelevando biglie da uno scaffale dest
      */
+    /**
+     * Fill the origin shelf withdrawing the resources from the dest Shelf
+     * @param origin Shelf to fill
+     * @param dest Shelf form where to take resources
+     * @return true if it was successful, false otherwise
+     */
     private boolean fill(Shelf origin, Shelf dest){
         if(origin.getColor() != dest.getColor() && dest.getColor() != null){ // need to check if null
             broadcaster.notifyUser(new ErrorUpdate("illegal move"));
@@ -119,8 +123,7 @@ public class ShelvesExtra implements Shelves {
     }
 
 
-    /**muove risorse tra due scaffali
-     */
+
     @Override
     public boolean move(int originId, int destId) {
         if(shelf.getPosition() == originId ){               //the extra shelf is the origin

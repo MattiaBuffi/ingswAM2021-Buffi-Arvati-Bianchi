@@ -5,6 +5,9 @@ import it.polimi.ingsw.Message.Model.ShelfUpdate;
 import it.polimi.ingsw.Model.EventBroadcaster;
 import it.polimi.ingsw.Model.Marble.Marble;
 
+/**
+ * Represent the additional shelf added to the storage by the activation of a leader card
+ */
 public class ShelfLeader extends Shelf {
 
 
@@ -37,9 +40,6 @@ public class ShelfLeader extends Shelf {
         broadcaster.notifyAllPlayers(new ShelfUpdate(position, maxSize, size, color)/*shelf new status*/);
         return true;
     }
-
-
-
 
     @Override
     public boolean remove(int amount) {
