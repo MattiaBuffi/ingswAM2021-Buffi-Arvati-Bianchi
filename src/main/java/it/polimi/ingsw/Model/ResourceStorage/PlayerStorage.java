@@ -27,13 +27,10 @@ public class PlayerStorage implements ResourceStorage{
         shelves = new ShelvesBase(broadcaster);
         chest = new ResourceList();
         this.broadcaster = broadcaster;
-
-        //CHEAT_RESOURCES();
-
     }
 
     /**
-     * Method used only to start the server in a "CHEAT MODE" in which all the players start the game with 100 resource
+     * Method used only to start the server in a "CHEAT MODE" in which all the players start the game with 99 resource
      * per type
      */
     public void CHEAT_RESOURCES(){

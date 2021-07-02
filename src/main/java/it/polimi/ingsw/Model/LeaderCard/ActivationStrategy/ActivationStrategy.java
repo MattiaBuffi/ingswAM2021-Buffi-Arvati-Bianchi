@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.Player.Player;
 
 
 /**
- *  applica le modifiche di una Leadercard
+ *  Apply changes of a Leader Card
  */
 public interface ActivationStrategy {
 

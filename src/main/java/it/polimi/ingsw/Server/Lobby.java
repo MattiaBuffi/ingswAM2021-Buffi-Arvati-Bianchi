@@ -10,6 +10,9 @@ import it.polimi.ingsw.Model.Player.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Identifies the Lobby
+ */
 public class Lobby {
 
     private List<Client> clientWaitingQueue;
@@ -21,6 +24,10 @@ public class Lobby {
     }
 
 
+    /**
+     * Remove a client from the Waiting Queue
+     * @param client client to remove
+     */
     public void removeClient(Client client){
         clientWaitingQueue.remove(client);
         sendToAllClients(clientWaitingQueue, new WaitingPlayersUpdate(clientWaitingQueue.size()));
@@ -40,6 +47,10 @@ public class Lobby {
 
     }
 
+    /**
+     * Add the client to the Waiting Queue
+     * @param client client that wants to join
+     */
     public void join(Client client){
 
         if (client.isSearchingGame()){
@@ -63,7 +74,11 @@ public class Lobby {
     }
 
 
-
+    /**
+     * Set the Size of the lobby
+     * @param client client that set the game size
+     * @param size size of the Lobby
+     */
     public void setGameSize(Client client, int size){
 
         if (gameSize != Integer.MAX_VALUE){
@@ -86,14 +101,23 @@ public class Lobby {
     }
 
 
-
+    /**
+     * Send a message to all clients
+     * @param clients List of all clients in the lobby
+     * @param message Message to send
+     */
     public void sendToAllClients(List<Client> clients, Message message){
         for (Client c: clients){
             c.send(message);
         }
     }
 
-
+    /**
+     * Check if the game can start
+     * @param size size of the lobby
+     * @param clients List of all clients in the lobby
+     * @return true when enough clients are connected to the same lobby
+     */
     public boolean canStartGame(int size, List<Client> clients){
         if(clients.size() < size){
             sendToAllClients(clients, new WaitingPlayersUpdate(clients.size()));
@@ -102,7 +126,12 @@ public class Lobby {
         return true;
     }
 
-
+    /**
+     * Start the Game
+     * @param size size of the lobby
+     * @param clients List of all clients in the lobby
+     * @return true after starting the game
+     */
     public boolean startGame(int size, List<Client> clients){
 
         if (!canStartGame(size, clients)){
@@ -134,8 +163,5 @@ public class Lobby {
         return true;
 
     }
-
-
-
 
 }

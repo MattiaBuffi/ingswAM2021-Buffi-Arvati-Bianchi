@@ -53,7 +53,7 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
      * Buy a development card
      * @param card Card to buy
      * @param position CardSlot where to store the card in the storage
-     * @param storage Where to store the card bought
+     * @param storage From where to take the resources
      * @return True if the purchase was successful
      */
     @Override
@@ -75,13 +75,19 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
         return true;
     }
 
-
+    /**
+     * Return a development card based on the specified selector
+     * @param selector selector for the card to get
+     * @return card return by the selector
+     */
     @Override
     public ProductionCard getCard(ProductionSelector selector) {
         return selector.getCard(this);
     }
 
-
+    /**
+     * @return all the cards contained in the CardStorage
+     */
     @Override
     public List<DevelopmentCard> getCards() {
         List<DevelopmentCard> list = new ArrayList<>();
@@ -96,7 +102,11 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
     }
 
 
-
+    /**
+     *
+     * @param selector
+     * @return A Custom Production Card made by Leader Power
+     */
     @Override
     public ProductionCard visit(SelectBasic selector) {
         if( selector.getRequires().getSize() != 2 ){
@@ -133,4 +143,5 @@ public class PlayerCardStorage implements CardStorage, ProductionVisitor {
         broadcaster.notifyUser(new ErrorUpdate("card not found"));
         return null;
     }
+
 }

@@ -6,6 +6,10 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.ProductionCard.LeaderProduction;
 
+/**
+ * Represent a Extra Production Leader Card
+ */
+
 public class ExtraProduction implements ActivationStrategy {
 
     private final Marble.Color color;

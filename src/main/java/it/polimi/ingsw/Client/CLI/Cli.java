@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.CLI;
 
+import it.polimi.ingsw.Client.App;
 import it.polimi.ingsw.Client.CLI.Pages.*;
 import it.polimi.ingsw.Client.ClientApp;
 import it.polimi.ingsw.Client.ModelData.ReducedDataModel.LeaderCard;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.Message.Model.ErrorUpdate;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 import it.polimi.ingsw.Model.ProductionCard.DevelopmentCard;
+import javafx.scene.image.Image;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -60,8 +62,6 @@ public class Cli {
                     "JoinGame.txt", "Exit.txt", "NewGame.txt", "WaitingForOtherPlayer.txt",
                     "BigFaithTrack.txt", "LeaderSelectionView.txt", "cardScheme.txt", "leaderShelfScheme.txt",
                     "leaderProductionScheme.txt", "EndGame.txt", "EndGameLose.txt"};
-
-    //private static char[] shelfColors = new char[2];
 
     public Cli(){
 
@@ -217,97 +217,6 @@ public class Cli {
             }
         }
     }
-
-    /*
-    public static void UpdateShelf(ViewBackEnd backEnd, char[] scheme) {
-
-            List<Shelf> playerShelf = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
-
-            for (int i = 0; i < playerShelf.size(); i++) {
-                int size = playerShelf.get(i).size;
-                if(playerShelf.get(i).color!= null){
-                    switch (playerShelf.get(i).color) {
-                        case YELLOW:
-                            for (int j = 0; j < size; j++) {
-                                if (i == 2) {
-                                    scheme[ShelfRssPosition[i + j + 1]] = 'Y';
-                                }else if (i == 3) {
-                                    scheme[ShelfRssPosition[i + j + 3]] = 'Y';
-                                }else if (i == 4) {
-                                    scheme[ShelfRssPosition[i + j + 5]] = 'Y';
-                                }else {
-                                    scheme[ShelfRssPosition[i + j]] = 'Y';
-                                }
-                            }
-                            break;
-                        case BLUE:
-                            for (int j = 0; j < size; j++) {
-                                if (i == 2) {
-                                    scheme[ShelfRssPosition[i + j + 1]] = 'B';
-                                }else if (i == 3) {
-                                    scheme[ShelfRssPosition[i + j + 3]] = 'B';
-                                }else if (i == 4) {
-                                    scheme[ShelfRssPosition[i + j + 5]] = 'B';
-                                }else {
-                                    scheme[ShelfRssPosition[i + j]] = 'B';
-                                }
-                            }
-                            break;
-                        case PURPLE:
-                            for (int j = 0; j < size; j++) {
-                                if (i == 2) {
-                                    scheme[ShelfRssPosition[i + j + 1]] = 'P';
-                                }else if (i == 3) {
-                                    scheme[ShelfRssPosition[i + j + 3]] = 'P';
-                                }else if (i == 4) {
-                                    scheme[ShelfRssPosition[i + j + 5]] = 'P';
-                                }else {
-                                    scheme[ShelfRssPosition[i + j]] = 'P';
-                                }
-                            }
-                            break;
-                        case GREY:
-                            for (int j = 0; j < size; j++) {
-                                if (i == 2) {
-                                    scheme[ShelfRssPosition[i + j + 1]] = 'G';
-                                } else if (i == 3){
-                                    scheme[ShelfRssPosition[i + j + 3]] = 'G';
-                                }else if (i == 4){
-                                    scheme[ShelfRssPosition[i + j + 5]] = 'G';
-                                }else {
-                                    scheme[ShelfRssPosition[i + j]] = 'G';
-                                }
-                            }
-                            break;
-                        default:
-                            for (int j = 0; j < size; j++) {
-                                if(i==2) {
-                                    scheme[ShelfRssPosition[i + j + 1]] = ' ';
-                                }else if(i==3) {
-                                    scheme[ShelfRssPosition[i + j + 3]] = ' ';
-                                }else if(i==4) {
-                                    scheme[ShelfRssPosition[i + j + 5]] = ' ';
-                                }else {
-                                    scheme[ShelfRssPosition[i + j]] = ' ';
-                                }
-                            }
-                            break;
-                    }
-                }else if (size==0){
-                    for (int j = 0; j<playerShelf.get(i).maxSize; j++) {
-                        if(i==2)
-                            scheme[ShelfRssPosition[i + j+1]] = ' ';
-                        else if(i==3)
-                            scheme[ShelfRssPosition[i + j+3]] = ' ';
-                        else if(i==4)
-                            scheme[ShelfRssPosition[i + j+5]] = ' ';
-                        else
-                            scheme[ShelfRssPosition[i + j]] = ' ';
-                    }
-                }
-            }
-    }
-*/
 
     public static void LeaderCardInfoExtractor(char[] home, List<LeaderCard> leaderCard, int i, int[] homeLeaderType, int[] homeLeaderPV, int[] homeLeaderCost, int[] homeLeaderEffect) {
         String leaderType = String.valueOf(leaderCard.get(i).getType());
@@ -497,7 +406,7 @@ public class Cli {
         System.out.println(spacer + "New Action Token played by Lorenzo");
         System.out.println(spacer + event.getMessage());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -568,7 +477,7 @@ public class Cli {
         System.out.println(spacer + event.getErrorMessage());
         System.out.println(spacer + "Here is a free time travel, enjoy it");
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -590,16 +499,6 @@ public class Cli {
     public static void showLeaderShelf(char[] page){
         char[] shelf;
         shelf = readSchematics(13);
-        List<LeaderCard> leaders = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getLeaderCard();
-        int pos = 0;
-
-        /*
-        for (LeaderCard leader: leaders) {
-            if(leader.isActive() && String.valueOf(leader.getType()).equals("EXTRA_SHELF")){
-                shelfColors[pos]= Cli.getColorString(leader.getColor()).charAt(0);
-                pos++;
-            }
-        }*/
 
         List<Shelf> playerShelves = backEnd.getModel().getPlayer(backEnd.getMyUsername()).getShelves();
 
@@ -612,25 +511,21 @@ public class Cli {
             page[LeaderShelfPosition[i]+ 7] = Cli.getColorString(playerShelves.get(3+i).color).charAt(0);
         }
 
-        /*
-        for (int i = 0; i < leaderActive[1]; i++){
-            for (int j = 0; j < 4; j++){
-                for (int k = 0; k < 15; k++){
-                    page[LeaderShelfPosition[i]+k+133*j] = shelf[k+16*j];
-                }
-            }
-            page[LeaderShelfPosition[i]+ 7] = shelfColors[i];
-        }*/
-
-
     }
 
-    public static void activatePopeFavor(int index) {
-        vaticanReport[index-1] = 1;
+    public static void activatePopeFavor() {
+
         for (Integer i: backEnd.getModel().vaticanRoute.getVaticanReports(backEnd.getMyUsername())) {
-            if (i == (index - 1)) {
-                vaticanReportActive[index-1] = true;
-                break;
+            switch(i){
+                case 1:
+                    vaticanReportActive[0]=true;
+                    break;
+                case 2:
+                    vaticanReportActive[1]=true;
+                    break;
+                case 3:
+                    vaticanReportActive[2]=true;
+                    break;
             }
         }
 
@@ -643,7 +538,7 @@ public class Cli {
         }
         System.out.println(spacer + message);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

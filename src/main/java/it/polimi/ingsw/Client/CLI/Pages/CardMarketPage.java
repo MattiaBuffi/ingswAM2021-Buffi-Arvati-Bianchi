@@ -68,7 +68,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
                 try {
                     if((Integer.parseInt(buyCardArray[0]) - 1)>=0 && (Integer.parseInt(buyCardArray[0]) - 1)<4 &&
                         (Integer.parseInt(buyCardArray[1]) - 1)>=0 && (Integer.parseInt(buyCardArray[1]) - 1)<3 &&
-                            (Integer.parseInt(buyCardArray[2]) - 1)>=0 && (Integer.parseInt(buyCardArray[0]) - 1)<3)
+                            (Integer.parseInt(buyCardArray[2]) - 1)>=0 && (Integer.parseInt(buyCardArray[2]) - 1)<3)
                     {
                         BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
                         this.backEnd.notify(messageBuyDev);
@@ -78,12 +78,12 @@ public class CardMarketPage extends ModelEventHandler.Default {
                         return;
                     }
                 } catch (NumberFormatException e) {
-                    Cli.showUpdateMessage("Wrong Input");
+                     Cli.showUpdateMessage("Wrong Input");
                     CardMarketPageView(this.backEnd);
                     return;
                 }
             }else {
-                Cli.showUpdateMessage("Wrong Input");
+                 Cli.showUpdateMessage("Wrong Input");
                 Cli.cardMarketPage.CardMarketPageView(this.backEnd);
                 return;
             }
@@ -207,26 +207,29 @@ public class CardMarketPage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e : event.getMessages()) {
             e.accept(this);
         }
-    /*
-        CLI_Controller.showUpdateMessage(event.getMessage());
-        update();*/
+
     }
 
     @Override
     public void handle(ActivePlayer event) {
         Cli.cls();
-        Cli.showUpdateMessage("your turn is over, redirecting to home");
+        if(this.backEnd.getModel().players.size()>1)
+            Cli.showUpdateMessage("your turn is over, redirecting to home");
         Cli.homePage.HomePageView(this.backEnd);
     }
 
     @Override
     public void handle(ActionTokenPlayed event) {
         Cli.showSingleMessage(event, this.backEnd);
+
     }
 
     @Override
     public void handle(VaticanReport event) {
-        Cli.activatePopeFavor(event.getIndex());
+        for (String name: event.getPlayers()) {
+            if(name.equals(this.backEnd.getMyUsername()))
+                Cli.activatePopeFavor();
+        }
     }
 
     @Override

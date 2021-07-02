@@ -62,18 +62,12 @@ public class ViewPage extends ModelEventHandler.Default {
         }
 
 
-        for (int j = 0; j < Cli.vaticanReport.length; j++){
-            if(Cli.vaticanReport[j] == 1 ){
-                if(Cli.vaticanReportActive[j]) {
-                    switch (j) {
-                        case 0 : bigView[BigFaithPopeFavourPosition[j]] = '2';break;
-                        case 1 : bigView[BigFaithPopeFavourPosition[j]] = '3';break;
-                        case 2 : bigView[BigFaithPopeFavourPosition[j]] = '4';break;
-                        default: bigView[BigFaithPopeFavourPosition[j]] = 'X'; break;
-                    }
-                }
-            }
-        }
+        if(Cli.vaticanReportActive[0])
+            bigView[BigFaithPopeFavourPosition[0]] = '2';
+        if(Cli.vaticanReportActive[1])
+            bigView[BigFaithPopeFavourPosition[1]] = '3';
+        if(Cli.vaticanReportActive[2])
+            bigView[BigFaithPopeFavourPosition[2]] = '4';
 
         System.out.println(bigView);
         System.out.println("Insert Command (Exit,EndTurn): ");
@@ -141,6 +135,6 @@ public class ViewPage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        Cli.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor();
     }
 }

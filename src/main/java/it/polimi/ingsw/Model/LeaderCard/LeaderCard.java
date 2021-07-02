@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.LeaderCard.ActivationStrategy.ActivationStrategy;
 import it.polimi.ingsw.Model.LeaderCard.RequirementsStrategy.RequirementStrategy;
 
 /**
- *  fornisce delle abilita aggiuntive ad un player
+ *  Represent a Leader Card
  */
 public class LeaderCard {
 
@@ -31,7 +31,6 @@ public class LeaderCard {
     public void setActive(boolean active) {
         this.active = active;
     }
-
 
     public String getId() {
         return id;

@@ -5,6 +5,10 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.ShelvesExtra;
 
+/**
+ * Represent a Extra Shelf Leader Card
+ */
+
 
 public class ExtraShelf  implements ActivationStrategy {
 

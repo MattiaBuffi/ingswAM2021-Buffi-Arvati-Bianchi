@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  controlla dei requisiti di carte su un Player
+ *  Check if a Player has accomplished CardRequirement to activate a Leader Card
  */
 public class RequireCards implements RequirementStrategy {
 
@@ -32,6 +32,11 @@ public class RequireCards implements RequirementStrategy {
         return requiredCards;
     }
 
+    /**
+     * Check if the player can activate a Leader Card
+     * @param player Player who wants to activate a Leader Card
+     * @return True if the player can Activate a Leader Card
+     */
     @Override
     public boolean canActivate(Player player) {
 
@@ -58,6 +63,9 @@ public class RequireCards implements RequirementStrategy {
 
     }
 
+    /**
+     * @return Requirement Type of a Leader Card
+     */
     @Override
     public Type getType() {
         return Type.CARD;

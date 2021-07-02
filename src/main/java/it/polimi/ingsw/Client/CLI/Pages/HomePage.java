@@ -68,18 +68,17 @@ public class HomePage extends ModelEventHandler.Default {
             homePage[FaithCellPosition[position]]= 'X';
         }
 
-        for (int j = 0; j < Cli.vaticanReport.length; j++){
-            if(Cli.vaticanReport[j] == 1 ){
-                if(Cli.vaticanReportActive[j]) {
-                    switch (j) {
-                        case 0 : homePage[HomePopeFavourPosition[j]] = '2';break;
-                        case 1 : homePage[HomePopeFavourPosition[j]] = '3';break;
-                        case 2 : homePage[HomePopeFavourPosition[j]] = '4';break;
-                        default: homePage[HomePopeFavourPosition[j]] = 'X';break;
-                    }
-                }
-            }
-        }
+
+        if(Cli.vaticanReportActive[0])
+            homePage[HomePopeFavourPosition[0]] = '2';
+        if(Cli.vaticanReportActive[1])
+            homePage[HomePopeFavourPosition[1]] = '3';
+        if(Cli.vaticanReportActive[2])
+            homePage[HomePopeFavourPosition[2]] = '4';
+
+
+
+
 
         List<LeaderCard> leaderCard = this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard();
         for (int i = 0; i < leaderCard.size(); i++) {
@@ -208,9 +207,6 @@ public class HomePage extends ModelEventHandler.Default {
         for (Message<ModelEventHandler> e: event.getMessages()){
             e.accept(this);
         }
-        /*
-        CLI_Controller.showUpdateMessage(event.getMessage());
-        HomePageView(this.backEnd);*/
     }
 
     @Override
@@ -251,14 +247,12 @@ public class HomePage extends ModelEventHandler.Default {
 
     @Override
     public void handle(VaticanReport event) {
-        Cli.activatePopeFavor(event.getIndex());
+        Cli.activatePopeFavor();
     }
 
     @Override
     public void handle(VaticanRoutePosition event) {
-        if(event.getUsername().equals(this.backEnd.getMyUsername())){
-            HomePageView(this.backEnd);
-        }
+        HomePageView(this.backEnd);
     }
 
     @Override

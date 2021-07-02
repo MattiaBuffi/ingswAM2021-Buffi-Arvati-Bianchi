@@ -17,8 +17,8 @@ public interface CardStorage {
     /**
      * Buy a development card
      * @param card Card to buy
-     * @param destinationPosition Where to store the card in the storage
-     * @param storage Where to store the card bought
+     * @param destinationPosition CardSlot where to store the card in the storage
+     * @param storage From where to take the resources
      * @return True if the purchase was successful
      */
     boolean buyCard(PurchasableCard card, int destinationPosition, ResourceStorage storage);
@@ -32,13 +32,8 @@ public interface CardStorage {
 
 
     /**
-     * Return all the cards contained in the CardStorage
-     * @return
+     * @return all the cards contained in the CardStorage
      */
     List<DevelopmentCard> getCards();
-
-    /**
-     * TODO: REVIEW DOCUMENTATION
-     */
 
 }
