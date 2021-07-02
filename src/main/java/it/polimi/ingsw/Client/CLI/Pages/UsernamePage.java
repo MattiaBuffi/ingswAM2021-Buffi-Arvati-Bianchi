@@ -49,7 +49,6 @@ public class UsernamePage extends ModelEventHandler.Default {
 
     @Override
     public void invalidMessage() {
-        System.out.println("invalid Message");
     }
 
     @Override

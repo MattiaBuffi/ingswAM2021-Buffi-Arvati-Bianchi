@@ -90,13 +90,13 @@ public class ViewPage extends ModelEventHandler.Default {
                 (line)->{
                     line = line.toUpperCase();
                     if (line.equals("EXIT")) {
-                        System.out.println("redirecting to Home..");
+                        Cli.showUpdateMessage("redirecting to Home..");
                     }else if (line.equals("ENDTURN")){
                         EndTurn message = new EndTurn();
                         this.backEnd.notify(message);
                         Cli.homePage.HomePageView(backEnd);
                     } else {
-                        System.out.println("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
+                        Cli.showUpdateMessage("Wrong Command, but you are very lucky, i'm redirecting you to Home anyway..");
                     }
                     Cli.homePage.HomePageView(backEnd);
                 }

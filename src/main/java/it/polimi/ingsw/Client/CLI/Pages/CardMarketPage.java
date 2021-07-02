@@ -62,17 +62,35 @@ public class CardMarketPage extends ModelEventHandler.Default {
 
 
     private void buy(String line) {
-        if (line.length() > 1) {
+        if (!line.isEmpty()) {
             String[] buyCardArray = line.split("-");
-            try {
-                BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
-                this.backEnd.notify(messageBuyDev);
-            }catch (NumberFormatException e) {
+            if(buyCardArray.length == 3) {
+                try {
+                    if((Integer.parseInt(buyCardArray[0]) - 1)>=0 && (Integer.parseInt(buyCardArray[0]) - 1)<4 &&
+                        (Integer.parseInt(buyCardArray[1]) - 1)>=0 && (Integer.parseInt(buyCardArray[1]) - 1)<3 &&
+                            (Integer.parseInt(buyCardArray[2]) - 1)>=0 && (Integer.parseInt(buyCardArray[0]) - 1)<3)
+                    {
+                        BuyDevelopmentCard messageBuyDev = new BuyDevelopmentCard(Integer.parseInt(buyCardArray[0]) - 1, Integer.parseInt(buyCardArray[1]) - 1, Integer.parseInt(buyCardArray[2]) - 1);
+                        this.backEnd.notify(messageBuyDev);
+                    }else {
+                        Cli.showUpdateMessage("Wrong Input");
+                        Cli.cardMarketPage.CardMarketPageView(this.backEnd);
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    Cli.showUpdateMessage("Wrong Input");
+                    CardMarketPageView(this.backEnd);
+                    return;
+                }
+            }else {
                 Cli.showUpdateMessage("Wrong Input");
-                CardMarketPageView(this.backEnd);
+                Cli.cardMarketPage.CardMarketPageView(this.backEnd);
                 return;
             }
-
+        }else {
+            Cli.showUpdateMessage("Wrong Input");
+            Cli.cardMarketPage.CardMarketPageView(this.backEnd);
+            return;
         }
         update();
     }
@@ -98,7 +116,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
                             break;
 
                         case "EXIT":
-                            System.out.println("redirecting to Home..");
+                            Cli.showUpdateMessage("redirecting to Home..");
                             Cli.homePage.HomePageView(this.backEnd);
                             break;
 
@@ -106,9 +124,10 @@ public class CardMarketPage extends ModelEventHandler.Default {
                             EndTurn message = new EndTurn();
                             this.backEnd.notify(message);
                             Cli.homePage.HomePageView(backEnd);
+                            break;
 
                         default:
-                            System.out.println("Wrong Command, please insert a real command");
+                            Cli.showUpdateMessage("Wrong Command, please insert a real command");
                             Cli.cardMarketPage.CardMarketPageView(this.backEnd);
                     }
                 }
@@ -196,7 +215,7 @@ public class CardMarketPage extends ModelEventHandler.Default {
     @Override
     public void handle(ActivePlayer event) {
         Cli.cls();
-        System.out.println("your turn is over, redirecting to home");
+        Cli.showUpdateMessage("your turn is over, redirecting to home");
         Cli.homePage.HomePageView(this.backEnd);
     }
 

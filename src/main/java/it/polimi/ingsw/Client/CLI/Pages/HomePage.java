@@ -97,21 +97,30 @@ public class HomePage extends ModelEventHandler.Default {
         Cli.UpdateChest(this.backEnd, homePage);
 
         System.out.println(homePage);
-        System.out.println("Insert Command (Produce, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
+        System.out.println("Insert Command (Production, CardMarket, RssMarket, View, Activate, Discard, EndTurn, Quit): ");
 
     }
 
     public void activate(String line){
 
         if (line.equals("1") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>0){
-            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
-            this.backEnd.notify(messageActivate);
+            if(!this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).isActive()) {
+                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(0).getId());
+                this.backEnd.notify(messageActivate);
+            }else{
+                Cli.showUpdateMessage("Leader Card Error");
+                Cli.homePage.HomePageView(this.backEnd);
+            }
         }else if (line.equals("2") && this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().size()>1){
-            ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
-            this.backEnd.notify(messageActivate);
+            if(!this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).isActive()) {
+                ActivateLeaderCard messageActivate = new ActivateLeaderCard(this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard().get(1).getId());
+                this.backEnd.notify(messageActivate);
+            }else{
+                Cli.showUpdateMessage("Leader Card Error");
+                Cli.homePage.HomePageView(this.backEnd);
+            }
         }else {
-            Cli.cls();
-            System.out.println("Leader Card Error");
+            Cli.showUpdateMessage("Leader Card Error");
             Cli.homePage.HomePageView(this.backEnd);
         }
     }
@@ -127,7 +136,7 @@ public class HomePage extends ModelEventHandler.Default {
             this.backEnd.notify(messageDiscard);
         }else {
             Cli.cls();
-            System.out.println("Leader Card Error");
+            Cli.showUpdateMessage("Leader Card Error");
             Cli.homePage.HomePageView(this.backEnd);
         }
     }
@@ -151,7 +160,7 @@ public class HomePage extends ModelEventHandler.Default {
                             Cli.setReadHandler(this::discard);
                         }else {
                             switch (line) {
-                                case "PRODUCE":
+                                case "PRODUCTION":
                                     Cli.productionPage.ProductionPageView(backEnd);
                                     break;
                                 case "CARDMARKET":
@@ -171,7 +180,7 @@ public class HomePage extends ModelEventHandler.Default {
                                     this.backEnd.notify(message);
                                     break;
                                 default:
-                                    System.out.println("Wrong Command");
+                                    Cli.showUpdateMessage("Wrong Command");
                                     print();
                                     break;
                             }

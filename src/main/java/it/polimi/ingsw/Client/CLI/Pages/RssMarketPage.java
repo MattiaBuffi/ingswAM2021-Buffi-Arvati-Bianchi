@@ -37,9 +37,14 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     private void buy(String line){
         try{
-            TakeResources messageBuyRss = new TakeResources(Integer.parseInt(line)-1);
-            selectedMarble = 0;
-            this.backEnd.notify(messageBuyRss);
+            if((Integer.parseInt(line) - 1)>=0 && (Integer.parseInt(line) - 1)<7) {
+                TakeResources messageBuyRss = new TakeResources(Integer.parseInt(line) - 1);
+                selectedMarble = 0;
+                this.backEnd.notify(messageBuyRss);
+            }else{
+                Cli.showUpdateMessage("Wrong Input");
+                RssMarketPageView(this.backEnd);
+            }
         }catch (NumberFormatException e){
             Cli.showUpdateMessage("Wrong Input");
             RssMarketPageView(this.backEnd);
@@ -60,9 +65,21 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
     public void move2(String line){
         dest =  line;
+        int activeShelfLeader = 0;
+        for (LeaderCard leader:this.backEnd.getModel().getPlayer(this.backEnd.getMyUsername()).getLeaderCard()) {
+            if(String.valueOf(leader.getType()).equals("EXTRA_SHELF") && leader.isActive())
+                activeShelfLeader+=1;
+        }
         try {
-            MoveResources moveMessage = new MoveResources(Integer.parseInt(origin) - 1, Integer.parseInt(dest) - 1);
-            this.backEnd.notify(moveMessage);
+            if((Integer.parseInt(origin) - 1)>=0 && (Integer.parseInt(origin) - 1)<(4+activeShelfLeader) &&
+                    (Integer.parseInt(dest) - 1)>=0 && (Integer.parseInt(dest) - 1)<(4+activeShelfLeader))
+            {
+                MoveResources moveMessage = new MoveResources(Integer.parseInt(origin) - 1, Integer.parseInt(dest) - 1);
+                this.backEnd.notify(moveMessage);
+            }else{
+                Cli.showUpdateMessage("Wrong Input");
+                RssMarketPageView(this.backEnd);
+            }
         }catch (NumberFormatException e){
             Cli.showUpdateMessage("Wrong Input");
             RssMarketPageView(this.backEnd);
@@ -95,7 +112,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                             Cli.setReadHandler(this::move1);
                             break;
                         case "EXIT":
-                            System.out.println("redirecting to Home..");
+                            Cli.showUpdateMessage("redirecting to Home..");
                             Cli.homePage.HomePageView(backEnd);
                             break;
                         case "ENDTURN":
@@ -103,7 +120,7 @@ public class RssMarketPage extends ModelEventHandler.Default {
                             this.backEnd.notify(message);
                             break;
                         default:
-                            System.out.println("Wrong Command, please insert a real command");
+                            Cli.showUpdateMessage("Wrong Command, please insert a real command");
                             Cli.rssMarketPage.RssMarketPageView(this.backEnd);
                             break;
                     }
