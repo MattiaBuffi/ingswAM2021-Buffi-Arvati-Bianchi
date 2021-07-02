@@ -47,8 +47,6 @@ public class ScoreboardTab implements Layout, GameTab {
         if(firstUpdate) setupView();
         updatePoints();
         updateView();
-
-        System.out.println("POINTS");
     }
 
     private void setupView(){
