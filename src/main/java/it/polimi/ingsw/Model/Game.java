@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.States.StateGameEnded;
+import it.polimi.ingsw.Model.Player.States.StateWait;
 import it.polimi.ingsw.Model.Player.User;
 import it.polimi.ingsw.Model.ResourceMarket.ResourceMarket;
 import it.polimi.ingsw.Model.VaticanRoute.VaticanRoute;
@@ -492,7 +493,7 @@ public class Game implements GameHandler {
         @Override
         public void endGame() {
             lastTurn = true;
-            endTurn();
+            //endTurn();
         }
 
     }
