@@ -12,7 +12,7 @@ import it.polimi.ingsw.Model.ResourceStorage.Shelf.Shelves;
 import it.polimi.ingsw.Model.ResourceStorage.Shelf.ShelvesBase;
 
 /**
- *  deposito di risorse
+ *  Represent the deposit of resources of a player. Contain the list of shelves and the chest
  */
 public class PlayerStorage implements ResourceStorage{
 
@@ -32,7 +32,10 @@ public class PlayerStorage implements ResourceStorage{
 
     }
 
-
+    /**
+     * Method used only to start the server in a "CHEAT MODE" in which all the players start the game with 100 resource
+     * per type
+     */
     public void CHEAT_RESOURCES(){
         chest.add(Marble.Color.YELLOW, 99);
         chest.add(Marble.Color.BLUE, 99);
@@ -42,15 +45,13 @@ public class PlayerStorage implements ResourceStorage{
         //broadcaster.notifyAllPlayers(new ChestUpdate(chest));
     }
 
-    /**
-     *  ritorna gli scaffali che contiene
-     */
     public Shelves getShelves() {
         return shelves;
     }
 
     /**
-     *  setta gli scaffali di this
+     * Set the shelves and notify the update to the players
+     * @see ShelfUpdate
      */
     public void setShelves(Shelves shelves) {
 
@@ -62,24 +63,27 @@ public class PlayerStorage implements ResourceStorage{
 
     }
 
-    /**
-     * muove risorse tra due scaffali
+     /**
+     * Move resources from a shelf to another
+     * @param originId index of the shelf from where to move the resources
+     * @param destId index of the shelf where to place the resources
+     * @return true if it was possible to move the resources, false if not
      */
     public boolean move(int originId, int destId) {
         return shelves.move(originId, destId);
     }
 
     /**
-     *  aggiunge una risorsa ad uno scaffale
+     * Add a resource of the color specified to the shelf with index equal to the one in dest parameter
+     * @param color color of the resource to add
+     * @param dest index of the shelf where to add the resource
+     * @return true if the resource could be added and false if not
      */
     public boolean store(Marble.Color color, int dest) {
         return shelves.store(color, dest);
     }
 
-
-    /**
-     * deposita risorse nella chest
-     */
+    @Override
     public boolean deposit(ResourceList resourceList) {
 
         if( resourceList == null){
@@ -91,9 +95,7 @@ public class PlayerStorage implements ResourceStorage{
         return true;
     }
 
-    /**
-     * preleva risorse da this. con priorita scaffali>chest
-     */
+    @Override
     public boolean withdrawal(ResourceList resourceList) {
         if(!getResources().contains(resourceList)){
             broadcaster.notifyUser(new ErrorUpdate( "not enough resources"));
@@ -110,7 +112,8 @@ public class PlayerStorage implements ResourceStorage{
     }
 
     /**
-     *  ritorna il totale delle risorse contenute negli scaffali e nella chest
+     * Return all the resources in the shelves and chest
+     * @return all the resources of shelves and chest summed together
      */
     public ResourceList getResources() {
         return chest.sum(shelves.getResources());

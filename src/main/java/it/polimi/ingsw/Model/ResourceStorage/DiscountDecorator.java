@@ -3,10 +3,8 @@ package it.polimi.ingsw.Model.ResourceStorage;
 import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Marble.ResourceList;
 
-
-
 /**
- *  decoratore di PlayerStorage. riduce le richieste di prelievo a seconda della quantita discount
+ * Decorator of PlayerStorage. Take the request of withdrawal and reduce it by the discount
  */
 public class DiscountDecorator implements ResourceStorage {
 
@@ -19,18 +17,18 @@ public class DiscountDecorator implements ResourceStorage {
         this.discount = discount;
     }
 
-
     /**
-     *  inoltra la richiesta deposit allo storage decorato
+     * Forward the deposit request to the decorated storage
+     * {@inheritDoc}
      */
     @Override
     public boolean deposit(ResourceList resourceList) {
         return storage.deposit(resourceList);
     }
 
-
     /**
-     *  inoltra la richiesta withdrawla allo storage decorato ridotta della quantita discount
+     * Forward the withdraw request to the decorated storage with the resource list reduced by the discount
+     * {@inheritDoc}
      */
     @Override
     public boolean withdrawal(ResourceList resourceList) {
@@ -39,7 +37,8 @@ public class DiscountDecorator implements ResourceStorage {
 
 
     /**
-     *  ritorna le risorse contenute nello storage decorato più la qunatita discpunt
+     * Return the list of resources in the storage with the discount resource added
+     * @return resources in the storage summed with the discount
      */
     @Override
     public ResourceList getResources() {

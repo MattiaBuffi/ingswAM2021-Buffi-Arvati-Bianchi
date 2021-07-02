@@ -193,15 +193,4 @@ public class VaticanRoute {
         broadcaster.notifyAllPlayers(new VaticanReport(popeSpaceReached+1, userList));
     }
 
-
-
-    public void assignRouteVictoryPoints(){
-        for(VaticanToken t: tokenList){
-            int n = t.getPosition()/VICTORY_POINTS_STEP;
-            t.setVictoryPoint( t.getVictoryPoints() + ROUTE_VICTORY_POINTS[n-1] );
-        }
-    }
-
-
-
 }

@@ -29,7 +29,9 @@ public class LeaderProduction {
 
 
     /**
-     *  Generate a production card with the output equal to the one choose by the user
+     * Generate a production card with the output equal to the one choose by the player
+     * @param color output color of the production card
+     * @return the production card with the output choose by the player
      */
     public ProductionCard getCard(Marble.Color color){
         if(color == Marble.Color.RED

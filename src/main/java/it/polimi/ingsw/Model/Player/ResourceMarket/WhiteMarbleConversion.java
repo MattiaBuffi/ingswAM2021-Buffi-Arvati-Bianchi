@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * decoratore di ResourceMArketHandler. Intercetta le WhiteMarble e le converte in SelectableMarble
+ * Decorator of ResourceMarketHandler. Used to handle white marbles and convert them in SelectableMarble
  */
 public class WhiteMarbleConversion implements ResourceMarketHandler{
 
@@ -46,28 +46,39 @@ public class WhiteMarbleConversion implements ResourceMarketHandler{
         }
     }
 
-
+    /**
+     * @see ResourceBuffer
+     */
     @Override
     public void handle(RedMarble marble) {
         baseHandler.handle(marble);
     }
 
+    /**
+     * Generate a new SelectableMarble of the color specified as field which has to be handled
+     * @see ResourceBuffer
+     */
     @Override
     public void handle(WhiteMarble marble) {
         baseHandler.handle(new SelectableMarble(color));
     }
 
+    /**
+     * @see ResourceBuffer
+     */
     @Override
     public void handle(ResourceMarble marble) {
         baseHandler.handle(marble);
     }
 
+    /**
+     * Add a color to the list of colors of the SelectableMarble
+     * @see ResourceBuffer
+     */
     @Override
     public void handle(SelectableMarble marble) {
         marble.addColor(color);
         baseHandler.handle(marble);
     }
-
-
 
 }
