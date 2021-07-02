@@ -9,7 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 
-public class WaitingPage extends ModelEventHandler.Default implements Layout{
+public class
+WaitingPage extends ModelEventHandler.Default implements Layout{
 
     @FXML
     Label playerNumber;
