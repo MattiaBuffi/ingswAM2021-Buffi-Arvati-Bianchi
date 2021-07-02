@@ -125,6 +125,7 @@ public class GameBoard extends ModelEventHandler.Default implements Layout {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        vaticanRoute_Controller.setTurnLabel(event.getUsername());
         storageTab_Controller.cleanDiscarded();
     }
 

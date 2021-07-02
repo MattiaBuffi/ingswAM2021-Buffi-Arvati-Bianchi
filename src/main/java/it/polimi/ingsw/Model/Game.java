@@ -492,7 +492,7 @@ public class Game implements GameHandler {
         @Override
         public void endGame() {
             lastTurn = true;
-            endTurn();
+            //endTurn();
         }
 
     }

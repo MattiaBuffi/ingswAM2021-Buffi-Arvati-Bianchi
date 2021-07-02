@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.GUI.Layout;
 import it.polimi.ingsw.Client.ViewBackEnd;
 import it.polimi.ingsw.Message.ClientMessages.EndTurn;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -18,6 +19,8 @@ public class VaticanRoutePane implements Layout,GameTab  {
     public ImageView cross1, cross2, cross3, cross4, crossReference;
     @FXML
     public ImageView popeToken1, popeToken2, popeToken3;
+    @FXML
+    public Label turnLabel;
 
     private final Position[] CROSS_SHIFT = {new Position(94,0), new Position(94,0), new Position(0,-62),
             new Position(0,-62), new Position(94,0), new Position(94,0), new Position(94,0), new Position(94,0),
@@ -48,7 +51,7 @@ public class VaticanRoutePane implements Layout,GameTab  {
         updateCrosses();
 
         for (Integer i: backEnd.getModel().vaticanRoute.getVaticanReports(backEnd.getMyUsername())){
-            System.out.println(backEnd.getMyUsername()+"--"+i);
+            //System.out.println(backEnd.getMyUsername()+"--"+i);
             activatePopeFavor(i);
         }
 
@@ -123,6 +126,10 @@ public class VaticanRoutePane implements Layout,GameTab  {
     public void endTurn() {
         EndTurn message = new EndTurn();
         backEnd.notify(message);
+    }
+
+    public void setTurnLabel(String username){
+        turnLabel.setText("It's " + username + " turn");
     }
 
     private class Position{
