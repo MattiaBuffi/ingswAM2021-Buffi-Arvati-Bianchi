@@ -69,6 +69,7 @@ For a Better Experience with the GUI, you need a 1920x1080 desktop without any t
  
 It is possible to start the game with 99 resources of each type inside the chest, but to do so it is necessary to get the source code.
 You must uncomment line 54 of the StateSetupResources class, present at the path src / main / java / it.polimi.ingsw / Model / Player / States.
+ 
 **After removing the comment you will need to create the jar again.**
 
 
