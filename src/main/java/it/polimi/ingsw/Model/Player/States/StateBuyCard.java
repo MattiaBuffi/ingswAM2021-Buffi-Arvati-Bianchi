@@ -10,6 +10,9 @@ import it.polimi.ingsw.Model.Player.PlayerState;
 import it.polimi.ingsw.Model.ResourceStorage.ResourceStorage;
 
 
+/**
+ * State in which the player can buy a development card
+ */
 public class StateBuyCard extends PlayerState {
 
     private static StateBuyCard instance;
@@ -34,11 +37,11 @@ public class StateBuyCard extends PlayerState {
 
         context.setState(StateWait.get());
 
-        if(cardStorage.getCards().size() < 7){
-            handler.endTurn();
-        } else {
+        if(cardStorage.getCards().size() >= 7){
             handler.endGame();
         }
+
+        handler.endTurn();
     }
 
 

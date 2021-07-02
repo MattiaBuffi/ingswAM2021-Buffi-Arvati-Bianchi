@@ -5,6 +5,9 @@ import it.polimi.ingsw.Model.Marble.Marble;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 
+/**
+ * State in which the player has to choose resources in the setup of the game
+ */
 public class StateSetupResources extends PlayerState {
 
     private static StateSetupResources instance;

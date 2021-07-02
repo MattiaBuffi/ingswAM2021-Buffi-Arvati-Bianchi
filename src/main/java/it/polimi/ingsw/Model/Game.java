@@ -425,6 +425,9 @@ public class Game implements GameHandler {
 
             StateGameEnded.setState(p);
             int playerPoint = p.getVictoryPoints();
+
+            broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
+
             if(playerPoint > maxPoint){
                 maxPoint = playerPoint;
                 winner = p;
@@ -541,15 +544,9 @@ public class Game implements GameHandler {
             setNextPlayer();
 
 
-
             if(lastTurn){
                 if(currentPlayer == 0){
                     broadcaster.notifyAllPlayers(new EndGame(getWinner()));
-
-                    for (Player p: players){
-                        broadcaster.notifyAllPlayers(new VictoryPointsUpdate(p.getUser().getUsername(), p.getVictoryPoints()));
-                    }
-
                     broadcaster.sendMessages(players.get(0).getUser().getUsername(), "game is ended");
                     terminateGame();
                 }

@@ -4,6 +4,9 @@ import it.polimi.ingsw.Message.Model.ActivePlayer;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 
+/**
+ * State in which the player has to wait for other player to play their turns
+ */
 public class StateWait extends PlayerState {
 
     private static StateWait instance;
