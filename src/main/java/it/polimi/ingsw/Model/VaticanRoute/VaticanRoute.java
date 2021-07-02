@@ -153,12 +153,10 @@ public class VaticanRoute {
         int newPosition = token.getPosition() + points;
 
 
-        if(popeSpaceReached > 2){
-            return;
-        }
-
-        if(vaticanReport(tokenList, newPosition, POPE_SPACES[popeSpaceReached], POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached])){
-            popeSpaceReached +=1;
+        if(popeSpaceReached <= 2 ){
+            if(vaticanReport(tokenList, newPosition, POPE_SPACES[popeSpaceReached], POPE_SPACES_LOWER_LIMITS[popeSpaceReached],POPES_FAVOR_VICTORY_POINTS[popeSpaceReached])){
+                popeSpaceReached +=1;
+            }
         }
 
         if(newPosition >= LAST_POSITION){

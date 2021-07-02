@@ -195,7 +195,7 @@
     "Victory_Points": 6,
     "Cost": ["3P","2Y"],
     "Require": ["1Y","1P"],
-    "Produce": ["3P"]
+    "Produce": ["3B"]
   },
   {
     "Id":"DC_23",
