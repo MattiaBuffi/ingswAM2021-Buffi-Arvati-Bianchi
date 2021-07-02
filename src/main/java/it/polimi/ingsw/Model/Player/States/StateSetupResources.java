@@ -51,7 +51,7 @@ public class StateSetupResources extends PlayerState {
         context.setReady(true);
         StateWait.setState(context);
         context.getGameHandler().startGame();
-        context.getResourceStorage().CHEAT_RESOURCES();
+        //context.getResourceStorage().CHEAT_RESOURCES();
     }
 
     public static boolean completeSetup(Player context){

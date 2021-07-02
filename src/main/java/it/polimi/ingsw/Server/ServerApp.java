@@ -25,6 +25,7 @@ public class ServerApp implements Server, SocketHandler {
 
                 if (args[0].equals("-port")) {
                     try{
+                        System.out.println(args[1]);
                         int port = Integer.parseInt(args[1]);
                         app = new ServerApp(port);
                     }catch (NumberFormatException e){

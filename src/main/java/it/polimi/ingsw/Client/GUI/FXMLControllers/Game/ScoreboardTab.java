@@ -35,7 +35,6 @@ public class ScoreboardTab implements Layout, GameTab {
     @Override
     public void setup(ViewBackEnd backEnd) {
 
-        System.out.println("ScoreBoardTab");
         this.backEnd = backEnd;
         hboxArray = new HBox[]{hbox1, hbox2, hbox3, hbox4};
         playersLabelsArray = new Label[]{player1, player2, player3, player4};
@@ -59,8 +58,8 @@ public class ScoreboardTab implements Layout, GameTab {
                 players.add(new PlayerScore(player.getUsername()));
             }
         } catch (NullPointerException e){
+            System.err.println("Players not initialized!");
             e.printStackTrace();
-            System.out.println("Players not initialized!");
         }
 
         for(int i=0; i<players.size(); i++){

@@ -11,7 +11,6 @@ public class HomePage implements Layout {
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("HomePage");
         this.backEnd = backEnd;
     }
 

@@ -56,6 +56,7 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
         this.controller.addObserver(backEnd);
         backEnd.addObserver(controller);
         return true;
+
     }
 
     public void localController(){
@@ -70,8 +71,10 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
             this.backEnd.removeObserver(controller);
             this.controller.disconnect();
             this.controller = null;
+            resetScreen.run();
         }
     }
+
 
     public void quit(){
 
@@ -91,6 +94,12 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
     }
 
 
+    @Override
+    public void close(ConnectionHandler connection) {
+        removeController();
+    }
+
+
     private boolean validIP(String ip) {
         if (ip == null || ip.isEmpty()) return false;
         ip = ip.trim();
@@ -103,13 +112,6 @@ public class ClientApp implements ConnectionHandler.ShutdownHandler {
         } catch (PatternSyntaxException ex) {
             return false;
         }
-    }
-
-
-    @Override
-    public void close(ConnectionHandler connection) {
-        removeController();
-        resetScreen.run();
     }
 
 

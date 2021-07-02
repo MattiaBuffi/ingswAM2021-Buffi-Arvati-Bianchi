@@ -27,8 +27,6 @@ public class OnlineController extends Controller {
     public void disconnect() {
         this.connectionHandler.stop();
         this.connectionDaemon.stop();
-        System.err.println("connection closed");
-
     }
 
     @Override

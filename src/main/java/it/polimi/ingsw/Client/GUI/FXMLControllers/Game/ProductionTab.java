@@ -43,7 +43,7 @@ public class ProductionTab extends ResourceViewer implements Layout, GameTab {
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("ProductionTabSetup");
+
         this.backEnd = backEnd;
 
         checkBoxArray = new CheckBox[]{checkLeaderProduction1, checkLeaderProduction2, checkBasicProduction, checkLeftProduction, checkCenterProduction, checkRightProduction};

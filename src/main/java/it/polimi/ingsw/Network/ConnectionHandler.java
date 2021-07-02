@@ -49,6 +49,9 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
 
     private int socketTimeout;
 
+
+
+
     public ConnectionHandler(Socket socket, int readTimeout, Consumer<IN> readHandler, ShutdownHandler closer) throws IOException {
 
         this.socket = socket;
@@ -59,6 +62,7 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.in = new ObjectInputStream(socket.getInputStream());
     }
+
 
     public ConnectionHandler(Socket socket,Consumer<IN> readHandler, ShutdownHandler closer) throws IOException {
 
@@ -71,6 +75,8 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
         this.in = new ObjectInputStream(socket.getInputStream());
 
     }
+
+
 
 
 
@@ -106,7 +112,7 @@ public class ConnectionHandler<IN, OUT> extends Observable implements Runnable {
 
         while(running){
             try {
-                //this.socket.setSoTimeout(socketTimeout);
+                this.socket.setSoTimeout(socketTimeout);
                 @SuppressWarnings("unchecked")
                 IN event = (IN) in.readObject();
                 handleReadMessage(event);

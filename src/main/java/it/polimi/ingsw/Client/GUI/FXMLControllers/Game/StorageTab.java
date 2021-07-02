@@ -41,7 +41,7 @@ public class StorageTab implements Layout, GameTab {
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("StorageTab");
+
         this.backEnd = backEnd;
 
         resetValue();

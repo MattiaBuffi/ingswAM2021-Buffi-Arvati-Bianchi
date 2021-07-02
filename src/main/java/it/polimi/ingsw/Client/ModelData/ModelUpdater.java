@@ -35,8 +35,6 @@ public class ModelUpdater implements ModelEventHandler {
     public void handle(VaticanReport event) {
         for (String username: event.getPlayers()){
 
-            System.out.println("VATICAN REPORT OF "+username+"  "+event.getIndex());
-
             Set<Integer> set = model.vaticanRoute.getVaticanReports(username);
             if(set.isEmpty()){
                 model.vaticanRoute.vaticanReport.put(username, new HashSet<>());

@@ -34,7 +34,7 @@ public class LeaderCardsTab implements Layout, GameTab{
 
     @Override
     public void setup(ViewBackEnd backEnd) {
-        System.out.println("LeaderCardTab");
+
         this.backEnd = backEnd;
 
         ivArray = new ImageView[]{leaderCard1, leaderCard2};

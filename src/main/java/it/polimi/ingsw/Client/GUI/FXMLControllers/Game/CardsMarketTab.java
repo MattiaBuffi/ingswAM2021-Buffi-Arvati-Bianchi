@@ -70,7 +70,7 @@ public class CardsMarketTab implements Layout, GameTab{
     public void buyCardSelected(){
         if(cardSelectedX != -1 && cardSelectedY != -1){
             if(columnChoice.getSelectionModel().getSelectedItem() != null) {
-                System.out.println(columnChoice.getSelectionModel().getSelectedItem());
+                //System.out.println(columnChoice.getSelectionModel().getSelectedItem());
                 BuyDevelopmentCard message = new BuyDevelopmentCard(cardSelectedX, cardSelectedY, columnChoice.getSelectionModel().getSelectedItem() - 1);
                 backEnd.notify(message);
             } else {
