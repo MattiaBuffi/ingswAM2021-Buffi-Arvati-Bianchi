@@ -32,6 +32,7 @@ public class StateBuyCard extends PlayerState {
 
 
     public void changeState(PlayerState.Context context, CardStorage cardStorage, GameHandler handler){
+
         context.setState(StateWait.get());
 
         if(cardStorage.getCards().size() < 7){

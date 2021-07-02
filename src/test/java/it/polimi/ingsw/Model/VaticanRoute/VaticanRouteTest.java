@@ -71,18 +71,54 @@ class VaticanRouteTest {
 
 
 
-
+    /**
+     * this test try to add point when the token has already reach the last position
+     */
     @Test
-    void addRoutePositionVictoryPoints(){
+    void addRoutePositionVictoryPointsLimit(){
         testHandler terminator = new testHandler();
         VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
 
         VaticanToken token = new VaticanToken(route, "test");
 
-        token.setLastPointPosition(1);
+        route.getRouteVictoryPoints(token, 10, (i)->10, (i)->1);
 
-
+        assertEquals(0, token.getVictoryPoints());
     }
+
+    /**
+     * this test try to add point to the token when the new position can get new points
+     */
+    @Test
+    void addRoutePositionVictoryPointsGetPoints(){
+        testHandler terminator = new testHandler();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
+
+        VaticanToken token = new VaticanToken(route,3, "test");
+
+        route.getRouteVictoryPoints(token, 10, (i)->i, (i)->1);
+
+        assertEquals(3, token.getVictoryPoints());
+    }
+
+
+    /**
+     * this test try to add point when the new position doesn't grant new point
+     */
+    @Test
+    void addRoutePositionVictoryPointsNoPoints(){
+        testHandler terminator = new testHandler();
+        VaticanRoute route = new VaticanRoute(new TestBroadcaster(),terminator);
+
+        VaticanToken token = new VaticanToken(route,3, "test");
+
+        route.getRouteVictoryPoints(token, 10, (i)->5, (i)->1);
+
+        assertEquals(0, token.getVictoryPoints());
+    }
+
+
+
 
 
     @Test
