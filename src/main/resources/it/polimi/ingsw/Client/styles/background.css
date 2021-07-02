@@ -20,7 +20,16 @@
 }
 
 .bg_trasparent{
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
+    -fx-background-color:  #cec4a6;
+    -fx-text-fill: #565033;
+    -fx-font-size: 24 px;
+}
+.list-cell{
+    -fx-background-color: #cec4a6;
+    -fx-text-fill: #565033;
+    -fx-font-style: italic;
+    -fx-font-size: 24 px;
 }
 .bg_vatican_route{
     -fx-background-image: url("../images/backgrounds/VaticanRoute.png");

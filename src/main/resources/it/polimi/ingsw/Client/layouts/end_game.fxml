@@ -21,8 +21,8 @@
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
-      <ListView fx:id="lvUsernames" layoutX="283.0" layoutY="150.0" prefHeight="200.0" prefWidth="165.0" styleClass="bg_trasparent" stylesheets="@../styles/background.css" />
-      <ListView fx:id="lvPoints" layoutX="460.0" layoutY="150.0" prefHeight="200.0" prefWidth="57.0" styleClass="bg_trasparent" stylesheets="@../styles/background.css" />
+      <ListView fx:id="lvUsernames" layoutX="260.0" layoutY="150.0" prefHeight="200.0" prefWidth="179.0" styleClass="list-cell" stylesheets="@../styles/background.css" />
+      <ListView fx:id="lvPoints" layoutX="451.0" layoutY="150.0" prefHeight="200.0" prefWidth="90.0" styleClass="list-cell" stylesheets="@../styles/background.css" />
     </children>
 
 </AnchorPane>

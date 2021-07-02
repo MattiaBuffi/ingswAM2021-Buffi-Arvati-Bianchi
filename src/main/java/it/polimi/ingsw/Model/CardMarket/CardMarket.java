@@ -225,6 +225,7 @@ public class CardMarket implements CardRemover{
 
     /**
      * Notify all the players that a card in a certain position of the market is changed
+     * @see MarketCardUpdate
      */
     private void notifyNewCard(PurchasableCard purchasableCard, int x, int y){
         DevelopmentCard card = purchasableCard.getCard();
