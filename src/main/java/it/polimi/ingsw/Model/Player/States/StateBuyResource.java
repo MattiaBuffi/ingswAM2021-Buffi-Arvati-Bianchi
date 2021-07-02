@@ -7,6 +7,9 @@ import it.polimi.ingsw.Model.Player.ResourceMarket.ResourceMarketHandler;
 
 import java.util.List;
 
+/**
+ * State in which the player can take resources
+ */
 public class StateBuyResource extends PlayerState {
 
     private static StateBuyResource instance;

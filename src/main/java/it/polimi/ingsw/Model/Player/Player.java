@@ -21,6 +21,9 @@ import it.polimi.ingsw.Model.VaticanRoute.VaticanToken;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represent a player in the game
+ */
 public class Player implements EventBroadcaster, PlayerState.Context {
 
 

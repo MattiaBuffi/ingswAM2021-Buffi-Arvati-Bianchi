@@ -3,6 +3,10 @@ package it.polimi.ingsw.Model.Player.States;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 
+
+/**
+ * State in which the game is ended
+ */
 public class StateGameEnded extends PlayerState {
 
     private static StateGameEnded instance;

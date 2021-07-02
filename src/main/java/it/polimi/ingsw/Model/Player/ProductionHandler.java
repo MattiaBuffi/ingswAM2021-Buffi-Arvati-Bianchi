@@ -13,9 +13,8 @@ import it.polimi.ingsw.Model.VaticanRoute.FaithHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * buffer delle risorse prodotte durante un turno di un player
+ * Buffer of resources produced by the player during its turn
  */
 public class ProductionHandler {
 
@@ -48,7 +47,10 @@ public class ProductionHandler {
 
 
     /**
-     *  reinizilaizza il buffer e lo rende disponibile ad accettare risorse
+     * Reinitialize the buffer and makes it available to accept resources
+     * @param cardStorage card storage
+     * @param resourceStorage resource storage
+     * @param faithHandler handler for position in the Vatican route
      */
     public void setupProductionHandler(CardStorage cardStorage, ResourceStorage resourceStorage, FaithHandler faithHandler){
         if(ready){
@@ -61,7 +63,9 @@ public class ProductionHandler {
     }
 
     /**
-     *  Ottiene una productionCard grazie al productionSelector e prova ad eseguirla
+     * Obtain a production thanks to the selector and try to execute them
+     * @param selector selector for the production card to obtain
+     * @return true if the action is successful, false if not
      */
     public boolean produce(ProductionSelector selector){
 
@@ -100,7 +104,7 @@ public class ProductionHandler {
     }
 
     /**
-     *  svuota il buffer di produzioni
+     * Empty the production buffer
      */
     public void empty(){
         resourceStorage.deposit(produced);
@@ -113,7 +117,7 @@ public class ProductionHandler {
     }
 
     /**
-     *  gestisce le marble prodotte
+     *  Handle the marbles produced
      */
     private class handler implements MarbleHandler{
 

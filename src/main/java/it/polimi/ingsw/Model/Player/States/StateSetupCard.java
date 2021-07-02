@@ -6,6 +6,10 @@ import it.polimi.ingsw.Model.LeaderCard.LeaderCard;
 import it.polimi.ingsw.Model.Player.Player;
 import it.polimi.ingsw.Model.Player.PlayerState;
 
+
+/**
+ * State in which the player has to choose leader cards in the setup of the game
+ */
 public class StateSetupCard extends PlayerState {
 
 
