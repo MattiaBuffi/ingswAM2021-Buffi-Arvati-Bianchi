@@ -55,7 +55,9 @@ public class StateSetupResources extends PlayerState {
         StateWait.setState(context);
         context.getGameHandler().startGame();
 
-        context.getResourceStorage().CHEAT_RESOURCES();
+
+        //UNCOMMENT THE LINE BELOW TO START WITH 99 OF EACH RESOURCE
+        //context.getResourceStorage().CHEAT_RESOURCES();
     }
 
     public static boolean completeSetup(Player context){
