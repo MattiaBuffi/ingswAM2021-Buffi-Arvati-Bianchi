@@ -19,19 +19,19 @@
          <image>
             <Image url="@../images/token/popeFavorOFF_3.png" />
          </image></ImageView>
-      <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="cross1" fitHeight="50.0" fitWidth="50.0" layoutX="72.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/redCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross2" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="cross2" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/greenCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross3" fitHeight="50.0" fitWidth="50.0" layoutX="68.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="cross3" fitHeight="50.0" fitWidth="50.0" layoutX="72.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/blueCross.png" />
          </image></ImageView>
-      <ImageView fx:id="cross4" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="cross4" fitHeight="50.0" fitWidth="50.0" layoutX="115.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/token/purpleCross.png" />
          </image></ImageView>
@@ -40,11 +40,16 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="124.0" text="Your token is" textFill="#9a3737">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="43.0" prefWidth="124.0" text="Your token is" textFill="#9a3737">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="crossReference" fitHeight="56.0" fitWidth="42.0" layoutX="138.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="crossReference" fitHeight="43.0" fitWidth="39.0" layoutX="131.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="turnLabel" layoutX="10.0" layoutY="57.0" prefHeight="43.0" prefWidth="206.0" text="It's ... turn" textFill="#9a3737">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
