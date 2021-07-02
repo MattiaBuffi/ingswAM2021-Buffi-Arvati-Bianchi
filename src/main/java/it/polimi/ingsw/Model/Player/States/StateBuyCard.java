@@ -34,11 +34,11 @@ public class StateBuyCard extends PlayerState {
 
         context.setState(StateWait.get());
 
-        if(cardStorage.getCards().size() < 7){
-            handler.endTurn();
-        } else {
+        if(cardStorage.getCards().size() >= 7){
             handler.endGame();
         }
+
+        handler.endTurn();
     }
 
 
