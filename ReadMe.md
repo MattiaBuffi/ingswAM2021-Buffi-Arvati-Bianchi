@@ -37,7 +37,7 @@ The final version of the Project includes:
 
 ## JavaDocs
 
-Here you can read the [JavaDocs](https://github.com/MattiaBuffi/ingswAM2021-Buffi-Arvati-Bianchi/.Deliverables/javaDocs/index.html) of this Project
+Here you can read the [JavaDocs](https://github.com/MattiaBuffi/ingswAM2021-Buffi-Arvati-Bianchi/blob/master/Deliverables/javaDocs/index.html) of this Project
 
 # Installation
 
