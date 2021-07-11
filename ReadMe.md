@@ -5,6 +5,8 @@ Final Test of "**Software Engineering**".
 
 **Professor** Alessandro Margara
 
+FINAL EVALUATION : 30/30
+
 ## _Project Specification_
 
 For this Project we made a Java version of the Game Masters of Renaissance, board game made by Cranio Creation.
