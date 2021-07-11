@@ -213,7 +213,7 @@ public class Cli {
                         break;
                 }
             }else if (size==0){
-                updateShelf(scheme, i, size, ' ');
+                updateShelf(scheme, i, playerShelf.get(i).maxSize, ' ');
             }
         }
     }
@@ -286,8 +286,10 @@ public class Cli {
         try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else
-                Runtime.getRuntime().exec("clear");
+            else{
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
         } catch (InterruptedException | IOException ignored) {}
     }
 

@@ -170,7 +170,10 @@ public class RssMarketPage extends ModelEventHandler.Default {
 
 
     public void rssHandler(){
-
+        if (this.backEnd.getModel().resourceMarketBuffer.size() == 0){
+            RssMarketPageView(this.backEnd);
+            return;
+        }
         if(this.backEnd.getModel().resourceMarketBuffer.get(selectedMarble).getColor() == Marble.Color.WHITE){
             SelectableMarble marble = (SelectableMarble)this.backEnd.getModel().resourceMarketBuffer.get(selectedMarble);
             if(marble.getSelectableColors().size() == 1) {
@@ -256,7 +259,6 @@ public class RssMarketPage extends ModelEventHandler.Default {
     public void handle(ErrorUpdate event) {
         Cli.showError(event);
         rssHandler();
-
     }
 
     @Override
